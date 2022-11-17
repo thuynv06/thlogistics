@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="svg">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/plugins/revolution/assets/svg/svg.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
