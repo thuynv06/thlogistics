@@ -1100,6 +1100,7 @@ iframe {
 }
 
 .ps-post--detail .ps-post__content ul li {
+    text-align: justify;
     line-height: 1.6em;
 }
 
@@ -2899,6 +2900,7 @@ textarea.form-control {
 .ps-post--detail .ps-post__content p {
     margin-bottom: 2px;
     font-family: FontAwesome;
+    text-align: justify;
     font-size: 16px;
     line-height: 1.8em;
     color: #000000;
