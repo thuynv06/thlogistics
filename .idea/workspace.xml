@@ -5,93 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/production/customer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/banggia.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chinhsach.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/danhsachdonhang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dathang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dichvudoitien.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dichvuvanchuyen.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/head.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/script.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/about.php" beforeDir="false" afterPath="$PROJECT_DIR$/about.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/css/shoe.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/css/shoe.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/shoe.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/shoe.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/login/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/auth/login/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/login/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/auth/login/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/filterAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/filterAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/filterWithCookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/filterWithCookie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog-detail.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog-grid-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog-grid.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog-list.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkout.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compare.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/banggia.php" beforeDir="false" afterPath="$PROJECT_DIR$/banggia.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chinhsach.php" beforeDir="false" afterPath="$PROJECT_DIR$/chinhsach.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/connect.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contact-us-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contact-us.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deleteCart.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/favicon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/formCart.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/homepage-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/homepage-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/146972117_2849928912001221_7521882077628797924_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/167460640_548361456141577_4021222783376699911_n (2).jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/167460640_548361456141577_4021222783376699911_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/186990832_2912094862453743_3770370240088288146_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/213649488_187668229973939_9155369604254683281_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/219358204_1359970707737129_193766959301754672_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/219843864_983016589114551_4999119056925262990_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/245073628_3091058767796051_5731964485928323993_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/245495174_2898697773716058_6691009756593589867_n.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/245642692_415139920308073_6895757974366559092_n.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/273012920_2601914886611642_4052643057805299217_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/278436512_1056949608191262_6272145579401916967_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/278713399_1987770381397641_3834876700356754447_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/73039743_457799481516743_2944413433908428800_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/74589546_545009112982009_579124783078178816_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/SharedScreenshot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/SharedScreenshot2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/SharedScreenshot3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/SharedScreenshot4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/SharedScreenshot5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/ao.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/avt.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/avttet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/avttethihi.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/baitapcpp.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageShoe/cogiaoman.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/banner/9cabbe31c834d4e8ff3028f1016b4984.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/banner/giày-thể-thao-ragus-man-12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/banner/giày-thể-thao-ragus-man-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/logo-white.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/logo-white.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/slider/Giay-nam-9-1170x1170.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/slider/footwear-photograph-water-shoe-photography-leg-1542485-pxhere.com.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/slider/shoe-color-blue-yellow-season-close-up-1406466-pxhere.com.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/team/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/team/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/team/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/team/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/testimonial/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/testimonial/2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/testimonial/3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/testimonial/4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/testimonial/5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/user/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/user/2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/user/3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/user/4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/user/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/danhsachdonhang.php" beforeDir="false" afterPath="$PROJECT_DIR$/danhsachdonhang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dathang.php" beforeDir="false" afterPath="$PROJECT_DIR$/dathang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dichvudoitien.php" beforeDir="false" afterPath="$PROJECT_DIR$/dichvudoitien.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dichvuvanchuyen.php" beforeDir="false" afterPath="$PROJECT_DIR$/dichvuvanchuyen.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-detail.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-listing-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-listing.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sendemail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sendemail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whishlist.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +52,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -131,6 +61,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/index.php">
       <method v="2" />
     </configuration>
@@ -150,6 +91,7 @@
       <workItem from="1668563099453" duration="39380000" />
       <workItem from="1668652304680" duration="2850000" />
       <workItem from="1668709907414" duration="686000" />
+      <workItem from="1669031530954" duration="6468000" />
     </task>
     <servers />
   </component>

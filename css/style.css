@@ -6911,10 +6911,10 @@ textarea.form-control {
 .header__actions > a, .header__actions .ps-dropdown > a {
     display: inline-block;
     padding: 0 15px;
-    font-family: "Archivo Narrow", sans-serif;
+    font-family: FontAwesome;
     font-size: 13px;
     text-align: center;
-    color: #8d8d8d;
+    color: #ff2369;
     text-transform: uppercase;
     line-height: 40px;
     border-left: 1px solid #e5e5e5;
@@ -6930,8 +6930,8 @@ textarea.form-control {
 }
 
 .header__actions > a:hover, .header__actions .ps-dropdown > a:hover {
-    background-color: #e5e5e5;
-    color: #2AC37D;
+    background-color:#ff6c00;
+    color: #fff;
 }
 
 .header__actions > a {
@@ -6992,6 +6992,9 @@ textarea.form-control {
 }
 
 @media (max-width: 479px) {
+    .header__actions > p, .header__actions .ps-dropdown > p {
+        font-size: 12px;
+    }
     .header__actions > a, .header__actions .ps-dropdown > a {
         font-size: 12px;
     }
@@ -7043,7 +7046,10 @@ textarea.form-control {
 
 @media (max-width: 991px) {
     .header .header__top p {
-        display: none;
+        display: block;
+        line-height: 22px;
+        font-family: FontAwesome;
+        font-size: 14px;
     }
 
     .header .ps-logo {

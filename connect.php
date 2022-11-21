@@ -1,7 +1,12 @@
 <?php
+//$server = "localhost:3306";
+//$user="root";
+//$pass="";
+//$database="thlogistics";
+//$conn=mysqli_connect($server,$user,$pass,$database);
 $server = "localhost:3306";
-$user="root";
-$pass="";
+$user="Root";
+$pass="Root_1234";
 $database="thlogistics";
 $conn=mysqli_connect($server,$user,$pass,$database);
 // Check connection
