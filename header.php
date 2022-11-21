@@ -25,7 +25,7 @@
                 </div>
                 <div class="navigation__column center">
                     <ul class="main-menu menu">
-                        <li class="menu-item menu-item-has-children dropdown"><a href="index.php">Trang Chủ</a>
+                        <li class="menu-item"><a href="index.php">Trang Chủ</a>
                         </li>
                         </li>
                         <li class="menu-item"><a href="banggia.php">Bảng Giá </a></li>
