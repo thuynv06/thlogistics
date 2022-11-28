@@ -148,7 +148,7 @@ class KienHangRepository
         $s=strval($status);  echo $s;
         global $conn;
         $sql = "update kienhang set ladingCode='$ladingCode', status=$status,
-                    listTimeStatus =JSON_SET (listTimeStatus,'$.$s','$date')
+                    listTimeStatus =JSON_SET (listTimeStatus,'$."$s"','$date')
                     where id=$id ";
         echo $sql;
         mysqli_query($conn,$sql);
