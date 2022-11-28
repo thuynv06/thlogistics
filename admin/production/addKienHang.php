@@ -97,7 +97,6 @@
                 $myObj = new stdClass();
                 $myObj->{1} = "$dateCreadted";
                 $listStatusJSON = json_encode($myObj);
-
                 $kienhang_id = $kienhangRepository->insert($_POST['name'], $orderCode, $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'],$_POST['linksp'], $_POST['note'],$dateCreadted,$listStatusJSON);
                 echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
             }

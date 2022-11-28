@@ -102,7 +102,7 @@ class KienHangRepository
         global $conn;
         $sql = "insert into kienhang(name,orderCode,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$orderCode','$ladingCode',$amount,'$shippingWay',
                                                                                                          '$size',$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
