@@ -145,7 +145,7 @@ class KienHangRepository
     }
 
     public function updateStatus($id,$ladingCode,$status,$date){
-        $s='$.'.'"'.status.'"';
+        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql = "update kienhang set ladingCode='$ladingCode', status=$status,
                     listTimeStatus =JSON_SET (listTimeStatus,'$s','$date')
