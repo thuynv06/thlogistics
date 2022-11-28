@@ -227,19 +227,19 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 <?php
                 if (isset($_POST['submit'])) {
                     $kienhangRepository->updateStatus($_POST['idKH'],$_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
-//                    echo "<script>window.location.href='kienHang.php';</script>";
+                    echo "<script>window.location.href='kienHang.php';</script>";
                 }
                 ?>
                 <?php
                 if (isset($_POST['submitAll'])) {
                     $kienhangRepository->updateStatusAll($_POST['idKH']);
-//                    echo "<script>window.location.href='kienHang.php';</script>";
+                    echo "<script>window.location.href='kienHang.php';</script>";
                 }
                 ?>
                 <?php
                 if (isset($_POST['resetStatus'])) {
                     $kienhangRepository->resetStatus($_POST['idKH']);
-//                    echo "<script>window.location.href='kienHang.php';</script>";
+                    echo "<script>window.location.href='kienHang.php';</script>";
                 }
                 ?>
             </div><!-- /.modal-content -->

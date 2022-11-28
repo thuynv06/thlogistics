@@ -133,31 +133,31 @@ class KienHangRepository
     }
 
     public function update($id,$name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note,$linksp,$date){
-        $s='$.'.'"'.$status.'"';
+//        $s='$.'.'"'.$status.'"';
         echo $s;
         global $conn;
         $sql = "update kienhang set name='$name',ladingCode='$ladingCode',amount=$amount,shippingWay='$shippingWay',
                     size='$size',status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',
-                    listTimeStatus =JSON_SET (listTimeStatus,'$s','$date')
+                    listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
                     where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn,$sql);
     }
 
     public function updateStatus($id,$ladingCode,$status,$date){
-        $s='$.'.'"'.$status.'"';
+//        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql = "update kienhang set ladingCode='$ladingCode', status=$status,
-                    listTimeStatus =JSON_SET (listTimeStatus,'$s','$date')
+                    listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
                     where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn,$sql);
     }
 
     public function updateStatusAll($id){
         global $conn;
         $date1 = new DateTime();
-        $string1 = $date1->add(new DateInterval("PT10H"))->format("Y-m-d\TH:i:s");
+//        $string1 = $date1->add(new DateInterval("PT10H"))->format("Y-m-d\TH:i:s");
         $string2 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
         $string3 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
         $string4 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
@@ -166,22 +166,22 @@ class KienHangRepository
 
         $sql = "update kienhang set status=6,
                     listTimeStatus =JSON_SET (listTimeStatus,
-                     '$."2"','$string2',
-                     '$."3"','$string3',
-                     '$."4"','$string4',
-                     '$."5"','$string5',
-                     '$."6"','$string6' )
+                     '\$.\"2\"','$string2',
+                     '\$.\"3\"','$string3',
+                     '\$.\"4\"','$string4',
+                    '\$.\"5\"','$string5',
+                    '\$.\"6\"','$string6' )
                     where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn,$sql);
     }
     public function resetStatus($id){
         global $conn;
 
         $sql = "update kienhang set status=1,
-                    listTimeStatus = JSON_REMOVE (listTimeStatus,'$.2','$.3','$.4','$.5','$.6')
+                    listTimeStatus = JSON_REMOVE (listTimeStatus,'\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"',))
                     where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn,$sql);
     }
 
