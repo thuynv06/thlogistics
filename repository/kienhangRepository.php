@@ -97,10 +97,10 @@ class KienHangRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($name, $orderCode, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note,$dateCreated,$listTimeStatus)
+    public function insert($name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note,$dateCreated,$listTimeStatus)
     {
         global $conn;
-        $sql = "insert into kienhang(name,orderCode,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$orderCode','$ladingCode',$amount,'$shippingWay',
+        $sql = "insert into kienhang(name,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$ladingCode',$amount,'$shippingWay',
                                                                                                          '$size',$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
 //        echo $sql;
         mysqli_query($conn, $sql);
@@ -181,6 +181,14 @@ class KienHangRepository
         $sql = "update kienhang set status=1,
                     listTimeStatus = JSON_REMOVE (listTimeStatus,'\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"')
                     where id=$id ";
+//        echo $sql;
+        mysqli_query($conn,$sql);
+    }
+
+    public function updateMaKien($id){
+        global $conn;
+        $orderCode="TH168800".$id;
+        $sql = "update kienhang set orderCode='$orderCode' where id=$id ";
 //        echo $sql;
         mysqli_query($conn,$sql);
     }

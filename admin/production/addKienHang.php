@@ -87,17 +87,13 @@
             <button name="submit" type="submit" class="btn btn-primary">Thêm</button>
             <?php
             if (isset($_POST['submit'])) {
-                $temp = $kienhangRepository->getOrderCodeLastRecord();
-
-                $lastOrderCode = $temp['orderCode'];
-                $lastOrderCode = substr($lastOrderCode, 0, 10);
-                $orderCode = $lastOrderCode . $temp['id'];
                 $date=  new DateTime();
                 $dateCreadted=$date ->format("Y-m-d\TH:i:s");
                 $myObj = new stdClass();
                 $myObj->{1} = "$dateCreadted";
                 $listStatusJSON = json_encode($myObj);
-                $kienhang_id = $kienhangRepository->insert($_POST['name'], $orderCode, $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'],$_POST['linksp'], $_POST['note'],$dateCreadted,$listStatusJSON);
+                $kienhang_id = $kienhangRepository->insert($_POST['name'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'],$_POST['linksp'], $_POST['note'],$dateCreadted,$listStatusJSON);
+                $kienhangRepository->updateMaKien($kienhang_id);
                 echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
             }
             ?>
