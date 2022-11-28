@@ -295,13 +295,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
         return new Date().getTimezoneOffset() * -60 * 1000;
     }
 
-    // $(document).ready(function() {
-    //     // Get the data and view to modal
-    //     get();
-    //     _getTimeZoneOffsetInMs();
-    //     document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
-    //
-    // });
+
 </script>
 
 

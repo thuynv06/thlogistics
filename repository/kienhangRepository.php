@@ -97,12 +97,12 @@ class KienHangRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($name, $orderCode, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note)
+    public function insert($name, $orderCode, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note,$dateCreated,$listTimeStatus)
     {
         global $conn;
-        $sql = "insert into kienhang(name,orderCode,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note) values('$name','$orderCode','$ladingCode',$amount,'$shippingWay',
-                                                                                                         '$size',$status,$price,$user_id,'$linksp','$note')";
-
+        $sql = "insert into kienhang(name,orderCode,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$orderCode','$ladingCode',$amount,'$shippingWay',
+                                                                                                         '$size',$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
+        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
@@ -147,7 +147,7 @@ class KienHangRepository
         $sql = "update kienhang set ladingCode='$ladingCode', status=$status,
                     listTimeStatus =JSON_SET (listTimeStatus,'$.$status','$date')
                     where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn,$sql);
     }
 
@@ -170,7 +170,7 @@ class KienHangRepository
                      '$.5','$string5',
                      '$.6','$string6' )
                     where id=$id ";
-//        echo $sql;
+        echo $sql;
         mysqli_query($conn,$sql);
     }
     public function resetStatus($id){

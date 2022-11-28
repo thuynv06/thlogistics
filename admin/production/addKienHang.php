@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Link Sản Phẩm</label>
-                <input minlength="1" maxlength="500" name="link" type="text" class="form-control"
+                <input minlength="1" maxlength="500" name="linksp" type="text" class="form-control"
                        id="exampleInputPassword1" placeholder="Nhập Link sản phẩm">
             </div>
             <div class="form-group">
@@ -88,10 +88,17 @@
             <?php
             if (isset($_POST['submit'])) {
                 $temp = $kienhangRepository->getOrderCodeLastRecord();
+
                 $lastOrderCode = $temp['orderCode'];
                 $lastOrderCode = substr($lastOrderCode, 0, 10);
                 $orderCode = $lastOrderCode . $temp['id'];
-                $kienhang_id = $kienhangRepository->insert($_POST['name'], $orderCode, $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'],$_POST['linksp'], $_POST['note']);
+                $date=  new DateTime();
+                $dateCreadted=$date ->format("Y-m-d\TH:i:s");
+                $myObj = new stdClass();
+                $myObj->{1} = "$dateCreadted";
+                $listStatusJSON = json_encode($myObj);
+
+                $kienhang_id = $kienhangRepository->insert($_POST['name'], $orderCode, $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'],$_POST['linksp'], $_POST['note'],$dateCreadted,$listStatusJSON);
                 echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
             }
             ?>
