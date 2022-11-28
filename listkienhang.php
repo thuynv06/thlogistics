@@ -68,22 +68,22 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                             </td>
                             <td style="color: blue"><?php
                                 switch ($kienHang['status']) {
-                                    case "0":
-                                        echo "Khởi tạo";
-                                        break;
                                     case "1":
-                                        echo "Kho Trung Quốc Nhận";
+                                        echo "Shop gửi hàng";
                                         break;
                                     case "2":
-                                        echo "Đang Vận Chuyển";
+                                        echo "Kho Trung Quốc Nhận";
                                         break;
                                     case "3":
-                                        echo "Nhập Kho Việt Nam";
+                                        echo "Đang Vận Chuyển";
                                         break;
                                     case "4":
-                                        echo "Đang Giao";
+                                        echo "Nhập Kho Việt Nam";
                                         break;
                                     case "5":
+                                        echo "Đang Giao";
+                                        break;
+                                    case "6":
                                         echo "Đã Giao";
                                         break;
                                     default:
