@@ -1,320 +1,308 @@
+<?php include "headeradmin.php" ?>
 <?php
-require_once("../../backend/filterAdmin.php");
-require_once("../../repository/KienHangRepository.php");
+if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
+    $page_no = $_GET['page_no'];
+} else {
+    $page_no = 1;
+}
+$total_records_per_page = 10;
+$offset = ($page_no - 1) * $total_records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+$adjacents = "2";
+$total_no_of_pages = 1;
+$orderCode = '';
 
-$kienhangRepository = new KienHangRepository();
+//    echo $orderCode;
+$result_count = $kienhangRepository->getTotalResult();
+//$total_records =$result_count->fetch_assoc();
+$total_records = $result_count['total_records'];
+//echo $total_records;
+$total_no_of_pages = ceil($total_records / $total_records_per_page);
+$second_last = $total_no_of_pages - 1; // total page minus 1
+$kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_records_per_page);
 
-$kienHangList = $kienhangRepository->getAll();
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
 
-    <title>Danh Sách Kiện Hàng! | </title>
-
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
-    <!-- bootstrap-progressbar -->
-    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-    <link href="css/shoe.css" rel="stylesheet">
-</head>
-
-<body class="nav-md">
-<div class="container body">
-    <div class="main_container">
-        <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-                <div class="navbar nav_title" style="border: 0;">
-                    <a href="../../index.php" class="site_title"><i class="fa fa-paw"></i> <span>HOME</span></a>
-                </div>
-
-                <div class="clearfix"></div>
-
-                <!-- menu profile quick info -->
-                <div class="profile clearfix">
-                    <div class="profile_info">
-                        <span>Welcome,</span>
-                        <h2> <?php require_once("../../backend/filterWithCookieAdmin.php") ?></h2>
-                    </div>
-                </div>
-                <!-- /menu profile quick info -->
-
-                <br/>
-
-                <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                    <div class="menu_section">
-                        <h3>General</h3>
-                        <ul class="nav side-menu">
-                            <li><a><i class="fa fa-home"></i> Quản Lý <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="shoe.php">Quản Lý Giày</a></li>
-                                    <li><a href="order.php">Quản Lý Đơn Hàng</a></li>
-                                    <li><a href="user.php">Quản Lý User</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /sidebar menu -->
-
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
-            </div>
-        </div>
-
-        <!-- top navigation -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <div class="nav toggle">
-                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                </div>
-                <nav class="nav navbar-nav">
-                    <ul class=" navbar-right">
-                        <li class="nav-item dropdown open" style="padding-left: 15px;">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
-                               id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                <?php require_once("../../backend/filterWithCookieAdmin.php") ?>
-                            </a>
-                            <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="javascript:;"> Profile</a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <span class="badge bg-red pull-right">50%</span>
-                                    <span>Settings</span>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">Help</a>
-                                <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log
-                                    Out</a>
-                            </div>
-                        </li>
-
-                        <li role="presentation" class="nav-item dropdown open">
-                            <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
-                               data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green">6</span>
-                            </a>
-                            <ul class="dropdown-menu list-unstyled msg_list" role="menu"
-                                aria-labelledby="navbarDropdown1">
-                                <li class="nav-item">
-                                    <a class="dropdown-item">
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item">
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item">
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item">
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <div class="text-center">
-                                        <a class="dropdown-item">
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <div class="right_col" role="main">
-            <table id="tableShoe">
+<div class="right_col" role="main">
+    <div class="container">
+        <form style="font-size: 16px;" action="" class="search-bar" method="POST">
+            <span>Tìm Kiếm Mã Vận Đơn</span>
+            <input type="search" id="inputtracuu" name="ladingCode" pattern=".*\S.*" placeholder="Nhập mã vận đơn" required>
+            <button class="search-btn" type="submit" onclick="checkInputTraCuu()"
+            <span>Tìm Kiếm</span>
+            </button>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+        <a class="btn btn-primary" href="addKienHang.php" role="button">Thêm Kiện Hàng</a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+        <?php include 'paginantionList.php'?>
+    </div>
+    <div class="table-responsive">
+        <table id="tableShoe">
+            <tr>
+                <th class="text-center" style="min-width:50px">STT</th>
+                <th class="text-center" style="min-width:95px;">Mã Kiện</th>
+                <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
+                <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
+                <th class="text-center" style="min-width:100px">Khách Hàng</th>
+                <th class="text-center" style="min-width:50px">Giá</th>
+                <th class="text-center" style="min-width:50px">Số Lượng</th>
+                <th class="text-center" style="min-width:50px">Cân nặng</th>
+                <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
+                <th class="text-center" style="min-width:100px">Lộ Trình</th>
+                <th class="text-center" style="min-width:120px">Chi tiết</th>
+                <th class="text-center" style="min-width:50px">Link SP</th>
+                <th class="text-center" style="min-width:50px">Ghi Chú</th>
+                <th class="text-center" style="min-width:50px"></th>
+                <th class="text-center" style="min-width:50px"></th>
+                <th class="text-center" style="min-width:50px"></th>
+            </tr>
+            <?php
+            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                $ladingCode = $_POST['ladingCode'];
+                $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
+            }
+            $i = 1;
+            foreach ($kienHangList as $kienHang) {
+                ?>
                 <tr>
-                    <th class="text-center" style="min-width:50px">STT</th>
-                    <th class="text-center" style="min-width:150px">Mã Kiện</th>
-                    <th class="text-center" style="min-width:150px">Trạng Thái</th>
-                    <th class="text-center" style="min-width:150px">Mã Vận Đơn</th>
-                    <th class="text-center" style="min-width:50px">Cân nặng TP/K.thước Quy Đổi</th>
-                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>
-                    <th class="text-center" style="min-width:100px">Lộ Trình</th>
-                    <th class="text-center" style="min-width:100px">Chi tiết</th>
-                </tr>
-                <?php
-                $i = 1;
-                foreach ($kienHangList as $kienHang) {
-                    ?>
-                    <tr>
-                        <td><?php echo $i++; ?></td>
-                        <td><?php echo $kienHang['orderCode'] ?></td>
-                        <td><?php
+                    <td><?php echo $i++; ?></td>
+                    <td><p style="font-weight: 700;"><?php echo $kienHang['orderCode'] ?></p>
+                        <p style="color: blue"> <?php
                             switch ($kienHang['status']) {
-                                case "0":
-                                    echo "Khởi tạo";
-                                    break;
                                 case "1":
-                                    echo "Kho Trung Quốc Nhận";
+                                    echo "Shop gửi hàng";
                                     break;
                                 case "2":
-                                    echo "Đang Vận Chuyển";
+                                    echo "Kho Trung Quốc Nhận";
                                     break;
                                 case "3":
-                                    echo "Nhập Kho Việt Nam";
+                                    echo "Đang Vận Chuyển";
                                     break;
                                 case "4":
-                                    echo "Đang Giao";
+                                    echo "Nhập Kho Việt Nam";
                                     break;
                                 case "5":
+                                    echo "Đang Giao";
+                                    break;
+                                case "6":
                                     echo "Đã Giao";
                                     break;
                                 default:
                                     echo "--";
                             }
-                            ?>
-                        </td>
-                        <td><?php echo $kienHang['ladingCode'] ?></td>
-                        <td><?php echo $kienHang['size'] ?></td>
-                        <td><?php echo $kienHang['shippingWay'] ?></td>
-                        <td>
-                            <ul style="text-align: left ;">
-                                <li><p class="fix-status">Ngày Khởi Tạo</p></li>
-                                <li><p class="fix-status">TQ Nhận hàng</p></li>
-                                <li><p class="fix-status">Vận chuyển</p></li>
-                                <li><p class="fix-status">Nhập kho VN</p></li>
-                                <li><p class="fix-status">Đang giao hàng</p></li>
-                                <li><p class="fix-status">Đã giao hàng</p></li>
-                            </ul>
-                        </td>
-                        <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
+                            ?> </p>
+                        <p><?php echo $kienHang['shippingWay'] ?></p>
+                    </td>
+                    <td><?php echo $kienHang['name'] ?></td>
+                    <td style="color: blue"><?php echo $kienHang['ladingCode'] ?></td>
+                    <td>
+                        <?php
+                        $listUser = $userRepository->getAll();
+                        foreach ($listUser as $user) {
+                            if ($user['id'] == $kienHang['user_id']){?>
+                                <?php  echo $user['username']?><span> &#45; </span><?php  echo $user['code']?>
+                            <?php }
+                        }
+                        ?>
+                    </td>
+                    <td><?php echo $kienHang['price'] ?><span> &#165;</span> </td>
+                    <td><?php echo $kienHang['amount'] ?></td>
+                    <td><?php echo $kienHang['size'] ?> <span>/Kg</span></td>
+                    <td>
+                        <ul style="text-align: left ;">
+                            <li><p class="fix-status">Ngày Khởi Tạo</p></li>
+                            <li><p class="fix-status">TQ Nhận hàng</p></li>
+                            <li><p class="fix-status">Vận chuyển</p></li>
+                            <li><p class="fix-status">Nhập kho VN</p></li>
+                            <li><p class="fix-status">Đang giao hàng</p></li>
+                            <li><p class="fix-status">Đã giao hàng</p></li>
+                        </ul>
+                    </td>
+                    <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
+                        <?php if (empty($obj)) { ?>
                             <ul style="text-align: left;">
-                                <li><p class="fix-status"><?php echo $obj->khoitao; ?></p></li>
-                                <li><p class="fix-status"><?php echo $obj->khotrungquocnhan; ?></p></li>
-                                <li><p class="fix-status"><?php echo $obj->vanchuyen; ?></p></li>
-                                <li><p class="fix-status"><?php echo $obj->nhapkhovietnam; ?></p></li>
-                                <li><p class="fix-status"><?php echo $obj->danggiao; ?></p></li>
-                                <li><p class="fix-status"><?php echo $obj->dagiaohang; ?></p></li>
+                                <li><p class="fix-status">............</p></li>
+                                <li><p class="fix-status">............</p></li>
+                                <li><p class="fix-status">............</p></li>
+                                <li><p class="fix-status">............</p></li>
+                                <li><p class="fix-status">............</p></li>
+                                <li><p class="fix-status">............</p></li>
+                            </ul><?php
+                        } else { ?>
+                            <ul style="text-align: left;">
+                                <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?></li>
+                                <li><p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p></li>
+                                <li><p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p></li>
+                                <li><p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p></li>
+                                <li><p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p></li>
+                                <li><p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p></li>
                             </ul>
-                        </td>
-                    </tr>
-                    <?php
+                            <?php
+                        } ?>
+                    </td>
+                    <td><a href="<?php echo $kienHang['linksp'] ?>">Link</a></td>
+                    <td><?php echo $kienHang['note'] ?></td>
+                    <td>
+                        <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#myModal" data-id="<?php echo $kienHang['id'] ?>"
+                                onclick="openModal()">
+                            UpdateStatus
+                        </button>
+                    </td>
+                    <td><a class="btn btn-warning" href="updateKH.php?id=<?php echo $kienHang['id'] ?>"
+                           role="button">Sửa</a></td>
+                    <td><a class="btn btn-danger" href="deleteKienHang.php?id=<?php echo $kienHang['id'] ?>"
+                           role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+                </tr>
+                <?php
+            }
+            ?>
+        </table>
+    </div>
+    <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
+        <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
+    </div>
+<?php include 'paginantionList.php'?>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập Nhập Trạng Thái Kiện Hàng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input class="form-control" name="idKH" type="number" value=""  readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Mã Kiện Hàng</label>
+                            <input required value="" minlength="5" maxlength="250" name="orderCode" type="text"
+                                   class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Mã Vận Đơn</label>
+                            <input required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
+                                   class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status_id" class="form-control">
+                                <?php
+                                $listStatus = $statusRepository->getAll();
+                                foreach ($listStatus as $status) {
+                                    ?>
+                                    <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Chọn Thời Gian</label>
+                            <input value="" name="updateDateStatus" type="datetime-local" step="1"
+                                   class="form-control" id="updateDate">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary" data-id="">
+                        Save changes
+                    </button>
+                    <button id="btnSaveAllStatus" name="submitAll" type="submit" class="btn btn-warning" data-id="">
+                        UpdatedAll
+                    </button>
+                    <button id="btnResetStatus" name="resetStatus" type="submit" class="btn btn-danger" data-id="">
+                        Reset
+                    </button>
+                </div>
+                </form>
+                <?php
+                if (isset($_POST['submit'])) {
+                    $kienhangRepository->updateStatus($_POST['idKH'],$_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
+                    echo "<script>window.location.href='kienHang.php';</script>";
                 }
                 ?>
-            </table>
-        </div>
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
-    </div>
+                <?php
+                if (isset($_POST['submitAll'])) {
+                    $kienhangRepository->updateStatusAll($_POST['idKH']);
+                    echo "<script>window.location.href='kienHang.php';</script>";
+                }
+                ?>
+                <?php
+                if (isset($_POST['resetStatus'])) {
+                    $kienhangRepository->resetStatus($_POST['idKH']);
+                    echo "<script>window.location.href='kienHang.php';</script>";
+                }
+                ?>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 
-<!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
-<!-- Chart.js -->
-<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-<!-- gauge.js -->
-<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
-<!-- bootstrap-progressbar -->
-<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<!-- iCheck -->
-<script src="../vendors/iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="../vendors/skycons/skycons.js"></script>
-<!-- Flot -->
-<script src="../vendors/Flot/jquery.flot.js"></script>
-<script src="../vendors/Flot/jquery.flot.pie.js"></script>
-<script src="../vendors/Flot/jquery.flot.time.js"></script>
-<script src="../vendors/Flot/jquery.flot.stack.js"></script>
-<script src="../vendors/Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
-<!-- DateJS -->
-<script src="../vendors/DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
-<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="../vendors/moment/min/moment.min.js"></script>
-<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script>
+    function get() {
+        $(document).delegate("[data-target='#myModal']", "click", function () {
 
-<!-- Custom Theme Scripts -->
-<script src="../build/js/custom.min.js"></script>
+            var id = $(this).attr('data-id');
 
-</body>
-</html>
+            // Ajax config
+            $.ajax({
+                type: "GET", //we are using GET method to get data from server side
+                url: 'getKienHang.php', // get the route value
+                data: {id: id}, //set data
+                beforeSend: function () {//We add this before send to disable the button once we submit it so that we prevent the multiple click
+
+                },
+                success: function (response) {//once the request successfully process to the server side it will return result here
+                    response = JSON.parse(response);
+                    $("#edit-form [name=\"idKH\"]").val(response.id);
+                    $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
+                    $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
+                    $("#edit-form [name=\"status_id\"]").val(response.status);
+                }
+            });
+        });
+    }
+
+    function openModal() {
+        get();
+        _getTimeZoneOffsetInMs();
+        document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
+    }
+
+    function checkInputTraCuu() {
+        let input = document.getElementById("inputtracuu").value;
+        if (!input) {
+            alert('Vui lòng nhập mã vận đơn');
+        }
+    }
+
+    function timestampToDatetimeInputString(timestamp) {
+        const date = new Date((timestamp + _getTimeZoneOffsetInMs()));
+        // slice(0, 19) includes seconds
+        return date.toISOString().slice(0, 19);
+    }
+
+    function _getTimeZoneOffsetInMs() {
+        return new Date().getTimezoneOffset() * -60 * 1000;
+    }
+
+    // $(document).ready(function() {
+    //     // Get the data and view to modal
+    //     get();
+    //     _getTimeZoneOffsetInMs();
+    //     document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
+    //
+    // });
+</script>
+
+
+<?php include 'footeradmin.php' ?>

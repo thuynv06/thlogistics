@@ -2,9 +2,11 @@
     require_once("auth.php");
     $checkCookie = Auth::loginWithCookie();
     if($checkCookie != null){
+
         if($checkCookie['role']==1){
-            echo '<a href="admin/production/shoe.php">TRUY CẬP TRANG ADMIN</a>';
+            echo '<a href="admin/production/kienHang.php">TRUY CẬP TRANG ADMIN</a>';
         }else if ($checkCookie['role']==0){
+            echo '<a href="danhsachdonhang.php">Mã KH: '.$checkCookie['code'].'</a>';
             echo '<a href="danhsachdonhang.php">Quản Lý Kiện Hàng</a>';
         }
         echo '<a href="profile.php">'.$checkCookie['fullname'].'</a>

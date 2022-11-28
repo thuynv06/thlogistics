@@ -17,10 +17,10 @@
 	</head>
 	<body>
 	<section class="ftco-section">
-		<div class="container">
+		<div class="container" style="font-family:FontAwesome">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Đăng Nhập</h2>
+					<h2 class="heading-section" style="font-family:FontAwesome">Đăng Nhập</h2>
 					
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 					<div class="wrap d-md-flex">
 						<div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
 							<div class="text w-100">
-								<h2>Welcome to login</h2>
+								<h2>Welcome to TH Logistics</h2>
 								<p>Bạn chưa có tài khoản?</p>
 								<a href="../register/index.php" class="btn btn-white btn-outline-white">Đăng Ký</a>
 							</div>
@@ -37,15 +37,15 @@
 						<div class="login-wrap p-4 p-lg-5">
 			      	<div class="d-flex">
 			      		<div class="w-100">
-			      			<h3 class="mb-4">Đăng Nhập</h3>
+			      			<h3 class="mb-4" style="font-family:FontAwesome">Đăng Nhập</h3>
 			      		</div>
 						  
-								<div class="w-100">
-									<p class="social-media d-flex justify-content-end">
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-									</p>
-								</div>
+<!--								<div class="w-100">-->
+<!--									<p class="social-media d-flex justify-content-end">-->
+<!--										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>-->
+<!--										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>-->
+<!--									</p>-->
+<!--								</div>-->
 								
 			      	</div>
 							<form method="POST" class="signin-form">

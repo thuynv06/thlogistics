@@ -1,9 +1,11 @@
 <?php
 require_once("../../backend/filterAdmin.php");
-require_once("../../repository/shoeRepository.php");
-require_once("../../repository/categoryRepository.php");
-$shoeRepository = new ShoeRepository();
-$categoryRepository = new CategoryRepository();
+require_once("../../repository/userRepository.php");
+require_once("../../repository/kienhangRepository.php");
+require_once("../../repository/statusRepository.php");
+$kienhangRepository = new KienHangRepository();
+$userRepository = new UserRepository();
+$statusRepository = new StatusRepository();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +17,7 @@ $categoryRepository = new CategoryRepository();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/favicon.ico" type="image/ico"/>
 
-    <title>Gentelella Alela! | </title>
+    <title>Th Logistics Manager! | </title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +38,7 @@ $categoryRepository = new CategoryRepository();
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <link href="css/shoe.css" rel="stylesheet">
+
 </head>
 
 <body class="nav-md">
@@ -44,7 +47,7 @@ $categoryRepository = new CategoryRepository();
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="../../index.php" class="site_title"><i class="fa fa-paw"></i> <span>HOME</span></a>
+                    <a href="../../index.php" class="site_title"><i class="fa fa-smile-o"></i> <span>HOME</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -53,7 +56,7 @@ $categoryRepository = new CategoryRepository();
                 <div class="profile clearfix">
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2><?php require_once("../../backend/filterWithCookieAdmin.php") ?></h2>
+                        <h2> <?php require_once("../../backend/filterWithCookieAdmin.php") ?></h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -65,11 +68,10 @@ $categoryRepository = new CategoryRepository();
                     <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
-                            <li><a><i class="fa fa-home"></i> Quản Lý <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="order.php">Quản Lý Đơn Hàng</a></li>
-                                    <li><a href="user.php">Quản Lý User</a></li>
                                     <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
+                                    <li><a href="user.php">Quản Lý User</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -90,7 +92,7 @@ $categoryRepository = new CategoryRepository();
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="../auth/login/index.php">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -193,97 +195,3 @@ $categoryRepository = new CategoryRepository();
                 </nav>
             </div>
         </div>
-        <div class="right_col" role="main">
-            <a class="btn btn-primary" href="addKienHang.php" role="button">Thêm Giày</a>
-            <table id="tableShoe">
-                <tr>
-                    <th class="text-center" style="min-width:50px">STT</th>
-                    <th class="text-center" style="min-width:50px">ID</th>
-                    <th class="text-center" style="min-width:150px">Tên Giày</th>
-                    <th class="text-center" style="min-width:150px">Giá Giày</th>
-                    <th class="text-center" style="min-width:50px">Giảm Giá</th>
-                    <th class="text-center" style="min-width:100px">Kích Cỡ</th>
-                    <th class="text-center" style="min-width:100px">Màu</th>
-                    <th class="text-center" style="min-width:100px">Thể Loại</th>
-                    <th class="text-center" style="min-width:200px">Giới Thiệu</th>
-                    <th class="text-center" style="min-width:100px"></th>
-                    <th class="text-center" style="min-width:100px"></th>
-                </tr>
-                <?php
-                $listShoe = $shoeRepository->getAll(null);
-                $i = 1;
-                foreach ($listShoe as $shoe) {
-                    ?>
-                    <tr>
-                        <td><?php echo $i++; ?></td>
-                        <td><?php echo $shoe['shoe_id'] ?></td>
-                        <td><?php echo $shoe['shoe_name'] ?></td>
-                        <td><?php echo $shoe['price'] . " VND" ?></td>
-                        <td><?php echo $shoe['sale'] . "%" ?></td>
-                        <td><?php echo $shoe['size'] ?></td>
-                        <td><?php echo $shoe['color'] ?></td>
-                        <td><?php echo $shoe['name'] ?></td>
-                        <td><?php echo $shoe['review'] ?></td>
-                        <td><a class="btn btn-warning" href="updateShoe.php?id=<?php echo $shoe['shoe_id'] ?>"
-                               role="button">Sửa</a></td>
-                        <td><a class="btn btn-danger" href="deleteShoe.php?id=<?php echo $shoe['shoe_id'] ?>"
-                               role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
-                    </tr>
-                    <?php
-                }
-                ?>
-            </table>
-        </div>
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
-    </div>
-</div>
-
-<!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
-<!-- Chart.js -->
-<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-<!-- gauge.js -->
-<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
-<!-- bootstrap-progressbar -->
-<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<!-- iCheck -->
-<script src="../vendors/iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="../vendors/skycons/skycons.js"></script>
-<!-- Flot -->
-<script src="../vendors/Flot/jquery.flot.js"></script>
-<script src="../vendors/Flot/jquery.flot.pie.js"></script>
-<script src="../vendors/Flot/jquery.flot.time.js"></script>
-<script src="../vendors/Flot/jquery.flot.stack.js"></script>
-<script src="../vendors/Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
-<!-- DateJS -->
-<script src="../vendors/DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
-<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="../vendors/moment/min/moment.min.js"></script>
-<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-<!-- Custom Theme Scripts -->
-<script src="../build/js/custom.min.js"></script>
-
-</body>
-</html>

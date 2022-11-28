@@ -17,6 +17,13 @@ class Auth{
                 $sql = "insert into user(username,password,fullname,dob,address,gender,email,phone,role)".
             " values('$username','".md5($password)."','$fullname','$dob','$address',$gender,'$email','$phone',0)";
             $run = mysqli_query($conn,$sql);
+            $temp= Auth::findOneByUsernameAndPassword($username,md5($password));
+            if($temp){
+                $id = $temp['id'];
+                $code = 'TH1688'.$id;
+                $sql1 = "update user set code = '$code' where id =$id";
+                mysqli_query($conn,$sql1);
+            }
             echo '<script>alert("Đăng ký thành công!");
             window.location.href="../login/index.php";</script>';
         }

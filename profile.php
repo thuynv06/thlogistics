@@ -31,6 +31,10 @@ $checkCookie = Auth::loginWithCookie();
                                         <td><?php echo $checkCookie['fullname'] ?></td>
                                     </tr>
                                     <tr style="min-width:100px">
+                                        <th>Mã Khách Hàng</th>
+                                        <td><?php echo $checkCookie['code'] ?></td>
+                                    </tr>
+                                    <tr style="min-width:100px">
                                         <th>D.O.B</th>
                                         <td><?php echo $checkCookie['dob'] ?></td>
 

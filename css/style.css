@@ -1492,6 +1492,16 @@ body {
     background-color: #eee;
     padding-bottom: 16px;
 }
+.css-phantrang>li>a{
+    color: #ff6c00;
+}
+.css-phantrang>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #ff6c00;
+    border-color: #ff6c00;
+}
 .btn-th{
     background-color: #ff6c00;
     border-radius: 33px;
@@ -7270,6 +7280,7 @@ textarea.form-control {
 }
 
 .ps-footer {
+    clear: both;
     position: relative;
 }
 

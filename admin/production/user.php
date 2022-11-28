@@ -43,7 +43,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="../../index.php" class="site_title"><i class="fa fa-paw"></i> <span>HOME</span></a>
+              <a href="kienHang.php" class="site_title"><i class="fa fa-smile-o"></i> <span>HOME</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -66,8 +66,9 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Quản Lý <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                    <li><a href="shoe.php">Quản Lý Giày</a></li>
-                      <li><a href="order.php">Quản Lý Đơn Hàng</a></li>
+<!--                    <li><a href="shoe.php">Quản Lý Giày</a></li>-->
+                        <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
+<!--                        <li><a href="order.php">Quản Lý Đơn Hàng</a></li>-->
                       <li><a href="user.php">Quản Lý User</a></li>
                     </ul>
                   </li>

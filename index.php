@@ -30,9 +30,9 @@ $kienhangRepository = new KienHangRepository();
                 <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">
                     <form id="tracuu" class="ps-subscribe__form" method="POST"
                     ">
-                    <input id="inputtracuu" class="form-control" type="text" name="orderCode"
+                    <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"
                            placeholder="Nhập mã vận đơn…">
-                    <button style="background-color: #ff6c00;" onclick="checkInputTraCuu()">Tra Cứu</button>
+                    <button style="background-color: #ff6c00;" >Tra Cứu</button>
                     </form>
                 </div>
                 <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
@@ -46,26 +46,26 @@ $kienhangRepository = new KienHangRepository();
                             <th class="text-center" style="min-width:100px">Mã Kiện</th>
                             <th class="text-center" style="min-width:100px">Trạng Thái</th>
                             <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
-                            <th class="text-center" style="min-width:80px">Cân nặng TP/K.thước Quy Đổi</th>
+                            <th class="text-center" style="min-width:80px">Cân nặng</th>
                             <th class="text-center" style="min-width:80px">Đường Vận Chuyển</th>
                             <th class="text-center" style="min-width:150px">Lộ Trình</th>
                             <th class="text-center" style="min-width:150px">Chi tiết</th>
                         </tr>
                         <?php
-                        if (!empty($_POST['orderCode'])) {
-                            $orderCode = $_POST['orderCode'];
+                        if (!empty($_POST['ladingCode'])) {
+                            $ladingCode = $_POST['ladingCode'];
 //                echo $orderCode;
-                            $result = $kienhangRepository->findByMaKien($orderCode);
+                            $result = $kienhangRepository->findByMaVanDon($ladingCode);
                             $i = 1;
                             foreach ($result as $kienHang) {
                                 ?>
                                 <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo $kienHang['orderCode'] ?></td>
-                                <td><?php
+                                <td style="color: blue"><?php
                                     switch ($kienHang['status']) {
                                         case "0":
-                                            echo "Khởi tạo";
+                                            echo "Shop Gửi Hàng";
                                             break;
                                         case "1":
                                             echo "Kho Trung Quốc Nhận";
@@ -92,49 +92,49 @@ $kienhangRepository = new KienHangRepository();
                                 <td><?php echo $kienHang['shippingWay'] ?></td>
                                 <td>
                                     <ul style="text-align: left ;">
-                                        <li><p class="fix-status">Ngày Khởi Tạo</p></li>
-                                        <li><p class="fix-status">TQ Nhận hàng</p></li>
-                                        <li><p class="fix-status">Vận chuyển</p></li>
-                                        <li><p class="fix-status">Nhập kho VN</p></li>
-                                        <li><p class="fix-status">Đang giao hàng</p></li>
-                                        <li><p class="fix-status">Đã giao hàng</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Ngày Khởi Tạo</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> TQ Nhận hàng</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Nhập kho VN</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Đang giao hàng</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
                                     </ul>
                                 </td>
                                 <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
                                     <ul style="text-align: left;">
                                         <li><p class="fix-status"><?php
-                                                if (!empty($obj->khoitao)) {
-                                                    echo $obj->khoitao;
+                                                if (!empty($obj->{1})) {
+                                                    echo $obj->{1};
                                                 } else {
                                                     echo "--------------";
                                                 }
                                                 ?></p></li>
                                         <li><p class="fix-status"><?php
-                                                if (!empty($obj->nhapkhotrungquoc)) {
-                                                    echo $obj->nhapkhotrungquoc;
+                                                if (!empty($obj->{2})) {
+                                                    echo $obj->{2};
                                                 } else {
                                                     echo "--------------";
                                                 } ?></p></li>
                                         <li><p class="fix-status"><?php
-                                                if (!empty($obj->vanchuyen)) {
-                                                    echo $obj->vanchuyen;
+                                                if (!empty($obj->{3})) {
+                                                    echo $obj->{3};
                                                 } else {
                                                     echo "--------------";
                                                 } ?></p></li>
-                                        <li><p class="fix-status"><?php if (!empty($obj->nhapkhovietnam)) {
-                                                    echo $obj->nhapkhovietnam;
-                                                } else {
-                                                    echo "--------------";
-                                                } ?></p></li>
-                                        <li><p class="fix-status"><?php
-                                                if (!empty($obj->danggiao)) {
-                                                    echo $obj->danggiao;
+                                        <li><p class="fix-status"><?php if (!empty($obj->{4})) {
+                                                    echo $obj->{4};
                                                 } else {
                                                     echo "--------------";
                                                 } ?></p></li>
                                         <li><p class="fix-status"><?php
-                                                if (!empty($obj->dagiaohang)) {
-                                                    echo $obj->dagiaohang;
+                                                if (!empty($obj->{5})) {
+                                                    echo $obj->{5};
+                                                } else {
+                                                    echo "--------------";
+                                                } ?></p></li>
+                                        <li><p class="fix-status"><?php
+                                                if (!empty($obj->{6})) {
+                                                    echo $obj->{6};
                                                 } else {
                                                     echo "--------------";
                                                 } ?></p></li>
@@ -351,12 +351,7 @@ $kienhangRepository = new KienHangRepository();
 <!-- JS Library-->
 <?php include 'script.php';?>
 <script>
-    function checkInputTraCuu() {
-        let input = document.getElementById("inputtracuu").value;
-        if (!input) {
-            alert('Vui lòng nhập mã vận đơn');
-        }
-    }
+
 </script>
 </body>
 </html>
