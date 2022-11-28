@@ -5,33 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/addKienHang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/deleteKienHang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/footeradmin.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/getKienHang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/headeradmin.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/paginantionList.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/updateKH.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/updateKienHang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/updateStatusKH.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/listkienhang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/statusRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/css/shoe.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/css/shoe.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/kienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/shoe.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/shoe.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/login/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/auth/login/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/filterWithCookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/filterWithCookie.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/connect.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/danhsachdonhang.php" beforeDir="false" afterPath="$PROJECT_DIR$/danhsachdonhang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +91,7 @@
       <workItem from="1669072823844" duration="18514000" />
       <workItem from="1669276667490" duration="10100000" />
       <workItem from="1669383092877" duration="17149000" />
-      <workItem from="1669422671979" duration="68648000" />
+      <workItem from="1669422671979" duration="69793000" />
     </task>
     <servers />
   </component>
