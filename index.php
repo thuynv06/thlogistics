@@ -64,22 +64,22 @@ $kienhangRepository = new KienHangRepository();
                                 <td><?php echo $kienHang['orderCode'] ?></td>
                                 <td style="color: blue"><?php
                                     switch ($kienHang['status']) {
-                                        case "0":
+                                        case "1":
                                             echo "Shop Gửi Hàng";
                                             break;
-                                        case "1":
+                                        case "2":
                                             echo "Kho Trung Quốc Nhận";
                                             break;
-                                        case "2":
+                                        case "3":
                                             echo "Đang Vận Chuyển";
                                             break;
-                                        case "3":
+                                        case "4":
                                             echo "Nhập Kho Việt Nam";
                                             break;
-                                        case "4":
+                                        case "5":
                                             echo "Đang Giao";
                                             break;
-                                        case "5":
+                                        case "6":
                                             echo "Đã Giao";
                                             break;
                                         default:

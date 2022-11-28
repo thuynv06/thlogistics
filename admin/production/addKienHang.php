@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Kích cỡ</label>
-                <input  min="1" max="100" name="size" type="number" step="0.01" class="form-control"
+                <input min="0" max="99999999999"  name="size" type="number" step="0.01" class="form-control"
                        id="exampleInputPassword1" placeholder="Nhập kích cỡ (Kg)">
             </div>
             <div class="form-group">

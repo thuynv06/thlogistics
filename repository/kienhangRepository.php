@@ -101,7 +101,7 @@ class KienHangRepository
     {
         global $conn;
         $sql = "insert into kienhang(name,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$ladingCode',$amount,'$shippingWay',
-                                                                                                         '$size',$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
+                                                                                                         $size,$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
 //        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
@@ -137,7 +137,7 @@ class KienHangRepository
         echo $s;
         global $conn;
         $sql = "update kienhang set name='$name',ladingCode='$ladingCode',amount=$amount,shippingWay='$shippingWay',
-                    size='$size',status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',
+                    size=$size,status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',
                     listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
                     where id=$id ";
 //        echo $sql;
