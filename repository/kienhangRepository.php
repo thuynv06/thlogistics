@@ -79,7 +79,7 @@ class KienHangRepository
         global $conn;
         $sql = "SELECT * FROM `kienhang` where user_id=$user_id ORDER BY id DESC  LIMIT $offset, $total_records_per_page ";
         if (!empty($ladingCode)) {
-            $sql = "SELECT * FROM `kienhang` as k where k.user_id=$user_id and k.ladingCode='$ladingCode' LIMIT $offset, $total_records_per_page ORDER BY ho DESC";
+            $sql = "SELECT * FROM `kienhang` as k where k.user_id=$user_id and k.ladingCode='$ladingCode' ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
         }
         mysqli_query($conn, 'set names "utf8"');
 
