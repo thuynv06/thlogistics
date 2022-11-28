@@ -133,19 +133,22 @@ class KienHangRepository
     }
 
     public function update($id,$name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note,$linksp,$date){
+        $s=strval($status);
+//        echo $s;
         global $conn;
         $sql = "update kienhang set name='$name',ladingCode='$ladingCode',amount=$amount,shippingWay='$shippingWay',
                     size='$size',status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',
-                    listTimeStatus =JSON_SET (listTimeStatus,'$.$status','$date')
+                    listTimeStatus =JSON_SET (listTimeStatus,'$.$s','$date')
                     where id=$id ";
 //        echo $sql;
         mysqli_query($conn,$sql);
     }
 
     public function updateStatus($id,$ladingCode,$status,$date){
+        $s=strval($status);  echo $s;
         global $conn;
         $sql = "update kienhang set ladingCode='$ladingCode', status=$status,
-                    listTimeStatus =JSON_SET (listTimeStatus,'$.$status','$date')
+                    listTimeStatus =JSON_SET (listTimeStatus,'$.$s','$date')
                     where id=$id ";
 //        echo $sql;
         mysqli_query($conn,$sql);
