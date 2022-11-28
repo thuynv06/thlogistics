@@ -179,7 +179,7 @@ class KienHangRepository
         global $conn;
 
         $sql = "update kienhang set status=1,
-                    listTimeStatus = JSON_REMOVE (listTimeStatus,'\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"',))
+                    listTimeStatus = JSON_REMOVE (listTimeStatus,'\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"')
                     where id=$id ";
 //        echo $sql;
         mysqli_query($conn,$sql);
