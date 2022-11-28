@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/addKienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/addKienHang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/kienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/connect.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +85,8 @@
       <workItem from="1669606277583" duration="1582000" />
       <workItem from="1669613742805" duration="1761000" />
       <workItem from="1669615798568" duration="1791000" />
-      <workItem from="1669618259522" duration="810000" />
+      <workItem from="1669618259522" duration="1558000" />
+      <workItem from="1669621247508" duration="28000" />
     </task>
     <servers />
   </component>
