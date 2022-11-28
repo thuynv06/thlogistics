@@ -11,28 +11,28 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Giá Tiền (Y)</label>
-                <input required min="0" max="99999999999" name="price" type="number" class="form-control"
+                <input required min="0" max="99999999999" name="price" type="number" class="form-control" step="0.01"
                        id="exampleInputPassword1" placeholder="Nhập giá tiền">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Số Lượng</label>
-                <input required min="0" max="99999999999" name="amount" type="number" class="form-control"
+                <input required min="0" max="99999999999" name="amount" type="number" step="0.01" class="form-control"
                        id="exampleInputPassword1" placeholder="Nhập số lượng">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Mã Vận Đơn</label>
-                <input minlength="5" maxlength="250" name="ladingCode" type="number" class="form-control"
+                <input minlength="5" maxlength="250" name="ladingCode" type="text" class="form-control"
                        placeholder="Nhập mã vận đơn">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Hình thức vận chuyển </label>
-                <input required minlength="1" maxlength="50" name="shippingWay" type="text" class="form-control"
+                <input  minlength="1" maxlength="50" name="shippingWay" type="text" class="form-control"
                        id="exampleInputPassword1" placeholder="Nhập hình thức vận chuyển">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Kích cỡ</label>
-                <input required min="1" max="100" name="size" type="text" class="form-control"
-                       id="exampleInputPassword1" placeholder="Nhập kích cỡ">
+                <input  min="1" max="100" name="size" type="number" step="0.01" class="form-control"
+                       id="exampleInputPassword1" placeholder="Nhập kích cỡ (Kg)">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Status</label>

@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Kích cỡ</label>
-            <input value="<?php echo $kh['size'] ?>" min="1" max="100" name="size" type="text" class="form-control"
+            <input value="<?php echo $kh['size'] ?> Kg" min="1" max="100" name="size" type="number" step="0.01" class="form-control"
                    id="exampleInputPassword1" placeholder="Nhập kích cỡ">
         </div>
         <div class="form-group">
