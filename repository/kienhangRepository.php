@@ -44,7 +44,7 @@ class KienHangRepository
     public function findByMaVanDon($ladingCode)
     {
         global $conn;
-        $sql = "select * from kienhang as k where k.ladingCode='$ladingCode ORDER BY id DESC";
+        $sql = "select * from kienhang as k where k.ladingCode='$ladingCode' ORDER BY id DESC";
 //        echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
