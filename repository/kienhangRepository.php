@@ -44,7 +44,16 @@ class KienHangRepository
     public function findByMaVanDon($ladingCode)
     {
         global $conn;
-        $sql = "select * from kienhang as k where k.ladingCode='$ladingCode'";
+        $sql = "select * from kienhang as k where k.ladingCode='$ladingCode ORDER BY id DESC";
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
+
+    public function findByStatus($status_id)
+    {
+        global $conn;
+        $sql = "select * from kienhang as k where k.status=$status_id ORDER BY id DESC";
 //        echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
@@ -97,10 +106,10 @@ class KienHangRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note,$dateCreated,$listTimeStatus)
+    public function insert($name,$nametq, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note,$dateCreated,$listTimeStatus)
     {
         global $conn;
-        $sql = "insert into kienhang(name,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$ladingCode',$amount,'$shippingWay',
+        $sql = "insert into kienhang(name,nametq,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$nametq','$ladingCode',$amount,'$shippingWay',
                                                                                                          $size,$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
 //        echo $sql;
         mysqli_query($conn, $sql);

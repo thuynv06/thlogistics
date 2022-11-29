@@ -1,11 +1,3 @@
-<?php
-//require_once("backend/auth.php");
-//require_once("sendemail.php");
-//require_once("repository/kienhangRepository.php");
-//$checkCookie = Auth::loginWithCookie();
-//$kienhangRepository = new KienHangRepository();
-//$kienHangList = $kienhangRepository->findByUserId($checkCookie['id']);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'head.php'; ?>
@@ -33,15 +25,16 @@
                     <form id="tracuu" class="ps-subscribe__form" method="POST"
                     ">
                     <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"
-                           placeholder="Nhập mã vận đơn…" >
-                    <button style="background-color: #ff6c00;" >Tra Cứu</button>
+                           placeholder="Nhập mã vận đơn…">
+                    <button style="background-color: #ff6c00;">Tra Cứu</button>
                     </form>
                 </div>
                 <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
                 </div>
             </div>
+
         </div>
-        <?php include "listkienhang.php";  ?>
+        <?php include "listkienhang.php"; ?>
     </div>
 </main>
 <?php include 'footer.php'; ?>

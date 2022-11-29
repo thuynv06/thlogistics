@@ -4764,8 +4764,8 @@ textarea.form-control {
     width: 60px;
     height: 60px;
     margin: -20px 0 0 -20px;
-    border: 8px solid #2AC37D;
-    border-bottom-color: #219962;
+    border: 8px solid #ff9d54;
+    border-bottom-color: #ff7e13;
     border-radius: 50%;
     animation: animLoader 0.8s linear infinite forwards;
 }
@@ -6089,6 +6089,18 @@ textarea.form-control {
 
 .ps-subscribe__form input.form-control {
     padding: 20px 30px;
+    height: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    border-radius: 50px;
+    background-color:#fff;
+    border: 1;
+    color: #000;
+    border-color: #ff6c00;
+}
+.ps-subscribe__form select.form-control {
+    /*padding: 20px 30px;*/
     height: 50px;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;

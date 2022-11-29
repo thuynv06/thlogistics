@@ -71,6 +71,7 @@ $statusRepository = new StatusRepository();
                             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
+                                    <li><a href="vandon.php">Vận Đơn</a></li>
                                     <li><a href="user.php">Quản Lý User</a></li>
                                 </ul>
                             </li>

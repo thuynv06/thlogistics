@@ -29,7 +29,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
     <div class="container">
         <form style="font-size: 16px;" action="" class="search-bar" method="POST">
             <span>Tìm Kiếm Mã Vận Đơn</span>
-            <input type="search" id="inputtracuu" name="ladingCode" pattern=".*\S.*" placeholder="Nhập mã vận đơn" required>
+            <input type="search" id="inputtracuu" name="ladingCode" pattern=".*\S.*" placeholder="Nhập mã vận đơn"
+                   required>
             <button class="search-btn" type="submit" onclick="checkInputTraCuu()"
             <span>Tìm Kiếm</span>
             </button>
@@ -39,7 +40,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
         <a class="btn btn-primary" href="addKienHang.php" role="button">Thêm Kiện Hàng</a>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
-        <?php include 'paginantionList.php'?>
+        <?php include 'paginantionList.php' ?>
     </div>
     <div class="table-responsive">
         <table id="tableShoe">
@@ -104,13 +105,14 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         <?php
                         $listUser = $userRepository->getAll();
                         foreach ($listUser as $user) {
-                            if ($user['id'] == $kienHang['user_id']){?>
-                                <?php  echo $user['username']?><span> &#45; </span><?php  echo $user['code']?>
+                            if ($user['id'] == $kienHang['user_id']) {
+                                ?>
+                                <?php echo $user['username'] ?><span> &#45; </span><?php echo $user['code'] ?>
                             <?php }
                         }
                         ?>
                     </td>
-                    <td><?php echo $kienHang['price'] ?><span> &#165;</span> </td>
+                    <td><?php echo $kienHang['price'] ?><span> &#165;</span></td>
                     <td><?php echo $kienHang['amount'] ?></td>
                     <td><?php echo $kienHang['size'] ?> <span>/Kg</span></td>
                     <td>
@@ -167,7 +169,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
     <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
         <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
     </div>
-<?php include 'paginantionList.php'?>
+    <?php include 'paginantionList.php' ?>
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -180,7 +182,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>ID</label>
-                            <input class="form-control" name="idKH" type="number" value=""  readonly>
+                            <input class="form-control" name="idKH" type="number" value="" readonly>
                         </div>
                         <div class="form-group">
                             <label>Mã Kiện Hàng</label>
@@ -190,7 +192,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         <div class="form-group">
                             <label>Mã Vận Đơn</label>
                             <input required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
-                                   class="form-control" >
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Status</label>
@@ -226,7 +228,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
-                    $kienhangRepository->updateStatus($_POST['idKH'],$_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
+                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
                     echo "<script>window.location.href='kienHang.php';</script>";
                 }
                 ?>

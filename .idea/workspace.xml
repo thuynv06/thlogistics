@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/admin/production/import.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/production/vandon.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/import.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vandonkhachang.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/headeradmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/headeradmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/kienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/connect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/danhsachdonhang.php" beforeDir="false" afterPath="$PROJECT_DIR$/danhsachdonhang.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/listkienhang.php" beforeDir="false" afterPath="$PROJECT_DIR$/listkienhang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/statusRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/statusRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,10 +61,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\thlogistics" />
       <recent name="C:\xampp\htdocs\thlogistics\admin\production" />
+      <recent name="C:\xampp\htdocs\thlogistics\vendor\phpoffice" />
       <recent name="C:\xampp\htdocs\thlogistics\repository" />
       <recent name="C:\xampp\htdocs\shoe" />
-      <recent name="C:\xampp\htdocs\shoe\admin\production" />
     </key>
   </component>
   <component name="RunManager">
@@ -85,7 +98,8 @@
       <workItem from="1669615798568" duration="1791000" />
       <workItem from="1669618259522" duration="1558000" />
       <workItem from="1669621247508" duration="10149000" />
-      <workItem from="1669633714144" duration="7398000" />
+      <workItem from="1669633714144" duration="7999000" />
+      <workItem from="1669672687676" duration="31263000" />
     </task>
     <servers />
   </component>
@@ -102,5 +116,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/sendemail.php</url>
+          <line>7</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

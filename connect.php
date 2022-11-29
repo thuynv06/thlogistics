@@ -3,12 +3,17 @@
 //$user="root";
 //$pass="";
 //$database="thlogistics";
-//$conn=mysqli_connect($server,$user,$pass,$database);
+
 $server = "localhost:3306";
 $user="Root";
 $pass="Root_1234";
 $database="thlogistics";
 $conn=mysqli_connect($server,$user,$pass,$database);
+$conn->set_charset('utf8');
+if(mysqli_connect_errno()){
+    echo 'Connect Failed: '.mysqli_connect_error();
+    exit;
+}
 // Check connection
 //if ($conn->connect_error) {
 //    die("Connection failed: " . $conn->connect_error);
