@@ -6936,9 +6936,10 @@ textarea.form-control {
     display: inline-block;
     padding: 0 15px;
     font-family: FontAwesome;
+    font-weight: 700;
     font-size: 13px;
     text-align: center;
-    color: #ff2369;
+    color: blue;
     text-transform: uppercase;
     line-height: 40px;
     border-left: 1px solid #e5e5e5;
@@ -7047,7 +7048,7 @@ textarea.form-control {
     font-family: "Montserrat", sans-serif;
     font-size: 16px;
     text-align: left;
-    color: #000;
+    color: black;
     line-height: 40px;
 }
 

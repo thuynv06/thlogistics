@@ -5,6 +5,31 @@ require_once("repository/statusRepository.php");
 require_once("repository/kienhangRepository.php");
 $kienhangRepository = new KienHangRepository();
 $statusRepository = new StatusRepository();
+if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
+    $page_no = $_GET['page_no'];
+} else {
+    $page_no = 1;
+}
+$total_records_per_page = 15;
+$offset = ($page_no - 1) * $total_records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+$adjacents = "2";
+$total_no_of_pages = 1;
+$ladingCode = ''; //set ma van don
+
+if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+    $ladingCode = $_POST['ladingCode'];
+    $offset =0;
+}
+//    echo $orderCode;
+$result_count = $kienhangRepository->getTotalResultKienHangByUserId($checkCookie['id'], $ladingCode);
+//$total_records =$result_count->fetch_assoc();
+$total_records = $result_count['total_records'];
+//echo $total_records;
+$total_no_of_pages = ceil($total_records / $total_records_per_page);
+$second_last = $total_no_of_pages - 1; // total page minus 1
+$kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $ladingCode, $offset, $total_records_per_page);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +78,7 @@ $statusRepository = new StatusRepository();
                     </form>
                 </div>
                 <?php
-                $kienHangList = $kienhangRepository->findByUserId($checkCookie['id']);
+                $kienHangList = $kienhangRepository->findByUserId($checkCookie['id'],$offset,$total_records_per_page);
                 ?>
                 <hr>
                 <div class="row">
@@ -170,6 +195,91 @@ $statusRepository = new StatusRepository();
                         }
                         ?>
                     </table>
+                    <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
+                        <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
+                    </div>
+                    <ul class="pagination css-phantrang">
+                        <?php // if($page_no > 1){ echo "<li><a href='?page_no=1'>First Page</a></li>"; } ?>
+
+                        <li <?php if ($page_no <= 1) {
+                            echo "class='disabled'";
+                        } ?>>
+                            <a <?php if ($page_no > 1) {
+                                echo "href='?page_no=$previous_page'";
+                            } ?>>Previous</a>
+                        </li>
+
+                        <?php
+                        if ($total_no_of_pages <= 10) {
+                            for ($counter = 1;
+                                 $counter <= $total_no_of_pages;
+                                 $counter++) {
+                                if ($counter == $page_no) {
+                                    echo "<li class='active'><a>$counter</a></li>";
+                                } else {
+                                    echo "<li><a href='?page_no=$counter'>$counter</a></li>";
+                                }
+                            }
+                        } elseif ($total_no_of_pages > 10) {
+
+                            if ($page_no <= 4) {
+                                for ($counter = 1;
+                                     $counter < 8;
+                                     $counter++) {
+                                    if ($counter == $page_no) {
+                                        echo "<li class='active'><a>$counter</a></li>";
+                                    } else {
+                                        echo "<li><a href='?page_no=$counter'>$counter</a></li>";
+                                    }
+                                }
+                                echo "<li><a>...</a></li>";
+                                echo "<li><a href='?page_no=$second_last'>$second_last</a></li>";
+                                echo "<li><a href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                            } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
+                                echo "<li><a href='?page_no=1'>1</a></li>";
+                                echo "<li><a href='?page_no=2'>2</a></li>";
+                                echo "<li><a>...</a></li>";
+                                for ($counter = $page_no - $adjacents;
+                                     $counter <= $page_no + $adjacents;
+                                     $counter++) {
+                                    if ($counter == $page_no) {
+                                        echo "<li class='active'><a>$counter</a></li>";
+                                    } else {
+                                        echo "<li><a href='?page_no=$counter'>$counter</a></li>";
+                                    }
+                                }
+                                echo "<li><a>...</a></li>";
+                                echo "<li><a href='?page_no=$second_last'>$second_last</a></li>";
+                                echo "<li><a href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                            } else {
+                                echo "<li><a href='?page_no=1'>1</a></li>";
+                                echo "<li><a href='?page_no=2'>2</a></li>";
+                                echo "<li><a>...</a></li>";
+
+                                for ($counter = $total_no_of_pages - 6;
+                                     $counter <= $total_no_of_pages;
+                                     $counter++) {
+                                    if ($counter == $page_no) {
+                                        echo "<li class='active'><a>$counter</a></li>";
+                                    } else {
+                                        echo "<li><a href='?page_no=$counter'>$counter</a></li>";
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+
+                        <li <?php if ($page_no >= $total_no_of_pages) {
+                            echo "class='disabled'";
+                        } ?>>
+                            <a <?php if ($page_no < $total_no_of_pages) {
+                                echo "href='?page_no=$next_page'";
+                            } ?>>Next</a>
+                        </li>
+                        <?php if ($page_no < $total_no_of_pages) {
+                            echo "<li><a href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                        } ?>
+                    </ul>
                 </div>
             </div>
         </div>

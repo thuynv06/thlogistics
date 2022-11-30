@@ -34,10 +34,10 @@ class KienHangRepository
 //        $sql = "delete from orders where id=$id";
 //        mysqli_query($conn,$sql);
 //    }
-    public function findByUserId($user_id)
+    public function findByUserId($user_id,$offset,$total_records_per_page)
     {
         global $conn;
-        $sql = "select * from kienhang where user_id = $user_id ORDER BY id DESC";
+        $sql = "select * from kienhang where user_id = $user_id ORDER BY id DESC LIMIT $offset, $total_records_per_page";
         return mysqli_query($conn, $sql);
     }
 

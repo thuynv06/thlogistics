@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/import.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/vandon.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/vandon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/connect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vandonkhachang.php" beforeDir="false" afterPath="$PROJECT_DIR$/vandonkhachang.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,17 +41,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/xampp/htdocs/thlogistics",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/thlogistics&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\thlogistics" />
@@ -87,7 +92,9 @@
       <workItem from="1669618259522" duration="1558000" />
       <workItem from="1669621247508" duration="10149000" />
       <workItem from="1669633714144" duration="7999000" />
-      <workItem from="1669672687676" duration="33041000" />
+      <workItem from="1669672687676" duration="33256000" />
+      <workItem from="1669769132424" duration="1710000" />
+      <workItem from="1669785261950" duration="3272000" />
     </task>
     <servers />
   </component>

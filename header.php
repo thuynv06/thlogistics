@@ -40,7 +40,7 @@
                         <li class="menu-item"><a href="about.php">Giới Thiệu </a></li>
                         <li class="menu-item"><a href="chinhsach.php">Chính Sách</a>
                         </li>
-                        <li class="menu-item"><a href="#">Góc Chia Sẻ</a>
+<!--                        <li class="menu-item"><a href="#">Góc Chia Sẻ</a>-->
                     </ul>
                 </div>
                 <div class="navigation__column right">
