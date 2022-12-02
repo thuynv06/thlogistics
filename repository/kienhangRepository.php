@@ -21,6 +21,7 @@ class KienHangRepository
 //        echo $sql;
         return mysqli_query($conn, $sql);
     }
+
     public function getAll()
     {
         global $conn;
@@ -34,7 +35,7 @@ class KienHangRepository
 //        $sql = "delete from orders where id=$id";
 //        mysqli_query($conn,$sql);
 //    }
-    public function findByUserId($user_id,$offset,$total_records_per_page)
+    public function findByUserId($user_id, $offset, $total_records_per_page)
     {
         global $conn;
         $sql = "select * from kienhang where user_id = $user_id ORDER BY id DESC LIMIT $offset, $total_records_per_page";
@@ -70,7 +71,6 @@ class KienHangRepository
     }
 
 
-
     public function getTotalResultKienHangByUserId($user_id, $ladingCode)
     {
         global $conn;
@@ -99,24 +99,40 @@ class KienHangRepository
     public function getTotalRecordPerPageAdmin($offset, $total_records_per_page)
     {
         global $conn;
-        $sql = "SELECT * FROM `kienhang` ORDER BY id DESC LIMIT $offset, $total_records_per_page " ;
+        $sql = "SELECT * FROM `kienhang` ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
 
         mysqli_query($conn, 'set names "utf8"');
 
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($name,$nametq, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id,$linksp,$note,$dateCreated,$listTimeStatus)
+    public function insert($servicefee, $name, $nametq, $ladingCode, $amount, $shippingWay, $size, $feetransport, $status, $price, $currency, $user_id, $linksp, $note, $dateCreated, $listTimeStatus)
     {
         global $conn;
-        $sql = "insert into kienhang(name,nametq,ladingCode,amount,shippingWay,size,status,price,user_id,linksp,note,dateCreated,listTimeStatus) values('$name','$nametq','$ladingCode',$amount,'$shippingWay',
-                                                                                                         $size,$status,$price,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
+        $totalmoney = 0;
+        $totalyen = 0;
+        $totalservicefee = 0;
+        $totalfeetransport = 0;
+        if (!empty($price) && !empty($amount) & !empty($currency)) {
+            $totalmoney = $amount * $currency;
+            $totalyen = $amount * $price;
+            $totalservicefee = $servicefee * $totalmoney / 100;
+        }
+        if (!empty($feetransport) && !empty($amount)) {
+            $totalfeetransport = $feetransport * $amount;
+        }
+        $alltotal = $totalmoney + $totalfeetransport + $totalservicefee;
+
+        $sql = "insert into kienhang(servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus) 
+values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
+       ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
 //        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
 
-    public function getOrderCodeLastRecord(){
+    public function getOrderCodeLastRecord()
+    {
         global $conn;
         $sql = "SELECT id,orderCode FROM kienhang ORDER BY id DESC LIMIT 1";
 
@@ -124,24 +140,29 @@ class KienHangRepository
         return mysqli_query($conn, $sql)->fetch_assoc();
     }
 
-    public function addOrderCode($id,$orderCode){
+    public function addOrderCode($id, $orderCode)
+    {
         global $conn;
         $sql = "insert into (id,orderCode) values($id,'$orderCode')";
-        mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
 
-    public function deleteById($id){
+    public function deleteById($id)
+    {
         global $conn;
         $sql = "delete from kienhang where id=$id";
-        mysqli_query($conn,$sql);
-    }
-    public function getById($id){
-        global $conn;
-        $sql = "select * from kienhang where id=$id";
-        return mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
 
-    public function update($id,$name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note,$linksp,$date){
+    public function getById($id)
+    {
+        global $conn;
+        $sql = "select * from kienhang where id=$id";
+        return mysqli_query($conn, $sql);
+    }
+
+    public function update($id, $name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note, $linksp, $date)
+    {
 //        $s='$.'.'"'.$status.'"';
         echo $s;
         global $conn;
@@ -150,28 +171,41 @@ class KienHangRepository
                     listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
                     where id=$id ";
 //        echo $sql;
-        mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
 
-    public function updateStatus($id,$ladingCode,$status,$date){
+    public function updateStatus($id, $ladingCode, $status, $date)
+    {
 //        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql = "update kienhang set ladingCode='$ladingCode', status=$status,
                     listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
                     where id=$id ";
 //        echo $sql;
-        mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
 
-    public function updateStatusAll($id){
+
+    public function updateByLadingCode($ladingCode, $status, $date)
+    {
+        global $conn;
+        $sql = "update kienhang set status=$status,
+                    listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
+                    where ladingCode='$ladingCode'";
+//        echo $sql;
+        return mysqli_query($conn, $sql);
+    }
+
+    public function updateStatusAll($id)
+    {
         global $conn;
         $date1 = new DateTime();
 //        $string1 = $date1->add(new DateInterval("PT10H"))->format("Y-m-d\TH:i:s");
-        $string2 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
-        $string3 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
-        $string4 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
-        $string5 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
-        $string6 = $date1->add(new DateInterval("PT3H"))->format("Y-m-d\TH:i:s");
+        $string2 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
+        $string3 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
+        $string4 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
+        $string5 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
+        $string6 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
 
         $sql = "update kienhang set status=6,
                     listTimeStatus =JSON_SET (listTimeStatus,
@@ -182,24 +216,27 @@ class KienHangRepository
                     '\$.\"6\"','$string6' )
                     where id=$id ";
 //        echo $sql;
-        mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
-    public function resetStatus($id){
+
+    public function resetStatus($id)
+    {
         global $conn;
 
         $sql = "update kienhang set status=1,
                     listTimeStatus = JSON_REMOVE (listTimeStatus,'\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"')
                     where id=$id ";
 //        echo $sql;
-        mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
 
-    public function updateMaKien($id){
+    public function updateMaKien($id)
+    {
         global $conn;
-        $orderCode="TH168800".$id;
+        $orderCode = "TH168800" . $id;
         $sql = "update kienhang set orderCode='$orderCode' where id=$id ";
 //        echo $sql;
-        mysqli_query($conn,$sql);
+        mysqli_query($conn, $sql);
     }
 
 

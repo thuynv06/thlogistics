@@ -3,9 +3,11 @@ require_once("../../backend/filterAdmin.php");
 require_once("../../repository/userRepository.php");
 require_once("../../repository/kienhangRepository.php");
 require_once("../../repository/statusRepository.php");
+require_once("../../repository/th1688Repository.php");
 $kienhangRepository = new KienHangRepository();
 $userRepository = new UserRepository();
 $statusRepository = new StatusRepository();
+$th1688Repository = new Th1688Repository();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +74,19 @@ $statusRepository = new StatusRepository();
                                 <ul class="nav child_menu">
                                     <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
                                     <li><a href="vandon.php">Vận Đơn</a></li>
+                                    <li><a href="nhapkho.php">Nhập Kho TH1688</a></li>
+                                    <li><a href="xuatkho.php">Xuất Kho TH1688</a></li>
+                                    <li><a href="giaohang.php">Giao Hàng</a>
+                                        <ul class="nav child_menu">
+                                            <li>
+                                                <a href="yeucaugiaohang.php">Tạo Phiếu YC Giao Hàng</a>
+                                            </li>
+                                            <li>
+                                                <a href="giaohang.php"> Phiếu Giao Hàng</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="configpage.php">Cấu Hình</a></li>
                                     <li><a href="user.php">Quản Lý User</a></li>
                                 </ul>
                             </li>

@@ -75,6 +75,19 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             ?>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id" class="form-control custom-select " onchange="searchStatus()">
+                            <option value="">Lọc theo khách hàng</option>
+                            <?php
+                            $listUser = $userRepository->getAll();
+                            foreach ($listUser as $user) {
+                                ?>
+                                <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
                     <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra Cứu</button>
                     <a style="" href="vandon.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
                 </form>
@@ -89,6 +102,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         <th class="text-center" style="min-width:50px">STT</th>
                         <th class="text-center" style="min-width:110px">Ngày</th>
                         <th class="text-center" style="min-width:130px">Mã Vận Đơn</th>
+                        <th class="text-center" style="min-width:100px">Khách Hàng</th>
                         <th class="text-center" style="min-width:130px">Tên Tiếng Việt</th>
                         <th class="text-center" style="min-width:80px">Số Lượng</th>
                         <th class="text-center" style="min-width:100px">Tổng tiền NDT</th>
@@ -105,7 +119,10 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
                         $kienHangList = $kienhangRepository->findByStatus($_POST['status_id']);
                     }
-
+                    if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+                        $user_id = $_POST['user_id'];
+                        $kienHangList = $kienhangRepository->findByUserId($user_id,$offset,$total_records_per_page);
+                    }
                     if (!empty($kienHangList)) {
                         $i = 1;
                         foreach ($kienHangList as $kienHang) {
@@ -116,6 +133,17 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                                 <p style="font-weight: 500;color: #0b0b0b"><?php echo $kienHang['dateCreated'] ?></p>
                             </td>
                             <td><?php echo $kienHang['ladingCode'] ?></td>
+                            <td>
+                                <?php
+                                $listUser = $userRepository->getAll();
+                                foreach ($listUser as $user) {
+                                    if ($user['id'] == $kienHang['user_id']) {
+                                        ?>
+                                        <?php echo $user['username'] ?><span> &#45; </span><?php echo $user['code'] ?>
+                                    <?php }
+                                }
+                                ?>
+                            </td>
                             <td><p><?php echo $kienHang['name'] ?></p>
                                 <p><?php echo $kienHang['nametq'] ?></p></td>
                             <td><?php echo $kienHang['amount'] ?></td>
@@ -132,7 +160,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                                         break;
                                     default:
                                         echo "Không";
-                                } ?>
+                                } ?></td>
                             <td><?php echo $kienHang['tienbh'] ?></td>
                             <td><?php echo $kienHang['size'] ?></td>
                             <td style="color: blue"><?php

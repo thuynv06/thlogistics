@@ -32,9 +32,10 @@ if (isset($_POST["btnImport"])) {
 //        echo $sheetCount;
 // output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
+        echo(print_r($spreadSheetAry, true));
 
 
-        for ($i = 1; $i < $sheetCount - 2; $i++) {
+        for ($i = 1; $i < $sheetCount ; $i++) {
             $ladingCode = "";
             if (isset($spreadSheetAry[$i][0])) {
                 $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
@@ -49,15 +50,19 @@ if (isset($_POST["btnImport"])) {
                 $nametq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
             }
             $amount = $spreadSheetAry[$i][3];
+//            echo $amount;
             $price = $spreadSheetAry[$i][4];
             $size = $spreadSheetAry[$i][5];
+            $currency = $spreadSheetAry[$i][6]; //t y gia te
+            $servicefee = $spreadSheetAry[$i][8];
+            $feetransport = $spreadSheetAry[$i][7];
             $linksp = "";
-            if (isset($spreadSheetAry[$i][6])) {
-                $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
+            if (isset($spreadSheetAry[$i][9])) {
+                $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
             }
             $note = "";
-            if (isset($spreadSheetAry[$i][7])) {
-                $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][7]);
+            if (isset($spreadSheetAry[$i][10])) {
+                $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
             }
 
 //            if (! empty($name) || ! empty($description)) {
@@ -66,9 +71,8 @@ if (isset($_POST["btnImport"])) {
             $myObj = new stdClass();
             $myObj->{1} = "$dateCreadted";
             $listStatusJSON = json_encode($myObj);
-            $kienhang_id = $kienhangRepository->insert($name, $nametq, $ladingCode, $amount, "BT / HN1", $size, 1, $price, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
+            $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
             $kienhangRepository->updateMaKien($kienhang_id);
-
             if (!empty($kienhang_id)) {
                 $type = "success";
                 $message = "Excel Data Imported into the Database";

@@ -1,11 +1,15 @@
-
+<?php
+require_once("repository/th1688Repository.php");
+$th1688Repository = new th1688Repository();
+$th = $th1688Repository->getConfig();
+?>
 <div class="header--sidebar"></div>
 <header class="header">
     <div class="header__top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12">
-                    <p>TH Logistics - Ngã 3 - Ba La - Hà Đông - Hà Nội - Hotline: 033.699.1688 - 0399.322.668 --------Tỷ giá: 1¥ = 3,600 </p>
+                    <p>TH Logistics - Ngã 3 - Ba La - Hà Đông - Hà Nội - Hotline: 033.699.1688 - 0399.322.668 --------Tỷ giá: 1¥ = <?php echo $th['tygia'] ?> </p>
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
                     <div class="header__actions">

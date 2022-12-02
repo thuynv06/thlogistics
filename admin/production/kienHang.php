@@ -27,14 +27,46 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
 
 <div class="right_col" role="main">
     <div class="container">
-        <form style="font-size: 16px;" action="" class="search-bar" method="POST">
-            <span>Tìm Kiếm Mã Vận Đơn</span>
-            <input type="search" id="inputtracuu" name="ladingCode" pattern=".*\S.*" placeholder="Nhập mã vận đơn"
-                   required>
-            <button class="search-btn" type="submit" onclick="checkInputTraCuu()"
-            <span>Tìm Kiếm</span>
-            </button>
-        </form>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <form name="search" class="form-inline ps-subscribe__form" method="POST"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input required style="margin-right: 20px; margin-bottom: 5px;" class="form-control input-large " name="ladingCode"
+                               type="text" value="" placeholder="Tìm theo mã vận đơn">
+                    </div>
+                    <div class="form-group">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id" class="form-control custom-select " onchange="searchStatus()">
+                            <option value="">Lọc theo trang thái</option>
+                            <?php
+                            $listStatus = $statusRepository->getAll();
+                            foreach ($listStatus as $status) {
+                                ?>
+                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id" class="form-control custom-select " onchange="searchStatus()">
+                            <option value="">Lọc theo khách hàng</option>
+                            <?php
+                            $listUser = $userRepository->getAll();
+                            foreach ($listUser as $user) {
+                                ?>
+                                <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra Cứu</button>
+                    <a style="" href="kienHang.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
+                </form>
+            </div>
+
+        </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
         <a class="btn btn-primary" href="addKienHang.php" role="button">Thêm Kiện Hàng</a>
@@ -66,6 +98,14 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
             if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
                 $ladingCode = $_POST['ladingCode'];
                 $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
+            }
+            if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                $statusid = $_POST['status_id'];
+                $kienHangList = $kienhangRepository->findByStatus($statusid);
+            }
+            if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+                $user_id = $_POST['user_id'];
+                $kienHangList = $kienhangRepository->findByUserId($user_id,$offset,$total_records_per_page);
             }
             $i = 1;
             foreach ($kienHangList as $kienHang) {
@@ -297,7 +337,9 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
         return new Date().getTimezoneOffset() * -60 * 1000;
     }
 
-
+    function searchStatus(){
+        document.search.submit();
+    }
 </script>
 
 
