@@ -80,20 +80,20 @@ if (isset($_POST["btnImport"])) {
 
                 $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
                 $kienhangRepository->updateMaKien($kienhang_id);
-//
-//                if (!empty($kienhang_id)) {
-//                    $type = "success";
-//                    $message = "Excel Data Imported into the Database";
-//                } else {
-//                    $type = "error";
-//                    $message = "Problem in Importing Excel Data";
-//                }
+
+                if (!empty($kienhang_id)) {
+                    $type = "success";
+                    $message = "Excel Data Imported into the Database";
+                } else {
+                    $type = "error";
+                    $message = "Problem in Importing Excel Data";
+                }
             } else {
                 break;
             }
 
         }
-//        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
+        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
     } else {
         $type = "error";
         $message = "Invalid File Type. Upload Excel File.";
