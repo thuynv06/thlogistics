@@ -73,13 +73,13 @@ if (isset($_POST["btnImport"])) {
             $listStatusJSON = json_encode($myObj);
            // $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
           //  $kienhangRepository->updateMaKien($kienhang_id);
-            if (!empty($kienhang_id)) {
-                $type = "success";
-                $message = "Excel Data Imported into the Database";
-            } else {
-                $type = "error";
-                $message = "Problem in Importing Excel Data";
-            }
+//            if (!empty($kienhang_id)) {
+//                $type = "success";
+//                $message = "Excel Data Imported into the Database";
+//            } else {
+//                $type = "error";
+//                $message = "Problem in Importing Excel Data";
+//            }
         }
        // echo "<script>alert('Thêm thành công');window.location.href='danhsachdonhang.php';</script>";
     }
