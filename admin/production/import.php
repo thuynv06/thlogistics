@@ -36,7 +36,7 @@ if (isset($_POST["btnImport"])) {
 //        echo $sheetCount;
 // output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
-//        echo(print_r($spreadSheetAry, true));
+        echo(print_r($spreadSheetAry, true));
 
 
         for ($i = 1; $i < $sheetCount ; $i++) {
@@ -78,16 +78,16 @@ if (isset($_POST["btnImport"])) {
                 $listStatusJSON = json_encode($myObj);
 
 
-                $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
-                $kienhangRepository->updateMaKien($kienhang_id);
-
-                if (!empty($kienhang_id)) {
-                    $type = "success";
-                    $message = "Excel Data Imported into the Database";
-                } else {
-                    $type = "error";
-                    $message = "Problem in Importing Excel Data";
-                }
+//                $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
+//                $kienhangRepository->updateMaKien($kienhang_id);
+//
+//                if (!empty($kienhang_id)) {
+//                    $type = "success";
+//                    $message = "Excel Data Imported into the Database";
+//                } else {
+//                    $type = "error";
+//                    $message = "Problem in Importing Excel Data";
+//                }
             } else {
                 break;
             }

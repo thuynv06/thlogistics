@@ -5,28 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/production/configpage.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/giaohang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/nhapkho.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/updateTyGia.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/xuatkho.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/yeucaugiaohang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/phieugiaphangRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/th1688Repository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/addKienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/addKienHang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/headeradmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/headeradmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/kienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/updateKH.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/updateKH.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/vandon.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/vandon.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/uploads/tempalte_th1688.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/admin/uploads/tempalte_th1688.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/connect.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/tempalte_th1688.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/tempalte_th1688.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +91,7 @@
       <workItem from="1669633714144" duration="7999000" />
       <workItem from="1669672687676" duration="33256000" />
       <workItem from="1669769132424" duration="1710000" />
-      <workItem from="1669785261950" duration="53211000" />
+      <workItem from="1669785261950" duration="54470000" />
     </task>
     <servers />
   </component>
