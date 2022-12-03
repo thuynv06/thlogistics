@@ -36,7 +36,7 @@ if (isset($_POST["btnImport"])) {
 //        echo $sheetCount;
 // output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
-        echo(print_r($spreadSheetAry, true));
+        //echo(print_r($spreadSheetAry, true));
 
 
         for ($i = 1; $i < $sheetCount ; $i++) {

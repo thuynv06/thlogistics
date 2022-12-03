@@ -71,8 +71,8 @@ if (isset($_POST["btnImport"])) {
             $myObj = new stdClass();
             $myObj->{1} = "$dateCreadted";
             $listStatusJSON = json_encode($myObj);
-            $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
-            $kienhangRepository->updateMaKien($kienhang_id);
+           // $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
+          //  $kienhangRepository->updateMaKien($kienhang_id);
             if (!empty($kienhang_id)) {
                 $type = "success";
                 $message = "Excel Data Imported into the Database";
@@ -81,7 +81,7 @@ if (isset($_POST["btnImport"])) {
                 $message = "Problem in Importing Excel Data";
             }
         }
-        echo "<script>alert('Thêm thành công');window.location.href='danhsachdonhang.php';</script>";
+       // echo "<script>alert('Thêm thành công');window.location.href='danhsachdonhang.php';</script>";
     }
 } else {
     $type = "error";
