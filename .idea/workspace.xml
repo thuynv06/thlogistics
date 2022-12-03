@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/tempalte_th1688.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/tempalte_th1688.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +88,7 @@
       <workItem from="1669633714144" duration="7999000" />
       <workItem from="1669672687676" duration="33256000" />
       <workItem from="1669769132424" duration="1710000" />
-      <workItem from="1669785261950" duration="55868000" />
+      <workItem from="1669785261950" duration="56002000" />
     </task>
     <servers />
   </component>
