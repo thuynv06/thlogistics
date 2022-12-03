@@ -93,7 +93,7 @@ if (isset($_POST["btnImport"])) {
             }
 
         }
-        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
+//        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
     } else {
         $type = "error";
         $message = "Invalid File Type. Upload Excel File.";
