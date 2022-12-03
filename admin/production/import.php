@@ -78,8 +78,8 @@ if (isset($_POST["btnImport"])) {
                 $listStatusJSON = json_encode($myObj);
 
 
-//                $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
-//                $kienhangRepository->updateMaKien($kienhang_id);
+                $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
+                $kienhangRepository->updateMaKien($kienhang_id);
 //
 //                if (!empty($kienhang_id)) {
 //                    $type = "success";
