@@ -1,4 +1,3 @@
-
 <?php include "headeradmin.php" ?>
 <?php
 
@@ -8,37 +7,47 @@ $th1688 = $th1688Repository->getConfig();
 ?>
 
 <!-- top navigation -->
-<div class="right_col" role="main" >
+<div class="right_col" role="main">
     <h3>Xuất Kho</h3>
     <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <form name="nhapma" class="form-inline ps-subscribe__form" method="POST"
                   enctype="multipart/form-data">
                 <div class="form-group">
-                    <input autofocus required style="margin-right: 20px; margin-bottom: 5px;" class="form-control input-large " name="ladingCode"
-                           type="text" value="" onchange="updateMaVanDon()" placeholder="nhập mã vận đơn">
+                    <input autofocus required style="margin-right: 20px;font-size: 45px; margin-bottom: 5px;"
+                           class="form-control input-xxlarge" name="ladingCode"
+                           type="text" value="" id="inputMVD" onchange="updateMaVanDon()" placeholder="nhập mã vận đơn">
                 </div>
-<!--                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Nhập Kho</button>-->
+                <!--                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Nhập Kho</button>-->
             </form>
         </div>
 
-        <?php
-            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])){
-
-                $date = new DateTime();
-                $temp = $date->format("Y-m-d\TH:i:s");
-
-                $result = $kienhangRepository->updateByLadingCode($_POST['ladingCode'],6,$temp);
-                if($result){
-                    echo "success";
-                }else{
-                    echo "cập nhập lỗi";
-                }
-            }
-        ?>
-
-        <div>
-
+        <!--        --><?php
+        //            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])){
+        //
+        //                $date = new DateTime();
+        //                $temp = $date->format("Y-m-d\TH:i:s");
+        //
+        //                $result = $kienhangRepository->updateByLadingCode($_POST['ladingCode'],6,$temp);
+        //                if($result){
+        //                    echo "success";
+        //                }else{
+        //                    echo "cập nhập lỗi";
+        //                }
+        //            }
+        //        ?>
+        <div class="row container">
+            <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive" style="padding-bottom: 20px;">
+                <table id="danhsachmavandon">
+                    <tr>
+                        <th class="text-center" style="min-width:50px">STT</th>
+                        <th
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>s
+        <div class="row">
             <div class="table-responsive" style="padding-bottom: 20px;">
                 <table id="tableShoe">
                     <tr>
@@ -55,12 +64,12 @@ $th1688 = $th1688Repository->getConfig();
                         <th class="text-center" style="min-width:150px">Lưu Ý</th>
                     </tr>
                     <?php
-                    if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
-                        $kienHangList = $kienhangRepository->findByMaVanDon($_POST['ladingCode']);
-                    }
-                    if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
-                        $kienHangList = $kienhangRepository->findByStatus($_POST['status_id']);
-                    }
+                    //                    if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                    //                        $kienHangList = $kienhangRepository->findByMaVanDon($_POST['ladingCode']);
+                    //                    }
+                    //                    if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                    //                        $kienHangList = $kienhangRepository->findByStatus($_POST['status_id']);
+                    //                    }
 
                     if (!empty($kienHangList)) {
                         $i = 1;
@@ -138,11 +147,16 @@ $th1688 = $th1688Repository->getConfig();
                                 } else { ?>
                                     <ul style="text-align: left;">
                                         <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?></li>
-                                        <li><p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p></li>
-                                        <li><p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p></li>
-                                        <li><p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p></li>
-                                        <li><p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p></li>
-                                        <li><p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p></li>
+                                        <li><p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p>
+                                        </li>
+                                        <li><p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p>
+                                        </li>
+                                        <li><p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
+                                        </li>
+                                        <li><p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
+                                        </li>
+                                        <li><p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
+                                        </li>
                                     </ul>
                                     <?php
                                 } ?>
@@ -159,8 +173,23 @@ $th1688 = $th1688Repository->getConfig();
     </div>
 </div>
 <script>
-    function updateMaVanDon(){
-        document.nhapma.submit();
+    var i=0;
+    function updateMaVanDon() {
+        var list = [];
+        var table = document.getElementById("danhsachmavandon");
+        var row = table.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var ladingCode = document.getElementById("inputMVD").value;
+        list.push(ladingCode);
+        cell1.innerHTML = table.rows.length -1;
+        cell2.style.color = "blue";
+        cell2.style.fontSize = "20px";
+        cell2.innerHTML = ladingCode;
+        document.getElementById("inputMVD").value = '';
+        list1 = remove_duplicates(list);
+        console.log(list1);
+
 
     }
 </script>

@@ -15,7 +15,7 @@ $th1688 = $th1688Repository->getConfig();
             <form name="nhapma" class="form-inline ps-subscribe__form" method="POST"
                   enctype="multipart/form-data">
                 <div class="form-group">
-                    <input autofocus required style="margin-right: 20px; margin-bottom: 5px;" class="form-control input-large " name="ladingCode"
+                    <input autofocus required style="margin-right: 20px;font-size: 45px; margin-bottom: 5px;" class="form-control input-large " name="ladingCode"
                            type="text" value="" onchange="updateMaVanDon()" placeholder="nhập mã vận đơn">
                 </div>
 <!--                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Nhập Kho</button>-->
