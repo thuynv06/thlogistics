@@ -39,7 +39,7 @@ if (isset($_POST["btnImport"])) {
         //echo(print_r($spreadSheetAry, true));
 
 
-        for ($i = 1; $i < $sheetCount ; $i++) {
+        for ($i = 1; $i < $sheetCount-1 ; $i++) {
             if (!empty($spreadSheetAry[$i])) {
                 $ladingCode = "";
                 if (isset($spreadSheetAry[$i][0])) {
