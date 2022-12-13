@@ -37,7 +37,7 @@ if (isset($_POST["btnImport"])) {
 //        echo $sheetCount;
 // output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
-//        echo(print_r($spreadSheetAry, true));
+        echo(print_r($spreadSheetAry, true));
 
         $userCode = $spreadSheetAry[4][2];
         $user = $userRepository->getByCode($userCode);
@@ -52,87 +52,87 @@ if (isset($_POST["btnImport"])) {
         $giavanchuyen = $spreadSheetAry[2][13];
         $phidichvu = $spreadSheetAry[6][13];
 
-        for ($i = 14; $i < $sheetCount - 1; $i++) {
-            if (!empty($spreadSheetAry[$i])) {
-                $ladingCode = "";
-                if (isset($spreadSheetAry[$i][11])) {
-                    $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
-                }
-//            echo $ladingCode;
-                $name = "";
-                if (isset($spreadSheetAry[$i][0])) {
-                    $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
-                } else {
-                    break;
-                }
-                $nametq = "";
-                if (isset($spreadSheetAry[$i][1])) {
-                    $nametq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
-                }
-                $linksp = "";
-                if (isset($spreadSheetAry[$i][2])) {
-                    $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
-                }
-                $kichthuoc = "";
-                if (isset($spreadSheetAry[$i][3])) {
-                    $kichthuoc = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
-                }
-                $color = "";
-                if (isset($spreadSheetAry[$i][4])) {
-                    $color = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
-                }
-                $amount = $spreadSheetAry[$i][5];
-                if (isset($spreadSheetAry[$i][5])) {
-                    $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
-                }
-//            echo $amount;
-                $price = 0;
-                if (isset($spreadSheetAry[$i][6])) {
-                    $price = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
-                }
-                $shiptq = 0;
-                if (isset($spreadSheetAry[$i][8])) {
-                    $shiptq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
-                }
-                $magiamgia = 0;
-                if (isset($spreadSheetAry[$i][9])) {
-                    $magiamgia = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
-                }
-                $note = "";
-                if (isset($spreadSheetAry[$i][10])) {
-                    $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
-                }
-
-                $size = 13;
-                if (isset($spreadSheetAry[$i][13])) {
-                    $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
-                }
-
-
-
-//            if (! empty($name) || ! empty($description)) {
-                $date = new DateTime();
-                $dateCreadted = $date->format("Y-m-d\TH:i:s");
-                $myObj = new stdClass();
-                $myObj->{1} = "$dateCreadted";
-                $listStatusJSON = json_encode($myObj);
-
-
-                $kienhang_id = $kienhangRepository->insert($phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON,$shiptq,$magiamgia,$kichthuoc,$color);
-                $kienhangRepository->updateMaKien($kienhang_id);
-
-                if (!empty($kienhang_id)) {
-                    $type = "success";
-                    $message = "Excel Data Imported into the Database";
-                } else {
-                    $type = "error";
-                    $message = "Problem in Importing Excel Data";
-                }
-            } else {
-                break;
-            }
-
-        }
+//        for ($i = 14; $i < $sheetCount - 1; $i++) {
+//            if (!empty($spreadSheetAry[$i])) {
+//                $ladingCode = "";
+//                if (isset($spreadSheetAry[$i][11])) {
+//                    $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
+//                }
+////            echo $ladingCode;
+//                $name = "";
+//                if (isset($spreadSheetAry[$i][0])) {
+//                    $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
+//                } else {
+//                    break;
+//                }
+//                $nametq = "";
+//                if (isset($spreadSheetAry[$i][1])) {
+//                    $nametq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
+//                }
+//                $linksp = "";
+//                if (isset($spreadSheetAry[$i][2])) {
+//                    $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
+//                }
+//                $kichthuoc = "";
+//                if (isset($spreadSheetAry[$i][3])) {
+//                    $kichthuoc = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+//                }
+//                $color = "";
+//                if (isset($spreadSheetAry[$i][4])) {
+//                    $color = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
+//                }
+//                $amount = $spreadSheetAry[$i][5];
+//                if (isset($spreadSheetAry[$i][5])) {
+//                    $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
+//                }
+////            echo $amount;
+//                $price = 0;
+//                if (isset($spreadSheetAry[$i][6])) {
+//                    $price = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
+//                }
+//                $shiptq = 0;
+//                if (isset($spreadSheetAry[$i][8])) {
+//                    $shiptq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
+//                }
+//                $magiamgia = 0;
+//                if (isset($spreadSheetAry[$i][9])) {
+//                    $magiamgia = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
+//                }
+//                $note = "";
+//                if (isset($spreadSheetAry[$i][10])) {
+//                    $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
+//                }
+//
+//                $size = 13;
+//                if (isset($spreadSheetAry[$i][13])) {
+//                    $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
+//                }
+//
+//
+//
+////            if (! empty($name) || ! empty($description)) {
+//                $date = new DateTime();
+//                $dateCreadted = $date->format("Y-m-d\TH:i:s");
+//                $myObj = new stdClass();
+//                $myObj->{1} = "$dateCreadted";
+//                $listStatusJSON = json_encode($myObj);
+//
+//
+//                $kienhang_id = $kienhangRepository->insert($phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON,$shiptq,$magiamgia,$kichthuoc,$color);
+//                $kienhangRepository->updateMaKien($kienhang_id);
+//
+//                if (!empty($kienhang_id)) {
+//                    $type = "success";
+//                    $message = "Excel Data Imported into the Database";
+//                } else {
+//                    $type = "error";
+//                    $message = "Problem in Importing Excel Data";
+//                }
+//            } else {
+//                break;
+//            }
+//
+//        }
 //        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
     } else {
         $type = "error";
