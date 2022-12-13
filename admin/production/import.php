@@ -39,18 +39,18 @@ if (isset($_POST["btnImport"])) {
 //        die(print_r($spreadSheetAry, true));
         echo(print_r($spreadSheetAry, true));
 
-        $userCode = $spreadSheetAry[4][2];
-        $user = $userRepository->getByCode($userCode);
-        if (empty($user)){
-//            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
-        }else{
-            $user_id =$user['id'];
-            echo(print_r($user_id, true));
-        }
-
-        $tygiate= $spreadSheetAry[1][13];;
-        $giavanchuyen = $spreadSheetAry[2][13];
-        $phidichvu = $spreadSheetAry[6][13];
+//        $userCode = $spreadSheetAry[4][2];
+//        $user = $userRepository->getByCode($userCode);
+//        if (empty($user)){
+////            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
+//        }else{
+//            $user_id =$user['id'];
+//            echo(print_r($user_id, true));
+//        }
+//
+//        $tygiate= $spreadSheetAry[1][13];;
+//        $giavanchuyen = $spreadSheetAry[2][13];
+//        $phidichvu = $spreadSheetAry[6][13];
 
 //        for ($i = 14; $i < $sheetCount - 1; $i++) {
 //            if (!empty($spreadSheetAry[$i])) {
