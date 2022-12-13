@@ -11,6 +11,17 @@
             $sql = "select * from user where id=$id"; 
             return mysqli_query($conn,$sql)->fetch_assoc();
         }
+        public function getByCode($makh){
+            global $conn;
+            $sql = "select * from user where code='$makh' ";
+            return mysqli_query($conn,$sql)->fetch_assoc();
+        }
+
+        public function getLastCode(){
+            global $conn;
+            $sql = "SELECT code FROM user ORDER BY id DESC LIMIT 1";
+            return mysqli_query($conn,$sql)->fetch_assoc();;
+        }
         public function deleteById($id){
             global $conn;
             $sql = "delete from user where id=$id"; 

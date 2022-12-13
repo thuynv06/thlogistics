@@ -15,10 +15,42 @@ $th1688 = $th1688Repository->getConfig();
                 </div>
                 <div class="form-group col-md-6">
                     <label for="exampleInputEmail1">Tên tiếng trung</label>
-                    <input  minlength="5" maxlength="250" name="nametq" type="text" class="form-control"
+                    <input minlength="5" maxlength="250" name="nametq" type="text" class="form-control"
                            placeholder="Nhập tên tiếng trung">
                 </div>
             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Size</label>
+                    <input required min="0" max="99999999999" value="" name="kichthuoc"
+                           type="text"
+                           class="form-control"
+                           id="exampleInputPassword1" placeholder="Nhập size S/M?L?XL ...">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Màu</label>
+                    <input  name="color" value="" type="text"
+                            class="form-control"
+                            id="exampleInputPassword1" placeholder="Nhập màu sản phẩm">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Phí Ship TQ</label>
+                    <input required min="0" max="99999999999" name="shiptq" type="number" class="form-control"
+                           step="0.01"
+                           id="exampleInputPassword1" value=""
+                           placeholder="Nhập phí ship trung quốc">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Mã Giảm Giá</label>
+                    <input required min="0" max="99999999999" name="magiamgia" type="number" step="0.01"
+                           class="form-control"
+                           id="exampleInputPassword1" value=""
+                           placeholder="Nhập mã giảm giá">
+                </div>
+            </div>
+
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="exampleInputPassword1 ">Giá Tiền (Y)</label>
@@ -30,7 +62,8 @@ $th1688 = $th1688Repository->getConfig();
                     <label for="exampleInputPassword1">Tỷ giá tệ (Y)</label>
                     <input required min="0" max="99999999999" name="currency" type="number" class="form-control"
                            step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $th1688['tygia']?>" placeholder="Nhập tỷ giá tệ: vd 3650">
+                           id="exampleInputPassword1" value="<?php echo $th1688['tygia'] ?>"
+                           placeholder="Nhập tỷ giá tệ: vd 3650">
                 </div>
 
             </div>
@@ -50,13 +83,15 @@ $th1688 = $th1688Repository->getConfig();
                     <label for="exampleInputPassword1">Giá Vận Chuyển (VNĐ)/Kg</label>
                     <input required min="0" max="99999999999" name="feetransport" type="number" class="form-control"
                            step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $th1688['giavanchuyen']?>" placeholder="Nhập giá vận chuyển (VNĐ)">
+                           id="exampleInputPassword1" value="<?php echo $th1688['giavanchuyen'] ?>"
+                           placeholder="Nhập giá vận chuyển (VNĐ)">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="exampleInputPassword1">Phí Dịch Vụ</label>
                     <input required min="0" max="99999999999" name="servicefee" type="number" step="0.01"
                            class="form-control"
-                           id="exampleInputPassword1" value="<?php echo $th1688['phidichvu']?>" placeholder="Nhập phí dịch vụ %: 1.6">
+                           id="exampleInputPassword1" value="<?php echo $th1688['phidichvu'] ?>"
+                           placeholder="Nhập phí dịch vụ %: 1.6">
                 </div>
             </div>
             <div class="form-row">
@@ -125,7 +160,8 @@ if (isset($_POST['submit'])) {
     $myObj->{1} = "$dateCreadted";
     $listStatusJSON = json_encode($myObj);
 
-    $kienhang_id = $kienhangRepository->insert($_POST['servicefee'],$_POST['name'], $_POST['nametq'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'] ,$_POST['size'], $_POST['feetransport'], $_POST['status_id'], $_POST['price'], $_POST['currency'], $_POST['user_id'], $_POST['linksp'], $_POST['note'], $dateCreadted, $listStatusJSON);
+    $kienhang_id = $kienhangRepository->insert($_POST['servicefee'], $_POST['name'], $_POST['nametq'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['feetransport'], $_POST['status_id'], $_POST['price'], $_POST['currency'], $_POST['user_id'], $_POST['linksp'], $_POST['note'], $dateCreadted, $listStatusJSON
+        ,$_POST['shiptq'], $_POST['magiamgia'], $_POST['kichthuoc'], $_POST['color']);
     $kienhangRepository->updateMaKien($kienhang_id);
     echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
 }

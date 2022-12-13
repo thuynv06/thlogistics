@@ -7,6 +7,9 @@ $userList = $userRepository->getAll();
 
     <!-- top navigation -->
     <div class="right_col" role="main">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+            <a class="btn btn-primary" href="addUser.php" role="button">Thêm KH</a>
+        </div>
         <table id="tableShoe">
             <tr>
                 <th class="text-center" style="min-width:50px">STT</th>

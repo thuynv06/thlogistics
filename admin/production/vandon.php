@@ -36,20 +36,20 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                                                                               href="../uploads/tempalte_th1688.xlsx">đây</a>
                         </p>
                     </div>
-                    <div class="form-group">
-                        <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Vận Đơn Cho
-                            Khách Hàng</label>
-                        <select name="user_id" class="form-control">
-                            <?php
-                            $listUser = $userRepository->getAll();
-                            foreach ($listUser as $user) {
-                                ?>
-                                <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Vận Đơn Cho-->
+<!--                            Khách Hàng</label>-->
+<!--                        <select name="user_id" class="form-control">-->
+<!--                            --><?php
+//                            $listUser = $userRepository->getAll();
+//                            foreach ($listUser as $user) {
+//                                ?>
+<!--                                <option value="--><?php //echo $user['id']; ?><!--">--><?php //echo $user['username']; ?><!--</option>-->
+<!--                                --><?php
+//                            }
+//                            ?>
+<!--                        </select>-->
+<!--                    </div>-->
                     <button class="btn btn-primary" type="submit" name="btnImport">UpLoad</button>
                 </form>
             </div>

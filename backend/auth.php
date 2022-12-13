@@ -20,7 +20,9 @@ class Auth{
             $temp= Auth::findOneByUsernameAndPassword($username,md5($password));
             if($temp){
                 $id = $temp['id'];
-                $code = 'TH1688'.$id;
+                $code = $temp['code'];
+                $numCode = substr($code['code'],-3) +1;
+                $code = 'TH'.$numCode;
                 $sql1 = "update user set code = '$code' where id =$id";
                 mysqli_query($conn,$sql1);
             }
@@ -28,6 +30,25 @@ class Auth{
             window.location.href="../login/index.php";</script>';
         }
     }
+
+    public static function registerByAdmin($username,$password,$fullname,$code,$dob,$address,$gender,$email,$phone){
+        global $conn;
+        if(Auth::checkExist("username",$username) && Auth::checkExist("email",$email) && Auth::checkExist("phone",$username)){
+            $sql = "insert into user(username,password,fullname,code,dob,address,gender,email,phone,role)".
+                " values('$username','".md5($password)."','$fullname','$code','$dob','$address',$gender,'$email','$phone',0)";
+            $run = mysqli_query($conn,$sql);
+// /           $temp= Auth::findOneByUsernameAndPassword($username,md5($password));
+//            if($temp){
+//                $id = $temp['id'];
+//                $code = 'TH1688'.$id;
+//                $sql1 = "update user set code = '$code' where id =$id";
+//                mysqli_query($conn,$sql1);
+//            }
+            echo '<script>
+            window.location.href="../production/user.php";</script>';
+        }
+    }
+
     public static function login($username,$password){
         $run = Auth::findOneByUsernameAndPassword($username,md5($password));
         if($run){

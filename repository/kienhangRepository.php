@@ -106,7 +106,7 @@ class KienHangRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($servicefee, $name, $nametq, $ladingCode, $amount, $shippingWay, $size, $feetransport, $status, $price, $currency, $user_id, $linksp, $note, $dateCreated, $listTimeStatus)
+    public function insert($servicefee, $name, $nametq, $ladingCode, $amount, $shippingWay, $size, $feetransport, $status, $price, $currency, $user_id, $linksp, $note, $dateCreated, $listTimeStatus,$shiptq,$magiamgia,$kichthuoc,$color)
     {
         global $conn;
         $totalmoney = 0;
@@ -123,10 +123,10 @@ class KienHangRepository
         }
         $alltotal = $totalmoney + $totalfeetransport + $totalservicefee;
 
-        $sql = "insert into kienhang(servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus) 
+        $sql = "insert into kienhang(servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus,shiptq,magiamgia,kichthuoc,color) 
 values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
-       ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus')";
-//        echo $sql;
+       ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus',$shiptq,$magiamgia,'$kichthuoc','$color')";
+        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
@@ -161,14 +161,13 @@ values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingW
         return mysqli_query($conn, $sql);
     }
 
-    public function update($id, $name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note, $linksp, $date)
+    public function update($id, $name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note, $linksp, $date,$shiptq,$magiamgia,$kichthuoc,$color)
     {
 //        $s='$.'.'"'.$status.'"';
-        echo $s;
         global $conn;
         $sql = "update kienhang set name='$name',ladingCode='$ladingCode',amount=$amount,shippingWay='$shippingWay',
                     size=$size,status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',
-                    listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date')
+                    listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date') ,shiptq=$shiptq,magiamgia=$magiamgia,kichthuoc='$kichthuoc',color='$color'
                     where id=$id ";
 //        echo $sql;
         mysqli_query($conn, $sql);

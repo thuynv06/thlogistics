@@ -44,6 +44,35 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="exampleInputPassword1">Size</label>
+                        <input required min="0" max="99999999999" value="<?php echo $kh['kichthuoc'] ?>" name="kichthuoc"
+                               type="text"
+                               class="form-control"
+                               id="exampleInputPassword1" placeholder="Nhập size S/M?L?XL ...">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="exampleInputPassword1">Màu</label>
+                        <input  name="color" value="<?php echo $kh['color'] ?>" type="text"
+                                class="form-control"
+                               id="exampleInputPassword1" placeholder="Nhập màu sản phẩm">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="exampleInputPassword1">Phí Ship TQ</label>
+                        <input required min="0" max="99999999999" name="shiptq" type="number" class="form-control"
+                               step="0.01"
+                               id="exampleInputPassword1" value="<?php echo $kh['shiptq'] ?>"
+                               placeholder="Nhập phí ship trung quốc">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="exampleInputPassword1">Mã Giảm Giá</label>
+                        <input required min="0" max="99999999999" name="magiamgia" type="number" step="0.01"
+                               class="form-control"
+                               id="exampleInputPassword1" value="<?php echo $kh['magiamgia'] ?>"
+                               placeholder="Nhập mã giảm giá">
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputPassword1 ">Giá Tiền (Y)</label>
                         <input required min="0" max="99999999999" name="price" type="number" size="50"
@@ -147,7 +176,8 @@
             <button name="submit" type="submit" class="btn btn-primary">Cập Nhật</button>
             <?php
             if (isset($_POST['submit'])) {
-                $kienhangRepository->update($_GET['id'], $_POST['name'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'], $_POST['note'], $_POST['linksp'], $_POST['updateDateStatus']);
+                $kienhangRepository->update($_GET['id'], $_POST['name'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'], $_POST['note'], $_POST['linksp'], $_POST['updateDateStatus']
+                ,$_POST['shiptq'], $_POST['magiamgia'], $_POST['kichthuoc'], $_POST['color']);
                 echo "<script>alert('Cập nhật thành công');window.location.href='kienHang.php';</script>";
             }
             ?>
