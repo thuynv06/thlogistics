@@ -12,6 +12,7 @@ $userList = $userRepository->getAll();
                 <th class="text-center" style="min-width:50px">STT</th>
                 <th class="text-center" style="min-width:150px">Username</th>
                 <th class="text-center" style="min-width:150px">Họ Tên</th>
+                <th class="text-center" style="min-width:150px">Mã KH</th>
                 <th class="text-center" style="min-width:150px">Ngày Sinh</th>
                 <th class="text-center" style="min-width:50px">Email</th>
                 <th class="text-center" style="min-width:100px">SDT</th>
@@ -27,6 +28,7 @@ $userList = $userRepository->getAll();
                     <td><?php echo $i++; ?></td>
                     <td><?php echo $user['username'] ?></td>
                     <td><?php echo $user['fullname'] ?></td>
+                    <td><?php echo $user['code'] ?></td>
                     <td><?php echo $user['dob'] ?></td>
                     <td><?php echo $user['email'] ?></td>
                     <td><?php echo $user['phone'] ?></td>

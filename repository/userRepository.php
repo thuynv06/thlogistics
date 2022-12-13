@@ -16,9 +16,9 @@
             $sql = "delete from user where id=$id"; 
             mysqli_query($conn,$sql);
         }
-        public function updateById($id,$fullname,$email,$phone,$role){
+        public function updateById($id,$fullname,$code,$email,$phone,$role){
             global $conn;
-            $sql = "update user set fullname='$fullname', email='$email', phone='$phone', role=$role where id=$id"; 
+            $sql = "update user set fullname='$fullname',code='$code', email='$email', phone='$phone', role=$role where id=$id";
             mysqli_query($conn,$sql);
         }
     }
