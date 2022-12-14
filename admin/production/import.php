@@ -45,8 +45,8 @@ if (isset($_POST["btnImport"])) {
                 $spreadSheet = $reader->load($targetPath);
                 echo "read ok !";
             } catch (Exception $e) {
-                die(print_r("yyyy", true));
                 echo $e->getMessage();
+                die(print_r("yyyy", true));
             } catch (InvalidArgumentException $e) {
                 echo $e->getMessage();
             }
