@@ -1,13 +1,13 @@
 <?php
-//$server = "localhost:3306";
-//$user="root";
-//$pass="";
-//$database="thlogistics";
-
 $server = "localhost:3306";
-$user="Root";
-$pass="Root_1234";
+$user="root";
+$pass="";
 $database="thlogistics";
+
+//$server = "localhost:3306";
+//$user="Root";
+//$pass="Root_1234";
+//$database="thlogistics";
 $conn=mysqli_connect($server,$user,$pass,$database);
 $conn->set_charset('utf8');
 if(mysqli_connect_errno()){

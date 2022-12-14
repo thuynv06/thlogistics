@@ -37,14 +37,14 @@ if (isset($_POST["btnImport"])) {
 //        echo $sheetCount;
 // output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
-        echo(print_r($spreadSheetAry, true));
+//        echo(print_r($spreadSheetAry, true));
 
         $userCode = $spreadSheetAry[4][2];
         $user = $userRepository->getByCode($userCode);
+        echo(print_r($user, true));
         if (empty($user)){
-            echo(print_r($user, true));
-            echo(print_r($userCode, true));
-            echo "<script>alert('Mã KH ko tồn tại');</script>";
+              die(print_r("Mã KH ko tồn tại", true));
+//            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
         }else{
             $user_id =$user['id'];
             echo(print_r($user_id, true));
@@ -56,10 +56,8 @@ if (isset($_POST["btnImport"])) {
 
         for ($i = 14; $i < $sheetCount - 1; $i++) {
             if (!empty($spreadSheetAry[$i])) {
-
-//            echo $ladingCode;
                 $name = "";
-                if (isset($spreadSheetAry[$i][0])) {
+                if (isset($spreadSheetAry[$i][0]) && !empty($spreadSheetAry[$i][0])) {
                     $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
                 } else {
                     break;
@@ -137,7 +135,7 @@ if (isset($_POST["btnImport"])) {
             }
 
         }
-        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
+//        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
     } else {
         $type = "error";
         $message = "Invalid File Type. Upload Excel File.";
