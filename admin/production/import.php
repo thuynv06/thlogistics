@@ -26,7 +26,7 @@ if (isset($_POST["btnImport"])) {
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 //            echo(print_r($_FILES, true));
-            $targetPath =__DIR__.'/thlogistics/uploads/' .($_FILES["file"]["name"]);
+            $targetPath =__DIR__.'/uploads/' .($_FILES["file"]["name"]);
             echo "Path: " . $targetPath . " \n";
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
                 echo "upload ok?";
