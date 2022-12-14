@@ -5,7 +5,7 @@
 //$database="thlogistics";
 
 $server = "localhost:3306";
-$user="root";
+$user="Root";
 $pass="Root_1234";
 $database="thlogistics";
 $conn=mysqli_connect($server,$user,$pass,$database);
