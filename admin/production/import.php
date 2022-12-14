@@ -26,8 +26,8 @@ if (isset($_POST["btnImport"])) {
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 
-            $targetPath = 'uploads/' . $_FILES['file']['name'];
-//            echo(print_r($targetPath, true));
+            $targetPath = '../../admin/uploads/' . $_FILES['file']['name'];
+            echo(print_r($targetPath, true));
             move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
             # Create a new Xls Reader
@@ -46,8 +46,8 @@ if (isset($_POST["btnImport"])) {
             $user = $userRepository->getByCode($userCode);
 //            echo(print_r($user, true));
             if (empty($user)) {
-//                die(print_r("Mã KH ko tồn tại", true));
-            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
+                die(print_r("Mã KH ko tồn tại", true));
+//            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
             } else {
                 $user_id = $user['id'];
 //                echo(print_r($user_id, true));
