@@ -26,7 +26,7 @@ if (isset($_POST["btnImport"])) {
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 //            echo(print_r($_FILES, true));
-            $targetPath =$_SERVER['DOCUMENT_ROOT'] . "/uploads/". basename($_FILES["file"]["name"]);
+            $targetPath ="uploads/". basename($_FILES["file"]["name"]);
             echo "Path: " . $targetPath . " \n";
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
                 echo "upload ok?";
@@ -141,7 +141,7 @@ if (isset($_POST["btnImport"])) {
                     }
 
                 }
-                //        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
+                echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
             } else {
                 echo "Not uploaded because of error #".$_FILES["file"]["error"];
             }
