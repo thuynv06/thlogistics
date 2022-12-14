@@ -42,7 +42,9 @@ if (isset($_POST["btnImport"])) {
         $userCode = $spreadSheetAry[4][2];
         $user = $userRepository->getByCode($userCode);
         if (empty($user)){
-            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
+            echo(print_r($user, true));
+            echo(print_r($userCode, true));
+            echo "<script>alert('Mã KH ko tồn tại');</script>";
         }else{
             $user_id =$user['id'];
             echo(print_r($user_id, true));
