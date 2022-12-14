@@ -25,15 +25,15 @@ if (isset($_POST["btnImport"])) {
         ];
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
-
-            $targetPath = '../../admin/uploads/' . $_FILES['file']['name'];
-            echo(print_r($targetPath, true));
-            move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
-
+            $path ="../../";
+//            $targetPath = 'localhost/admin/uploads/' . $_FILES['file']['name'];
+//            echo(print_r($targetPath, true));
+            move_uploaded_file($_FILES['file']['tmp_name'], $path."uploads/".$_FILES['file']['name']);
+//            move_uploaded_file($file["tmp_name"],$path."uploads/".$_FILES['file']['name']);
             # Create a new Xls Reader
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $reader->setReadDataOnly(true);
-            $spreadSheet = $reader->load($targetPath);
+            $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
             $excelSheet = $spreadSheet->getActiveSheet();
             $spreadSheetAry = $excelSheet->toArray();
             $sheetCount = count($spreadSheetAry);
