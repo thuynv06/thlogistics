@@ -37,7 +37,7 @@ if (isset($_POST["btnImport"])) {
 //        echo $sheetCount;
 // output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
-//        echo(print_r($spreadSheetAry, true));
+        echo(print_r($spreadSheetAry, true));
 
         $userCode = $spreadSheetAry[4][2];
         $user = $userRepository->getByCode($userCode);
@@ -54,10 +54,7 @@ if (isset($_POST["btnImport"])) {
 
         for ($i = 14; $i < $sheetCount - 1; $i++) {
             if (!empty($spreadSheetAry[$i])) {
-                $ladingCode = "";
-                if (isset($spreadSheetAry[$i][11])) {
-                    $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
-                }
+
 //            echo $ladingCode;
                 $name = "";
                 if (isset($spreadSheetAry[$i][0])) {
@@ -101,6 +98,11 @@ if (isset($_POST["btnImport"])) {
                 $note = "";
                 if (isset($spreadSheetAry[$i][10])) {
                     $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
+                }
+
+                $ladingCode = "";
+                if (isset($spreadSheetAry[$i][11])) {
+                    $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
                 }
 
                 $size = 13;

@@ -33,7 +33,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Vận Đơn:</span></label>
                         <input required type="file" name="file">
                         <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
-                                                                              href="../uploads/tempalte_th1688.xlsx">đây</a>
+                                                                              href="../uploads/filemau.xlsx">đây</a>
                         </p>
                     </div>
 <!--                    <div class="form-group">-->
