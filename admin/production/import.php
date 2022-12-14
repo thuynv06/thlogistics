@@ -26,7 +26,7 @@ if (isset($_POST["btnImport"])) {
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 //            echo(print_r($_FILES, true));
-            $targetPath ='uploads/' .($_FILES["file"]["name"]);
+            $targetPath ='../uploads/' .($_FILES["file"]["name"]);
             echo "Path: " . $targetPath . " \n";
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
                 echo "upload ok?";
@@ -36,7 +36,7 @@ if (isset($_POST["btnImport"])) {
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
                 $reader->setReadDataOnly(true);
 //                echo $path."uploads/".$_FILES['file']['name'];
-                $spreadSheet = $reader->load('uploads/' .($_FILES["file"]["name"]));
+                $spreadSheet = $reader->load($targetPath);
                 echo "read ok !";
                 $excelSheet = $spreadSheet->getActiveSheet();
                 $spreadSheetAry = $excelSheet->toArray();
