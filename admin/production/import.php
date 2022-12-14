@@ -29,6 +29,7 @@ if (isset($_POST["btnImport"])) {
 //            $targetPath = 'localhost/admin/uploads/' . $_FILES['file']['name'];
 //            echo(print_r($targetPath, true));
             try{
+                echo $path."uploads/".$_FILES['file']['name']."KKK";
                 move_uploaded_file($_FILES['file']['tmp_name'], $path."uploads/".$_FILES['file']['name']);
             } catch (Exception $e) {
                 echo "Loi upload file";
@@ -43,6 +44,7 @@ if (isset($_POST["btnImport"])) {
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $reader->setReadDataOnly(true);
             try{
+                echo $path."uploads/".$_FILES['file']['name'];
                 $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
             } catch (Exception $e) {
                 die(print_r($path."uploads/".$_FILES['file']['name']."yyyy", true));
@@ -154,7 +156,7 @@ if (isset($_POST["btnImport"])) {
                 }
 
             }
-        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
+//        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
         } else {
             $type = "error";
             $message = "Invalid File Type. Upload Excel File.";
