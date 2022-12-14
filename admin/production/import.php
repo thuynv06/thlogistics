@@ -143,7 +143,7 @@ if (isset($_POST["btnImport"])) {
                 }
                 //        echo "<script>alert('Thêm thành công');window.location.href='kienHang.php';</script>";
             } else {
-                echo "Upload failed";
+                echo "Not uploaded because of error #".$_FILES["file"]["error"];
             }
         } else {
             $type = "error";
