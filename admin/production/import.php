@@ -34,6 +34,7 @@ if (isset($_POST["btnImport"])) {
                 echo "Loi upload file";
                 echo $e->getMessage();
             } catch (InvalidArgumentException $e) {
+                die(print_r("xxx", true));
                 echo $e->getMessage();
             }
 
@@ -44,6 +45,7 @@ if (isset($_POST["btnImport"])) {
             try{
                 $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
             } catch (Exception $e) {
+                die(print_r("yyyy", true));
                 echo $e->getMessage();
             } catch (InvalidArgumentException $e) {
                 echo $e->getMessage();
