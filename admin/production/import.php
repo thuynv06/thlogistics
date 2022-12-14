@@ -26,7 +26,7 @@ if (isset($_POST["btnImport"])) {
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 
-            $targetPath = '../uploads/' . $_FILES['file']['name'];
+            $targetPath = 'uploads/' . $_FILES['file']['name'];
             move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
             # Create a new Xls Reader
