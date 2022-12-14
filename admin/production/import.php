@@ -33,7 +33,14 @@ if (isset($_POST["btnImport"])) {
             # Create a new Xls Reader
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $reader->setReadDataOnly(true);
-            $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
+            try{
+                $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            } catch (InvalidArgumentException $e) {
+                echo $e->getMessage();
+            }
+//            $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
             $excelSheet = $spreadSheet->getActiveSheet();
             $spreadSheetAry = $excelSheet->toArray();
             $sheetCount = count($spreadSheetAry);
