@@ -4,7 +4,11 @@ require_once("../../backend/filterAdmin.php");
 $userList = $userRepository->getAll();
 $lastCode = $userRepository->getLastCode();
 //print_r($lastCode['code']);
-$numCode = substr($lastCode['code'],-3) +1;
+if(empty($lastCode)){
+    $numCode='';
+}else{
+    $numCode = substr($lastCode['code'],-3) +1;
+}
 //print_r($numCode);
 ?>
 

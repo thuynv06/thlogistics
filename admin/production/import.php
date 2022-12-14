@@ -25,12 +25,11 @@ if (isset($_POST["btnImport"])) {
         ];
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
-            $path ="../../";
-//            $targetPath = 'localhost/admin/uploads/' . $_FILES['file']['name'];
-//            echo(print_r($targetPath, true));
+            $targetPath = '../../uploads/' . $_FILES['file']['name'];
+            echo(print_r($targetPath, true));
             try{
-                echo $path."uploads/".$_FILES['file']['name']."KKK";
-                move_uploaded_file($_FILES['file']['tmp_name'], $path."uploads/".$_FILES['file']['name']);
+                move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+                echo "upload ok?";
             } catch (Exception $e) {
                 echo "Loi upload file";
                 echo $e->getMessage();
@@ -38,21 +37,19 @@ if (isset($_POST["btnImport"])) {
                 die(print_r("xxx", true));
                 echo $e->getMessage();
             }
-
-//            move_uploaded_file($file["tmp_name"],$path."uploads/".$_FILES['file']['name']);
             # Create a new Xls Reader
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $reader->setReadDataOnly(true);
             try{
-                echo $path."uploads/".$_FILES['file']['name'];
-                $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
+//                echo $path."uploads/".$_FILES['file']['name'];
+                $spreadSheet = $reader->load($targetPath);
+                echo "read ok !";
             } catch (Exception $e) {
-                die(print_r($path."uploads/".$_FILES['file']['name']."yyyy", true));
+                die(print_r("yyyy", true));
                 echo $e->getMessage();
             } catch (InvalidArgumentException $e) {
                 echo $e->getMessage();
             }
-//            $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
             $excelSheet = $spreadSheet->getActiveSheet();
             $spreadSheetAry = $excelSheet->toArray();
             $sheetCount = count($spreadSheetAry);
