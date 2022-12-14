@@ -45,7 +45,7 @@ if (isset($_POST["btnImport"])) {
             try{
                 $spreadSheet = $reader->load($path."uploads/".$_FILES['file']['name']);
             } catch (Exception $e) {
-                die(print_r("yyyy", true));
+                die(print_r($path."uploads/".$_FILES['file']['name']."yyyy", true));
                 echo $e->getMessage();
             } catch (InvalidArgumentException $e) {
                 echo $e->getMessage();
