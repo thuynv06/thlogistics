@@ -157,7 +157,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     <td><?php echo $kienHang['size'] ?> <span>/Kg</span></td>
                     <td>
                         <ul style="text-align: left ;">
-                            <li><p class="fix-status">Ngày Khởi Tạo</p></li>
+                            <li><p class="fix-status">Shop gửi hàng</p></li>
                             <li><p class="fix-status">TQ Nhận hàng</p></li>
                             <li><p class="fix-status">Vận chuyển</p></li>
                             <li><p class="fix-status">Nhập kho VN</p></li>
@@ -256,7 +256,10 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary" data-id="">
-                        Save changes
+                        Lưu
+                    </button>
+                    <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
+                        KhoTQ Nhận
                     </button>
                     <button id="btnSaveAllStatus" name="submitAll" type="submit" class="btn btn-warning" data-id="">
                         UpdatedAll
@@ -271,7 +274,17 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
                     echo "<script>window.location.href='kienHang.php';</script>";
                 }
+                if (isset($_POST['tqnhan'])) {
+                    if($_POST['status_id'] ==1){
+                        $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
+                        echo "<script>window.location.href='kienHang.php';</script>";
+                    }else{
+                        echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='kienHang.php';</script>";
+                    }
+
+                }
                 ?>
+
                 <?php
                 if (isset($_POST['submitAll'])) {
                     $kienhangRepository->updateStatusAll($_POST['idKH']);

@@ -141,6 +141,17 @@ $th1688 = $th1688Repository->getConfig();
                            id="exampleInputPassword1" placeholder="Nhập Link sản phẩm">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Chọn ảnh</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    </div>
+                    <div class="custom-file">
+                        <input multiple accept="image/png, image/jpeg" name="files[]" type="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+            </div>
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="exampleInputPassword1">Ghi Chú</label>

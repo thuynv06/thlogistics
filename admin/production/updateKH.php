@@ -4,6 +4,8 @@
         <form method="POST" enctype="multipart/form-data">
             <?php
             $listKH = $kienhangRepository->getById($_GET['id']);
+            $link_image = $kienhangRepository->getImage($_GET['id'])->fetch_assoc();
+//            echo (print_r($link_image,true));
             foreach ($listKH as $kh) {
                 ?>
                 <div class="form-row">
@@ -170,6 +172,12 @@
                                id="exampleInputPassword1" placeholder="Nhập ghi chú sp">
                     </div>
                 </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="exampleInputPassword1">Ảnh</label>
+                    <img src="<?php echo $link_image['link_image'] ?>">
+                </div>
+            </div>
             <?php }
             ?>
 

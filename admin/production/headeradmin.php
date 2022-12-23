@@ -4,6 +4,8 @@ require_once("../../repository/userRepository.php");
 require_once("../../repository/kienhangRepository.php");
 require_once("../../repository/statusRepository.php");
 require_once("../../repository/th1688Repository.php");
+require_once("../../repository/orderRepository.php");
+$orderRepository = new OrderRepository();
 $kienhangRepository = new KienHangRepository();
 $userRepository = new UserRepository();
 $statusRepository = new StatusRepository();
@@ -72,8 +74,8 @@ $th1688Repository = new Th1688Repository();
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
                                     <li><a href="vandon.php">Vận Đơn</a></li>
+                                    <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
                                     <li><a href="nhapkho.php">Nhập Kho TH1688</a></li>
                                     <li><a href="xuatkho.php">Xuất Kho TH1688</a></li>
                                     <li><a href="giaohang.php">Giao Hàng</a>

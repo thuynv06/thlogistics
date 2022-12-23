@@ -160,6 +160,12 @@ values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingW
         $sql = "select * from kienhang where id=$id";
         return mysqli_query($conn, $sql);
     }
+    public function getByCode($code)
+    {
+        global $conn;
+        $sql = "select * from kienhang where orderCode='$code'";
+        return mysqli_query($conn, $sql)->fetch_assoc();;
+    }
 
     public function update($id, $name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note, $linksp, $date,$shiptq,$magiamgia,$kichthuoc,$color)
     {
@@ -200,11 +206,11 @@ values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingW
         global $conn;
         $date1 = new DateTime();
 //        $string1 = $date1->add(new DateInterval("PT10H"))->format("Y-m-d\TH:i:s");
-        $string2 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
-        $string3 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
-        $string4 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
-        $string5 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
-        $string6 = $date1->add(new DateInterval("PT1D"))->format("Y-m-d\TH:i:s");
+        $string2 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+        $string3 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+        $string4 = date_add($date1,date_interval_create_from_date_string("4 days"))->format("Y-m-d\TH:i:s");
+        $string5 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+        $string6 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 
         $sql = "update kienhang set status=6,
                     listTimeStatus =JSON_SET (listTimeStatus,
@@ -217,6 +223,25 @@ values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingW
 //        echo $sql;
         mysqli_query($conn, $sql);
     }
+
+    public function updatekhoTQNhan($id)
+    {
+        global $conn;
+        $date1 = new DateTime();
+        $string2 = date_format($date1,"Y-m-d\TH:i:s");
+        date_add($date1,date_interval_create_from_date_string("2 days"));
+        $string3 = date_format($date1,"Y-m-d\TH:i:s");
+
+        $sql = "update kienhang set status=3,
+                    listTimeStatus =JSON_SET (listTimeStatus,
+                     '\$.\"2\"','$string2',
+                     '\$.\"3\"','$string3'
+                    )
+                    where id=$id ";
+        echo $sql;
+        mysqli_query($conn, $sql);
+    }
+
 
     public function resetStatus($id)
     {
@@ -236,6 +261,17 @@ values($servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingW
         $sql = "update kienhang set orderCode='$orderCode' where id=$id ";
 //        echo $sql;
         mysqli_query($conn, $sql);
+    }
+
+    public function addImage($id,$linkImage){
+        global $conn;
+        $sql = "insert into product_image(product_id,link_image) values($id,'$linkImage')";
+        mysqli_query($conn,$sql);
+    }
+    public function getImage($id){
+        global $conn;
+        $sql = "select link_image from product_image where product_id=$id";
+        return mysqli_query($conn,$sql);
     }
 
 

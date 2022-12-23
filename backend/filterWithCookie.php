@@ -4,7 +4,7 @@
     if($checkCookie != null){
 
         if($checkCookie['role']==1){
-            echo '<a href="admin/production/kienHang.php">TRUY CẬP TRANG ADMIN</a>';
+            echo '<a href="admin/production/vandon.php">TRUY CẬP TRANG ADMIN</a>';
         }else if ($checkCookie['role']==0){
             echo '<a href="danhsachdonhang.php">Mã KH: '.$checkCookie['code'].'</a>';
             echo '<a href="danhsachdonhang.php">Quản Lý Kiện Hàng</a>';

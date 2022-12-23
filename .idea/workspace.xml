@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/admin/production/detailOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/production/updateOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/addKienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/addKienHang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/deleteOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/deleteOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/headeradmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/headeradmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/import.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/kienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/updateKH.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/updateKH.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/updateKienHang.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/vandon.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/vandon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/filterWithCookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/filterWithCookie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/LogoTHzz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/bghangtrungquoc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/orderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/orderRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,17 +50,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/thlogistics/admin/production&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/xampp/htdocs/thlogistics/admin/production",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\thlogistics\admin\production" />
@@ -92,7 +108,10 @@
       <workItem from="1670117303644" duration="7561000" />
       <workItem from="1670504619273" duration="2396000" />
       <workItem from="1670745769303" duration="1858000" />
-      <workItem from="1670909957915" duration="43965000" />
+      <workItem from="1670909957915" duration="44689000" />
+      <workItem from="1671115495719" duration="13810000" />
+      <workItem from="1671241550178" duration="26893000" />
+      <workItem from="1671593403686" duration="26146000" />
     </task>
     <servers />
   </component>
