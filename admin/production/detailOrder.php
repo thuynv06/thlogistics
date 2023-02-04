@@ -1,4 +1,68 @@
-<?php include "headeradmin.php" ?>
+<?php include "headeradmin.php";
+require '../../vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Drawing;
+
+if(isset($_POST['xuatphieu'])) {
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+//Set sheet name.
+    $sheet->setTitle('Data');
+    //Make header(optional).
+    $sheet->setCellValue('A1', "STT");
+//    $sheet->setCellValue('B1', "Tên Sản Phẩm");
+
+    $sheet->setCellValue('B1', "Mã Vận Đơn");
+    $sheet->setCellValue('C1', "Mã Sản Phẩm");
+    $sheet->setCellValue('D1', "Cân Nặng (Kg) ");
+    $sheet->setCellValue('E1', "Đơn Giá (đ)");
+    $sheet->setCellValue('F1', "Thành Tiền (đ)");
+//Make a bottom border(optional).
+    $sheet->getStyle('A1:F1')->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+//Set header background color(optional).
+    $sheet->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('d2d3d1');
+//Set text bold.
+    $sheet->getStyle("A1:F1")->getFont()->setBold(true);
+//Set auto resize(optional).
+    $sheet->getColumnDimension('A')->setAutoSize(true);
+    $sheet->getColumnDimension('B')->setAutoSize(true);
+    $sheet->getColumnDimension('C')->setAutoSize(true);
+    $sheet->getColumnDimension('D')->setAutoSize(true);
+    $sheet->getColumnDimension('E')->setAutoSize(true);
+    $sheet->getColumnDimension('F')->setAutoSize(true);
+//For more styling/formatting info. check out the official documentation: https://phpspreadsheet.readthedocs.io/en/latest/
+    $listId = $_POST['listproduct'];
+    //Write data 1.
+    $tongcan=0;
+    $tongtienvc=0;
+    $i = 2;
+    foreach ($listId as $product_id){
+
+        $tempProduct = $kienhangRepository->getById($product_id)->fetch_assoc();
+        $sheet->setCellValue('A' . $i, $i-1);
+        $sheet->setCellValue('B' . $i, $tempProduct['ladingCode']);
+        $sheet->setCellValue('C' . $i, $tempProduct['orderCode']);
+        $sheet->setCellValue('D' . $i, $tempProduct['size']);
+        $sheet->setCellValue('E' . $i, $tempProduct['feetransport']);
+        $sheet->setCellValue('F' . $i, $tempProduct['size']*$tempProduct['feetransport']);
+
+        $tongcan +=$tempProduct['size'];
+        $tongtienvc += $tempProduct['size']*$tempProduct['feetransport'];
+        $i++;
+    }
+    $sheet->setCellValue('D' . $i, $tongcan);
+    $sheet->setCellValue('F' . $i, $tongtienvc);
+//            echo  print_r($listId,true);
+    //Write excel file.
+    $savePath = "exports/";
+
+    $writer = new Xlsx($spreadsheet);
+    $writer->save($savePath . "\\New File.xlsx");
+
+}
+?>
+
 <div class="right_col" role="main">
     <a class="btn btn-primary" href="vandon.php" role="button">Trở Về</a>
     <div class="">
@@ -13,7 +77,7 @@
             $listUser = $userRepository->getAll();
             foreach ($listUser as $user) {
                 ?>
-                <?php if ($user['code'] == $order['user_code']) {
+                <?php if ($user['id'] == $order['user_id']) {
                     $user_id = $user['id'];
                     $user_code = $user['code'];
                     $user_name = $user['username'];
@@ -44,7 +108,7 @@
                 <div class="form-group col-md-3">
                     <label for="exampleInputEmail1">Mã KH</label>
                     <input style="font-weight: bold" readonly value="<?php echo $user_code ?>"
-                           name="orderId" type="text" class="form-control"
+                           name="user_code" type="text" class="form-control"
                     >
                 </div>
                 <div class="form-group col-md-3">
@@ -58,7 +122,7 @@
                             echo "Đã Giao";
                             break; ?><?php
                     } ?>"
-                           name="orderId" type="text" class="form-control">
+                           name="status" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-row">
@@ -91,7 +155,7 @@
                     <input readonly required min="0" max="99999999999" name="tongtienhangweb" type="number"
                            class="form-control"
                            step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $order['tongtienhangweb'] ?>"
+                           id="exampleInputPassword1" value="<?php echo $order['tongtienhang'] ?>"
                            placeholder="Nhập tỷ giá tệ: vd 3650">
                 </div>
                 <div class="form-group col-md-4">
@@ -99,14 +163,14 @@
                     <input readonly required min="0" max="99999999999" name="tongmagiamgia" type="number"
                            class="form-control"
                            step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $order['tongmagiamgia'] ?>"
+                           id="exampleInputPassword1" value="<?php echo $order['shiptq'] ?>"
                            placeholder="Nhập phí ship trung quốc">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="exampleInputPassword1">Giảm Giá (CNY)</label>
                     <input readonly required min="0" max="99999999999" name="tongmagiamgia" type="number" step="0.01"
                            class="form-control"
-                           id="exampleInputPassword1" value="<?php echo $order['tongmagiamgia'] ?>"
+                           id="exampleInputPassword1" value="<?php echo $order['giamgia'] ?>"
                            placeholder="Nhập mã giảm giá">
                 </div>
             </div>
@@ -133,7 +197,7 @@
                            class="form-control"
                            step="0.01"
                            id="exampleInputPassword1" value="<?php echo $order['tiencong'] ?>"
-                           placeholder="Nhập giá vận chuyển (VNĐ)">
+                           name="tiencong">
                 </div>
 
             </div>
@@ -142,7 +206,7 @@
                     <label for="" style="color: blue;font-weight: bold">Tổng Tiền (VNĐ)
                         - <?php echo product_price($order['tongall']) ?></label>
                     <input readonly required min="0" max="99999999999" value="<?php echo $order['tongall'] ?>"
-                           name="tongcan"
+                           name="tongall"
                            type="number" step="0.01"
                            class="form-control"
                            id="exampleInputPassword1">
@@ -181,7 +245,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="exampleInputPassword1">Ngày Xuất</label>
-                    <input name="enddate" type="datetime-local" step="1"
+                    <input readonly name="enddate" type="datetime-local" step="1"
                            class="form-control"
                            id="enddate">
                 </div>
@@ -194,11 +258,9 @@
                            id="exampleInputPassword1" placeholder="Nhập ghi chú đơn hàng">
                 </div>
             </div>
-            <button class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
-                    data-target="#vandon" data-id="<?php echo $order['id'] ?>"
-                    role="button" onclick="openVanDon()">Vận Đơn
-            </button>
-            <button class="btn-sm btn-primary" href="updateOrder.php?id=<?php echo $order['id'] ?>"
+
+            <button class="btn-sm btn-primary" type="submit" name="updateOrder"
+                    href="detailOrder.php?id=<?php echo $order['id'] ?>"
                     role="button">Cập Nhật
             </button>
             <button class="btn-sm btn-dark" href=""
@@ -209,23 +271,87 @@
             </button>
 
             <?php
-            if (isset($_POST['submit'])) {
-                $kienhangRepository->update($_GET['id'], $_POST['name'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'], $_POST['note'], $_POST['linksp'], $_POST['updateDateStatus']
-                    , $_POST['shiptq'], $_POST['magiamgia'], $_POST['kichthuoc'], $_POST['color']);
-                echo "<script>alert('Cập nhật thành công');window.location.href='kienHang.php';</script>";
+            if (isset($_POST['updateOrder'])) {
+                $tygiate = $order['tygiate'];
+                if (!empty($_POST['tygiate'])) {
+                    $tygiate = $_POST['tygiate'];
+                }
+                $giavanchuyen = $order['giavanchuyen'];
+                if (!empty($_POST['giavanchuyen'])) {
+                    $giavanchuyen = $_POST['giavanchuyen'];
+                }
+                $phidichvu = $order['phidichvu'];
+                if (!empty($_POST['phidichvu'])) {
+                    $phidichvu = $_POST['phidichvu'];
+                }
+                $phidichvu = $order['phidichvu'];
+                if (!empty($_POST['phidichvu'])) {
+                    $phidichvu = $_POST['phidichvu'];
+                }
+                $tamdung = $order['tamung'];
+                if (!empty($_POST['phidichvu'])) {
+                    $tamdung = $_POST['tamung'];
+                }
+                $ghichu = $order['ghichu'];
+                if (!empty($_POST['note'])) {
+                    $ghichu = $_POST['note'];
+                }
+                $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+                //
+                //                            echo(print_r($arr_unserialize1, true));
+                $tongcan = 0;
+                $tongtienhang = 0;
+                $listproduct = array();
+                $shiptq = 0;
+                $tongall = 0;
+                $giamgia = 0;
+                $tienvanchuyen = 0;
+                $tongcan = 0;
+                if (!empty($arr_unserialize1)) {
+                    foreach ($arr_unserialize1 as $masp) {
+                        $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                        $tongtienhang += $product['price'] * $product['amount'];
+                        $shiptq += $product['shiptq'];
+                        $tongcan += $product['size'];
+                        $giamgia += $product['magiamgia'];
+                    }
+                }
+                $tienvanchuyen += $tongcan * $giavanchuyen;
+                $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
+                $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
+
+                if (isset($_POST['tongcan']) && !empty($_POST['tongcan'])) {
+                    $tongcan = $_POST['tongcan'];
+                    $tienvanchuyen = $tongcan * $giavanchuyen;
+                    $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
+
+                }
+
+                $orderRepository->update($_POST['orderId'], $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang, $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1);
+                echo "<script>window.location.href='$urlStr';</script>";
             }
             ?>
         </form>
-
+        <button class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
+                data-target="#vandon" data-id="<?php echo $order['id'] ?>"
+                role="button" onclick="openVanDon()">Vận Đơn
+        </button>
     </div>
+
     <div>
         <h3>Danh Sách Sản Phẩm</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
+
+                    role="button">Xuất Phiếu
+            </button>
         <table id="tableShoe">
             <tr>
                 <th class="text-center" style="min-width:50px">STT</th>
+                <th class="text-center" style="min-width:50px"><input onclick="clickAll()" type="checkbox" id="selectall"/>All</th>
                 <th class="text-center" style="min-width:95px;">Mã Kiện</th>
-                <th class="text-center" style="min-width:95px;">Ảnh</th>
                 <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
+                <th class="text-center" style="min-width:95px;">Ảnh</th>
                 <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
                 <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
                 <th class="text-center" style="min-width:50px">Giá</th>
@@ -257,11 +383,12 @@
 
                     <tr>
                         <td><?php echo $i++; ?></td>
+                        <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>" id=""> Chọn</td>
                         <td><p style="font-weight: 700;"><?php echo $product['orderCode'] ?></p>
                             <p style="color: blue"> <?php
                                 switch ($product['status']) {
                                     case "1":
-                                        echo "Shop gửi hàng";
+                                        echo "Shop Gửi hàng";
                                         break;
                                     case "2":
                                         echo "Kho Trung Quốc Nhận";
@@ -285,7 +412,9 @@
                             <p><?php echo $product['shippingWay'] ?></p>
                         </td>
                         <td><?php echo $product['name'] ?></td>
-                        <td><img width="150px" height="150px" src="<?php echo $link_image['link_image'] ?>"></td>
+                        <td><img width="150px" height="150px"
+                                 src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
+                                 if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
                         <td style="font-weight: bold"><?php echo $product['ladingCode'] ?></td>
                         <!--                        <td>-->
                         <!--                            --><?php
@@ -302,15 +431,23 @@
                         <!--                        </td>-->
                         <td><?php echo $product['price'] ?><span> &#165;</span></td>
                         <td><?php echo $product['amount'] ?></td>
-                        <td><?php echo $product['size'] ?> <span>/Kg</span></td>
+                        <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
+                            <button type="button" id="modalUpdateS" class="btn-sm btn-primary "
+                                    data-toggle="modal"
+                                    data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
+                                    onclick="openModalSuaCan()">
+                                Sửa Cân
+                            </button>
+
+                        </td>
                         <td>
                             <ul style="text-align: left ;">
-                                <li><p class="fix-status">Ngày Khởi Tạo</p></li>
-                                <li><p class="fix-status">TQ Nhận hàng</p></li>
+                                <li><p class="fix-status">Shop Gửi</p></li>
+                                <li><p class="fix-status">TQ Nhận</p></li>
                                 <li><p class="fix-status">Vận chuyển</p></li>
-                                <li><p class="fix-status">Nhập kho VN</p></li>
-                                <li><p class="fix-status">Đang giao hàng</p></li>
-                                <li><p class="fix-status">Đã giao hàng</p></li>
+                                <li><p class="fix-status">NhậpKho VN</p></li>
+                                <li><p class="fix-status">Đang giao</p></li>
+                                <li><p class="fix-status">Đã giao </p></li>
                             </ul>
                         </td>
                         <td><?php $obj = json_decode($product['listTimeStatus']); ?>
@@ -347,7 +484,7 @@
                                     data-toggle="modal"
                                     data-target="#myModal" data-id="<?php echo $product['id'] ?>"
                                     onclick="openModal()">
-                                UpdateStatus
+                                Cập Nhập
                             </button>
                         </td>
                         <td><a class="btn btn-warning" href="updateKH.php?id=<?php echo $product['id'] ?>"
@@ -363,7 +500,7 @@
                         $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
                         echo "<script>window.location.href='$urlStr';</script>";
                     }
-                    if (isset($_POST['tqnhan'])) {
+                    if (isset($_POST['khotq'])) {
                         if ($_POST['status_id'] == 1) {
                             $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
                             echo "<script>window.location.href='$urlStr';</script>";
@@ -372,7 +509,7 @@
                         }
 
                     }
-                    if (isset($_POST['nhapkhovn'])) {
+                    if (isset($_POST['khovn'])) {
                         if ($_POST['status_id'] == 3) {
                             $date = new DateTime();
                             $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
@@ -406,6 +543,7 @@
             ?>
 
         </table>
+        </form>
     </div>
 </div>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
@@ -456,10 +594,10 @@
                 <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary" data-id="">
                     Lưu
                 </button>
-                <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
+                <button id="btnSaveChangeStautus" name="khotq" type="submit" class="btn btn-success" data-id="">
                     KhoTQ Nhận
                 </button>
-                <button id="btnSaveChangeStautus" name="nhapkhovn" type="submit" class="btn btn-success" data-id="">
+                <button id="btnSaveChangeStautus" name="khovn" type="submit" class="btn btn-success" data-id="">
                     NhậpKho VN
                 </button>
 
@@ -477,6 +615,82 @@
 </div>
 </form>
 
+<div id="suacannang" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập Nhập Trạng Thái Kiện Hàng</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+            </div>
+            <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input class="form-control" name="idKH" type="number" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Kiện Hàng</label>
+                        <input required value="" minlength="5" maxlength="250" name="orderCode" type="text"
+                               class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Vận Đơn</label>
+                        <input readonly required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select readonly name="status_id" class="form-control">
+                            <?php
+                            $listStatus = $statusRepository->getAll();
+                            foreach ($listStatus as $status) {
+                                ?>
+                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số KLG</label>
+                        <input required value="" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
+                               class="form-control" placeholder="Nhập số cân">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="xxx" name="suacan" type="submit" class="btn btn-primary" data-id="">
+                        Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php
+    if (isset($_POST['suacan'])) {
+        $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
+        $order = $orderRepository->getById($p['order_id']);
+        $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan']);
+            $tongcan = 0;
+            if (!empty($arr_unserialize1)) {
+                foreach ($arr_unserialize1 as $masp) {
+                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                    $tongcan += $product['size'];
+                }
+            }
+            $tienvanchuyen = $tongcan * $order['giavanchuyen'];
+            $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
+            $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
+
+        $urlStr = "detailOrder.php?id=" . $_GET['id'];
+        echo "<script>window.location.href='$urlStr';</script>";
+    }
+
+    ?>
+</div>
 <div id="vandon" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -494,7 +708,7 @@
                     <div class="form-group">
                         <label>Chọn Thời Gian</label>
                         <input value="" name="updateDateStatus" type="datetime-local" step="1"
-                               class="form-control" id="updateDate">
+                               class="form-control" id="timeVanDon">
                     </div>
             </div>
             <div class="modal-footer">
@@ -508,11 +722,14 @@
                 <button id="btnSaveChangeStautus" name="dagiao" type="submit" class="btn btn-success" data-id="">
                     Đã Giao
                 </button>
+                <button id="btnSaveChangeStautus" name="reset" type="submit" class="btn btn-danger" data-id="">
+                    Reset
+                </button>
             </div>
         </div>
     </div>
 </div>
-
+<?php include 'functionVanDon.php' ?>
 <script>
     function get() {
         $(document).delegate("[data-target='#myModal']", "click", function () {
@@ -544,15 +761,40 @@
         document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
     }
 
+    function openModalSuaCan() {
+        $(document).delegate("[data-target='#suacannang']", "click", function () {
+
+            var id = $(this).attr('data-id');
+
+            // Ajax config
+            $.ajax({
+                type: "GET", //we are using GET method to get data from server side
+                url: 'getKienHang.php', // get the route value
+                data: {id: id}, //set data
+                beforeSend: function () {//We add this before send to disable the button once we submit it so that we prevent the multiple click
+
+                },
+                success: function (response) {//once the request successfully process to the server side it will return result here
+                    response = JSON.parse(response);
+                    $("#edit-form [name=\"idKH\"]").val(response.id);
+                    $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
+                    $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
+                    $("#edit-form [name=\"socan\"]").val(response.size);
+                }
+            });
+        });
+    }
+
     function openVanDon() {
-        $(document).delegate("[data-target='#myModal']", "click", function () {
+        $(document).delegate("[data-target='#vandon']", "click", function () {
             var id = $(this).attr('data-id');
             document.getElementById('idOrder').value = id;
         });
         _getTimeZoneOffsetInMs();
 
-        document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
+        document.getElementById('timeVanDon').value = timestampToDatetimeInputString(Date.now());
     }
+
     function checkInputTraCuu() {
         let input = document.getElementById("inputtracuu").value;
         if (!input) {
@@ -574,7 +816,30 @@
         document.search.submit();
     }
 
-    document.getElementById('enddate').value = timestampToDatetimeInputString(Date.now());
+    function clickAll(){
+        if(document.getElementById('selectall').checked == true)
+        {
+            var ele=document.getElementsByName('listproduct[]');
+
+            for(var i=0; i<ele.length; i++){
+                if(ele[i].type=='checkbox')
+                    ele[i].checked=true;
+            }
+        }else{
+            var ele=document.getElementsByName('listproduct[]');
+
+            for(var i=0; i<ele.length; i++){
+                if(ele[i].type=='checkbox')
+                    ele[i].checked=false;
+            }
+        }
+
+
+
+    }
+
+
+    // document.getElementById('enddate').value = timestampToDatetimeInputString(Date.now());
 </script>
 <?php include 'footeradmin.php' ?>
 

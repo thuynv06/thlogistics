@@ -1,13 +1,16 @@
 <?php include "headeradmin.php" ?>
+<?php
+$kh = $kienhangRepository->getById($_GET['id'])->fetch_assoc();
+$link_image = $kienhangRepository->getImage($_GET['id'])->fetch_assoc();
+$order_id = $kh['order_id'];
+echo $order_id;
+$trove ="detailOrder.php?id=".$order_id ;
+
+?>
     <div class="right_col" role="main">
-        <a class="btn btn-primary" href="kienHang.php" role="button">Trở Về</a>
+        <a class="btn btn-primary" href="<?php echo $trove ?>" role="button">Trở Về</a>
         <form method="POST" enctype="multipart/form-data">
-            <?php
-            $listKH = $kienhangRepository->getById($_GET['id']);
-            $link_image = $kienhangRepository->getImage($_GET['id'])->fetch_assoc();
-//            echo (print_r($link_image,true));
-            foreach ($listKH as $kh) {
-                ?>
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1">Mã Kiện</label>
@@ -48,7 +51,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="exampleInputPassword1">Size</label>
-                        <input required min="0" max="99999999999" value="<?php echo $kh['kichthuoc'] ?>" name="kichthuoc"
+                        <input  min="0" max="99999999999" value="<?php echo $kh['kichthuoc'] ?>" name="kichthuoc"
                                type="text"
                                class="form-control"
                                id="exampleInputPassword1" placeholder="Nhập size S/M?L?XL ...">
@@ -100,7 +103,7 @@
                                id="exampleInputPassword1" placeholder="Nhập số lượng">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="exampleInputPassword1">Kích cỡ</label>
+                        <label for="exampleInputPassword1">Số Cân KLG</label>
                         <input min="0" max="99999999999" name="size" value="<?php echo $kh['size'] ?>" type="number"
                                step="0.01" class="form-control"
                                id="exampleInputPassword1" placeholder="Nhập kích cỡ (Kg)">
@@ -178,15 +181,17 @@
                     <img src="<?php echo $link_image['link_image'] ?>">
                 </div>
             </div>
-            <?php }
+<!--            --><?php //}
             ?>
 
             <button name="submit" type="submit" class="btn btn-primary">Cập Nhật</button>
             <?php
             if (isset($_POST['submit'])) {
+                $urlStr = "updateKH.php?id=" . $_GET['id'];
+
                 $kienhangRepository->update($_GET['id'], $_POST['name'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'], $_POST['note'], $_POST['linksp'], $_POST['updateDateStatus']
                 ,$_POST['shiptq'], $_POST['magiamgia'], $_POST['kichthuoc'], $_POST['color']);
-                echo "<script>alert('Cập nhật thành công');window.location.href='kienHang.php';</script>";
+                echo "<script>alert('Cập nhật thành công');window.location.href='$urlStr';</script>";
             }
             ?>
         </form>

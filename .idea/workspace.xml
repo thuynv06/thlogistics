@@ -5,22 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/production/detailOrder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/production/updateOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/production/functionVanDon.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/production/images/LogoTHzz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/production/importKG.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/production/xuatphieu.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/addKienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/addKienHang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/deleteOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/deleteOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/deleteKienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/deleteKienHang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/detailOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/detailOrder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/headeradmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/headeradmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/kienHang.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/kienHang.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/updateKH.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/updateKH.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/updateKienHang.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/production/updateOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/updateOrder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/vandon.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/vandon.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/filterWithCookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/filterWithCookie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/LogoTHzz.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/bghangtrungquoc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/auth.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repository/orderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/orderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/userRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/userRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +52,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/xampp/htdocs/thlogistics/admin/production",
+    "last_opened_file_path": "C:/xampp/htdocs/thlogistics",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,11 +66,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\thlogistics\admin\production\images" />
       <recent name="C:\xampp\htdocs\thlogistics\admin\production" />
       <recent name="C:\xampp\htdocs\thlogistics\repository" />
       <recent name="C:\xampp\htdocs\thlogistics" />
       <recent name="C:\xampp\htdocs\thlogistics\vendor\phpoffice" />
-      <recent name="C:\xampp\htdocs\shoe" />
     </key>
   </component>
   <component name="RunManager">
@@ -112,6 +114,11 @@
       <workItem from="1671115495719" duration="13810000" />
       <workItem from="1671241550178" duration="26893000" />
       <workItem from="1671593403686" duration="26146000" />
+      <workItem from="1671848156791" duration="10934000" />
+      <workItem from="1672023453675" duration="1992000" />
+      <workItem from="1672032142643" duration="26436000" />
+      <workItem from="1675412260091" duration="8000" />
+      <workItem from="1675475138940" duration="1307000" />
     </task>
     <servers />
   </component>

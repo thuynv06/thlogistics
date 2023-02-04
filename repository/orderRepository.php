@@ -41,11 +41,11 @@
 
             return mysqli_query($conn, $sql);
         }
-        public function createOrder($user_code,$listproduct,$tygiate,$phidichvu,$giavanchuyen,$tongtienhangweb,$tongtienshiptq,$tienvanchuyen,$tamung,$tongall,$tiencong,$tongmagiamgia,$tongcan){
+        public function createOrder($userId,$listproduct,$tygiate,$phidichvu,$giavanchuyen,$tongtienhangweb,$tongtienshiptq,$tienvanchuyen,$tamung,$tongall,$tiencong,$tongmagiamgia,$tongcan,$type){
             global $conn;
             $array_data = serialize($listproduct);
-            $sql = "insert into orders(user_code,listsproduct,tygiate,phidichvu,giavanchuyen,tongtienhangweb,tongtienshiptq,tienvanchuyen,tamung,tongall,tiencong,tongmagiamgia,tongcan)
-            values('$user_code','" . $array_data . "',$tygiate,$phidichvu,$giavanchuyen,$tongtienhangweb,$tongtienshiptq,$tienvanchuyen,$tamung,$tongall ,$tiencong,$tongmagiamgia,$tongcan)";
+            $sql = "insert into orders(user_id,listsproduct,tygiate,phidichvu,giavanchuyen,tongtienhang,shiptq,tienvanchuyen,tamung,tongall,tiencong,giamgia,tongcan,type)
+            values($userId,'" . $array_data . "',$tygiate,$phidichvu,$giavanchuyen,$tongtienhangweb,$tongtienshiptq,$tienvanchuyen,$tamung,$tongall ,$tiencong,$tongmagiamgia,$tongcan,$type)";
 
 //            echo $sql;
             mysqli_query($conn,$sql);
@@ -60,6 +60,38 @@
 
             return mysqli_insert_id($conn);
         }
-        
+
+        public function update($id, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$phishiptq,$giamgia,$tienvanchuyen,$tiencong,$tongtien,$ghichu,$listproduct)
+        {
+            $array_data = serialize($listproduct);
+            global $conn;
+            $sql = "update orders set tygiate=$tygiate,giavanchuyen=$giavanchuyen,phidichvu=$phidichvu,tongcan=$tongcan,tamung=$tamung,tongtienhang=$tongtienhang,
+                    shiptq=$phishiptq,giamgia=$giamgia,tienvanchuyen=$tienvanchuyen,tiencong=$tiencong,tongall=$tongtien,ghichu='$ghichu',listsproduct= '" . $array_data . "'
+                    where id=$id ";
+            echo $sql;
+            mysqli_query($conn, $sql);
+        }
+        public function findByUserId($user_id)
+        {
+            global $conn;
+            $sql = "select * from orders where user_id = $user_id ORDER BY id DESC LIMIT 0, 30";
+            return mysqli_query($conn, $sql);
+        }
+        public function findByNameKH($name)
+        {
+            global $conn;
+            $sql = "select * from orders where  LIKE  '$name' ORDER BY id DESC LIMIT 0, 30";
+            return mysqli_query($conn, $sql);
+        }
+
+        public function updateCan($id,$tongcan,$tienvanchuyen,$tongtien)
+        {
+
+            global $conn;
+            $sql = "update orders set tongcan=$tongcan,tienvanchuyen=$tienvanchuyen,tongall=$tongtien
+                    where id=$id ";
+            echo $sql;
+            mysqli_query($conn, $sql);
+        }
     }
 ?>

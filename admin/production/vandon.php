@@ -2,6 +2,7 @@
 <?php
 require_once("../../repository/orderRepository.php");
 $orderRepository = new OrderRepository();
+$th1688 = $th1688Repository->getConfig();
 if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
     $page_no = $_GET['page_no'];
 } else {
@@ -24,36 +25,79 @@ $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1; // total page minus 1
 $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_records_per_page);
 
-
+if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+    $user_id = $_POST['user_id'];
+    $ordersList = $orderRepository->findByUserId($user_id);
+}
+if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
+    $maKH = $_POST['MaKH'];
+    $user = $userRepository->getByCode($maKH);
+    if(isset($user)){
+        $ordersList = $orderRepository->findByUserId($user['id']);
+    }else{
+        echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
+    }
+}
 ?>
     <div class="right_col" role="main">
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
             <div class=" " style="padding: 20px;">
                 <form action="import.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Vận Đơn:</span></label>
                         <input required type="file" name="file">
                         <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
-                                                                              href="../uploads/filemau.xlsx">đây</a>
+                                                                              href="../production/uploads/filemau.xlsx">đây</a>
                         </p>
                     </div>
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Vận Đơn Cho-->
-                    <!--                            Khách Hàng</label>-->
-                    <!--                        <select name="user_id" class="form-control">-->
-                    <!--                            --><?php
-                    //                            $listUser = $userRepository->getAll();
-                    //                            foreach ($listUser as $user) {
-                    //                                ?>
-                    <!--                                <option value="--><?php //echo $user['id']; ?><!--">-->
-                    <?php //echo $user['username']; ?><!--</option>-->
-                    <!--                                --><?php
-                    //                            }
-                    //                            ?>
-                    <!--                        </select>-->
-                    <!--                    </div>-->
+
                     <button class="btn btn-primary" type="submit" name="btnImport">UpLoad</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+            <div class=" " style="padding: 20px;">
+                <form action="importKG.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Ký Gửi:</span></label>
+                            <input required type="file" name="file">
+                            <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
+                                                                                  href="../production/uploads/filemauKHKG.xlsx">đây</a>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Vận Đơn
+                                Cho
+                                Khách Hàng</label>
+                            <select name="userId" class="form-control">
+                                <?php
+                                $listUser = $userRepository->getAll();
+                                foreach ($listUser as $user) {
+                                    ?>
+                                    <option value="<?php echo $user['id']; ?>">
+                                        <?php echo $user['code']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;"
+                                   for="exampleInputPassword1 ">Giá Vận Chuyển</label>
+                            <input required min="0" max="99999999999" name="giavc" type="number" size="50"
+                                   class="form-control"
+                                   step="0.01"
+                                   id="exampleInputPassword1" value="<?php echo $th1688['giavanchuyen'] ?>"
+                                   placeholder="Nhập giá tiền">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" name="btnImportKG">UpLoad</button>
                 </form>
             </div>
         </div>
@@ -63,23 +107,10 @@ $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_recor
                       enctype="multipart/form-data">
                     <div class="form-group">
                         <input required style="margin-right: 20px; margin-bottom: 5px;"
-                               class="form-control input-large " name="ladingCode"
-                               type="text" value="" placeholder="Tìm theo mã vận đơn">
+                               class="form-control input-large " name="MaKH"
+                               type="text" value="" placeholder="Nhập Mã Khách Hàng">
                     </div>
-                    <div class="form-group">
-                        <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id"
-                                class="form-control custom-select " onchange="searchStatus()">
-                            <option value="">Lọc theo trang thái</option>
-                            <?php
-                            $listStatus = $statusRepository->getAll();
-                            foreach ($listStatus as $status) {
-                                ?>
-                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
+
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
                                 class="form-control custom-select " onchange="searchStatus()">
@@ -117,8 +148,8 @@ $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_recor
                         <th class="text-center" style="min-width:100px">Status</th>
                         <th class="text-center" style="min-width:130px">Tổng Tiền Hàng</th>
                         <th class="text-center" style="min-width:100px">Tiền Công</th>
-                        <th class="text-center" style="min-width:100px">Tiền Vận Chuyển</th>
-                        <th class="text-center" style="min-width:100px">Tổng Tiền</th>
+                        <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>
+                        <th class="text-center" style="min-width:130px">Tổng Tiền</th>
                         <th class="text-center" style="min-width:100px">Đã TT</th>
                         <th class="text-center" style="min-width:100px">Công Nợ</th>
                         <th class="text-center" style="min-width:100px">Ghi Chú</th>
@@ -169,9 +200,9 @@ $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_recor
                             </td>
                             <td>
                                 <?php
-                                $user = $userRepository->getByCode($orders['user_code']); ?>
-                                <p style="font-weight: 500;color: blue"><?php echo $user['username'] ?>
-                                    <span> &#45; </span><?php echo $orders['user_code'] ?></p>
+                                $user = $userRepository->getById($orders['user_id']); ?>
+                                <p style="font-weight: 500;color: blue"><?php echo $user['username'] ?></p>
+                                <p><?php echo $user['code'] ?></p>
                             </td>
                             <!--                            <td>-->
 
@@ -193,11 +224,12 @@ $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_recor
                                             echo "--";
                                     }
                                     ?> </p></td>
-                            <td><p>Tiền Hàng:<?php echo product_priceyen($orders['tongtienhangweb']) ?></p>
-                                <p>Tiền Ship TQ:<?php echo product_priceyen($orders['tongtienshiptq']) ?> </p>
-                                <p>Tổng MGG:<?php echo product_priceyen($orders['tongmagiamgia']) ?> </p></td>
+                            <td><p>Tiền Hàng:<?php echo product_priceyen($orders['tongtienhang']) ?></p>
+                                <p>Tiền Ship TQ:<?php echo product_priceyen($orders['shiptq']) ?> </p>
+                                <p>Tổng MGG:<?php echo product_priceyen($orders['giamgia']) ?> </p></td>
                             <td><?php echo product_price($orders['tiencong']) ?> </td>
-                            <td><p style="font-weight: bold">Tiền VC:<?php echo product_price($orders['tienvanchuyen']) ?></p>
+                            <td><p style="font-weight: bold">Tiền
+                                    VC:<?php echo product_price($orders['tienvanchuyen']) ?></p>
                                 <p style="color: blue">Tổng Kg:<?php echo product_price($orders['tongcan']) ?></p>
                             </td>
                             <td style="font-weight: 500;color: blue"><?php echo product_price($orders['tongall']) ?></td>
@@ -205,11 +237,11 @@ $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_recor
                             <td style="color: red;font-weight: bold"><?php echo product_price($orders['tongall'] - $orders['tamung']) ?></td>
                             <td><?php echo $orders['ghichu'] ?> </td>
                             <td><p><a class="btn-sm btn-dark" href="detailOrder.php?id=<?php echo $orders['id'] ?>"
-                                   role="button">Detail</a></p>
-                            <p><a class="btn-sm btn-primary" href=""
-                               role="button">Duyệt</a></p></td>
+                                      role="button">Detail</a></p>
+                                <p><a class="btn-sm btn-primary" href=""
+                                      role="button">Duyệt</a></p></td>
                             <td>
-                                <a class="btn-sm btn-success" id="modalUpdateS"  data-toggle="modal"
+                                <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS" data-toggle="modal"
                                    data-target="#myModal" data-id="<?php echo $orders['id'] ?>"
                                    role="button" onclick="openModal()">Vận Đơn</a></td>
                             <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
@@ -256,85 +288,14 @@ $ordersList = $orderRepository->getTotalRecordPerPageAdmin($offset, $total_recor
                     <button id="btnSaveChangeStautus" name="dagiao" type="submit" class="btn btn-success" data-id="">
                         Đã Giao
                     </button>
+                    <button id="btnSaveChangeStautus" name="reset" type="submit" class="btn btn-danger" data-id="">
+                        Reset
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-<?php
-if (isset($_POST['nhapkhovn'])) {
-    $idOrder = $_POST['idOrder'];
-    $date = $_POST['updateDateStatus'];
-//    echo $date;
-    $order = $orderRepository->getById($idOrder);
-    //            echo(print_r($order, true));
-    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-    //                            echo(print_r($arr_unserialize1, true));
-    $arr = array();
-    if (!empty($arr_unserialize1)) {
-        foreach ($arr_unserialize1 as $masp) {
-            $product = $kienhangRepository->getById($masp)->fetch_assoc();
-            if ($product['status'] == 3) {
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 4 ,$date);
-                $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $date);
-                $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 5, $tempDate);
-                array_push($arr, $product['ladingCode']);
-                echo "<script>window.location.href='vandon.php';</script>";
-            } else {
-            }
-        }
-    }
-}
-if (isset($_POST['tqnhan'])) {
-    $idOrder = $_POST['idOrder'];
-    $date = $_POST['updateDateStatus'];
-//    echo $date;
-    $order = $orderRepository->getById($idOrder);
-    //            echo(print_r($order, true));
-    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-    //                            echo(print_r($arr_unserialize1, true));
-    $arr = array();
-    if (!empty($arr_unserialize1)) {
-        foreach ($arr_unserialize1 as $masp) {
-            $product = $kienhangRepository->getById($masp)->fetch_assoc();
-            if ($product['status'] == 1) {
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 2, $date);
-                $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $date);
-                $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 3, $tempDate);
-                array_push($arr, $product['ladingCode']);
-                echo "<script>window.location.href='vandon.php';</script>";
-            } else {
-//                echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='kienHang.php';</script>";
-            }
-        }
-    }
-}
-if (isset($_POST['dagiao'])) {
-    $idOrder = $_POST['idOrder'];
-    $order = $orderRepository->getById($idOrder);
-    //            echo(print_r($order, true));
-    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-    //                            echo(print_r($arr_unserialize1, true));
-    $arr = array();
-    if (!empty($arr_unserialize1)) {
-        foreach ($arr_unserialize1 as $masp) {
-            $product = $kienhangRepository->getById($masp)->fetch_assoc();
-            $obj = json_decode($product['listTimeStatus']);
-            if (!empty($obj) && !empty($obj->{5}) && $product['status'] == 5){
-                $date=$obj->{5};
-                $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $date);
-                $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 6, $tempDate);
-                array_push($arr, $product['ladingCode']);
-                echo "<script>window.location.href='vandon.php';</script>";
-            } else {
-//                echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='kienHang.php';</script>";
-            }
-        }
-    }
-}
-?>
+<?php include 'functionVanDon.php' ?>
     <script>
         function searchStatus() {
             document.search.submit();

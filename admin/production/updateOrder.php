@@ -15,7 +15,7 @@ $urlStr = "detailOrder.php?id=" . $_GET['id'];
             $listUser = $userRepository->getAll();
             foreach ($listUser as $user) {
                 ?>
-                <?php if ($user['code'] == $order['user_code']) {
+                <?php if ($user['id'] == $order['user_id']) {
                     $user_id = $user['id'];
                     $user_code = $user['code'];
                     $user_name = $user['username'];
@@ -83,21 +83,21 @@ $urlStr = "detailOrder.php?id=" . $_GET['id'];
                     <label for="exampleInputPassword1">Tổng Tiền Hàng (CNY)</label>
                     <input required min="0" max="99999999999" name="tongtienhangweb" type="number" class="form-control"
                            step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $order['tongtienhangweb'] ?>"
+                           id="exampleInputPassword1" value="<?php echo $order['tongtienhang'] ?>"
                            placeholder="Nhập tỷ giá tệ: vd 3650">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="exampleInputPassword1">Phí Ship TQ (CNY)</label>
                     <input required min="0" max="99999999999" name="tongmagiamgia" type="number" class="form-control"
                            step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $order['tongmagiamgia'] ?>"
+                           id="exampleInputPassword1" value="<?php echo $order['shiptq'] ?>"
                            placeholder="Nhập phí ship trung quốc">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="exampleInputPassword1">Giảm Giá (CNY)</label>
                     <input required min="0" max="99999999999" name="tongmagiamgia" type="number" step="0.01"
                            class="form-control"
-                           id="exampleInputPassword1" value="<?php echo $order['tongmagiamgia'] ?>"
+                           id="exampleInputPassword1" value="<?php echo $order['giamgia'] ?>"
                            placeholder="Nhập mã giảm giá">
                 </div>
             </div>

@@ -3,7 +3,7 @@
     class UserRepository{
         public function getAll(){
             global $conn;
-            $sql = "select * from user"; 
+            $sql = "select * from user ORDER BY id DESC ";
             return mysqli_query($conn,$sql);
         }
         public function getById($id){
