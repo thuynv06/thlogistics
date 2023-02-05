@@ -67,7 +67,7 @@ if (isset($_POST["btnImport"])) {
 //            echo(print_r($user, true));
                 if (empty($user)) {
 //                    die(print_r("Mã KH ko tồn tại", true));
-//            echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
+                    echo "<script>alert('Mã KH ko tồn tại');window.location.href='vandon.php';</script>";
                 } else {
                     $user_id = $user['id'];
 //                echo(print_r($user_id, true));
@@ -85,7 +85,7 @@ if (isset($_POST["btnImport"])) {
                 $tongcan=0;
 
                 $j =1;
-                $orderId = $orderRepository->createOrder($userCode, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,0);
+                $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,0);
 
                 for ($i = 14; $i < $sheetCount; $i++) {
 
