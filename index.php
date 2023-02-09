@@ -200,7 +200,7 @@ $kienhangRepository = new KienHangRepository();
     <div class="ps-taisao">
         <div class="ps-container">
             <div class="titleTH">
-                <h3 style="font-weight: 700;">TẠI SAO NÊN CHỌN TH LOGISTICS ORDER</h3>
+                <h3 style="font-weight: 700;">TẠI SAO NÊN CHỌN TRUNG HOA LOGISTICS ORDER</h3>
                 <img src="images/devider.png">
             </div>
             <div class="row">

@@ -5,7 +5,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 " style="text-align: center">
                     <aside class="ps-widget--footer ps-widget--info">
                         <header>
-                            <h3 class="ps-widget__title">TH Logistics – Cung Cấp Dịch Vụ Đặt Hàng Trung Quốc
+                            <h3 class="ps-widget__title">Trung Hoa Logistics – Cung Cấp Dịch Vụ Đặt Hàng Trung Quốc
                                 Chuyên Nghiệp – Nhanh Chóng – Tận Tâm </h3>
                         </header>
                         <ul class="ps-social">
@@ -42,7 +42,7 @@
                         </header>
                         <footer>
                             <ul class="ps-list--link">
-                                <li><a href="about.php"><i class="fa fa-check"></i> Giới thiệu TH - Logistics</a></li>
+                                <li><a href="about.php"><i class="fa fa-check"></i> Giới thiệu Trung Hoa Logistics</a></li>
                                 <li><a href="dathang.php"><i class="fa fa-check"></i> Dịch vụ Đặt Hàng</a></li>
                                 <li><a href="dichvuvanchuyen.php"><i class="fa fa-check"></i> Dịch vụ Vận Chuyển</a></li>
                                 <li><a href="dichvudoitien.php"><i class="fa fa-check"></i> Dịch vụ Đổi Tiền</a></li>

@@ -9,7 +9,7 @@ $th = $th1688Repository->getConfig();
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12">
-                    <p>TH Logistics - Ngã 3 - Ba La - Hà Đông - Hà Nội - Hotline: 033.699.1688 - 0399.322.668 --------Tỷ giá: 1¥ = <?php echo $th['tygia'] ?> </p>
+                    <p>Trung Hoa Logistics - Ngã 3 - Ba La - Hà Đông - Hà Nội - Hotline: 033.699.1688 - 0399.322.668 --------Tỷ giá: 1¥ = <?php echo $th['tygia'] ?> </p>
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
                     <div class="header__actions">
@@ -25,7 +25,10 @@ $th = $th1688Repository->getConfig();
         <div class="container-fluid">
             <div class="row">
                 <div class="navigation__column left">
-                    <div class="header__logo"><a class="ps-logo" href="index.php"><img src="images/logo.png" alt=""></a></div>
+                    <div class="header__logo"><a class="ps-logo" href="index.php">
+                            <img src="images/logo.png" alt="">
+                        </a>
+                    </div>
                 </div>
                 <div class="navigation__column center">
                     <ul class="main-menu menu">
@@ -71,10 +74,10 @@ $th = $th1688Repository->getConfig();
              data-owl-gap="0"
              data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1"
              data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
-            <p class="ps-service"><i class="ps-icon-delivery"></i><strong>TH Logistics</strong>: Giải pháp đột phá tiết
+            <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Trung Hoa Logistics</strong>: Giải pháp đột phá tiết
                 kiệm chi phí</p>
-            <p class="ps-service"><i class="ps-icon-delivery"></i><strong>TH Logistics</strong>: Dẫn đầu về tốc độ</p>
-            <p class="ps-service"><i class="ps-icon-delivery"></i><strong>TH Logistics</strong>: Đặt hàng không qua
+            <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Trung Hoa Logistics</strong>: Dẫn đầu về tốc độ</p>
+            <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Trung Hoa Logistics</strong>: Đặt hàng không qua
                 trung gian,làm việc trực tiếp với xưởng</p>
         </div>
     </div>
