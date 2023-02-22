@@ -1,90 +1,164 @@
 <?php
 require 'vendor/autoload.php';
-
+require_once("repository/th1688Repository.php");
+require_once("repository/orderRepository.php");
 use vendor\PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 require_once("repository/kienhangRepository.php");
 $kienhangRepository = new KienHangRepository();
+$th1688Repository = new th1688Repository();
+$orderRepository = new OrderRepository();
+$th = $th1688Repository->getConfig();
 require_once("backend/auth.php");
 $checkCookie = Auth::loginWithCookie();
 $user_id = $checkCookie['id'];
 include 'connect.php';
+
 if (isset($_POST["btnImport"])) {
-    $allowedFileType = [
-        'application/vnd.ms-excel',
-        'text/xls',
-        'text/xlsx',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    ];
+    try {
+        $allowedFileType = [
+            'application/vnd.ms-excel',
+            'text/xls',
+            'text/xlsx',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ];
 
-    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+//            echo(print_r($_FILES, true));
+            $targetPath = "uploads/" . basename($_FILES["file"]["name"]);
+            echo "Path: " . $targetPath . " \n";
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
 
-        $targetPath = 'uploads/' . $_FILES['file']['name'];
-        move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetPath);
 
-        # Create a new Xls Reader
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $spreadSheet = $reader->load($targetPath);
-        $excelSheet = $spreadSheet->getActiveSheet();
-        $spreadSheetAry = $excelSheet->toArray();
-        $sheetCount = count($spreadSheetAry);
+//                $worksheet = $spreadsheet->getActiveSheet();
+//                $worksheetArray = $worksheet->toArray();
+////                die(print_r($worksheetArray, true));
+//
+//                $sheetCount = count($worksheetArray);
+//                echo "$sheetCount \n";
+//                array_shift($worksheetArray);
+
+
+                echo "upload ok?";
+                echo "File " . $_FILES['file']['name'] . " uploaded successfully.\n";
+                echo "Displaying contents\n";
+                # Create a new Xls Reader
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                $reader->setReadDataOnly(true);
+
+                $spreadSheet = $reader->load($targetPath);
+                echo "read ok !";
+//                die(print_r($drawing, true));
+                $worksheet = $spreadSheet->getActiveSheet();
+                $spreadSheetAry = $worksheet->toArray();
+                $sheetCount = count($spreadSheetAry);
 //        echo $sheetCount;
-// output the data to the console, so you can see what there is.
 //        die(print_r($spreadSheetAry, true));
 //        echo(print_r($spreadSheetAry, true));
+                // echo $_POST['giavc'];
+                // echo $_POST['userId'];
+                // $userID =$_POST["userId"];
+//            echo(print_r($user, true));
 
 
-        for ($i = 1; $i < $sheetCount ; $i++) {
-            $ladingCode = "";
-            if (isset($spreadSheetAry[$i][0])) {
-                $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
-            }
-//            echo $ladingCode;
-            $name = "";
-            if (isset($spreadSheetAry[$i][1])) {
-                $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
-            }
-            $nametq = "";
-            if (isset($spreadSheetAry[$i][2])) {
-                $nametq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
-            }
-            $amount = $spreadSheetAry[$i][3];
+                $tygiate =0;
+                $giavanchuyen = $th['giavanchuyen'];
+                $phidichvu = 0;
+                $listproduct = array();
+                $tongtienhang = 0;
+                $tongtienshiptq = 0;
+                $tongall = 0;
+                $tongmagiamgia = 0;
+                $tienvanchuyen = 0;
+                $tongcan=0;
+
+                $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,1);
+
+                for ($i = 1; $i < $sheetCount; $i++) {
+
+//                    $drawing = $spreadSheetAry[$i]->getDrawingCollection();
+//                    print_r($drawing,true);
+                    if (!empty($spreadSheetAry[$i])) {
+                        $ladingCode = "";
+                        if (isset($spreadSheetAry[$i][1])) {
+                            $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
+                        }
+                        $name = "";
+                        if (isset($spreadSheetAry[$i][2]) && !empty($spreadSheetAry[$i][2])) {
+                            $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
+                        } else {
+                            break;
+                        }
+                        $linksp = "";
+                        if (isset($spreadSheetAry[$i][3])) {
+                            $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+                        }
+                        $kichthuoc = "";
+                        $color = "";
+                        $amount = $spreadSheetAry[$i][4];
+                        if (isset($spreadSheetAry[$i][4])) {
+                            $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
+                        }
 //            echo $amount;
-            $price = $spreadSheetAry[$i][4];
-            $size = $spreadSheetAry[$i][5];
-            $currency = $spreadSheetAry[$i][6]; //t y gia te
-            $servicefee = $spreadSheetAry[$i][8];
-            $feetransport = $spreadSheetAry[$i][7];
-            $linksp = "";
-            if (isset($spreadSheetAry[$i][9])) {
-                $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
-            }
-            $note = "";
-            if (isset($spreadSheetAry[$i][10])) {
-                $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
-            }
+                        $price = 0;
+                        $shiptq = 0;
+                        $magiamgia = 0;
+                        $note = "";
+                        if (isset($spreadSheetAry[$i][7])) {
+                            $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][7]);
+                        }
+                        $size = 0;
 
 //            if (! empty($name) || ! empty($description)) {
-            $date = new DateTime();
-            $dateCreadted = $date->format("Y-m-d\TH:i:s");
-            $myObj = new stdClass();
-            $myObj->{1} = "$dateCreadted";
-            $listStatusJSON = json_encode($myObj);
-            $kienhang_id = $kienhangRepository->insert($servicefee, $name, $nametq, $ladingCode, $amount, "BT / HN1", $size, $feetransport, 1, $price, $currency, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON);
-            $kienhangRepository->updateMaKien($kienhang_id);
-            if (!empty($kienhang_id)) {
-                $type = "success";
-                $message = "Excel Data Imported into the Database";
+                        $date = new DateTime();
+                        $dateCreadted = $date->format("Y-m-d\TH:i:s");
+                        $myObj = new stdClass();
+                        $myObj->{1} = "$dateCreadted";
+                        $listStatusJSON = json_encode($myObj);
+
+
+                        $kienhang_id = $kienhangRepository->insert($orderId,$phidichvu, $name, NULL, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
+                        $kienhangRepository->updateMaKien($kienhang_id);
+                        array_push($listproduct, $kienhang_id);
+
+
+                        if (!empty($kienhang_id)) {
+                            $type = "success";
+                            $message = "Excel Data Imported into the Database";
+                        } else {
+                            $type = "error";
+                            $message = "Problem in Importing Excel Data";
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+                $tamung = 0;
+                $tiencong = ($tongtienhang + $tongtienshiptq) * $phidichvu;
+                $tongall = ($tongtienhang + $tongtienshiptq + $tiencong - $tongmagiamgia) * $tygiate + $tienvanchuyen;
+
+//                echo (print_r($listproduct,true));
+//                echo $phidichvu;
+                $orderRepository->update($orderId, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
+                echo "<script>alert('Thêm thành công');
+                window.location.href='vandonkhachang.php';</script>";
             } else {
-                $type = "error";
-                $message = "Problem in Importing Excel Data";
+                echo "Not uploaded because of error #" . $_FILES["file"]["error"];
             }
+        } else {
+            $type = "error";
+            $message = "Invalid File Type. Upload Excel File.";
         }
-        echo "<script>alert('Thêm thành công');window.location.href='danhsachdonhang.php';</script>";
+
+
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    } catch (InvalidArgumentException $e) {
+        echo $e->getMessage();
     }
-} else {
-    $type = "error";
-    $message = "Invalid File Type. Upload Excel File.";
+
 }
 
 ?>

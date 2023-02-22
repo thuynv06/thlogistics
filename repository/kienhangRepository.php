@@ -45,8 +45,8 @@ class KienHangRepository
     public function findByMaVanDon($ladingCode)
     {
         global $conn;
-        $sql = "select * from kienhang as k where k.ladingCode='$ladingCode' ORDER BY id DESC";
-//        echo $sql;
+        $sql = "select * from kienhang as k where k.ladingCode LIKE '%$ladingCode%' ORDER BY id DESC";
+    //    echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
@@ -126,7 +126,7 @@ class KienHangRepository
         $sql = "insert into kienhang(order_id,servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus,shiptq,magiamgia,kichthuoc,color) 
 values($orderId,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
        ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus',$shiptq,$magiamgia,'$kichthuoc','$color')";
-        echo $sql;
+        // echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
@@ -273,11 +273,22 @@ values($orderId,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$
         $sql = "select link_image from product_image where product_id=$id";
         return mysqli_query($conn,$sql);
     }
-    public function updateCanNang($id, $cannang)
+    public function updateCanNang($id, $cannang,$gianhap)
     {
 //        $s='$.'.'"'.$status.'"';
         global $conn;
-        $sql = "update kienhang set size=$cannang where id=$id ";
+        $sql=null;
+        if(!empty($cannang) && !empty($gianhap)){
+            $sql = "update kienhang set gianhap=$gianhap,size=$cannang where id=$id ";
+        }else{
+            if(!empty($cannang) && empty($gianhap)){
+                $sql = "update kienhang set size=$cannang where id=$id ";
+            }
+            if(empty($cannang) && !empty($gianhap)){
+                $sql = "update kienhang set gianhap=$gianhap where id=$id ";
+            }
+        }
+        
 //        echo $sql;
         mysqli_query($conn, $sql);
     }

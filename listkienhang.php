@@ -74,9 +74,9 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                                     case "2":
                                         echo "Kho Trung Quốc Nhận";
                                         break;
-                                    case "3":
-                                        echo "Đang Vận Chuyển";
-                                        break;
+                                    // case "3":
+                                    //     echo "Đang Vận Chuyển";
+                                    //     break;
                                     case "4":
                                         echo "Nhập Kho Việt Nam";
                                         break;
@@ -97,7 +97,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                                 <ul style="text-align: left ;">
                                     <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>
                                     <li><p class="fix-status"><span>&#8658;</span> TQ Nhận hàng</p></li>
-                                    <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li>
+                                    <!-- <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li> -->
                                     <li><p class="fix-status"><span>&#8658;</span> Nhập kho VN</p></li>
                                     <li><p class="fix-status"><span>&#8658;</span> Đang giao hàng</p></li>
                                     <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
@@ -118,12 +118,12 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                                             } else {
                                                 echo "--------------";
                                             } ?></p></li>
-                                    <li><p class="fix-status"><?php
-                                            if (!empty($obj->{3})) {
-                                                echo $obj->{3};
-                                            } else {
-                                                echo "--------------";
-                                            } ?></p></li>
+                                    <!-- <li><p class="fix-status"><?php
+                                            // if (!empty($obj->{3})) {
+                                            //     echo $obj->{3};
+                                            // } else {
+                                            //     echo "--------------";
+                                            // } ?></p></li> -->
                                     <li>
                                         <p class="fix-status"><?php if (!empty($obj->{4})) {
                                                 echo $obj->{4};

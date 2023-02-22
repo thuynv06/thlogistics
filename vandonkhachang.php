@@ -53,8 +53,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
             <div class="container">
                 <p style="color: #0b0b0b;"><span>Thông Báo</span></p>
                 <p style="color: #0b0b0b;">Do một số hãng Kuaidi Trung Quốc che các thông tin về Mã khách hàng vì vậy
-                    gây khó khăn cho việc nhận diện kiện hàng khi Alibao khai thác hàng tại kho Trung Quốc. Vì vậy TH
-                    logistics rất mong các Quý khách hàng cập nhật đầy đủ các mã vận đơn ký gửi lên hệ thống của TH
+                    gây khó khăn cho việc nhận diện kiện hàng khi Trung Hoa Logistics khai thác hàng tại kho Trung Quốc. Vì vậy Trung Hoa
+                    logistics rất mong các Quý khách hàng cập nhật đầy đủ các mã vận đơn ký gửi lên hệ thống của Trung Hoa
                     logistics để tránh sai sót không cần thiết. Quy trình cập nhật vận đơn ký gửi được cập nhật TẠI ĐÂY.
                 </p>
                 <p style="color: #0b0b0b;">Trân trọng!</p>
@@ -71,7 +71,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                             <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Vận Đơn:</span></label>
                             <input required type="file" name="file">
                             <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
-                                                                                  href="uploads/tempalte_th1688.xlsx">đây</a>
+                                                                                  href="uploads/filemauKHKG.xlsx">đây</a>
                             </p>
                         </div>
                         <button class="btn btn-primary" type="submit" name="btnImport">UpLoad</button>
@@ -107,6 +107,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
                         <a style="margin-top: 5px;padding: 10px 40px;" href="vandonkhachang.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
+                        <a style="margin-top: 5px;padding: 10px 40px;" href="danhsachdonhang.php" class="btn btn-primary btn-large btn-th">Danh Sách Đơn Hàng</a>
                     </div>
                 </div>
                 <hr>

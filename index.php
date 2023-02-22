@@ -61,7 +61,9 @@ $kienhangRepository = new KienHangRepository();
                                 ?>
                                 <tr>
                                 <td><?php echo $i++; ?></td>
-                                <td><?php echo $kienHang['orderCode'] ?></td>
+                                <td><p><?php echo $kienHang['orderCode'] ?></p>
+                                <p style="font-weight: 700;color:#000"><?php echo $kienHang['name'] ?></p>
+                                </td>
                                 <td style="color: blue"><?php
                                     switch ($kienHang['status']) {
                                         case "1":
@@ -70,9 +72,9 @@ $kienhangRepository = new KienHangRepository();
                                         case "2":
                                             echo "Kho Trung Quốc Nhận";
                                             break;
-                                        case "3":
-                                            echo "Đang Vận Chuyển";
-                                            break;
+                                        // case "3":
+                                        //     echo "Đang Vận Chuyển";
+                                        //     break;
                                         case "4":
                                             echo "Nhập Kho Việt Nam";
                                             break;
@@ -87,14 +89,15 @@ $kienhangRepository = new KienHangRepository();
                                     }
                                     ?>
                                 </td>
-                                <td><?php echo $kienHang['ladingCode'] ?></td>
+                                <td><?php echo $kienHang['ladingCode'] ?>
+                                </td>
                                 <td><?php echo $kienHang['size'] ?></td>
                                 <td><?php echo $kienHang['shippingWay'] ?></td>
                                 <td>
                                     <ul style="text-align: left ;">
-                                        <li><p class="fix-status"><span>&#8658;</span> Ngày Khởi Tạo</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>
                                         <li><p class="fix-status"><span>&#8658;</span> TQ Nhận hàng</p></li>
-                                        <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li>
+                                        <!-- <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li> -->
                                         <li><p class="fix-status"><span>&#8658;</span> Nhập kho VN</p></li>
                                         <li><p class="fix-status"><span>&#8658;</span> Đang giao hàng</p></li>
                                         <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
@@ -115,12 +118,12 @@ $kienhangRepository = new KienHangRepository();
                                                 } else {
                                                     echo "--------------";
                                                 } ?></p></li>
-                                        <li><p class="fix-status"><?php
-                                                if (!empty($obj->{3})) {
-                                                    echo $obj->{3};
-                                                } else {
-                                                    echo "--------------";
-                                                } ?></p></li>
+                                        <!-- <li><p class="fix-status"><?php
+                                                // if (!empty($obj->{3})) {
+                                                //     echo $obj->{3};
+                                                // } else {
+                                                //     echo "--------------";
+                                                // } ?></p></li> -->
                                         <li><p class="fix-status"><?php if (!empty($obj->{4})) {
                                                     echo $obj->{4};
                                                 } else {

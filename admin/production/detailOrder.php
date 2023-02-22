@@ -126,14 +126,21 @@ if(isset($_POST['xuatphieu'])) {
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="exampleInputPassword1">Tỷ giá tệ (Y)</label>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Giá Tệ Nhập (Y)</label>
+                    <input required min="0" max="99999999999" name="giatenhap" type="number" class="form-control"
+                           step="0.01"
+                           id="exampleInputPassword1" value="<?php echo $order['giatenhap'] ?>"
+                           >
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Giá Tệ Bán (Y)</label>
                     <input required min="0" max="99999999999" name="tygiate" type="number" class="form-control"
                            step="0.01"
                            id="exampleInputPassword1" value="<?php echo $order['tygiate'] ?>"
                            placeholder="Nhập tỷ giá tệ: vd 3650">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="exampleInputPassword1 ">Giá Vận Chuyển</label>
                     <input required min="0" max="99999999999" name="giavanchuyen" type="number" size="50"
                            class="form-control"
@@ -141,7 +148,7 @@ if(isset($_POST['xuatphieu'])) {
                            id="exampleInputPassword1" value="<?php echo $order['giavanchuyen'] ?>"
                            placeholder="Nhập giá tiền">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="exampleInputPassword1">Phí Dịch Vụ</label>
                     <input required min="0" max="99999999999" name="phidichvu" type="number" class="form-control"
                            step="0.01"
@@ -150,7 +157,7 @@ if(isset($_POST['xuatphieu'])) {
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="exampleInputPassword1">Tổng Tiền Hàng (CNY)</label>
                     <input readonly required min="0" max="99999999999" name="tongtienhangweb" type="number"
                            class="form-control"
@@ -158,7 +165,7 @@ if(isset($_POST['xuatphieu'])) {
                            id="exampleInputPassword1" value="<?php echo $order['tongtienhang'] ?>"
                            placeholder="Nhập tỷ giá tệ: vd 3650">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="exampleInputPassword1">Phí Ship TQ (CNY)</label>
                     <input readonly required min="0" max="99999999999" name="tongmagiamgia" type="number"
                            class="form-control"
@@ -166,11 +173,18 @@ if(isset($_POST['xuatphieu'])) {
                            id="exampleInputPassword1" value="<?php echo $order['shiptq'] ?>"
                            placeholder="Nhập phí ship trung quốc">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="exampleInputPassword1">Giảm Giá (CNY)</label>
                     <input readonly required min="0" max="99999999999" name="tongmagiamgia" type="number" step="0.01"
                            class="form-control"
                            id="exampleInputPassword1" value="<?php echo $order['giamgia'] ?>"
+                           placeholder="Nhập mã giảm giá">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Thu Khác</label>
+                    <input  required min="0" max="99999999999" name="thukhac" type="number" step="0.01"
+                           class="form-control"
+                           id="exampleInputPassword1" value="<?php echo $order['thukhac'] ?>"
                            placeholder="Nhập mã giảm giá">
                 </div>
             </div>
@@ -202,7 +216,7 @@ if(isset($_POST['xuatphieu'])) {
 
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="" style="color: blue;font-weight: bold">Tổng Tiền (VNĐ)
                         - <?php echo product_price($order['tongall']) ?></label>
                     <input readonly required min="0" max="99999999999" value="<?php echo $order['tongall'] ?>"
@@ -211,7 +225,7 @@ if(isset($_POST['xuatphieu'])) {
                            class="form-control"
                            id="exampleInputPassword1">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label style="color: #00CC00;font-weight: bold">Đã Ứng (VNĐ)
                         - <?php echo product_price($order['tamung']) ?></label>
                     <input min="0" max="99999999999" name="tamung" value="<?php echo $order['tamung'] ?>"
@@ -219,9 +233,19 @@ if(isset($_POST['xuatphieu'])) {
                            step="0.01" class="form-control"
                            id="exampleInputPassword1">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label style="color: red;font-weight: bold">Công Nợ (VNĐ)
                         - <?php echo product_price($order['tongall'] - $order['tamung']) ?></label>
+                    <input readonly required min="0" max="99999999999" name="congno" type="number" class="form-control"
+                           step="0.01"
+                           id="exampleInputPassword1" value="<?php echo $order['tongall'] - $order['tamung'] ?>"
+                    >
+                </div>
+                <div class="form-group col-md-3">
+                    <label style="color: red;font-weight: bold">Lợi Nhuận (VNĐ)
+                         <?php echo product_price($order['tongall'] - $order['tamung']) 
+                            
+                         ?>
                     <input readonly required min="0" max="99999999999" name="congno" type="number" class="form-control"
                            step="0.01"
                            id="exampleInputPassword1" value="<?php echo $order['tongall'] - $order['tamung'] ?>"
@@ -429,14 +453,16 @@ if(isset($_POST['xuatphieu'])) {
                         //                            }
                         //                            ?>
                         <!--                        </td>-->
-                        <td><?php echo $product['price'] ?><span> &#165;</span></td>
+                        <td><p style="color:red"><?php echo $product['price'] ?><span> &#165;</span></p>
+                        <p style="color:green"><?php echo $product['gianhap'] ?><span> &#165;</span></p>
+                        </td>
                         <td><?php echo $product['amount'] ?></td>
                         <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
                             <button type="button" id="modalUpdateS" class="btn-sm btn-primary "
                                     data-toggle="modal"
                                     data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
                                     onclick="openModalSuaCan()">
-                                Sửa Cân
+                                Sửa Giá/Cân
                             </button>
 
                         </td>
@@ -658,6 +684,11 @@ if(isset($_POST['xuatphieu'])) {
                         <input required value="" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
                                class="form-control" placeholder="Nhập số cân">
                     </div>
+                    <div class="form-group">
+                        <label>Giá Nhập</label>
+                        <input required value="" minlength="1" maxlength="250" name="gianhap" type="number" step="0.01"
+                               class="form-control" placeholder="Nhập số cân">
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -673,7 +704,7 @@ if(isset($_POST['xuatphieu'])) {
     if (isset($_POST['suacan'])) {
         $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
         $order = $orderRepository->getById($p['order_id']);
-        $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan']);
+        $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'],$_POST['gianhap']);
             $tongcan = 0;
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
@@ -780,6 +811,7 @@ if(isset($_POST['xuatphieu'])) {
                     $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
                     $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
                     $("#edit-form [name=\"socan\"]").val(response.size);
+                    $("#edit-form [name=\"gianhap\"]").val(response.size);
                 }
             });
         });

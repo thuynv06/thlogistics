@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">
                     <form id="tracuu" class="ps-subscribe__form" method="POST"
-                    ">
+                    >
                     <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"
                            placeholder="Nhập mã vận đơn…">
                     <button style="background-color: #ff6c00;">Tra Cứu</button>
