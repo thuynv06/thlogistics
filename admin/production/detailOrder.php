@@ -3,6 +3,7 @@ require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Drawing;
+$loinhuan=0;
 
 if(isset($_POST['xuatphieu'])) {
     $spreadsheet = new Spreadsheet();
@@ -63,6 +64,8 @@ if(isset($_POST['xuatphieu'])) {
 }
 ?>
 
+
+
 <div class="right_col" role="main">
     <a class="btn btn-primary" href="vandon.php" role="button">Trở Về</a>
     <div class="">
@@ -72,6 +75,17 @@ if(isset($_POST['xuatphieu'])) {
             $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
             //                            echo(print_r($arr_unserialize1, true));
             $startdate = date("Y-m-d\TH:i:s", strtotime($order['startdate']));
+            if (!empty($arr_unserialize1)) {
+                foreach ($arr_unserialize1 as $masp) {
+                   $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                   $thanhtiennhap= $product['gianhap']*$product['amount']*$order['giatenhap'];
+                   $thanhtienban= $product['price']*$product['amount']*$product['currency'] + $product['shiptq']*$product['currency'] - $product['magiamgia']*$product['currency'];
+                   $phidv = $thanhtienban*$product['servicefee'];
+           
+                   $loinhuan+=$thanhtienban+$phidv-$thanhtiennhap;
+                }
+                $loinhuan=  $loinhuan- $order['thukhac'];
+               }
             ?>
             <?php
             $listUser = $userRepository->getAll();
@@ -241,15 +255,9 @@ if(isset($_POST['xuatphieu'])) {
                            id="exampleInputPassword1" value="<?php echo $order['tongall'] - $order['tamung'] ?>"
                     >
                 </div>
-                <div class="form-group col-md-3">
-                    <label style="color: red;font-weight: bold">Lợi Nhuận (VNĐ)
-                         <?php echo product_price($order['tongall'] - $order['tamung']) 
-                            
-                         ?>
-                    <input readonly required min="0" max="99999999999" name="congno" type="number" class="form-control"
-                           step="0.01"
-                           id="exampleInputPassword1" value="<?php echo $order['tongall'] - $order['tamung'] ?>"
-                    >
+                <div class=" col-md-3">
+                    <label >Lợi Nhuận (VNĐ)</label>
+                         <h4 style="color: green;font-weight: bold;margin-top: 6px; text-indent: 20px;"><?php echo product_price($loinhuan)   ?></h4>
                 </div>
 
             </div>
