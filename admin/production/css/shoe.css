@@ -41,6 +41,22 @@ td{
     font-weight: 500;
     color: #000000d1;
 }
+#tableDei td
+{
+    border: 1px solid #ddd;
+    padding: 5px;
+    font-family: 'FontAwesome';
+    font-weight: 700;
+    color: #000000d1;
+}
+#tableDei td, #tableDei th{
+    font-family: 'FontAwesome';
+    font-weight: 700;
+    background-color: #f4b78a;
+    color: #141414;
+}
+
+
 #tableShoeIndex tr:nth-child(even){
     background-color: #f2f2f2;
 }

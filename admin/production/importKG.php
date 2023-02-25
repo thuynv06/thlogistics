@@ -122,7 +122,7 @@ if (isset($_POST["btnImportKG"])) {
                         $listStatusJSON = json_encode($myObj);
 
 
-                        $kienhang_id = $kienhangRepository->insert($orderId,$phidichvu, $name, NULL, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $userID, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
+                        $kienhang_id = $kienhangRepository->insert($orderId,0,$phidichvu, $name, NULL, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $userID, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
                         $kienhangRepository->updateMaKien($kienhang_id);
                         array_push($listproduct, $kienhang_id);
 
@@ -145,7 +145,7 @@ if (isset($_POST["btnImportKG"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-                $orderRepository->update($orderId, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
+                $orderRepository->update($orderId,0, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
                 echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
             } else {
                 echo "Not uploaded because of error #" . $_FILES["file"]["error"];

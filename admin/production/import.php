@@ -84,8 +84,8 @@ if (isset($_POST["btnImport"])) {
                 $tongmagiamgia = 0;
                 $tienvanchuyen = 0;
                 $tongcan=0;
-
-                $j =1;
+                $giatenhap=0;
+                $j =0;
                 $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,0);
 
                 for ($i = 14; $i < $sheetCount; $i++) {
@@ -143,7 +143,7 @@ if (isset($_POST["btnImport"])) {
                             $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
                         }
 
-                        $size = 13;
+                        $size = 0;
                         if (isset($spreadSheetAry[$i][13])) {
                             $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
                         }
@@ -159,7 +159,7 @@ if (isset($_POST["btnImport"])) {
                         $listStatusJSON = json_encode($myObj);
 
 
-                        $kienhang_id = $kienhangRepository->insert($orderId,$phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
+                        $kienhang_id = $kienhangRepository->insert($orderId,$price,$phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
                         $kienhangRepository->updateMaKien($kienhang_id);
                         array_push($listproduct, $kienhang_id);
                         $tongtienhang += $price * $amount;
@@ -214,7 +214,7 @@ if (isset($_POST["btnImport"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-                $orderRepository->update($orderId, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
+                $orderRepository->update($orderId,$giatenhap, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
                 echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
             } else {
                 echo "Not uploaded because of error #" . $_FILES["file"]["error"];

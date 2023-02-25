@@ -61,11 +61,11 @@
             return mysqli_insert_id($conn);
         }
 
-        public function update($id, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$phishiptq,$giamgia,$tienvanchuyen,$tiencong,$tongtien,$ghichu,$listproduct)
+        public function update($id,$giatenhap,$tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$phishiptq,$giamgia,$tienvanchuyen,$tiencong,$tongtien,$ghichu,$listproduct)
         {
             $array_data = serialize($listproduct);
             global $conn;
-            $sql = "update orders set tygiate=$tygiate,giavanchuyen=$giavanchuyen,phidichvu=$phidichvu,tongcan=$tongcan,tamung=$tamung,tongtienhang=$tongtienhang,
+            $sql = "update orders set giatenhap=$giatenhap, tygiate=$tygiate,giavanchuyen=$giavanchuyen,phidichvu=$phidichvu,tongcan=$tongcan,tamung=$tamung,tongtienhang=$tongtienhang,
                     shiptq=$phishiptq,giamgia=$giamgia,tienvanchuyen=$tienvanchuyen,tiencong=$tiencong,tongall=$tongtien,ghichu='$ghichu',listsproduct= '" . $array_data . "'
                     where id=$id ";
             echo $sql;

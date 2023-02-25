@@ -106,7 +106,7 @@ class KienHangRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($orderId,$servicefee, $name, $nametq, $ladingCode, $amount, $shippingWay, $size, $feetransport, $status, $price, $currency, $user_id, $linksp, $note, $dateCreated, $listTimeStatus,$shiptq,$magiamgia,$kichthuoc,$color)
+    public function insert($orderId,$gianhap,$servicefee, $name, $nametq, $ladingCode, $amount, $shippingWay, $size, $feetransport, $status, $price, $currency, $user_id, $linksp, $note, $dateCreated, $listTimeStatus,$shiptq,$magiamgia,$kichthuoc,$color)
     {
         global $conn;
         $totalmoney = 0;
@@ -123,10 +123,10 @@ class KienHangRepository
         }
         $alltotal = $totalmoney + $totalfeetransport + $totalservicefee;
 
-        $sql = "insert into kienhang(order_id,servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus,shiptq,magiamgia,kichthuoc,color) 
-values($orderId,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
+        $sql = "insert into kienhang(order_id,gianhap,servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus,shiptq,magiamgia,kichthuoc,color) 
+values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
        ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus',$shiptq,$magiamgia,'$kichthuoc','$color')";
-        // echo $sql;
+        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
