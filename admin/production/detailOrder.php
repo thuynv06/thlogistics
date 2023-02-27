@@ -112,7 +112,7 @@ if (isset($_POST['xuatphieu'])) {
             <div class="row">
                 <div class="col-md-4 table-responsive">
                     <h3>Thông Tin Khách Hàng</h3>
-                    <table id="tableShoe">
+                    <table id="tableShoe" >
                         <tr style="min-width:100px">
                             <th>Họ tên</th>
                             <td><?php echo $kh['fullname'] ?></td>

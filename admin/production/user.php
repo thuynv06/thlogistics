@@ -23,6 +23,9 @@ $userList = $userRepository->getAll();
                 <th class="text-center" style="min-width:100px"></th>
                 <th class="text-center" style="min-width:100px"></th>
             </tr>
+             <?php
+            $i = 1;
+            foreach ($userList as $user) {?>
             <tr>
                 <td><?php echo $i++; ?></td>
                 <td><?php echo $user['username'] ?></td>
@@ -37,6 +40,9 @@ $userList = $userRepository->getAll();
                 <td><a class="btn btn-danger" href="deleteUser.php?id=<?php echo $user['id'] ?>" role="button"
                         onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
             </tr>
+                <?php
+            }
+             ?>
         </table>
     </div>
 <?php include 'footeradmin.php' ?>

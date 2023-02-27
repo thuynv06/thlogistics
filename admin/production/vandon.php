@@ -200,9 +200,12 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                             </td>
                             <td>
                                 <?php
-                                $user = $userRepository->getById($orders['user_id']); ?>
+                                $user = $userRepository->getById($orders['user_id']);
+                                if(!empty($user)){ ?>
                                 <p style="font-weight: 500;color: blue"><?php echo $user['username'] ?></p>
                                 <p><?php echo $user['code'] ?></p>
+                                    <?php
+                                    } ?>
                             </td>
                             <!--                            <td>-->
 
