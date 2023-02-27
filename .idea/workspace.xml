@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8351cfb4-2077-4350-aab4-e2a01297b0c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/css/shoe.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/css/shoe.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/production/detailOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/detailOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/importKG.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/importKG.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/uploads/filemau.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/uploads/filemau.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/production/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/production/user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/kienhangRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/kienhangRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/orderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/repository/orderRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +107,7 @@
       <workItem from="1675475138940" duration="14116000" />
       <workItem from="1677313997072" duration="126000" />
       <workItem from="1677314212321" duration="2098000" />
+      <workItem from="1677464748878" duration="2031000" />
     </task>
     <servers />
   </component>

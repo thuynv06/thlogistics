@@ -68,7 +68,7 @@ if (isset($_POST['xuatphieu'])) {
 
 <div class="right_col" role="main">
     <a class="btn btn-primary" href="vandon.php" role="button">Trở Về</a>
-    <div class="row">
+    <div class="row" style="margin-left: 0px;">
         <form method="POST" enctype="multipart/form-data">
             <?php
             $order = $orderRepository->getById($_GET['id']);
@@ -267,12 +267,7 @@ if (isset($_POST['xuatphieu'])) {
                             <th>Tổng Tiền</th>
                             <td><label for="" style="color: blue;font-weight: bold">Tổng Tiền (VNĐ)
                                     - <?php echo product_price($order['tongall']) ?></label>
-                                <input readonly required min="0" max="99999999999"
-                                       value="<?php echo $order['tongall'] ?>"
-                                       name="tongall"
-                                       type="number" step="0.01"
-                                       class="form-control"
-                                       id="exampleInputPassword1"></td>
+                                </td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Đã Thanh Toán</th>
@@ -290,13 +285,7 @@ if (isset($_POST['xuatphieu'])) {
                         <tr style="min-width:100px">
                             <th>Còn Thiếu</th>
                             <td><label style="color: red;font-weight: bold">Công Nợ (VNĐ)
-                                    - <?php echo product_price($order['tongall'] - $order['tamung']) ?></label><input
-                                        readonly required min="0" max="99999999999" name="congno" type="number"
-                                        class="form-control"
-                                        step="0.01"
-                                        id="exampleInputPassword1"
-                                        value="<?php echo $order['tongall'] - $order['tamung'] ?>"
-                                ></td>
+                                    - <?php echo product_price($order['tongall'] - $order['tamung']) ?></label></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Trạng Thái</th>
@@ -319,84 +308,86 @@ if (isset($_POST['xuatphieu'])) {
 
                     </table>
                 </div>
+                <div class="col-md-4">
+                <button class="btn-sm btn-primary" type="submit" name="updateOrder"
+                        href="detailOrder.php?id=<?php echo $order['id'] ?>"
+                        role="button">Cập Nhật
+                </button>
+                <button class="btn-sm btn-dark" href=""
+                        role="button">Duyệt
+                </button>
+                <button class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
+                        type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
+                </button>
 
-                    <button class="btn-sm btn-primary" type="submit" name="updateOrder"
-                            href="detailOrder.php?id=<?php echo $order['id'] ?>"
-                            role="button">Cập Nhật
-                    </button>
-                    <button class="btn-sm btn-dark" href=""
-                            role="button">Duyệt
-                    </button>
-                    <button class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
-                            type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
-                    </button>
-                
+                </div>
+
             </div>
-                <?php
-                if (isset($_POST['updateOrder'])) {
-                    $tygiate = $order['tygiate'];
-                    if (!empty($_POST['tygiate'])) {
-                        $tygiate = $_POST['tygiate'];
+            <?php
+            if (isset($_POST['updateOrder'])) {
+                $tygiate = $order['tygiate'];
+                if (!empty($_POST['tygiate'])) {
+                    $tygiate = $_POST['tygiate'];
+                }
+                $giatenhap = $order['giatenhap'];
+                if (!empty($_POST['giatenhap'])) {
+                    $giatenhap = $_POST['giatenhap'];
+                }
+                $giavanchuyen = $order['giavanchuyen'];
+                if (!empty($_POST['giavanchuyen'])) {
+                    $giavanchuyen = $_POST['giavanchuyen'];
+                }
+                $phidichvu = $order['phidichvu'];
+                if (!empty($_POST['phidichvu'])) {
+                    $phidichvu = $_POST['phidichvu'];
+                }
+                $phidichvu = $order['phidichvu'];
+                if (!empty($_POST['phidichvu'])) {
+                    $phidichvu = $_POST['phidichvu'];
+                }
+                $tamdung = $order['tamung'];
+                if (!empty($_POST['phidichvu'])) {
+                    $tamdung = $_POST['tamung'];
+                }
+                $ghichu = $order['ghichu'];
+                if (!empty($_POST['note'])) {
+                    $ghichu = $_POST['note'];
+                }
+                $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+                //
+                //                            echo(print_r($arr_unserialize1, true));
+                $tongcan = 0;
+                $tongtienhang = 0;
+                $listproduct = array();
+                $shiptq = 0;
+                $tongall = 0;
+                $giamgia = 0;
+                $tienvanchuyen = 0;
+                $tongcan = 0;
+                if (!empty($arr_unserialize1)) {
+                    foreach ($arr_unserialize1 as $masp) {
+                        $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                        $tongtienhang += $product['price'] * $product['amount'];
+                        $shiptq += $product['shiptq'];
+                        $tongcan += $product['size'];
+                        $giamgia += $product['magiamgia'];
                     }
-                    $giatenhap = $order['giatenhap'];
-                    if (!empty($_POST['giatenhap'])) {
-                        $giatenhap = $_POST['giatenhap'];
-                    }
-                    $giavanchuyen = $order['giavanchuyen'];
-                    if (!empty($_POST['giavanchuyen'])) {
-                        $giavanchuyen = $_POST['giavanchuyen'];
-                    }
-                    $phidichvu = $order['phidichvu'];
-                    if (!empty($_POST['phidichvu'])) {
-                        $phidichvu = $_POST['phidichvu'];
-                    }
-                    $phidichvu = $order['phidichvu'];
-                    if (!empty($_POST['phidichvu'])) {
-                        $phidichvu = $_POST['phidichvu'];
-                    }
-                    $tamdung = $order['tamung'];
-                    if (!empty($_POST['phidichvu'])) {
-                        $tamdung = $_POST['tamung'];
-                    }
-                    $ghichu = $order['ghichu'];
-                    if (!empty($_POST['note'])) {
-                        $ghichu = $_POST['note'];
-                    }
-                    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-                    //
-                    //                            echo(print_r($arr_unserialize1, true));
-                    $tongcan = 0;
-                    $tongtienhang = 0;
-                    $listproduct = array();
-                    $shiptq = 0;
-                    $tongall = 0;
-                    $giamgia = 0;
-                    $tienvanchuyen = 0;
-                    $tongcan = 0;
-                    if (!empty($arr_unserialize1)) {
-                        foreach ($arr_unserialize1 as $masp) {
-                            $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                            $tongtienhang += $product['price'] * $product['amount'];
-                            $shiptq += $product['shiptq'];
-                            $tongcan += $product['size'];
-                            $giamgia += $product['magiamgia'];
-                        }
-                    }
-                    $tienvanchuyen += $tongcan * $giavanchuyen;
-                    $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
+                }
+                $tienvanchuyen += $tongcan * $giavanchuyen;
+                $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
+                $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
+
+                if (isset($_POST['tongcan']) && !empty($_POST['tongcan'])) {
+                    $tongcan = $_POST['tongcan'];
+                    $tienvanchuyen = $tongcan * $giavanchuyen;
                     $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
 
-                    if (isset($_POST['tongcan']) && !empty($_POST['tongcan'])) {
-                        $tongcan = $_POST['tongcan'];
-                        $tienvanchuyen = $tongcan * $giavanchuyen;
-                        $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
-
-                    }
-
-                    $orderRepository->update($_POST['orderId'], $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang, $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1);
-                    echo "<script>window.location.href='$urlStr';</script>";
                 }
-                ?>
+
+                $orderRepository->update($_POST['orderId'], $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang, $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1);
+                echo "<script>window.location.href='$urlStr';</script>";
+            }
+            ?>
 
         </form>
     </div>
