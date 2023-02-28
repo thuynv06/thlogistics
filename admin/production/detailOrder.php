@@ -112,7 +112,7 @@ if (isset($_POST['xuatphieu'])) {
             <div class="row">
                 <div class="col-md-4 table-responsive">
                     <h3>Thông Tin Khách Hàng</h3>
-                    <table id="tableShoe" >
+                    <table id="tableShoe">
                         <tr style="min-width:100px">
                             <th>Họ tên</th>
                             <td><?php echo $kh['fullname'] ?></td>
@@ -267,7 +267,7 @@ if (isset($_POST['xuatphieu'])) {
                             <th>Tổng Tiền</th>
                             <td><label for="" style="color: blue;font-weight: bold">Tổng Tiền (VNĐ)
                                     - <?php echo product_price($order['tongall']) ?></label>
-                                </td>
+                            </td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Đã Thanh Toán</th>
@@ -309,16 +309,16 @@ if (isset($_POST['xuatphieu'])) {
                     </table>
                 </div>
                 <div class="col-md-4">
-                <button class="btn-sm btn-primary" type="submit" name="updateOrder"
-                        href="detailOrder.php?id=<?php echo $order['id'] ?>"
-                        role="button">Cập Nhật
-                </button>
-                <button class="btn-sm btn-dark" href=""
-                        role="button">Duyệt
-                </button>
-                <button class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
-                        type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
-                </button>
+                    <button class="btn-sm btn-primary" type="submit" name="updateOrder"
+                            href="detailOrder.php?id=<?php echo $order['id'] ?>"
+                            role="button">Cập Nhật
+                    </button>
+                    <button class="btn-sm btn-dark" href=""
+                            role="button">Duyệt
+                    </button>
+                    <button class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
+                            type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
+                    </button>
 
                 </div>
 
@@ -426,7 +426,6 @@ if (isset($_POST['xuatphieu'])) {
                     <th class="text-center" style="min-width:50px"></th>
                     <th class="text-center" style="min-width:50px"></th>
                 </tr>
-
                 <?php
                 //            $order = $orderRepository->getById($_GET['id']);
                 //            echo print_r($listOrder, true);
@@ -606,16 +605,14 @@ if (isset($_POST['xuatphieu'])) {
                             echo "<script>window.location.href='$urlStr';</script>";
                         }
                         ?>
-
                         <?php
-
                     }
                 }
                 ?>
-
             </table>
-            <div>
+        <div>
     </form>
+</div>
 </div>
 </div>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
@@ -683,8 +680,6 @@ if (isset($_POST['xuatphieu'])) {
         </div>
     </div>
 </div>
-</form>
-
 <div id="suacannang" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

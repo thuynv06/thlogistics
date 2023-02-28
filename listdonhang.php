@@ -2,7 +2,9 @@
 require_once("backend/auth.php");
 $checkCookie = Auth::loginWithCookie();
 require_once("repository/kienhangRepository.php");
+require_once("repository/orderRepository.php");
 $kienhangRepository = new KienHangRepository();
+$orderRepository = new OrderRepository();
 $kienHangList = null;
 
 if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
@@ -23,127 +25,112 @@ if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
     $offset =0;
 }
 //    echo $orderCode;
-$result_count = $kienhangRepository->getTotalResultKienHangByUserId($checkCookie['id'], $ladingCode);
+$result_count = $orderRepository->finAlldByUserId($checkCookie['id']);
 //$total_records =$result_count->fetch_assoc();
 $total_records = $result_count['total_records'];
 //echo $total_records;
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1; // total page minus 1
-$kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $ladingCode, $offset, $total_records_per_page);
-
+$ordersList = $orderRepository->getTotalRecordPerPage($checkCookie['id'], $offset, $total_records_per_page);
+function product_price($priceFloat)
+{
+    $symbol = ' VNĐ';
+    $symbol_thousand = '.';
+    $decimal_place = 0;
+    $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+    return $price . $symbol;
+}
 ?>
+
 <div class="ps-danhsachkienhang">
     <div class="row">
-        <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 "></div>
-        <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 ">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <div class="btnquanlykienhang">
                 <a href="danhsachdonhang.php" class="btn btn-primary btn-th">Tất cả kiện hàng</a>
-                <a href="danhsachdonhang1.php" class="btn btn-primary btn-th">Vận đơn</a>
+                <a href="vandonkhachang.php" class="btn btn-primary btn-th">Vận đơn</a>
                 <a href="" class="btn btn-primary btn-th">Giao hàng</a>
             </div>
             <div class="titleTH">
-                <h3 style="font-weight: 700;">DANH SÁCH KIỆN HÀNG</h3>
+                <h3 style="font-weight: 700;">DANH SÁCH ĐƠN HÀNG</h3>
                 <img src="images/devider.png">
             </div>
             <div class="table-responsive">
                 <table id="tableShoeIndex">
                     <tr>
                         <th class="text-center" style="min-width:50px">STT</th>
-                        <th class="text-center" style="min-width:100px">Mã Kiện</th>
+                        <th class="text-center" style="min-width:100px">Ngày Tháng</th>
+                        <th class="text-center" style="min-width:100px">Mã Đơn</th>
                         <th class="text-center" style="min-width:100px">Trạng Thái</th>
-                        <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
-                        <th class="text-center" style="min-width:80px">Cân nặng</th>
-                        <th class="text-center" style="min-width:150px">Lộ Trình</th>
-                        <th class="text-center" style="min-width:150px">Chi tiết</th>
+                        <th class="text-center" style="min-width:100px">Số SP</th>
+                        <th class="text-center" style="min-width:150px">Danh Sách MVĐ</th>
+                        <th class="text-center" style="min-width:80px">Đã Ứng</th>
+                        <th class="text-center" style="min-width:120px">Thu Khác</th>
+                        <th class="text-center" style="min-width:120px">Tổng Tiền</th>
+                        <th class="text-center" style="min-width:120px">Công Nợ</th>
+                        <th class="text-center" style="min-width:100px">Ghi Chú</th>
+                        <th class="text-center" style="min-width:50px"></th>
                     </tr>
                     <?php
-                    if (!empty($kienHangList)) {
+                    if (!empty($ordersList)) {
+                        $count=0;
                         $i = 1;
-                        foreach ($kienHangList as $kienHang) {
+                        foreach ($ordersList as $order) {
+                            $arr_unserialize1 = unserialize($order['listsproduct']);
                             ?>
                             <tr>
                             <td><?php echo $i++; ?></td>
-                            <td><p style="font-weight: 500;color: #0b0b0b"><?php echo $kienHang['orderCode'] ?></p>
-                                <p><?php echo $kienHang['shippingWay'] ?></p>
-                            </td>
-                            <td style="color: blue"><?php
-                                switch ($kienHang['status']) {
+                            <td><?php echo $order['startdate'] ?></td>
+                            <td><p style="font-weight: 500;color: #0b0b0b"><?php echo $order['code'] ?></p></td>
+                            <td>
+                                <?php
+                                switch ($order['status']) {
+                                    case "0":
+                                        echo "Chưa Xuất";
+                                        break;
                                     case "1":
-                                        echo "Shop gửi hàng";
-                                        break;
-                                    case "2":
-                                        echo "Kho Trung Quốc Nhận";
-                                        break;
-                                    // case "3":
-                                    //     echo "Đang Vận Chuyển";
-                                    //     break;
-                                    case "4":
-                                        echo "Nhập Kho Việt Nam";
-                                        break;
-                                    case "5":
-                                        echo "Đang Giao";
-                                        break;
-                                    case "6":
                                         echo "Đã Giao";
+                                        break; ?><?php
+                                } ?>
+                            </td>
+                            <td>
+                                <?php
+                                echo $count;
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                if (!empty($arr_unserialize1)) {
+                                    $count=0;
+                                foreach ($arr_unserialize1 as $masp) {
+                                    if(!empty($masp)){
+                                        $count++;
+                                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                                    if(!empty($product['ladingCode'])){
+                                     echo "<p style='font-weight: 700;color: blue'>".$product['ladingCode']."</p>";}
+                                    }else{
                                         break;
-                                    default:
-                                        echo "--";
+                                    }
+                                }
                                 }
                                 ?>
                             </td>
-                            <td><?php echo $kienHang['ladingCode'] ?></td>
-                            <td><?php echo $kienHang['size'] ?><span> Kg</span></td>
                             <td>
-                                <ul style="text-align: left ;">
-                                    <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>
-                                    <li><p class="fix-status"><span>&#8658;</span> TQ Nhận hàng</p></li>
-                                    <!-- <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li> -->
-                                    <li><p class="fix-status"><span>&#8658;</span> Nhập kho VN</p></li>
-                                    <li><p class="fix-status"><span>&#8658;</span> Đang giao hàng</p></li>
-                                    <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
-                                </ul>
+                                <?php echo product_price($order['tamung']) ?>
                             </td>
-                            <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
-                                <ul style="text-align: left;">
-                                    <li><p class="fix-status"><?php
-                                            if (!empty($obj->{1})) {
-                                                echo $obj->{1};
-                                            } else {
-                                                echo "--------------";
-                                            }
-                                            ?></p></li>
-                                    <li><p class="fix-status"><?php
-                                            if (!empty($obj->{2})) {
-                                                echo $obj->{2};
-                                            } else {
-                                                echo "--------------";
-                                            } ?></p></li>
-                                    <!-- <li><p class="fix-status"><?php
-                                            // if (!empty($obj->{3})) {
-                                            //     echo $obj->{3};
-                                            // } else {
-                                            //     echo "--------------";
-                                            // } ?></p></li> -->
-                                    <li>
-                                        <p class="fix-status"><?php if (!empty($obj->{4})) {
-                                                echo $obj->{4};
-                                            } else {
-                                                echo "--------------";
-                                            } ?></p></li>
-                                    <li><p class="fix-status"><?php
-                                            if (!empty($obj->{5})) {
-                                                echo $obj->{5};
-                                            } else {
-                                                echo "--------------";
-                                            } ?></p></li>
-                                    <li><p class="fix-status"><?php
-                                            if (!empty($obj->{6})) {
-                                                echo $obj->{6};
-                                            } else {
-                                                echo "--------------";
-                                            } ?></p></li>
-                                </ul>
+                            <td>
+                                <?php echo product_price($order['thukhac']) ?>
                             </td>
+                            <td>
+                                <?php echo product_price($order['tongall']) ?>
+                            </td>
+                            <td>
+                                <?php echo product_price($order['tongall'] - $order['tamung']) ?>
+                            </td>
+                            <td>
+                                <?php echo $order['ghichu'] ?>
+                            </td>
+                            <td><a class="btn btn-warning" href="detailOrder.php?id=<?php echo $order['id'] ?>"
+                                   role="button">Chi tiết</a></td>
                             </tr><?php
                         }
                     }
@@ -236,7 +223,6 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                     echo "<li><a href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
                 } ?>
             </ul>
-            <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 "></div>
         </div>
     </div>
 </div>

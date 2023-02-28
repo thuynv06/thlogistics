@@ -93,5 +93,23 @@
             echo $sql;
             mysqli_query($conn, $sql);
         }
+
+        public function finAlldByUserId($user_id)
+        {
+            global $conn;
+            $sql = "SELECT COUNT(*) As total_records FROM `orders` where user_id = $user_id  ";
+//            echo $sql;
+            return mysqli_query($conn, $sql)->fetch_assoc();
+        }
+
+        public function getTotalRecordPerPage($user_id, $offset, $total_records_per_page)
+        {
+            global $conn;
+            $sql = "SELECT * FROM `orders` where user_id=$user_id ORDER BY id DESC  LIMIT $offset, $total_records_per_page ";
+
+            mysqli_query($conn, 'set names "utf8"');
+
+            return mysqli_query($conn, $sql);
+        }
     }
 ?>
