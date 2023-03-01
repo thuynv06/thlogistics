@@ -1593,6 +1593,10 @@ td{
     font-weight: 500;
     color: #000000d1;
 }
+#tableShoeIndex td p,#tableShoe th p{
+    color:black;
+    font-weight: 400;
+}
 #tableShoeIndex tr:nth-child(even){
     background-color: #f2f2f2;
 }
@@ -1611,6 +1615,10 @@ td{
     font-family: 'FontAwesome';
     font-weight: 500;
     color: black;
+}
+.fixinfo td p{
+    font-weight: 900;
+    font-size: 14px;
 }
 .form-control {
     outline: none;
