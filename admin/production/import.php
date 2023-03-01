@@ -85,7 +85,7 @@ if (isset($_POST["btnImport"])) {
                 $tienvanchuyen = 0;
                 $tongcan=0;
                 $giatenhap=0;
-                $j =0;
+                $j =1;
                 $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,0);
 
                 for ($i = 14; $i < $sheetCount; $i++) {
@@ -191,7 +191,6 @@ if (isset($_POST["btnImport"])) {
                             print $success ? $file : 'Unable to save the file.';
                             $j++;
                         }
-
 
                         if (!empty($kienhang_id)) {
                             $type = "success";
