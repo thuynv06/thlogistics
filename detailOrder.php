@@ -42,6 +42,16 @@
         $orderRepository = new OrderRepository();
         $order = $orderRepository->getById($_GET['id']);
         $kienHangList = null;
+        function product_price($priceFloat)
+        {
+//            $symbol = ' VNĐ';
+
+                $symbol_thousand = '.';
+                $decimal_place = 0;
+                $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+                return $price;
+
+        }
         ?>
         <div class="ps-danhsachkienhang">
             <div class="row" style="background-color: #ffe6d3">
@@ -88,107 +98,214 @@
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Ngày Xuất</th>
-                                <td><?php echo $order['ngayxuat'] ?></td>
+                                <td><?php  if(!empty($order['ngayxuat'])){
+                                    echo $order['ngayxuat'];
+                                    }else echo "--/--/---" ?></td>
                             </tr>
-                            <tr style="min-width:100px">
-                                <th>Phí dịch vụ (%)</th>
-                                <td><?php echo $order['phidichvu']*100 ?>
-                                    </td>
-                            </tr>
-                            <tr style="min-width:100px">
-                                <th>Thu Khác</th>
-                                <td><?php echo $order['thukhac'] ?></td>
-                            </tr>
+
+
 
                         </table>
                     </div>
-                    <div class="col-md-4 table-responsive " style="display: block;
+                    <div class="col-md-4 table-responsive " style="display: block;margin-top: 22px;
                       margin-left: auto;
                       margin-right: auto;
-                      width: 33%;">
-                        <img width="450px" height="450px"
+                      text-align: center">
+                        <img width="300px" height="300px"
                              src="<?php echo 'images/logoth1688.png' ?>">
                     </div>
                     <div class="col-md-4 table-responsive">
                         <h3>Tổng Quan Đơn Hàng</h3>
                         <table id="tableShoeIndex">
                             <tr style="min-width:100px">
-                                <th>ID</th>
-                                <td><input readonly value="<?php echo $order['id'] ?>"
-                                           name="orderId" type="text" class="form-control"></td>
+                                <th>Mã Đơn Hàng</th>
+                                <td><?php if(!empty($order['code'])) echo $order['code'] ?></td>
                             </tr>
                             <tr class="form-group" style="min-width:100px">
                                 <th>Tỷ Giá Tệ</th>
                                 <td>
-                                    <input required min="0" max="99999999999" name="tygiate" type="number"
-                                           class="form-control"
-                                           step="0.01"
-                                           id="exampleInputPassword1" value="<?php echo $order['tygiate'] ?>"
-                                           placeholder="Nhập tỷ giá tệ: vd 3650"></td>
+                                    <?php if(!empty($order['tygiate'])) echo product_price($order['tygiate']) ?><span> ¥</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Giá Vận Chuyển</th>
-                                <td><input required min="0" max="99999999999" name="giavanchuyen" type="number"
-                                           size="50"
-                                           class="form-control"
-                                           step="0.01"
-                                           id="exampleInputPassword1" value="<?php echo $order['giavanchuyen'] ?>"
-                                           placeholder="Nhập giá tiền"></td>
+                                <td><?php if(!empty($order['giavanchuyen'])) echo product_price($order['giavanchuyen']) ?><span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Hàng</th>
-                                <td><input readonly required min="0" max="99999999999" name="tongtienhangweb"
-                                           type="number"
-                                           class="form-control"
-                                           step="0.01"
-                                           id="exampleInputPassword1" value="<?php echo $order['tongtienhang'] ?>"></td>
+                                <td><?php if(!empty($order['tongtienhang']))  echo product_price($order['tongtienhang']) ?><span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Ship TQ</th>
-                                <td><input readonly required min="0" max="99999999999" name="tongtienhangweb"
-                                           type="number"
-                                           class="form-control"
-                                           step="0.01"
-                                           id="exampleInputPassword1" value="<?php echo $order['shiptq'] ?>"></td>
+                                <td><?php if(!empty($order['shiptq'])) echo product_price($order['shiptq']) ?><span> ¥</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Mã Giảm Giá</th>
-                                <td><input readonly required min="0" max="99999999999" name="tongmagiamgia"
-                                           type="number"
-                                           step="0.01"
-                                           class="form-control"
-                                           id="exampleInputPassword1" value="<?php echo $order['giamgia'] ?>"
-                                           placeholder="Nhập mã giảm giá"></td>
+                                <td><?php if(!empty($order['giamgia'])) echo product_price($order['giamgia']) ?><span> ¥</span></td>
+                            </tr>
+                            <tr style="min-width:100px">
+                                <th>Phí dịch vụ (%)</th>
+                                <td><?php  if(!empty($order['phidichvu'])) echo $order['phidichvu']*100 ?><span> %</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Công</th>
-                                <td><input readonly required min="0" max="99999999999" name="tongmagiamgia"
-                                           type="number"
-                                           step="0.01"
-                                           class="form-control"
-                                           id="exampleInputPassword1" value="<?php echo $order['tiencong'] ?>"></td>
+                                <td><?php if(!empty($order['tiencong'])) echo product_price($order['tiencong']) ?><span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Ship về VN</th>
-                                <td><input readonly min="0" max="99999999999" name="tienvanchuyen"
-                                           value="<?php echo $order['tienvanchuyen'] ?>"
-                                           type="number"
-                                           step="0.01" class="form-control"
-                                           id="exampleInputPassword1"></td>
+                                <td><?php if(!empty($order['tienvanchuyen'])) echo product_price($order['tienvanchuyen']) ?><span> VNĐ</span></td>
+                            </tr>
+                            <tr style="min-width:100px">
+                                <th>Thu Khác</th>
+                                <td><?php if(!empty($order['thukhac'])) echo product_price($order['thukhac']) ?><span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Ghi Chú</th>
-                                <td><input value="<?php echo $order['ghichu'] ?>" minlength="1" maxlength="500"
-                                           name="note"
-                                           type="text"
-                                           class="form-control"
-                                           id="exampleInputPassword1" placeholder="Nhập ghi chú đơn hàng"></td>
+                                <td><?php echo $order['ghichu'] ?></td>
                             </tr>
                         </table>
                     </div>
-
-
                 </div>
+            </div>
+            <div class="row">
+                <h3>Danh Sách Sản Phẩm</h3>
+                <form method="POST" enctype="multipart/form-data">
+<!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
+<!--                            role="button">Xuất Phiếu-->
+<!--                    </button>-->
+                    <div class="table-responsive">
+                        <table id="tableShoeIndex">
+                            <tr>
+                                <th class="text-center" style="min-width:50px">STT</th>
+                                <th class="text-center" style="min-width:95px;">Mã Kiện</th>
+                                <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
+                                <th class="text-center" style="min-width:95px;">Ảnh</th>
+                                <th class="text-center" style="min-width:50px">Link SP</th>
+                                <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
+                                <th class="text-center" style="min-width:50px">Size/Color/SL</th>
+                                <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
+                                <th class="text-center" style="min-width:50px">Giá</th>
+
+                                <th class="text-center" style="min-width:50px"></th>
+                                <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
+                                <th class="text-center" style="min-width:100px">Lộ Trình</th>
+                                <th class="text-center" style="min-width:120px">Chi tiết</th>
+
+                                <th class="text-center" style="min-width:50px">Ghi Chú</th>
+                                <th class="text-center" style="min-width:50px"></th>
+                                <th class="text-center" style="min-width:50px"></th>
+                                <th class="text-center" style="min-width:50px"></th>
+                            </tr>
+                            <?php
+                            //            $order = $orderRepository->getById($_GET['id']);
+                            //            echo print_r($listOrder, true);
+                            //            echo(print_r($order, true));
+                            $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+                            //                            echo(print_r($arr_unserialize1, true));
+                            if (!empty($arr_unserialize1)) {
+                                $i = 1;
+                                foreach ($arr_unserialize1 as $masp) {
+                                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                                    $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
+
+                                    //                    echo(print_r($product, true));?>
+
+                                    <tr>
+                                        <td><?php echo $i++; ?></td>
+                                        <td><p style="font-weight: 700;"><?php echo $product['orderCode'] ?></p>
+                                            <p style="color: blue"> <?php
+                                                switch ($product['status']) {
+                                                    case "1":
+                                                        echo "Shop Gửi hàng";
+                                                        break;
+                                                    case "2":
+                                                        echo "Kho Trung Quốc Nhận";
+                                                        break;
+                                                    case "3":
+                                                        echo "Đang Vận Chuyển";
+                                                        break;
+                                                    case "4":
+                                                        echo "Nhập Kho Việt Nam";
+                                                        break;
+                                                    case "5":
+                                                        echo "Đang Giao";
+                                                        break;
+                                                    case "6":
+                                                        echo "Đã Giao";
+                                                        break;
+                                                    default:
+                                                        echo "--";
+                                                }
+                                                ?> </p>
+                                            <p><?php echo $product['shippingWay'] ?></p>
+                                        </td>
+                                        <td><?php echo $product['name'] ?></td>
+                                        <td><img width="150px" height="150px"
+                                                 src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo dirname(__FILE__)."/admin/production/".$link_image['link_image'];
+                                                 if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
+                                        <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
+                                        <td style="font-weight: bold"><?php echo $product['ladingCode']." \n " ;
+                                                        echo "Cân nặng: ".$product['size'];?>
+                                        </td>
+                                        <td><p>Size: <?php echo $product['kichthuoc'] ?></p>
+                                            <p>Màu: <?php echo $product['color'] ?></p>
+                                            <p>Số Lượng: <?php echo $product['amount'] ?></p>
+                                        </td>
+                                        <td><p style="color:red"><?php echo $product['price'] ?><span> &#165;</span></p></td>
+                                        <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
+                                        </td>
+                                        <td>
+                                            <ul style="text-align: left ;">
+                                                <li><p class="fix-status">Shop Gửi</p></li>
+                                                <li><p class="fix-status">TQ Nhận</p></li>
+<!--                                                <li><p class="fix-status">Vận chuyển</p></li>-->
+                                                <li><p class="fix-status">NhậpKho VN</p></li>
+                                                <li><p class="fix-status">Đang giao</p></li>
+                                                <li><p class="fix-status">Đã giao </p></li>
+                                            </ul>
+                                        </td>
+                                        <td><?php $obj = json_decode($product['listTimeStatus']); ?>
+                                            <?php if (empty($obj)) { ?>
+                                                <ul style="text-align: left;">
+                                                    <li><p class="fix-status">............</p></li>
+                                                    <li><p class="fix-status">............</p></li>
+                                                    <li><p class="fix-status">............</p></li>
+                                                    <li><p class="fix-status">............</p></li>
+                                                    <li><p class="fix-status">............</p></li>
+                                                    <li><p class="fix-status">............</p></li>
+                                                </ul><?php
+                                            } else { ?>
+                                                <ul style="text-align: left;">
+                                                    <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?>
+                                                    </li>
+                                                    <li>
+                                                        <p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p>
+                                                    </li>
+<!--                                                    <li>-->
+<!--                                                        <p class="fix-status">--><?php //if (!empty($obj->{3})) echo $obj->{3}; ?><!--</p>-->
+<!--                                                    </li>-->
+                                                    <li>
+                                                        <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
+                                                    </li>
+                                                    <li>
+                                                        <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
+                                                    </li>
+                                                    <li>
+                                                        <p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
+                                                    </li>
+                                                </ul>
+                                                <?php
+                                            } ?>
+                                        </td>
+
+                                        <td><?php echo $product['note'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </table>
+                        <div>
+                </form>
             </div>
         </div>
 
