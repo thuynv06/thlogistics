@@ -85,7 +85,7 @@ if (isset($_POST["btnImport"])) {
                 $tienvanchuyen = 0;
                 $tongcan=0;
                 $giatenhap=0;
-                $j =1;
+                $j =0;
                 $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,0);
 
                 for ($i = 14; $i < $sheetCount; $i++) {
@@ -170,6 +170,7 @@ if (isset($_POST["btnImport"])) {
                         // Code luu annh
                         $worksheet = $spreadsheet->getActiveSheet();
                         if (isset($worksheet->getDrawingCollection()[$j])){
+//                            echo $j;
                             $drawing = $worksheet->getDrawingCollection()[$j];
 
                             $zipReader = fopen($drawing->getPath(), 'r');
@@ -182,15 +183,16 @@ if (isset($_POST["btnImport"])) {
 //                            echo '<tr align="center">';
 //                            echo '<td><img  height="500px" width="500px"   src="data:image/jpeg;base64,' . base64_encode($imageContents) . '"/></td>';
 //                            echo '</tr>';
-//                            $data = base64_decode($img);
+////                            $data = base64_decode($img);
                             $file = UPLOAD_DIR . uniqid() . '.'.$extension;
                             $success = file_put_contents($file, $imageContents);
                             if($success){
                                 $kienhangRepository->addImage($kienhang_id,$file);
                             }
-                            print $success ? $file : 'Unable to save the file.';
+//                            print $success ? $file : 'Unable to save the file.';
                             $j++;
                         }
+
 
                         if (!empty($kienhang_id)) {
                             $type = "success";
@@ -215,6 +217,8 @@ if (isset($_POST["btnImport"])) {
 //                echo $phidichvu;
                 $orderRepository->update($orderId,$giatenhap, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
                 echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
+
+
             } else {
                 echo "Not uploaded because of error #" . $_FILES["file"]["error"];
             }

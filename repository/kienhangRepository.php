@@ -126,7 +126,7 @@ class KienHangRepository
         $sql = "insert into kienhang(order_id,gianhap,servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus,shiptq,magiamgia,kichthuoc,color) 
 values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
        ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus',$shiptq,$magiamgia,'$kichthuoc','$color')";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
@@ -270,7 +270,7 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
     }
     public function getImage($id){
         global $conn;
-        $sql = "select link_image from product_image where product_id=$id";
+        $sql = "select link_image from product_image where product_id=$id ORDER BY `id` DESC LIMIT 1";
         return mysqli_query($conn,$sql);
     }
     public function updateCanNang($id, $cannang,$gianhap)
@@ -292,7 +292,16 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
 //        echo $sql;
         mysqli_query($conn, $sql);
     }
-
+    public function deleteImage($id){
+        global $conn;
+        $sql = "delete from product_image where product_id=$id";
+        mysqli_query($conn,$sql);
+    }
+//    public function addImage($id,$linkImage){
+//        global $conn;
+//        $sql = "insert into product_image(shoe_id,link_image) values($id,'$linkImage')";
+//        mysqli_query($conn,$sql);
+//    }
 }
 
 ?>

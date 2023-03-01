@@ -68,7 +68,7 @@
             $sql = "update orders set giatenhap=$giatenhap, tygiate=$tygiate,giavanchuyen=$giavanchuyen,phidichvu=$phidichvu,tongcan=$tongcan,tamung=$tamung,tongtienhang=$tongtienhang,
                     shiptq=$phishiptq,giamgia=$giamgia,tienvanchuyen=$tienvanchuyen,tiencong=$tiencong,tongall=$tongtien,ghichu='$ghichu',listsproduct= '" . $array_data . "'
                     where id=$id ";
-            echo $sql;
+//            echo $sql;
             mysqli_query($conn, $sql);
         }
         public function findByUserId($user_id)

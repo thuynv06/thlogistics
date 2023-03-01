@@ -25,8 +25,8 @@ class UploadFile{
             $file_type = $file["type"];
             $file_size = $file["size"];
             if($file_size <= 2097152){
-                move_uploaded_file($file["tmp_name"],$path."imageShoe/".$file["name"]);
-                $link = "imageShoe/".$file["name"];
+                move_uploaded_file($file["tmp_name"],$path.$file["name"]);
+                $link = "$path/".$file["name"];
                 array_push($arr,$link);
             }
         }

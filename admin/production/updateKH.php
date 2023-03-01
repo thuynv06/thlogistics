@@ -1,11 +1,13 @@
 <?php include "headeradmin.php" ?>
+
 <?php
 $kh = $kienhangRepository->getById($_GET['id'])->fetch_assoc();
 $link_image = $kienhangRepository->getImage($_GET['id'])->fetch_assoc();
 $order_id = $kh['order_id'];
 echo $order_id;
 $trove ="detailOrder.php?id=".$order_id ;
-
+require_once("../../uploadFile.php");
+$uploadFile = new UploadFile();
 ?>
     <div class="right_col" role="main">
         <a class="btn btn-primary" href="<?php echo $trove ?>" role="button">Trở Về</a>
@@ -175,19 +177,41 @@ $trove ="detailOrder.php?id=".$order_id ;
                                id="exampleInputPassword1" placeholder="Nhập ghi chú sp">
                     </div>
                 </div>
+
             <div class="form-row">
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Chọn ảnh</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        </div>
+                        <div class="custom-file">
+                            <input multiple accept="image/png, image/jpeg" name="files[]" type="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group col-md-6">
                     <label for="exampleInputPassword1">Ảnh</label>
                     <img src="<?php echo $link_image['link_image'] ?>">
                 </div>
+
             </div>
-<!--            --><?php //}
-            ?>
+
 
             <button name="submit" type="submit" class="btn btn-primary">Cập Nhật</button>
             <?php
             if (isset($_POST['submit'])) {
                 $urlStr = "updateKH.php?id=" . $_GET['id'];
+
+                if(!empty($_FILES['files']['name'][0])){
+                    $kienhangRepository->deleteImage($_GET['id']);
+                    $arrLinkFile = $uploadFile->upload("images/");
+                    foreach($arrLinkFile as $linkFile){
+                        $kienhangRepository->addImage($_GET['id'], $linkFile);
+                    }
+                }
 
                 $kienhangRepository->update($_GET['id'], $_POST['name'], $_POST['ladingCode'], $_POST['amount'], $_POST['shippingWay'], $_POST['size'], $_POST['status_id'], $_POST['price'], $_POST['user_id'], $_POST['note'], $_POST['linksp'], $_POST['updateDateStatus']
                 ,$_POST['shiptq'], $_POST['magiamgia'], $_POST['kichthuoc'], $_POST['color']);
