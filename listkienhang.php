@@ -38,7 +38,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
         <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 ">
             <div class="btnquanlykienhang">
                 <a href="danhsachdonhang.php" class="btn btn-primary btn-th">Tất cả kiện hàng</a>
-                <a href="danhsachdonhang1.php" class="btn btn-primary btn-th">Vận đơn</a>
+                <a href="vandon.php" class="btn btn-primary btn-th">Vận đơn</a>
                 <a href="" class="btn btn-primary btn-th">Giao hàng</a>
             </div>
             <div class="titleTH">

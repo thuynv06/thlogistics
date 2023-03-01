@@ -47,7 +47,7 @@ function product_price($priceFloat)
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <div class="btnquanlykienhang">
                 <a href="danhsachdonhang.php" class="btn btn-primary btn-th">Tất cả kiện hàng</a>
-                <a href="vandonkhachang.php" class="btn btn-primary btn-th">Vận đơn</a>
+                <a href="vandon.php" class="btn btn-primary btn-th">Vận đơn</a>
                 <a href="" class="btn btn-primary btn-th">Giao hàng</a>
             </div>
             <div class="titleTH">
@@ -129,7 +129,7 @@ function product_price($priceFloat)
                             <td>
                                 <?php echo $order['ghichu'] ?>
                             </td>
-                            <td><a class="btn btn-warning" href="detailOrder.php?id=<?php echo $order['id'] ?>"
+                            <td><a class="btn btn-primary" href="detailOrder.php?id=<?php echo $order['id'] ?>"
                                    role="button">Chi tiết</a></td>
                             </tr><?php
                         }

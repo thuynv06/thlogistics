@@ -12,28 +12,31 @@
 <?php include 'header.php'; ?>
 <main class="ps-main">
     <div class="ps-container">
-
-        <div class="ps-tracuu">
-            <div class="titleTH">
-                <h3 style="font-weight: 700;">Tra Cứu Mã Vận Đơn</h3>
-                <img src="images/devider.png">
-            </div>
-            <div class="row">
-                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                </div>
-                <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">
-                    <form id="tracuu" class="ps-subscribe__form" method="POST"
-                    >
-                        <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"
-                               placeholder="Nhập mã vận đơn…">
-                        <button style="background-color: #ff6c00;">Tra Cứu</button>
-                    </form>
-                </div>
-                <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
-                </div>
-            </div>
-
+        <div class="titleTH">
+            <!--                <h3 style="font-weight: 700;">Tra Cứu Mã Vận Đơn</h3>-->
+            <img src="images/devider.png">
         </div>
+<!--        <div class="ps-tracuu">-->
+<!--            <div class="titleTH">-->
+<!--                <h3 style="font-weight: 700;">Tra Cứu Mã Vận Đơn</h3>-->
+<!--                <img src="images/devider.png">-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">-->
+<!--                </div>-->
+<!--                <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">-->
+<!--                    <form id="tracuu" class="ps-subscribe__form" method="POST"-->
+<!--                    >-->
+<!--                        <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"-->
+<!--                               placeholder="Nhập mã vận đơn…">-->
+<!--                        <button style="background-color: #ff6c00;">Tra Cứu</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--                <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
         <?php
         $checkCookie = Auth::loginWithCookie();
         require_once("repository/kienhangRepository.php");
@@ -59,7 +62,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding: 15px;">
                     <div class="btnquanlykienhang">
                         <a href="danhsachdonhang.php" class="btn btn-primary btn-th">Tất cả kiện hàng</a>
-                        <a href="vandonkhachang.php" class="btn btn-primary btn-th">Vận đơn</a>
+                        <a href="vandon.php" class="btn btn-primary btn-th">Vận đơn</a>
                         <a href="" class="btn btn-primary btn-th">Giao hàng</a>
                     </div>
                     <div class="col-md-3 table-responsive">
@@ -71,7 +74,7 @@
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Mã Khách Hàng</th>
-                                <td><p><?php echo $checkCookie['code'] ?></p></td>
+                                <td style="color: blue;font-weight: 700"><?php echo $checkCookie['code'] ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>D.O.B</th>
@@ -165,15 +168,15 @@
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tổng Tiền</th>
-                                <td><?php echo product_price($order['tongall']) ?></td>
+                                <td style="font-weight: 700;"><?php echo product_price($order['tongall']) ?><span> VNĐ</span></td>
                             </tr>
-                            <tr style="min-width:100px">
+                            <tr style="min-width:100px;">
                                 <th>Đã Thanh Toán</th>
-                                <td>  <?php echo product_price($order['tamung']) ?></td>
+                                <td style="color: green;font-weight: 700;"> <?php echo product_price($order['tamung']) ?><span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Công Nợ</th>
-                                <td><?php echo product_price($order['tongall'] - $order['tamung']) ?></td>
+                                <td style="color: red;font-weight: 700;"><?php echo product_price($order['tongall'] - $order['tamung']) ?><span> VNĐ</span></td>
                             </tr>
                         </table>
                     </div>
