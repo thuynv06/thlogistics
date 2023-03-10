@@ -66,19 +66,24 @@ if (isset($_POST['xuatphieu'])) {
 }
 ?>
 
-<div class="right_col" role="main">
+<div class="right_col" role="main" style="font-size: 10px;">
     <a class="btn btn-primary" href="vandon.php" role="button">Trở Về</a>
     <div class="row" style="margin-left: 0px;">
         <form method="POST" enctype="multipart/form-data">
             <?php
             $order = $orderRepository->getById($_GET['id']);
+
+            echo $order['listsproduct'];
             $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-            //                            echo(print_r($arr_unserialize1, true));
+                                        echo(print_r($arr_unserialize1, true));
+//            print_r($arr_unserialize1,true);
+            $arr_unserialize1 = array_diff($arr_unserialize1, ["265"]);
+            echo(print_r($arr_unserialize1, true));
             $startdate = date("Y-m-d\TH:i:s", strtotime($order['startdate']));
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
                     $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap'];
+                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap'] - $product['magiamgia'] * $product['currency'];
                     $thanhtienban = $product['price'] * $product['amount'] * $product['currency'] + $product['shiptq'] * $product['currency'] - $product['magiamgia'] * $product['currency'];
                     $phidv = $thanhtienban * $product['servicefee'];
 
@@ -115,74 +120,35 @@ if (isset($_POST['xuatphieu'])) {
                     <table id="tableShoe">
                         <tr style="min-width:100px">
                             <th>Họ tên</th>
-                            <td><?php echo $kh['fullname'] ?></td>
+                            <td><input readonly class="form-control" value="<?php echo $kh['fullname'] ?>"></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Mã Khách Hàng</th>
-                            <td><?php echo $kh['code'] ?></td>
+                            <td><input readonly class="form-control" value="<?php echo $kh['code'] ?>"></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>D.O.B</th>
-                            <td><?php echo $kh['dob'] ?></td>
+                            <td><input readonly class="form-control" value="<?php echo $kh['dob'] ?>"></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Email</th>
-                            <td><?php echo $kh['email'] ?></td>
+                            <td><input readonly class="form-control" value="<?php echo $kh['email'] ?>"></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>SĐT</th>
-                            <td><?php echo $kh['phone'] ?></td>
+                            <td><input readonly class="form-control" value="<?php echo $kh['phone'] ?>"></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Địa Chỉ</th>
-                            <td><?php echo $kh['address'] ?></td>
+                            <td><input readonly class="form-control" value="<?php echo $kh['address'] ?>"></td>
                         </tr>
                     </table>
-                    <br>
-                    <table id="tableShoe">
-                        <tr style="min-width:100px">
-                            <th>Ngày Tạo</th>
-                            <td><input readonly value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
-                                       step="1"
-                                       class="form-control"
-                                       id="startdate"></td>
-                        </tr>
-                        <tr style="min-width:100px">
-                            <th>Ngày Xuất</th>
-                            <td><input readonly name="enddate" type="datetime-local" step="1"
-                                       class="form-control"
-                                       id="enddate"></td>
-                        </tr>
-                        <tr style="min-width:100px">
-                            <th>Giá tệ nhập</th>
-                            <td><input required min="0" max="99999999999" name="giatenhap" type="number"
-                                       class="form-control"
-                                       step="0.01"
-                                       id="exampleInputPassword1" value="<?php echo $order['giatenhap'] ?>"
-                                ></td>
-                        </tr>
-                        <tr style="min-width:100px">
-                            <th>Phí dịch vụ (%)</th>
-                            <td><input readonly min="0" max="99999999999" name="phidichvu" type="number"
-                                       class="form-control"
-                                       step="0.01"
-                                       id="exampleInputPassword1" value="<?php echo $order['phidichvu'] ?>"
-                                ></td>
-                        </tr>
 
-                        <tr style="min-width:100px">
-                            <th>Thu Khác</th>
-                            <td><input min="0" max="99999999999" name="thukhac" type="number" step="0.01"
-                                       class="form-control"
-                                       id="exampleInputPassword1" value="<?php echo $order['thukhac'] ?>"
-                                       placeholder="Nhập tiền thu khác"></td>
-                        </tr>
-
-                    </table>
                 </div>
                 <div class="col-md-4 table-responsive">
                     <h3>Tổng Quan Đơn Hàng</h3>
                     <table id="tableShoe">
+
                         <tr style="min-width:100px">
                             <th>ID</th>
                             <td><input readonly value="<?php echo $order['id'] ?>"
@@ -197,6 +163,15 @@ if (isset($_POST['xuatphieu'])) {
                                        id="exampleInputPassword1" value="<?php echo $order['tygiate'] ?>"
                                        placeholder="Nhập tỷ giá tệ: vd 3650"></td>
                         </tr>
+                        <tr style="min-width:100px">
+                            <th>Giá tệ nhập</th>
+                            <td><input required min="0" max="99999999999" name="giatenhap" type="number"
+                                       class="form-control"
+                                       step="0.01"
+                                       id="exampleInputPassword1" value="<?php echo $order['giatenhap'] ?>"
+                                ></td>
+                        </tr>
+
                         <tr style="min-width:100px">
                             <th>Giá Vận Chuyển</th>
                             <td><input required min="0" max="99999999999" name="giavanchuyen" type="number" size="50"
@@ -228,6 +203,14 @@ if (isset($_POST['xuatphieu'])) {
                                        placeholder="Nhập mã giảm giá"></td>
                         </tr>
                         <tr style="min-width:100px">
+                            <th>Phí dịch vụ (%)</th>
+                            <td><input readonly min="0" max="99999999999" name="phidichvu" type="number"
+                                       class="form-control"
+                                       step="0.01"
+                                       id="exampleInputPassword1" value="<?php echo $order['phidichvu'] ?>"
+                                ></td>
+                        </tr>
+                        <tr style="min-width:100px">
                             <th>Tiền Công</th>
                             <td><input readonly required min="0" max="99999999999" name="tongmagiamgia" type="number"
                                        step="0.01"
@@ -254,6 +237,19 @@ if (isset($_POST['xuatphieu'])) {
                 <div class="col-md-4 table-responsive">
                     <h3>Tổng</h3>
                     <table id="tableShoe">
+                        <tr style="min-width:100px">
+                            <th>Ngày Tạo</th>
+                            <td><input readonly value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
+                                       step="1"
+                                       class="form-control"
+                                       id="startdate"></td>
+                        </tr>
+                        <tr style="min-width:100px">
+                            <th>Ngày Xuất</th>
+                            <td><input readonly name="enddate" type="datetime-local" step="1"
+                                       class="form-control"
+                                       id="enddate"></td>
+                        </tr>
                         <tr style="min-width:100px">
                             <th>Tổng Kg</th>
                             <td><label for="exampleInputPassword1">Tổng KLG (Kg)</label>
@@ -305,6 +301,14 @@ if (isset($_POST['xuatphieu'])) {
                             <td>
                                 <h4 style="color: green;font-weight: bold;margin-top: 6px; text-indent: 20px;"><?php echo product_price($loinhuan) ?></h4>
                             </td>
+                        </tr>
+                        <tr style="min-width:100px">
+                            <th>Thu Khác</th>
+                            <td><input min="0" max="99999999999" name="thukhac" type="number" step="0.01"
+                                       class="form-control"
+                                       id="exampleInputPassword1" value="<?php echo $order['thukhac'] ?>"
+                                       placeholder="Nhập tiền thu khác"></td>
+                        </tr>
 
                     </table>
                 </div>
@@ -396,224 +400,225 @@ if (isset($_POST['xuatphieu'])) {
             role="button" onclick="openVanDon()">Vận Đơn
     </button>
     <h3>Danh Sách Sản Phẩm</h3>
+    <div class="row">
+        <form method="POST" enctype="multipart/form-data">
+            <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
 
-    <form method="POST" enctype="multipart/form-data">
-        <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
+                    role="button">Xuất Phiếu
+            </button>
+            <div class="table-responsive">
+                <table id="tableShoe">
+                    <tr>
+                        <th class="text-center" style="min-width:50px">STT</th>
+                        <th class="text-center" style="min-width:50px"><input onclick="clickAll()" type="checkbox"
+                                                                              id="selectall"/>All
+                        </th>
+                        <th class="text-center" style="min-width:95px;">Mã Kiện</th>
+                        <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
+                        <th class="text-center" style="min-width:95px;">Ảnh</th>
+                        <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
+                        <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
+                        <th class="text-center" style="min-width:50px">Giá</th>
+                        <th class="text-center" style="min-width:50px">Số Lượng</th>
+                        <th class="text-center" style="min-width:50px">Cân nặng</th>
+                        <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
+                        <th class="text-center" style="min-width:100px">Lộ Trình</th>
+                        <th class="text-center" style="min-width:120px">Chi tiết</th>
+                        <th class="text-center" style="min-width:50px">Link SP</th>
+                        <th class="text-center" style="min-width:50px">Ghi Chú</th>
+                        <th class="text-center" style="min-width:50px"></th>
+                        <th class="text-center" style="min-width:50px"></th>
+                        <th class="text-center" style="min-width:50px"></th>
+                    </tr>
+                    <?php
+                    //            $order = $orderRepository->getById($_GET['id']);
+                    //            echo print_r($listOrder, true);
+                    //            echo(print_r($order, true));
+                    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+                    //                            echo(print_r($arr_unserialize1, true));
+                    if (!empty($arr_unserialize1)) {
+                        $i = 1;
+                        foreach ($arr_unserialize1 as $masp) {
+                            $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                            $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
 
-                role="button">Xuất Phiếu
-        </button>
-        <div class="table-responsive">
-            <table id="tableShoe">
-                <tr>
-                    <th class="text-center" style="min-width:50px">STT</th>
-                    <th class="text-center" style="min-width:50px"><input onclick="clickAll()" type="checkbox"
-                                                                          id="selectall"/>All
-                    </th>
-                    <th class="text-center" style="min-width:95px;">Mã Kiện</th>
-                    <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
-                    <th class="text-center" style="min-width:95px;">Ảnh</th>
-                    <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
-                    <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
-                    <th class="text-center" style="min-width:50px">Giá</th>
-                    <th class="text-center" style="min-width:50px">Số Lượng</th>
-                    <th class="text-center" style="min-width:50px">Cân nặng</th>
-                    <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
-                    <th class="text-center" style="min-width:100px">Lộ Trình</th>
-                    <th class="text-center" style="min-width:120px">Chi tiết</th>
-                    <th class="text-center" style="min-width:50px">Link SP</th>
-                    <th class="text-center" style="min-width:50px">Ghi Chú</th>
-                    <th class="text-center" style="min-width:50px"></th>
-                    <th class="text-center" style="min-width:50px"></th>
-                    <th class="text-center" style="min-width:50px"></th>
-                </tr>
-                <?php
-                //            $order = $orderRepository->getById($_GET['id']);
-                //            echo print_r($listOrder, true);
-                //            echo(print_r($order, true));
-                $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-                //                            echo(print_r($arr_unserialize1, true));
-                if (!empty($arr_unserialize1)) {
-                    $i = 1;
-                    foreach ($arr_unserialize1 as $masp) {
-                        $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                        $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
+                            //                    echo(print_r($product, true));?>
 
-                        //                    echo(print_r($product, true));?>
+                    <tr>
+                                <td><?php echo $i++; ?></td>
+                                <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>"
+                                           id=""> Chọn
+                                </td>
+                                <td><p style="font-weight: 700;"><?php echo $product['orderCode'] ?></p>
+                                    <p style="color: blue"> <?php
+                                        switch ($product['status']) {
+                                            case "1":
+                                                echo "Shop Gửi hàng";
+                                                break;
+                                            case "2":
+                                                echo "Kho Trung Quốc Nhận";
+                                                break;
+                                            case "3":
+                                                echo "Đang Vận Chuyển";
+                                                break;
+                                            case "4":
+                                                echo "Nhập Kho Việt Nam";
+                                                break;
+                                            case "5":
+                                                echo "Đang Giao";
+                                                break;
+                                            case "6":
+                                                echo "Đã Giao";
+                                                break;
+                                            default:
+                                                echo "--";
+                                        }
+                                        ?> </p>
+                                    <p><?php echo $product['shippingWay'] ?></p>
+                                </td>
+                                <td><?php echo $product['name'] ?></td>
+                                <td><img width="150px" height="150px"
+                                         src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
+                                         if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
+                                <td style="font-weight: bold"><?php echo $product['ladingCode'] ?></td>
+                                <!--                        <td>-->
+                                <!--                            --><?php
+                                //                            $listUser = $userRepository->getAll();
+                                //                            foreach ($listUser as $user) {
+                                //                                if ($user['id'] == $product['user_id']) {
+                                //                                    ?>
+                                <!--                                    <p>-->
+                                <?php //echo $user['username'] ?><!--</p>-->
+                                <!--                                    <p style="color: blue;font-weight: bold">-->
+                                <?php //echo $user['code'] ?><!--</p>-->
+                                <!--                                --><?php //}
+                                //                            }
+                                //                            ?>
+                                <!--                        </td>-->
+                                <td><p style="color:red"><?php echo $product['price'] ?><span> &#165;</span></p>
+                                    <p style="color:green"><?php echo $product['gianhap'] ?><span> &#165;</span></p>
+                                </td>
+                                <td><?php echo $product['amount'] ?></td>
+                                <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
+                                    <button type="button" id="modalUpdateS" class="btn-sm btn-primary "
+                                            data-toggle="modal"
+                                            data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
+                                            onclick="openModalSuaCan()">
+                                        Sửa Giá/Cân
+                                    </button>
 
-                        <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>"
-                                       id=""> Chọn
-                            </td>
-                            <td><p style="font-weight: 700;"><?php echo $product['orderCode'] ?></p>
-                                <p style="color: blue"> <?php
-                                    switch ($product['status']) {
-                                        case "1":
-                                            echo "Shop Gửi hàng";
-                                            break;
-                                        case "2":
-                                            echo "Kho Trung Quốc Nhận";
-                                            break;
-                                        case "3":
-                                            echo "Đang Vận Chuyển";
-                                            break;
-                                        case "4":
-                                            echo "Nhập Kho Việt Nam";
-                                            break;
-                                        case "5":
-                                            echo "Đang Giao";
-                                            break;
-                                        case "6":
-                                            echo "Đã Giao";
-                                            break;
-                                        default:
-                                            echo "--";
-                                    }
-                                    ?> </p>
-                                <p><?php echo $product['shippingWay'] ?></p>
-                            </td>
-                            <td><?php echo $product['name'] ?></td>
-                            <td><img width="150px" height="150px"
-                                     src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
-                                     if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
-                            <td style="font-weight: bold"><?php echo $product['ladingCode'] ?></td>
-                            <!--                        <td>-->
-                            <!--                            --><?php
-                            //                            $listUser = $userRepository->getAll();
-                            //                            foreach ($listUser as $user) {
-                            //                                if ($user['id'] == $product['user_id']) {
-                            //                                    ?>
-                            <!--                                    <p>-->
-                            <?php //echo $user['username'] ?><!--</p>-->
-                            <!--                                    <p style="color: blue;font-weight: bold">-->
-                            <?php //echo $user['code'] ?><!--</p>-->
-                            <!--                                --><?php //}
-                            //                            }
-                            //                            ?>
-                            <!--                        </td>-->
-                            <td><p style="color:red"><?php echo $product['price'] ?><span> &#165;</span></p>
-                                <p style="color:green"><?php echo $product['gianhap'] ?><span> &#165;</span></p>
-                            </td>
-                            <td><?php echo $product['amount'] ?></td>
-                            <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
-                                <button type="button" id="modalUpdateS" class="btn-sm btn-primary "
-                                        data-toggle="modal"
-                                        data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
-                                        onclick="openModalSuaCan()">
-                                    Sửa Giá/Cân
-                                </button>
-
-                            </td>
-                            <td>
-                                <ul style="text-align: left ;">
-                                    <li><p class="fix-status">Shop Gửi</p></li>
-                                    <li><p class="fix-status">TQ Nhận</p></li>
-                                    <li><p class="fix-status">Vận chuyển</p></li>
-                                    <li><p class="fix-status">NhậpKho VN</p></li>
-                                    <li><p class="fix-status">Đang giao</p></li>
-                                    <li><p class="fix-status">Đã giao </p></li>
-                                </ul>
-                            </td>
-                            <td><?php $obj = json_decode($product['listTimeStatus']); ?>
-                                <?php if (empty($obj)) { ?>
-                                    <ul style="text-align: left;">
-                                        <li><p class="fix-status">............</p></li>
-                                        <li><p class="fix-status">............</p></li>
-                                        <li><p class="fix-status">............</p></li>
-                                        <li><p class="fix-status">............</p></li>
-                                        <li><p class="fix-status">............</p></li>
-                                        <li><p class="fix-status">............</p></li>
-                                    </ul><?php
-                                } else { ?>
-                                    <ul style="text-align: left;">
-                                        <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?>
-                                        </li>
-                                        <li>
-                                            <p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p>
-                                        </li>
-                                        <li>
-                                            <p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p>
-                                        </li>
-                                        <li>
-                                            <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
-                                        </li>
-                                        <li>
-                                            <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
-                                        </li>
-                                        <li>
-                                            <p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
-                                        </li>
+                                </td>
+                                <td>
+                                    <ul style="text-align: left ;">
+                                        <li><p class="fix-status">Shop Gửi</p></li>
+                                        <li><p class="fix-status">TQ Nhận</p></li>
+                                        <li><p class="fix-status">Vận chuyển</p></li>
+                                        <li><p class="fix-status">NhậpKho VN</p></li>
+                                        <li><p class="fix-status">Đang giao</p></li>
+                                        <li><p class="fix-status">Đã giao </p></li>
                                     </ul>
-                                    <?php
-                                } ?>
-                            </td>
-                            <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
-                            <td><?php echo $product['note'] ?></td>
-                            <td>
-                                <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
-                                        data-toggle="modal"
-                                        data-target="#myModal" data-id="<?php echo $product['id'] ?>"
-                                        onclick="openModal()">
-                                    Cập Nhập
-                                </button>
-                            </td>
-                            <td><a class="btn btn-warning" href="updateKH.php?id=<?php echo $product['id'] ?>"
-                                   role="button">Sửa</a></td>
-                            <td><a class="btn btn-danger" href="deleteKienHang.php?id=<?php echo $product['id'] ?>"
-                                   role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
-                        </tr>
+                                </td>
+                                <td><?php $obj = json_decode($product['listTimeStatus']); ?>
+                                    <?php if (empty($obj)) { ?>
+                                        <ul style="text-align: left;">
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                        </ul><?php
+                                    } else { ?>
+                                        <ul style="text-align: left;">
+                                            <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
+                                            </li>
+                                        </ul>
+                                        <?php
+                                    } ?>
+                                </td>
+                                <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
+                                <td><?php echo $product['note'] ?></td>
+                                <td>
+                                    <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#myModal" data-id="<?php echo $product['id'] ?>"
+                                            onclick="openModal()">
+                                        Cập Nhập
+                                    </button>
+                                </td>
+                                <td><a class="btn btn-warning" href="updateKH.php?id=<?php echo $product['id'] ?>"
+                                       role="button">Sửa</a></td>
+                                <td><a class="btn btn-danger" href="deleteKienHang.php?id=<?php echo $product['id'] ?>&orderId=<?php echo $order['id'] ?>"
+                                       role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+                    </tr>
 
-                        <?php
-                        $urlStr = "detailOrder.php?id=" . $_GET['id'];
+                            <?php
+                            $urlStr = "detailOrder.php?id=" . $_GET['id'];
 
-                        if (isset($_POST['submit'])) {
-                            $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
-                            echo "<script>window.location.href='$urlStr';</script>";
-                        }
-                        if (isset($_POST['khotq'])) {
-                            if ($_POST['status_id'] == 1) {
-                                $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
+                            if (isset($_POST['submit'])) {
+                                $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
                                 echo "<script>window.location.href='$urlStr';</script>";
-                            } else {
-                                echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
                             }
+                            if (isset($_POST['khotq'])) {
+                                if ($_POST['status_id'] == 1) {
+                                    $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
+                                    echo "<script>window.location.href='$urlStr';</script>";
+                                } else {
+                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
+                                }
 
-                        }
-                        if (isset($_POST['khovn'])) {
-                            if ($_POST['status_id'] == 3) {
-                                $date = new DateTime();
-                                $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
-                                $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-                                $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
+                            }
+                            if (isset($_POST['khovn'])) {
+                                if ($_POST['status_id'] == 3) {
+                                    $date = new DateTime();
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
+                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
+                                    echo "<script>window.location.href='$urlStr';</script>";
+                                } else {
+                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
+                                }
+
+                            }
+                            ?>
+
+                            <?php
+                            if (isset($_POST['submitAll'])) {
+                                $kienhangRepository->updateStatusAll($_POST['idKH']);
                                 echo "<script>window.location.href='$urlStr';</script>";
-                            } else {
-                                echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
                             }
-
+                            ?>
+                            <?php
+                            if (isset($_POST['resetStatus'])) {
+                                $kienhangRepository->resetStatus($_POST['idKH']);
+                                echo "<script>window.location.href='$urlStr';</script>";
+                            }
+                            ?>
+                            <?php
                         }
-                        ?>
-
-                        <?php
-                        if (isset($_POST['submitAll'])) {
-                            $kienhangRepository->updateStatusAll($_POST['idKH']);
-                            echo "<script>window.location.href='$urlStr';</script>";
-                        }
-                        ?>
-                        <?php
-                        if (isset($_POST['resetStatus'])) {
-                            $kienhangRepository->resetStatus($_POST['idKH']);
-                            echo "<script>window.location.href='$urlStr';</script>";
-                        }
-                        ?>
-                        <?php
                     }
-                }
-                ?>
-            </table>
-        <div>
-    </form>
-</div>
-</div>
+                    ?>
+                </table>
+                <div>
+        </form>
+    </div>
+    <?php include 'footeradmin.php' ?>
+
 </div>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -657,6 +662,7 @@ if (isset($_POST['xuatphieu'])) {
                         <input value="" name="updateDateStatus" type="datetime-local" step="1"
                                class="form-control" id="updateDate">
                     </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -677,6 +683,7 @@ if (isset($_POST['xuatphieu'])) {
                     Reset
                 </button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -737,30 +744,30 @@ if (isset($_POST['xuatphieu'])) {
                         Lưu
                     </button>
                 </div>
+                <?php
+                if (isset($_POST['suacan'])) {
+                    $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
+                    $order = $orderRepository->getById($p['order_id']);
+                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $_POST['gianhap']);
+                    $tongcan = 0;
+                    if (!empty($arr_unserialize1)) {
+                        foreach ($arr_unserialize1 as $masp) {
+                            $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                            $tongcan += $product['size'];
+                        }
+                    }
+                    $tienvanchuyen = $tongcan * $order['giavanchuyen'];
+                    $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
+                    $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
+
+                    $urlStr = "detailOrder.php?id=" . $_GET['id'];
+                    echo "<script>window.location.href='$urlStr';</script>";
+                }
+
+                ?>
             </form>
         </div>
     </div>
-    <?php
-    if (isset($_POST['suacan'])) {
-        $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
-        $order = $orderRepository->getById($p['order_id']);
-        $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $_POST['gianhap']);
-        $tongcan = 0;
-        if (!empty($arr_unserialize1)) {
-            foreach ($arr_unserialize1 as $masp) {
-                $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                $tongcan += $product['size'];
-            }
-        }
-        $tienvanchuyen = $tongcan * $order['giavanchuyen'];
-        $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
-        $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
-
-        $urlStr = "detailOrder.php?id=" . $_GET['id'];
-        echo "<script>window.location.href='$urlStr';</script>";
-    }
-
-    ?>
 </div>
 <div id="vandon" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -797,6 +804,7 @@ if (isset($_POST['xuatphieu'])) {
                     Reset
                 </button>
             </div>
+        </form>
         </div>
     </div>
 </div>
@@ -908,8 +916,6 @@ if (isset($_POST['xuatphieu'])) {
 
     }
 
-
     // document.getElementById('enddate').value = timestampToDatetimeInputString(Date.now());
 </script>
-<?php include 'footeradmin.php' ?>
 

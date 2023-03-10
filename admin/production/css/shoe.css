@@ -36,7 +36,7 @@ td{
 }
 #tableShoe td, #tableShoe th{
     border: 1px solid #ddd;
-    padding: 5px;
+    /*padding: 5px;*/
     font-family: 'FontAwesome';
     font-weight: 500;
     color: #000000d1;
@@ -44,7 +44,7 @@ td{
 #tableDei td
 {
     border: 1px solid #ddd;
-    padding: 5px;
+    /*padding: 5px;*/
     font-family: 'FontAwesome';
     font-weight: 700;
     color: #000000d1;

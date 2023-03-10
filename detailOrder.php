@@ -16,27 +16,27 @@
             <!--                <h3 style="font-weight: 700;">Tra Cứu Mã Vận Đơn</h3>-->
             <img src="images/devider.png">
         </div>
-<!--        <div class="ps-tracuu">-->
-<!--            <div class="titleTH">-->
-<!--                <h3 style="font-weight: 700;">Tra Cứu Mã Vận Đơn</h3>-->
-<!--                <img src="images/devider.png">-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">-->
-<!--                </div>-->
-<!--                <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">-->
-<!--                    <form id="tracuu" class="ps-subscribe__form" method="POST"-->
-<!--                    >-->
-<!--                        <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"-->
-<!--                               placeholder="Nhập mã vận đơn…">-->
-<!--                        <button style="background-color: #ff6c00;">Tra Cứu</button>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">-->
-<!--                </div>-->
-<!--            </div>-->
+        <!--        <div class="ps-tracuu">-->
+        <!--            <div class="titleTH">-->
+        <!--                <h3 style="font-weight: 700;">Tra Cứu Mã Vận Đơn</h3>-->
+        <!--                <img src="images/devider.png">-->
+        <!--            </div>-->
+        <!--            <div class="row">-->
+        <!--                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">-->
+        <!--                </div>-->
+        <!--                <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">-->
+        <!--                    <form id="tracuu" class="ps-subscribe__form" method="POST"-->
+        <!--                    >-->
+        <!--                        <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"-->
+        <!--                               placeholder="Nhập mã vận đơn…">-->
+        <!--                        <button style="background-color: #ff6c00;">Tra Cứu</button>-->
+        <!--                    </form>-->
+        <!--                </div>-->
+        <!--                <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">-->
+        <!--                </div>-->
+        <!--            </div>-->
 
-<!--        </div>-->
+        <!--        </div>-->
         <?php
         $checkCookie = Auth::loginWithCookie();
         require_once("repository/kienhangRepository.php");
@@ -49,12 +49,13 @@
         {
 //            $symbol = ' VNĐ';
 
-                $symbol_thousand = '.';
-                $decimal_place = 0;
-                $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
-                return $price;
+            $symbol_thousand = '.';
+            $decimal_place = 0;
+            $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+            return $price;
 
         }
+
         ?>
         <div class="ps-danhsachkienhang">
 
@@ -108,52 +109,65 @@
                         <table id="tableShoeIndex">
                             <tr style="min-width:100px">
                                 <th>Mã Đơn Hàng</th>
-                                <td><?php if(!empty($order['code'])) { echo $order['code']; } else echo "--" ?></td>
+                                <td><?php if (!empty($order['code'])) {
+                                        echo $order['code'];
+                                    } else echo "--" ?></td>
                             </tr>
                             <tr class="form-group" style="min-width:100px">
                                 <th>Tỷ Giá Tệ</th>
                                 <td>
-                                    <?php if(!empty($order['tygiate'])) echo product_price($order['tygiate']) ?><span> ¥</span></td>
+                                    <?php if (!empty($order['tygiate'])) echo product_price($order['tygiate']) ?><span> ¥</span>
+                                </td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Giá Vận Chuyển</th>
-                                <td><?php if(!empty($order['giavanchuyen'])) echo product_price($order['giavanchuyen']) ?><span> VNĐ</span></td>
+                                <td><?php if (!empty($order['giavanchuyen'])) echo product_price($order['giavanchuyen']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Hàng</th>
-                                <td><?php if(!empty($order['tongtienhang']))  echo product_price($order['tongtienhang']) ?><span> VNĐ</span></td>
+                                <td><?php if (!empty($order['tongtienhang'])) echo product_price($order['tongtienhang']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Ship TQ</th>
-                                <td><?php if(!empty($order['shiptq'])) echo product_price($order['shiptq']) ?><span> ¥</span></td>
+                                <td><?php if (!empty($order['shiptq'])) echo product_price($order['shiptq']) ?>
+                                    <span> ¥</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Mã Giảm Giá</th>
-                                <td><?php if(!empty($order['giamgia'])) echo product_price($order['giamgia']) ?><span> ¥</span></td>
+                                <td><?php if (!empty($order['giamgia'])) echo product_price($order['giamgia']) ?><span> ¥</span>
+                                </td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Phí dịch vụ (%)</th>
-                                <td><?php  if(!empty($order['phidichvu'])) echo $order['phidichvu']*100 ?><span> %</span></td>
+                                <td><?php if (!empty($order['phidichvu'])) echo $order['phidichvu'] * 100 ?>
+                                    <span> %</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Công</th>
-                                <td><?php if(!empty($order['tiencong'])) echo product_price($order['tiencong']) ?><span> VNĐ</span></td>
+                                <td><?php if (!empty($order['tiencong'])) echo product_price($order['tiencong']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Ship về VN</th>
-                                <td><?php if(!empty($order['tienvanchuyen'])) echo product_price($order['tienvanchuyen']) ?><span> VNĐ</span></td>
+                                <td><?php if (!empty($order['tienvanchuyen'])) echo product_price($order['tienvanchuyen']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Thu Khác</th>
-                                <td><?php if(!empty($order['thukhac'])) echo product_price($order['thukhac']) ?><span> VNĐ</span></td>
+                                <td><?php if (!empty($order['thukhac'])) echo product_price($order['thukhac']) ?><span> VNĐ</span>
+                                </td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Ghi Chú</th>
-                                <td><?php if(!empty($order['ghichu'])) { echo $order['ghichu']; } else echo "--"?></td>
+                                <td><?php if (!empty($order['ghichu'])) {
+                                        echo $order['ghichu'];
+                                    } else echo "--" ?></td>
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-3 table-responsive " >
+                    <div class="col-md-3 table-responsive ">
                         <h3>Tổng Quan Đơn Hàng</h3>
                         <table id="tableShoeIndex">
                             <tr style="min-width:100px">
@@ -162,21 +176,24 @@
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Ngày Xuất</th>
-                                <td><?php  if(!empty($order['ngayxuat'])){
+                                <td><?php if (!empty($order['ngayxuat'])) {
                                         echo $order['ngayxuat'];
-                                    }else echo "--/--/---" ?></td>
+                                    } else echo "--/--/---" ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tổng Tiền</th>
-                                <td style="font-weight: 700;"><?php echo product_price($order['tongall']) ?><span> VNĐ</span></td>
+                                <td style="font-weight: 700;"><?php echo product_price($order['tongall']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px;">
                                 <th>Đã Thanh Toán</th>
-                                <td style="color: green;font-weight: 700;"> <?php echo product_price($order['tamung']) ?><span> VNĐ</span></td>
+                                <td style="color: green;font-weight: 700;"> <?php echo product_price($order['tamung']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Công Nợ</th>
-                                <td style="color: red;font-weight: 700;"><?php echo product_price($order['tongall'] - $order['tamung']) ?><span> VNĐ</span></td>
+                                <td style="color: red;font-weight: 700;"><?php echo product_price($order['tongall'] - $order['tamung']) ?>
+                                    <span> VNĐ</span></td>
                             </tr>
                         </table>
                     </div>
@@ -185,9 +202,9 @@
             <div class="row">
                 <h3>Danh Sách Sản Phẩm</h3>
                 <form method="POST" enctype="multipart/form-data">
-<!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
-<!--                            role="button">Xuất Phiếu-->
-<!--                    </button>-->
+                    <!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
+                    <!--                            role="button">Xuất Phiếu-->
+                    <!--                    </button>-->
                     <div class="table-responsive">
                         <table id="tableShoeIndex">
                             <tr>
@@ -254,18 +271,22 @@
                                         </td>
                                         <td><p><?php echo $product['name'] ?></p></td>
                                         <td><img width="150px" height="150px"
-                                                 src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo "admin/production/".$link_image['link_image'];
-                                                 if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
+                                                 src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo "admin/production/" . $link_image['link_image'];
+                                                 if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>">
+                                        </td>
                                         <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
-                                        <td style="font-weight: bold;"><p style="color: blue"><?php echo $product['ladingCode'] ?> </p>
-                                                        <?php echo "Cân nặng: ".$product['size']." /Kg";?>
+                                        <td style="font-weight: bold;"><p
+                                                    style="color: blue"><?php echo $product['ladingCode'] ?> </p>
+                                            <?php echo "Cân nặng: " . $product['size'] . " /Kg"; ?>
                                         </td>
                                         <td><p>Size: <?php echo $product['kichthuoc'] ?></p>
                                             <p>Màu: <?php echo $product['color'] ?></p>
                                             <p>Số Lượng: <?php echo $product['amount'] ?></p>
                                         </td>
-                                        <td><p style="color:green"><?php echo $product['price'] ?><span> &#165;</span></p></td>
-                                        <td><p style="color:blue"><?php echo $product['totalyen'] ?> <span> ¥</span></p></td>
+                                        <td><p style="color:green"><?php echo $product['price'] ?><span> &#165;</span>
+                                            </p></td>
+                                        <td><p style="color:blue"><?php echo $product['totalyen'] ?> <span> ¥</span></p>
+                                        </td>
                                         <td><p style=""><?php echo $product['shiptq'] ?> <span> ¥</span></p></td>
                                         <td><p style=""><?php echo $product['magiamgia'] ?> <span> ¥</span></p></td>
                                         <td>
@@ -319,7 +340,9 @@
                                                         } ?></p></li>
                                             </ul>
                                         </td>
-                                        <td> <p><?php  if(!empty($product['note'])) { echo $product['note'];} else echo "---" ?></p></td>
+                                        <td><p><?php if (!empty($product['note'])) {
+                                                    echo $product['note'];
+                                                } else echo "---" ?></p></td>
                                     </tr>
                                     <?php
                                 }

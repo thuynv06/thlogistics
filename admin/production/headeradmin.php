@@ -46,7 +46,7 @@ $th1688Repository = new Th1688Repository();
 </head>
 
 <body class="nav-md">
-<div class="container body">
+<div class="container body" style="font-size: 11px;">
     <div class="main_container">
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">

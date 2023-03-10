@@ -111,5 +111,16 @@
 
             return mysqli_query($conn, $sql);
         }
+        public function getListProductById($id){
+            global $conn;
+            $sql = "select listsproduct from orders where id=$id";
+            return mysqli_query($conn,$sql)->fetch_assoc();
+        }
+        public function updatedListProductById($id,$array_data){
+            global $conn;
+            $sql = "update orders set listsproduct= '" . $array_data . "'  where id=$id";
+            echo $sql;
+            return mysqli_query($conn,$sql);
+        }
     }
 ?>
