@@ -30,7 +30,7 @@ if (isset($_POST["btnImport"])) {
 
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 //            echo(print_r($_FILES, true));
-            $targetPath = $_SERVER['DOCUMENT_ROOT']."/img/" . basename($_FILES["file"]["name"]);
+            $targetPath = dirname(__FILE__, 5)."/img/" . basename($_FILES["file"]["name"]);
             echo "Path: " . $targetPath . " \n";
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
 
@@ -218,7 +218,7 @@ if (isset($_POST["btnImport"])) {
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
                     $orderRepository->update($orderId, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
-                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
+//                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
                 }
