@@ -117,9 +117,10 @@
             return mysqli_query($conn,$sql)->fetch_assoc();
         }
         public function updatedListProductById($id,$array_data){
+            $array_data = serialize($array_data);
             global $conn;
             $sql = "update orders set listsproduct= '" . $array_data . "'  where id=$id";
-            echo $sql;
+//            echo $sql;
             return mysqli_query($conn,$sql);
         }
     }

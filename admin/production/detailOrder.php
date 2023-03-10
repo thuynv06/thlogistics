@@ -73,12 +73,12 @@ if (isset($_POST['xuatphieu'])) {
             <?php
             $order = $orderRepository->getById($_GET['id']);
 
-            echo $order['listsproduct'];
+//            echo $order['listsproduct'];
             $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-                                        echo(print_r($arr_unserialize1, true));
+//                                        echo(print_r($arr_unserialize1, true));
 //            print_r($arr_unserialize1,true);
-            $arr_unserialize1 = array_diff($arr_unserialize1, ["265"]);
-            echo(print_r($arr_unserialize1, true));
+//            $arr_unserialize1 = array_diff($arr_unserialize1, ["265"]);
+//            echo(print_r($arr_unserialize1, true));
             $startdate = date("Y-m-d\TH:i:s", strtotime($order['startdate']));
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
