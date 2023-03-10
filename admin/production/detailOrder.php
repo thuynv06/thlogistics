@@ -74,8 +74,8 @@ if (isset($_POST['xuatphieu'])) {
             $order = $orderRepository->getById($_GET['id']);
 
 //            echo dirname(__FILE__);
-            $temppath="..".dirname(__FILE__);
-            echo $temppath;
+//            $temppath="..".dirname(__FILE__);
+//            echo $temppath;
 //            echo $order['listsproduct'];
             $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
 //                                        echo(print_r($arr_unserialize1, true));

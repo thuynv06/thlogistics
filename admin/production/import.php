@@ -16,10 +16,9 @@ $orderRepository = new OrderRepository();
 //} else {
 //    $user_id = $_POST['user_id'];
 //}
-define('UPLOAD_DIR', 'images/');
+//define('UPLOAD_DIR', 'images/');
 
 $user_id=null;
-
 if (isset($_POST["btnImport"])) {
     try {
         $allowedFileType = [
@@ -28,11 +27,10 @@ if (isset($_POST["btnImport"])) {
             'text/xlsx',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ];
-         $_SERVER['DOCUMENT_ROOT'];
+
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 //            echo(print_r($_FILES, true));
-            $temppath= "../../".$_SERVER['DOCUMENT_ROOT']."uploads/" . basename($_FILES["file"]["name"]);
-            echo $temppath;
+            $targetPath = $_SERVER['DOCUMENT_ROOT']."/img/" . basename($_FILES["file"]["name"]);
             echo "Path: " . $targetPath . " \n";
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
 
@@ -132,22 +130,6 @@ if (isset($_POST["btnImport"])) {
                                 $price = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
                             }
 
-
-                                          $note = "";
-                            if (isset($spreadSheetAry[$i][10])) {
-                                $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
-                            }
-
-                            $ladingCode = "";
-                            if (isset($spreadSheetAry[$i][11])) {
-                                $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
-                            }
-
-                            $size = 0;
-                            if (isset($spreadSheetAry[$i][13])) {
-                                $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
-
-
                             $shiptq = 0;
                             if (isset($spreadSheetAry[$i][8])) {
                                 $shiptq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
@@ -159,7 +141,6 @@ if (isset($_POST["btnImport"])) {
                             $note = "";
                             if (isset($spreadSheetAry[$i][10])) {
                                 $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
-
                             }
 
                             $ladingCode = "";
@@ -189,6 +170,7 @@ if (isset($_POST["btnImport"])) {
                             $tongcan += $size;
                             $tienvanchuyen += $size * $giavanchuyen;
                             $tongmagiamgia += $magiamgia;
+
                             // Code luu annh
                             $worksheet = $spreadsheet->getActiveSheet();
                             if (isset($worksheet->getDrawingCollection()[$j])) {
@@ -204,9 +186,8 @@ if (isset($_POST["btnImport"])) {
 //                            echo '<tr align="center">';
 //                            echo '<td><img  height="500px" width="500px"   src="data:image/jpeg;base64,' . base64_encode($imageContents) . '"/></td>';
 //                            echo '</tr>';
-
 //                            $data = base64_decode($img);
-                                $file = UPLOAD_DIR . uniqid() . '.' . $extension;
+                                $file = $_SERVER['DOCUMENT_ROOT']."/img/" . uniqid() . '.' . $extension;
                                 $success = file_put_contents($file, $imageContents);
                                 if ($success) {
                                     $kienhangRepository->addImage($kienhang_id, $file);
@@ -237,7 +218,7 @@ if (isset($_POST["btnImport"])) {
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
                     $orderRepository->update($orderId, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
-//                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
+                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
                 }
