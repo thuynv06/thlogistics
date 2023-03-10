@@ -72,7 +72,10 @@ if (isset($_POST['xuatphieu'])) {
         <form method="POST" enctype="multipart/form-data">
             <?php
             $order = $orderRepository->getById($_GET['id']);
-            echo $_SERVER['DOCUMENT_ROOT'];
+//            echo $_SERVER['DOCUMENT_ROOT'];
+//            echo dirname(__FILE__);
+            $temppath="..".dirname(__FILE__);
+            echo $temppath;
 //            echo $order['listsproduct'];
             $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
 //                                        echo(print_r($arr_unserialize1, true));
