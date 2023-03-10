@@ -406,8 +406,16 @@ if (isset($_POST['xuatphieu'])) {
     <div class="row">
         <form method="POST" enctype="multipart/form-data">
             <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
-
                     role="button">Xuất Phiếu
+            </button>
+<!--            <button class="btn-sm btn-primary" type="submit" name="addKienHang"-->
+<!--                    role="button">Thêm Sản Phẩm-->
+<!--            </button>-->
+            <button type="button" id="modalthemSP" class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#modalThemSanPham" data-id="<?php echo $order['id'] ?>"
+                    onclick="openModalThemSanPham()">
+                Thêm Sản Phẩm
             </button>
             <div class="table-responsive">
                 <table id="tableShoe">
@@ -690,6 +698,7 @@ if (isset($_POST['xuatphieu'])) {
         </div>
     </div>
 </div>
+
 <div id="suacannang" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -772,6 +781,7 @@ if (isset($_POST['xuatphieu'])) {
         </div>
     </div>
 </div>
+
 <div id="vandon" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -811,6 +821,93 @@ if (isset($_POST['xuatphieu'])) {
         </div>
     </div>
 </div>
+
+<div id="modalThemSanPham" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm Sản Phẩm  </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+            </div>
+            <form action="" id="ThemSanPham" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Mã Đơn Hàng</label>
+                        <input class="form-control" name="orderID" id="orderID" type="number" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Têm Sản Phẩm</label>
+                        <input required value="" minlength="5" maxlength="500" name="tensanpham" type="text"
+                               class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Vận Đơn</label>
+                        <input  required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
+                               class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số Lượng</label>
+                        <input required value="1" minlength="1" maxlength="250" name="soluong" type="number" step="1"
+                               class="form-control" placeholder="Nhập số lương">
+                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>Status</label>-->
+<!--                        <select readonly name="status_id" class="form-control">-->
+<!--                            --><?php
+//                            $listStatus = $statusRepository->getAll();
+//                            foreach ($listStatus as $status) {
+//                                ?>
+<!--                                <option value="--><?php //echo $status['status_id']; ?><!--">--><?php //echo $status['name']; ?><!--</option>-->
+<!--                                --><?php
+//                            }
+//                            ?>
+<!--                        </select>-->
+<!--                    </div>-->
+                    <div class="form-group">
+                        <label>Link SP</label>
+                        <input   value="" minlength="5" maxlength="100000" name="linksp" type="text"
+                                class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Chọn Thời Gian</label>
+                        <input value="" name="updateDateStatus" type="datetime-local" step="1"
+                               class="form-control" id="timeadd">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="xxx" name="themsanpham" type="submit" class="btn btn-primary" data-id="">
+                        Thêm Sản Phẩm
+                    </button>
+                </div>
+                <?php
+                if (isset($_POST['themsanpham'])) {
+                    $orderId= $_POST['orderID'];
+                    $o = $orderRepository->getById($orderId);
+                    $date = new DateTime();
+                    $dateCreadted = $date->format("Y-m-d\TH:i:s");
+                    $myObj = new stdClass();
+                    $myObj->{1} = "$dateCreadted";
+                    $listStatusJSON = json_encode($myObj);
+
+                    $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $_POST['tensanpham'], null, $_POST['ladingCode'], $_POST['soluong'], "BT/HN1", 0, $o['giavanchuyen'], 1, 0, 0, $o['user_id'], $_POST['linksanpham'], 0, $dateCreadted, $listStatusJSON, 0, 0, 0, 0);
+                    $arrayList =$orderRepository-> getListProductById($orderId);
+                    $arr_unserialize1 = unserialize($arrayList['listsproduct']);
+                    array_push($arr_unserialize1, $kienhang_id);
+                    $orderRepository->updatedListProductById($orderId,$arr_unserialize1);
+                    $kienhangRepository->updateMaKien($kienhang_id);
+                    $urlStr = "detailOrder.php?id=" . $orderId;
+                    echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
+                }
+                ?>
+            </form>
+        </div>
+    </div>
+</div>
+
 <?php include 'functionVanDon.php' ?>
 <script>
     function get() {
@@ -842,6 +939,18 @@ if (isset($_POST['xuatphieu'])) {
         _getTimeZoneOffsetInMs();
         document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
     }
+    function openModalThemSanPham() {
+        var id = $(this).attr('data-id');
+
+        $(document).delegate("[data-target='#modalThemSanPham']", "click", function () {
+            var id = $(this).attr('data-id');
+            document.getElementById('orderID').value = id;
+        });
+        _getTimeZoneOffsetInMs();
+        document.getElementById('timeadd').value = timestampToDatetimeInputString(Date.now());
+
+    }
+
 
     function openModalSuaCan() {
         $(document).delegate("[data-target='#suacannang']", "click", function () {
