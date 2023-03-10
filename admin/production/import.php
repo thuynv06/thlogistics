@@ -18,7 +18,8 @@ $orderRepository = new OrderRepository();
 //}
 define('UPLOAD_DIR', 'images/');
 
-$user_id = null;
+$user_id=null;
+
 if (isset($_POST["btnImport"])) {
     try {
         $allowedFileType = [
@@ -64,7 +65,7 @@ if (isset($_POST["btnImport"])) {
 
                 if (isset($spreadSheetAry[4][2]) && !empty($spreadSheetAry[4][2])) {
                     $userCode = $spreadSheetAry[4][2];
-                } else {
+                } else{
                     echo "<script>alert('Không Có Mã Khách Hàng');window.location.href='vandon.php';</script>";
                 }
 
@@ -88,9 +89,9 @@ if (isset($_POST["btnImport"])) {
                 $tongall = 0;
                 $tongmagiamgia = 0;
                 $tienvanchuyen = 0;
-                $tongcan = 0;
-                $giatenhap = 0;
-                $j = 1;
+                $tongcan=0;
+                $giatenhap=0;
+                $j =1;
                 if (!empty($user_id) && isset($user_id)) {
                     $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {
@@ -130,6 +131,22 @@ if (isset($_POST["btnImport"])) {
                                 $price = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
                             }
 
+
+                                          $note = "";
+                            if (isset($spreadSheetAry[$i][10])) {
+                                $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
+                            }
+
+                            $ladingCode = "";
+                            if (isset($spreadSheetAry[$i][11])) {
+                                $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
+                            }
+
+                            $size = 0;
+                            if (isset($spreadSheetAry[$i][13])) {
+                                $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
+
+
                             $shiptq = 0;
                             if (isset($spreadSheetAry[$i][8])) {
                                 $shiptq = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
@@ -141,6 +158,7 @@ if (isset($_POST["btnImport"])) {
                             $note = "";
                             if (isset($spreadSheetAry[$i][10])) {
                                 $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
+
                             }
 
                             $ladingCode = "";
@@ -161,6 +179,7 @@ if (isset($_POST["btnImport"])) {
                             $myObj->{1} = "$dateCreadted";
                             $listStatusJSON = json_encode($myObj);
 
+
                             $kienhang_id = $kienhangRepository->insert($orderId, $price, $phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
                             $kienhangRepository->updateMaKien($kienhang_id);
                             array_push($listproduct, $kienhang_id);
@@ -174,7 +193,6 @@ if (isset($_POST["btnImport"])) {
                             if (isset($worksheet->getDrawingCollection()[$j])) {
                                 $drawing = $worksheet->getDrawingCollection()[$j];
 
-
                                 $zipReader = fopen($drawing->getPath(), 'r');
                                 $imageContents = '';
                                 while (!feof($zipReader)) {
@@ -182,7 +200,9 @@ if (isset($_POST["btnImport"])) {
                                 }
                                 fclose($zipReader);
                                 $extension = $drawing->getExtension();
-
+//                            echo '<tr align="center">';
+//                            echo '<td><img  height="500px" width="500px"   src="data:image/jpeg;base64,' . base64_encode($imageContents) . '"/></td>';
+//                            echo '</tr>';
 
 //                            $data = base64_decode($img);
                                 $file = UPLOAD_DIR . uniqid() . '.' . $extension;
@@ -215,13 +235,11 @@ if (isset($_POST["btnImport"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-                    echo(print_r($listproduct, true));
                     $orderRepository->update($orderId, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
-//                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
-                } else {
+                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
+                }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
                 }
-
             } else {
                 echo "Not uploaded because of error #" . $_FILES["file"]["error"];
             }

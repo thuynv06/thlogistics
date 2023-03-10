@@ -83,7 +83,7 @@ if (isset($_POST['xuatphieu'])) {
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
                     $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap'] - $product['magiamgia'] * $product['currency'];
+                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap']- $product['magiamgia'] * $product['currency'];
                     $thanhtienban = $product['price'] * $product['amount'] * $product['currency'] + $product['shiptq'] * $product['currency'] - $product['magiamgia'] * $product['currency'];
                     $phidv = $thanhtienban * $product['servicefee'];
 
