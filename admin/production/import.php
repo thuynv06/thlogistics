@@ -31,7 +31,7 @@ if (isset($_POST["btnImport"])) {
         if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 //            echo(print_r($_FILES, true));
             $targetPath = dirname(__FILE__, 5)."/img/" . basename($_FILES["file"]["name"]);
-            echo "Path: " . $targetPath . " \n";
+//            echo "Path: " . $targetPath . " \n";
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
 
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetPath);
@@ -187,7 +187,7 @@ if (isset($_POST["btnImport"])) {
 //                            echo '<td><img  height="500px" width="500px"   src="data:image/jpeg;base64,' . base64_encode($imageContents) . '"/></td>';
 //                            echo '</tr>';
 //                            $data = base64_decode($img);
-                                $file = $_SERVER['DOCUMENT_ROOT']."/img/" . uniqid() . '.' . $extension;
+                                $file = dirname(__FILE__, 5)."/img/". uniqid() . '.' . $extension;
                                 $success = file_put_contents($file, $imageContents);
                                 if ($success) {
                                     $kienhangRepository->addImage($kienhang_id, $file);
