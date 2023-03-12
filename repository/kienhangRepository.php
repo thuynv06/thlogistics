@@ -46,7 +46,7 @@ class KienHangRepository
     {
         global $conn;
         $sql = "select * from kienhang as k where k.ladingCode LIKE '%$ladingCode%' ORDER BY id DESC";
-    //    echo $sql;
+//        echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
