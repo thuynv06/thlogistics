@@ -27,9 +27,14 @@
             $sql = "delete from user where id=$id"; 
             mysqli_query($conn,$sql);
         }
-        public function updateById($id,$fullname,$code,$email,$phone,$role){
+        public function updateById($id,$username,$fullname,$code,$email,$phone,$role){
             global $conn;
-            $sql = "update user set fullname='$fullname',code='$code', email='$email', phone='$phone', role=$role where id=$id";
+            $sql = "update user set  username='$username',fullname='$fullname',code='$code', email='$email', phone='$phone', role=$role where id=$id";
+            mysqli_query($conn,$sql);
+        }
+        public function ressetPass($id){
+            global $conn;
+            $sql = "update user set password='25d55ad283aa400af464c76d713c07ad' where id=$id";
             mysqli_query($conn,$sql);
         }
     }

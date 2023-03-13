@@ -198,6 +198,10 @@
           <input required value="<?php echo $userInfo['fullname']?>" minlength="5" maxlength="50" name="fullname" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập tên giày">
         </div>
         <div class="form-group">
+            <label for="exampleInputEmail1">User Name</label>
+            <input required value="<?php echo $userInfo['username']?>" minlength="3" maxlength="50" name="username" type="text" class="form-control"  placeholder="Nhập mã khách hàng">
+        </div>
+        <div class="form-group">
             <label for="exampleInputEmail1">Mã KH</label>
             <input required value="<?php echo $userInfo['code']?>" minlength="3" maxlength="50" name="code" type="text" class="form-control"  placeholder="Nhập mã khách hàng">
         </div>
@@ -221,7 +225,7 @@
         <button name="submit" type="submit" class="btn btn-primary">Cập Nhật</button>
         <?php
           if(isset($_POST['submit'])){
-              $userRepository->updateById($_GET['id'],$_POST['fullname'],$_POST['code'],$_POST['email'],$_POST['phone'],$_POST['role']);
+              $userRepository->updateById($_GET['id'],$_POST['username'],$_POST['fullname'],$_POST['code'],$_POST['email'],$_POST['phone'],$_POST['role']);
               echo "<script>alert('Cập nhật thành công');window.location.href='user.php';</script>";
           }
         ?>

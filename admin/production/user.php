@@ -20,7 +20,8 @@ $userList = $userRepository->getAll();
                 <th class="text-center" style="min-width:50px">Email</th>
                 <th class="text-center" style="min-width:100px">SDT</th>
                 <th class="text-center" style="min-width:100px">Quyền</th>
-                <th class="text-center" style="min-width:100px"></th>
+                <th class="text-center" style="min-width:50px"></th>
+                <th class="text-center" style="min-width:50px"></th>
                 <th class="text-center" style="min-width:100px"></th>
             </tr>
              <?php
@@ -39,6 +40,8 @@ $userList = $userRepository->getAll();
                         role="button">Sửa</a></td>
                 <td><a class="btn btn-danger" href="deleteUser.php?id=<?php echo $user['id'] ?>" role="button"
                         onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+                <td><a class="btn btn-danger" href="ressetPassUser.php?id=<?php echo $user['id'] ?>" role="button"
+                       onclick="return confirm('Bạn có muốn resset mật khẩu Không?');">Resset Pass </a></td>
             </tr>
                 <?php
             }
