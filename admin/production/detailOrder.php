@@ -404,7 +404,22 @@ if (isset($_POST['xuatphieu'])) {
     </button>
     <h3>Danh Sách Sản Phẩm</h3>
     <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+            <form name="search" class="form-inline ps-subscribe__form" method="POST"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <input required style="margin-right: 20px; margin-bottom: 5px;"
+                           class="form-control input-large " name="mavandon"
+                           type="text" value="" placeholder="Nhập Mã Vận Đơn">
+                </div>
+                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">
+                     Tra Cứu
+                </button>
+                <a style="" href="detailOrder.php?id=<?php echo $_GET['id']?>" class="btn btn-primary btn-large btn-th">RELOAD</a>
+            </form>
+        </div>
         <form method="POST" enctype="multipart/form-data">
+
             <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
                     role="button">Xuất Phiếu
             </button>
@@ -445,13 +460,24 @@ if (isset($_POST['xuatphieu'])) {
                     //            $order = $orderRepository->getById($_GET['id']);
                     //            echo print_r($listOrder, true);
                     //            echo(print_r($order, true));
-                    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+                    if(isset($_POST['mavandon'])){
+                        $arr_unserialize1= array();
+                        $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'],$_GET['id']);
+                        foreach ($tempList as $p){
+                            array_push($arr_unserialize1,$p['id']);
+                        }
+                    }else{
+                        $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
+                    }
+
                     //                            echo(print_r($arr_unserialize1, true));
                     if (!empty($arr_unserialize1)) {
                         $i = 1;
                         foreach ($arr_unserialize1 as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                            $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
+                            if(isset($product )){
+                                $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
+                            }
 
                             //                    echo(print_r($product, true));?>
 

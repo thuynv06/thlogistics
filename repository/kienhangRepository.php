@@ -50,6 +50,14 @@ class KienHangRepository
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
+    public function findByMaVanDonAndOrderId($ladingCode,$OrderID)
+    {
+        global $conn;
+        $sql = "select * from kienhang as k where k.ladingCode LIKE '%$ladingCode%' and k.order_id=$OrderID ORDER BY id DESC";
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
 
     public function findByStatus($status_id)
     {
