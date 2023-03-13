@@ -214,7 +214,7 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                             <td style="background-color: #fec243;color: black;font-weight: bold"><p>Tỷ
                                     Giá:<?php echo product_price($orders['tygiate']) ?></p>
                                 <p>Giá VC:<?php echo product_price($orders['giavanchuyen']) ?></p>
-                                <p>Phí DV:<?php echo $orders['phidichvu'] ?></p></td>
+<!--                                <p>Phí DV:--><?php //echo $orders['phidichvu'] ?><!--</p></td>-->
                             <td><p style="color: #00CC00"> <?php
                                     switch ($orders['status']) {
                                         case "0":
@@ -229,7 +229,7 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                                     ?> </p></td>
                             <td><p>Tiền Hàng:<?php echo product_priceyen($orders['tongtienhang']) ?></p>
                                 <p>Tiền Ship TQ:<?php echo product_priceyen($orders['shiptq']) ?> </p>
-                                <p>Tổng MGG:<?php echo product_priceyen($orders['giamgia']) ?> </p></td>
+<!--                                <p>Tổng MGG:--><?php //echo product_priceyen($orders['giamgia']) ?><!-- </p></td>-->
                             <td><?php echo product_price($orders['tiencong']) ?> </td>
                             <td><p style="font-weight: bold">Tiền
                                     VC:<?php echo product_price($orders['tienvanchuyen']) ?></p>

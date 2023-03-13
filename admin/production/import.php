@@ -90,7 +90,7 @@ if (isset($_POST["btnImport"])) {
                 $tienvanchuyen = 0;
                 $tongcan=0;
                 $giatenhap=0;
-                $j =1;
+                $j =0;
                 if (!empty($user_id) && isset($user_id)) {
                     $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {

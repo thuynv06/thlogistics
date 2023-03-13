@@ -457,18 +457,15 @@ if (isset($_POST['xuatphieu'])) {
                         <th class="text-center" style="min-width:50px"></th>
                     </tr>
                     <?php
-                    //            $order = $orderRepository->getById($_GET['id']);
-                    //            echo print_r($listOrder, true);
-                    //            echo(print_r($order, true));
-                    if(isset($_POST['mavandon'])){
-                        $arr_unserialize1= array();
-                        $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'],$_GET['id']);
-                        foreach ($tempList as $p){
-                            array_push($arr_unserialize1,$p['id']);
+                        if(isset($_POST['mavandon'])){
+                            $arr_unserialize1= array();
+                            $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'],$_GET['id']);
+                            foreach ($tempList as $p){
+                                array_push($arr_unserialize1,$p['id']);
+                            }
+                        }else{
+                            $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
                         }
-                    }else{
-                        $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
-                    }
 
                     //                            echo(print_r($arr_unserialize1, true));
                     if (!empty($arr_unserialize1)) {
