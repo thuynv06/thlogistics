@@ -187,7 +187,7 @@ if (isset($_POST["btnImport"])) {
 //                            echo '<td><img  height="500px" width="500px"   src="data:image/jpeg;base64,' . base64_encode($imageContents) . '"/></td>';
 //                            echo '</tr>';
 //                            $data = base64_decode($img);
-                                $file = dirname(__FILE__, 5)."/img/". uniqid() . '.' . $extension;
+                                $file = "../../img/". uniqid() . '.' . $extension;
                                 $success = file_put_contents($file, $imageContents);
                                 if ($success) {
                                     $kienhangRepository->addImage($kienhang_id, $file);
