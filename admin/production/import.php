@@ -218,7 +218,7 @@ if (isset($_POST["btnImport"])) {
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
                     $orderRepository->update($orderId, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
-//                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
+                    echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
                 }
