@@ -29,6 +29,10 @@ if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
     $ordersList = $orderRepository->findByUserId($user_id);
 }
+if (isset($_POST['kieudon']) && !empty($_POST['kieudon'])) {
+    $type = $_POST['kieudon'];
+    $ordersList = $orderRepository->findByType($type);
+}
 if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
     $maKH = $_POST['MaKH'];
     $user = $userRepository->getByCode($maKH);
@@ -123,6 +127,15 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                                 <?php
                             }
                             ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="kieudon"
+                                class="form-control custom-select " onchange="searchStatus()">
+                            <option value="">Lọc theo kiểu đơn</option>
+                            <option value="0"> Đơn Order</option>
+                            <option value="1"> Đơn Ký Gửi</option>
+
                         </select>
                     </div>
                     <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra

@@ -77,6 +77,12 @@
             $sql = "select * from orders where user_id = $user_id ORDER BY id DESC LIMIT 0, 30";
             return mysqli_query($conn, $sql);
         }
+        public function findByType($type)
+        {
+            global $conn;
+            $sql = "select * from orders where type = $type ORDER BY id DESC LIMIT 0, 30";
+            return mysqli_query($conn, $sql);
+        }
         public function findByNameKH($name)
         {
             global $conn;
