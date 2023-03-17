@@ -6,6 +6,11 @@
             $sql = "select * from user ORDER BY id DESC ";
             return mysqli_query($conn,$sql);
         }
+        public function getAllByType($type){
+            global $conn;
+            $sql = "select * from user where type =$type ORDER BY id DESC ";
+            return mysqli_query($conn,$sql);
+        }
         public function getById($id){
             global $conn;
             $sql = "select * from user where id=$id"; 

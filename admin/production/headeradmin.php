@@ -74,17 +74,18 @@ $th1688Repository = new Th1688Repository();
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="vandon.php">Vận Đơn</a></li>
+                                    <li><a href="vandon.php">Đơn Order</a></li>
+                                    <li><a href="kygui.php">Đơn Ký Gửi</a>
                                     <li><a href="nhapkho.php">Nhập Kho TH1688</a></li>
                                     <li><a href="xuatkho.php">Xuất Kho TH1688</a></li>
-                                    <li><a href="giaohang.php">Giao Hàng</a>
+<!--                                    <li><a href="giaohang.php">Giao Hàng</a>-->
                                     <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
                                         <ul class="nav child_menu">
                                             <li>
-                                                <a href="yeucaugiaohang.php">Tạo Phiếu YC Giao Hàng</a>
+<!--                                                <a href="yeucaugiaohang.php">Tạo Phiếu YC Giao Hàng</a>-->
                                             </li>
                                             <li>
-                                                <a href="giaohang.php"> Phiếu Giao Hàng</a>
+<!--                                                <a href="giaohang.php"> Phiếu Giao Hàng</a>-->
                                             </li>
                                         </ul>
                                     </li>

@@ -23,19 +23,30 @@
             return mysqli_query($conn,$sql)->fetch_assoc();;
         }
 
-        public function getTotalResult()
+        public function getTotalResult($type)
         {
             global $conn;
 //        echo $orderCode;
-            $sql = "SELECT COUNT(*) As total_records FROM `orders` ";
+            $sql = "SELECT COUNT(*) As total_records FROM `orders`  where type=$type";
 
             mysqli_query($conn, 'set names "utf8"');
             return mysqli_query($conn, $sql)->fetch_assoc();
         }
-        public function getTotalRecordPerPageAdmin($offset, $total_records_per_page)
+
+//        public function getTotalDonKyGui()
+//        {
+//            global $conn;
+////        echo $orderCode;
+//            $sql = "SELECT COUNT(*) As total_records FROM `orders`  where type=1";
+//
+//            mysqli_query($conn, 'set names "utf8"');
+//            return mysqli_query($conn, $sql)->fetch_assoc();
+//        }
+
+        public function getTotalRecordPerPageAdmin($type,$offset, $total_records_per_page)
         {
             global $conn;
-            $sql = "SELECT * FROM `orders` ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
+            $sql = "SELECT * FROM `orders` where type=$type ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
 
             mysqli_query($conn, 'set names "utf8"');
 
@@ -61,11 +72,11 @@
             return mysqli_insert_id($conn);
         }
 
-        public function update($id,$giatenhap,$tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$phishiptq,$giamgia,$tienvanchuyen,$tiencong,$tongtien,$ghichu,$listproduct)
+        public function update($id,$user_id,$giatenhap,$tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$phishiptq,$giamgia,$tienvanchuyen,$tiencong,$tongtien,$ghichu,$listproduct)
         {
             $array_data = serialize($listproduct);
             global $conn;
-            $sql = "update orders set giatenhap=$giatenhap, tygiate=$tygiate,giavanchuyen=$giavanchuyen,phidichvu=$phidichvu,tongcan=$tongcan,tamung=$tamung,tongtienhang=$tongtienhang,
+            $sql = "update orders set user_id=$user_id, giatenhap=$giatenhap, tygiate=$tygiate,giavanchuyen=$giavanchuyen,phidichvu=$phidichvu,tongcan=$tongcan,tamung=$tamung,tongtienhang=$tongtienhang,
                     shiptq=$phishiptq,giamgia=$giamgia,tienvanchuyen=$tienvanchuyen,tiencong=$tiencong,tongall=$tongtien,ghichu='$ghichu',listsproduct= '" . $array_data . "'
                     where id=$id ";
 //            echo $sql;
@@ -83,6 +94,15 @@
             $sql = "select * from orders where type = $type ORDER BY id DESC LIMIT 0, 30";
             return mysqli_query($conn, $sql);
         }
+
+        public function findByStatus($type,$status)
+        {
+            global $conn;
+            $sql = "select * from orders where type = $type and status=$status ORDER BY id DESC LIMIT 0, 30";
+            echo $sql;
+            return mysqli_query($conn, $sql);
+        }
+
         public function findByNameKH($name)
         {
             global $conn;
@@ -96,7 +116,7 @@
             global $conn;
             $sql = "update orders set tongcan=$tongcan,tienvanchuyen=$tienvanchuyen,tongall=$tongtien
                     where id=$id ";
-            echo $sql;
+//            echo $sql;
             mysqli_query($conn, $sql);
         }
 
@@ -129,5 +149,12 @@
 //            echo $sql;
             return mysqli_query($conn,$sql);
         }
+
+    public function xuatDon($id){
+        global $conn;
+        $sql = "update orders set status=1 where id=$id";
+//            echo $sql;
+        return mysqli_query($conn,$sql);
+    }
     }
 ?>

@@ -1,11 +1,17 @@
 <?php
 if (isset($_POST['nhapkhovn'])) {
-    $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
+
+
 
     $idOrder = $_POST['idOrder'];
     $date = $_POST['updateDateStatus'];
 //    echo $date;
     $order = $orderRepository->getById($idOrder);
+    if($order['type']==0){
+        $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
+    }else{
+        $urlStr = "detailKyGui.php?id=" . $_POST['idOrder'];
+    }
     //            echo(print_r($order, true));
     $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
     //                            echo(print_r($arr_unserialize1, true));
@@ -26,12 +32,16 @@ if (isset($_POST['nhapkhovn'])) {
     }
 }
 if (isset($_POST['tqnhan'])) {
-    $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
 
     $idOrder = $_POST['idOrder'];
     $date = $_POST['updateDateStatus'];
 //    echo $date;
     $order = $orderRepository->getById($idOrder);
+    if($order['type']==0){
+        $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
+    }else{
+        $urlStr = "detailKyGui.php?id=" . $_POST['idOrder'];
+    }
     //            echo(print_r($order, true));
     $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
     //                            echo(print_r($arr_unserialize1, true));
@@ -53,10 +63,14 @@ if (isset($_POST['tqnhan'])) {
     }
 }
 if (isset($_POST['dagiao'])) {
-    $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
 
     $idOrder = $_POST['idOrder'];
     $order = $orderRepository->getById($idOrder);
+    if($order['type']==0){
+        $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
+    }else{
+        $urlStr = "detailKyGui.php?id=" . $_POST['idOrder'];
+    }
     //            echo(print_r($order, true));
     $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
     //                            echo(print_r($arr_unserialize1, true));
@@ -80,10 +94,14 @@ if (isset($_POST['dagiao'])) {
 }
 
 if (isset($_POST['reset'])) {
-    $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
 
     $idOrder = $_POST['idOrder'];
     $order = $orderRepository->getById($idOrder);
+    if($order['type']==0){
+        $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
+    }else{
+        $urlStr = "detailKyGui.php?id=" . $_POST['idOrder'];
+    }
     //            echo(print_r($order, true));
     $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
     //                            echo(print_r($arr_unserialize1, true));
