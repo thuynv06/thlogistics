@@ -328,15 +328,15 @@ if (isset($_POST['xuatphieu'])) {
                     </table>
                 </div>
                 <div class="col-md-4">
-                    <button class="btn-sm btn-primary" type="submit" name="updateOrder"
+                    <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-primary" type="submit" name="updateOrder"
                             href="detailOrder.php?id=<?php echo $order['id'] ?>"
                             role="button">Cập Nhật
                     </button>
-                    <button class="btn-sm btn-dark" name="xuatdon" type="submit" href="xuatdon.php?id=<?php echo $order['id'] ?>"
-                             onclick="return confirm('Bạn có chắc chắn Xuất Đơn ?');"
-                            role="button"> Xuất Đơn`
-                    </button>
-                    <button class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
+
+                    <a  class="btn btn-success"  href="xuatdon.php?id=<?php echo $order['id'] ?>"
+                       role="button" onclick="return confirm('Bạn có chắc chắn Xuất Đơn ?');">Xuất Đơn</a>
+
+                    <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
                             type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
                     </button>
 
@@ -414,7 +414,7 @@ if (isset($_POST['xuatphieu'])) {
 
         </form>
     </div>
-    <button class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
+    <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
             data-target="#vandon" data-id="<?php echo $order['id'] ?>"
             role="button" onclick="openVanDon()">Vận Đơn
     </button>
@@ -550,7 +550,7 @@ if (isset($_POST['xuatphieu'])) {
                                 </td>
                                 <td><?php echo $product['amount'] ?></td>
                                 <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
-                                    <button type="button" id="modalUpdateS" class="btn-sm btn-primary "
+                                    <button <?php if ($order['status']==1) echo "disabled" ?> type="button" id="modalUpdateS" class="btn-sm btn-primary "
                                             data-toggle="modal"
                                             data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
                                             onclick="openModalSuaCan()">
@@ -604,14 +604,14 @@ if (isset($_POST['xuatphieu'])) {
                                 <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
                                 <td><?php echo $product['note'] ?></td>
                                 <td>
-                                    <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
+                                    <button <?php if ($order['status']==1) echo "disabled" ?> type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
                                             data-toggle="modal"
                                             data-target="#myModal" data-id="<?php echo $product['id'] ?>"
                                             onclick="openModal()">
                                         Cập Nhập
                                     </button>
                                 </td>
-                                <td><a class="btn btn-warning" href="updateKH.php?id=<?php echo $product['id'] ?>"
+                                <td><a   class="btn btn-warning" href="updateKH.php?id=<?php echo $product['id'] ?>"
                                        role="button">Sửa</a></td>
                                 <td><a class="btn btn-danger" href="deleteKienHang.php?id=<?php echo $product['id'] ?>&orderId=<?php echo $order['id'] ?>"
                                        role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
