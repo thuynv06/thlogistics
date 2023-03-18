@@ -201,6 +201,17 @@
             <label for="exampleInputEmail1">User Name</label>
             <input required value="<?php echo $userInfo['username']?>" minlength="3" maxlength="50" name="username" type="text" class="form-control"  placeholder="Nhập mã khách hàng">
         </div>
+            <div class="form-group">
+                <!--                <label for="formGroupExampleInput2">Kiểu Khách Hàng</label>-->
+                <label class="radio-container m-r-45">Ký Gửi
+                    <input <?php if ($userInfo['type']==1) echo "checked" ?> id="kg" onclick="checkButton()" type="radio" value=1 name="type">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">KH Order
+                    <input <?php if ($userInfo['type']==0) echo "checked" ?>  id="od" onclick="checkButton()" type="radio" value=0 name="type">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Mã KH</label>
             <input required value="<?php echo $userInfo['code']?>" minlength="3" maxlength="50" name="code" type="text" class="form-control"  placeholder="Nhập mã khách hàng">
@@ -225,7 +236,7 @@
         <button name="submit" type="submit" class="btn btn-primary">Cập Nhật</button>
         <?php
           if(isset($_POST['submit'])){
-              $userRepository->updateById($_GET['id'],$_POST['username'],$_POST['fullname'],$_POST['code'],$_POST['email'],$_POST['phone'],$_POST['role']);
+              $userRepository->updateById($_GET['id'],$_POST['username'],$_POST['fullname'],$_POST['code'],$_POST['email'],$_POST['phone'],$_POST['role'],$_POST['type']);
               echo "<script>alert('Cập nhật thành công');window.location.href='user.php';</script>";
           }
         ?>

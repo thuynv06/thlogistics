@@ -32,9 +32,9 @@
             $sql = "delete from user where id=$id"; 
             mysqli_query($conn,$sql);
         }
-        public function updateById($id,$username,$fullname,$code,$email,$phone,$role){
+        public function updateById($id,$username,$fullname,$code,$email,$phone,$role,$type){
             global $conn;
-            $sql = "update user set  username='$username',fullname='$fullname',code='$code', email='$email', phone='$phone', role=$role where id=$id";
+            $sql = "update user set type=$type, username='$username',fullname='$fullname',code='$code', email='$email', phone='$phone', role=$role where id=$id";
             mysqli_query($conn,$sql);
         }
         public function ressetPass($id){

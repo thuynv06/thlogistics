@@ -108,7 +108,7 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
         <div>
 
         </div>
-        <div>
+        <div class="row col col-12">
             <h3>Danh Sách Đơn Hàng</h3>
             <div class="table-responsive" style="padding-bottom: 20px;">
                 <table id="tableShoe">
@@ -116,7 +116,7 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                         <th class="text-center" style="min-width:50px">STT</th>
                         <th class="text-center" style="min-width:80px">Ngày</th>
                         <th class="text-center" style="min-width:100px">Khách Hàng</th>
-                        <th class="text-center" style="min-width:130px">Deal</th>
+<!--                        <th class="text-center" style="min-width:130px">Deal</th>-->
                         <th class="text-center" style="min-width:100px">Status</th>
                         <th class="text-center" style="min-width:130px">Tổng Tiền Hàng</th>
                         <th class="text-center" style="min-width:100px">Tiền Công</th>
@@ -183,10 +183,10 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
 
 
                             <!--                            </td>-->
-                            <td style="background-color: #fec243;color: black;font-weight: bold"><p>Tỷ
-                                    Giá:<?php echo product_price($orders['tygiate']) ?></p>
-                                <p>Giá VC:<?php echo product_price($orders['giavanchuyen']) ?></p>
-<!--                                <p>Phí DV:--><?php //echo $orders['phidichvu'] ?><!--</p></td>-->
+<!--                            <td style="background-color: #fec243;color: black;font-weight: bold"><p>Tỷ-->
+<!--                                    Giá:--><?php //echo product_price($orders['tygiate']) ?><!--</p>-->
+<!--                                <p>Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?><!--</p>-->
+<!--                          <p>Phí DV:--><?php ////echo $orders['phidichvu'] ?><!--<</p></td>-->
                             <td><p style="color: #00CC00"> <?php
                                     switch ($orders['status']) {
                                         case "0":

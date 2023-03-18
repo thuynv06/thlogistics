@@ -87,7 +87,7 @@ if(empty($lastCode)){
 
                 Auth::registerByAdmin($_POST['username'], '12345678',
                     $_POST['fullname'],$_POST['code'], $dob, $_POST['address'],
-                    $_POST['gender'], $_POST['email'], $_POST['phone']);
+                    $_POST['gender'], $_POST['email'], $_POST['phone'],$_POST['type']);
             }
         }
         ?>

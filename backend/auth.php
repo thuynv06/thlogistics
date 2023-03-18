@@ -35,12 +35,12 @@ class Auth
         }
     }
 
-    public static function registerByAdmin($username, $password, $fullname, $code, $dob, $address, $gender, $email, $phone)
+    public static function registerByAdmin($username, $password, $fullname, $code, $dob, $address, $gender, $email, $phone,$type)
     {
         global $conn;
         if (Auth::checkExist("username", $username) && Auth::checkExist("email", $email) && Auth::checkExist("phone", $username)) {
-            $sql = "insert into user(username,password,fullname,code,dob,address,gender,email,phone,role)" .
-                " values('$username','" . md5($password) . "','$fullname','$code','$dob','$address',$gender,'$email','$phone',0)";
+            $sql = "insert into user(username,password,fullname,code,dob,address,gender,email,phone,role,type)" .
+                " values('$username','" . md5($password) . "','$fullname','$code','$dob','$address',$gender,'$email','$phone',0,$type)";
             $run = mysqli_query($conn, $sql);
 // /           $temp= Auth::findOneByUsernameAndPassword($username,md5($password));
 //            if($temp){
