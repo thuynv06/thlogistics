@@ -442,7 +442,7 @@ if (isset($_POST['xuatphieu'])) {
 <!--            <button class="btn-sm btn-primary" type="submit" name="addKienHang"-->
 <!--                    role="button">Thêm Sản Phẩm-->
 <!--            </button>-->
-            <button type="button" id="modalthemSP" class="btn btn-primary btn-sm"
+            <button <?php if ($order['status']==1) echo "disabled" ?>  type="button" id="modalthemSP" class="btn btn-primary btn-sm"
                     data-toggle="modal"
                     data-target="#modalThemSanPham" data-id="<?php echo $order['id'] ?>"
                     onclick="openModalThemSanPham()">
@@ -611,11 +611,12 @@ if (isset($_POST['xuatphieu'])) {
                                         Cập Nhập
                                     </button>
                                 </td>
-                                <td><a   class="btn btn-warning" href="updateKH.php?id=<?php echo $product['id'] ?>"
+                                <td><a class="btn btn-warning" <?php if ($order['status']==0) echo "href=".'"'."updateKH.php?id=".$product['id'].'"' ?>
                                        role="button">Sửa</a></td>
-                                <td><a class="btn btn-danger" href="deleteKienHang.php?id=<?php echo $product['id'] ?>&orderId=<?php echo $order['id'] ?>"
-                                       role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
-                    </tr>
+                                <td><a class="btn btn-danger" <?php if ($order['status']==0) echo "href=".'"'."deleteKienHang.php?id=".$product['id']."&orderId=".$order['id'].'"' ?>
+                                       role="button" <?php if ($order['status']==0) echo "onclick=".'"'."return confirm('Bạn có muốn xóa không?')".'"' ?> >Xóa</a></td>
+                                </tr>
+
 
                             <?php
                             $urlStr = "detailOrder.php?id=" . $_GET['id'];
