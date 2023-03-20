@@ -45,15 +45,15 @@ if (isset($_POST["btnImport"])) {
 //                array_shift($worksheetArray);
 
 
-                echo "upload ok?";
-                echo "File " . $_FILES['file']['name'] . " uploaded successfully.\n";
-                echo "Displaying contents\n";
+//                echo "upload ok?";
+//                echo "File " . $_FILES['file']['name'] . " uploaded successfully.\n";
+//                echo "Displaying contents\n";
                 # Create a new Xls Reader
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
                 $reader->setReadDataOnly(true);
 
                 $spreadSheet = $reader->load($targetPath);
-                echo "read ok !";
+//                echo "read ok !";
 //                die(print_r($drawing, true));
                 $worksheet = $spreadSheet->getActiveSheet();
                 $spreadSheetAry = $worksheet->toArray();
@@ -90,7 +90,7 @@ if (isset($_POST["btnImport"])) {
                 $tienvanchuyen = 0;
                 $tongcan=0;
                 $giatenhap=0;
-                $j =0;
+                $j =1;
                 if (!empty($user_id) && isset($user_id)) {
                     $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {
@@ -217,7 +217,7 @@ if (isset($_POST["btnImport"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-                    $orderRepository->update($orderId, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
+                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
                     echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
