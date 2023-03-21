@@ -397,6 +397,19 @@ if (isset($_POST['xuatphieu'])) {
                            class="form-control input-large " name="mavandon"
                            type="text" value="" placeholder="Nhập Mã Vận Đơn">
                 </div>
+                <div class="form-group">
+                    <select style="margin-right: 20px; margin-bottom: 5px;" name="trangthai"
+                            class="form-select custom-select " onchange="searchStatus()">
+                            <?php
+                            $listStatus = $statusRepository->getAll();
+                            foreach ($listStatus as $status) {
+                                ?>
+                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                <?php
+                            }
+                            ?>
+                    </select>
+                </div>
                 <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">
                      Tra Cứu
                 </button>
@@ -451,6 +464,13 @@ if (isset($_POST['xuatphieu'])) {
                             $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
                         }
 
+                    if(isset($_POST['trangthai'])){
+                        $arr_unserialize1= array();
+                        $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['trangthai'],$_GET['id']);
+                        foreach ($tempList as $p){
+                            array_push($arr_unserialize1,$p['id']);
+                        }
+                    }
                     //                            echo(print_r($arr_unserialize1, true));
                     if (!empty($arr_unserialize1)) {
                         $i = 1;

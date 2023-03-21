@@ -43,7 +43,7 @@ $userList = $userRepository->getAll();
                         role="button">Sửa</a></td>
                 <td><a class="btn btn-danger" href="deleteUser.php?id=<?php echo $user['id'] ?>" role="button"
                         onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
-                <td><a class="btn btn-danger" href="ressetPassUser.php?id=<?php echo $user['id'] ?>" role="button"
+                <td><a class="btn btn-success" href="ressetPassUser.php?id=<?php echo $user['id'] ?>" role="button"
                        onclick="return confirm('Bạn có muốn resset mật khẩu Không?');">Resset Pass </a></td>
             </tr>
                 <?php
