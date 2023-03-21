@@ -86,7 +86,7 @@ if (isset($_POST['xuatphieu'])) {
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
                     $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap']- $product['magiamgia'] * $product['currency'];
+                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap'];
                     $thanhtienban = $product['price'] * $product['amount'] * $product['currency'] + $product['shiptq'] * $product['currency'] - $product['magiamgia'] * $product['currency'];
                     $phidv = $thanhtienban * $product['servicefee'];
 
@@ -180,10 +180,10 @@ if (isset($_POST['xuatphieu'])) {
                         </tr>
                         <tr style="min-width:100px">
                             <th>Giá tệ nhập</th>
-                            <td><input required min="0" max="99999999999" name="giatenhap" type="number"
+                            <td><input <?php if( $checkCookie['role']!=2) echo "disabled" ?> required min="0" max="99999999999" name="giatenhap" type="number"
                                        class="form-control"
                                        step="0.01"
-                                       id="exampleInputPassword1" value="<?php echo $order['giatenhap'] ?>"
+                                       id="exampleInputPassword1" value="<?php if($checkCookie['role']==2) { echo $order['giatenhap'];} ?>"
                                 ></td>
                         </tr>
 
@@ -276,8 +276,8 @@ if (isset($_POST['xuatphieu'])) {
                         </tr>
                         <tr style="min-width:100px">
                             <th>Tổng Tiền</th>
-                            <td><label for="" style="color: blue;font-weight: bold">Tổng Tiền (VNĐ)
-                                    - <?php echo product_price($order['tongall']) ?></label>
+                            <td><h6 for="" style="color: blue;font-weight: bold">
+                                    <?php echo product_price($order['tongall']) ?></h6>
                             </td>
                         </tr>
                         <tr style="min-width:100px">
@@ -312,18 +312,19 @@ if (isset($_POST['xuatphieu'])) {
                                        name="status" type="text" class="form-control"></td>
                         </tr>
                         <tr style="min-width:100px">
-                            <th>Lợi Nhuận (VNĐ)</th>
-                            <td>
-                                <h4 style="color: green;font-weight: bold;margin-top: 6px; text-indent: 20px;"><?php echo product_price($loinhuan) ?></h4>
-                            </td>
-                        </tr>
-                        <tr style="min-width:100px">
                             <th>Thu Khác</th>
                             <td><input min="0" max="99999999999" name="thukhac" type="number" step="0.01"
                                        class="form-control"
                                        id="exampleInputPassword1" value="<?php echo $order['thukhac'] ?>"
                                        placeholder="Nhập tiền thu khác"></td>
                         </tr>
+                        <tr style="min-width:100px">
+                            <th>Lợi Nhuận (VNĐ)</th>
+                            <td>
+                                <h4 style="color: green;font-weight: bold;margin-top: 6px; text-indent: 20px;"><?php if($checkCookie['role']==2) { echo product_price($loinhuan);} else echo "No Permistion" ?></h4>
+                            </td>
+                        </tr>
+
 
                     </table>
                 </div>
@@ -428,6 +429,19 @@ if (isset($_POST['xuatphieu'])) {
                            class="form-control input-large " name="mavandon"
                            type="text" value="" placeholder="Nhập Mã Vận Đơn">
                 </div>
+                <div class="form-group">
+                    <select style="margin-right: 20px; margin-bottom: 5px;" name="trangthai"
+                            class="form-select custom-select " onchange="searchStatus()">
+                        <?php
+                        $listStatus = $statusRepository->getAll();
+                        foreach ($listStatus as $status) {
+                            ?>
+                            <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </div>
                 <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">
                      Tra Cứu
                 </button>
@@ -482,7 +496,13 @@ if (isset($_POST['xuatphieu'])) {
                         }else{
                             $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
                         }
-
+                    if(isset($_POST['trangthai'])){
+                        $arr_unserialize1= array();
+                        $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['trangthai'],$_GET['id']);
+                        foreach ($tempList as $p){
+                            array_push($arr_unserialize1,$p['id']);
+                        }
+                    }
                     //                            echo(print_r($arr_unserialize1, true));
                     if (!empty($arr_unserialize1)) {
                         $i = 1;
