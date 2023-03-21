@@ -145,7 +145,7 @@ if (isset($_POST["btnImportKG"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-                $orderRepository->update($orderId,0, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
+                $orderRepository->update($orderId,$userID, $tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
                 echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
             } else {
                 echo "Not uploaded because of error #" . $_FILES["file"]["error"];
