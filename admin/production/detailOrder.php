@@ -60,8 +60,26 @@ if (isset($_POST['xuatphieu'])) {
     //Write excel file.
     $savePath = "exports/";
 
-    $writer = new Xlsx($spreadsheet);
-    $writer->save($savePath . "\\New File.xlsx");
+//    $writer = new Xlsx($spreadsheet);
+//    $filename = "filedetail".".xlsx";
+//    header('Content-Type: application/vnd.ms-excel');
+//    header('Content-Disposition: attachment;filename="'.$filename.'"');
+//    header('Cache-Control: max-age=0');
+////    $writer->save($filename);
+//    $writer->save($savePath . "$filename");
+//
+//    $excel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+//    $sheet = $excel->getActiveSheet();
+//    $sheet->setTitle('This is a test', true);
+
+    ob_end_clean();
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="filename_' . time() . '.xlsx"');
+    header('Cache-Control: max-age=0');
+
+    $xlsxWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+    $xlsxWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    exit($xlsxWriter->save('php://output'));
 
 }
 ?>
@@ -969,7 +987,10 @@ if (isset($_POST['xuatphieu'])) {
     </div>
 </div>
 
-<?php include 'functionVanDon.php' ?>
+<?php include 'functionVanDon.php';
+
+ob_end_flush();
+?>
 <script>
     function get() {
         $(document).delegate("[data-target='#myModal']", "click", function () {

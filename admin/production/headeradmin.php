@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once("../../backend/filterAdmin.php");
 require_once("../../repository/userRepository.php");
 require_once("../../repository/kienhangRepository.php");
