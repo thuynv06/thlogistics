@@ -4,6 +4,26 @@
 require_once("../../backend/filterAdmin.php");
 $th1688 = $th1688Repository->getConfig();
 
+
+if (isset($_POST['xuatkho'])) {
+    $listID = array();
+
+    $listsMVD = $_POST['listproduct'];
+//    echo(print_r($listsMVD, true));
+//    include "phieuxuatkho.php";
+    foreach ($listsMVD as $mavd){
+        $listP = $kienhangRepository->findByMaVanDon($mavd);
+        if(!empty($listP)) {
+            foreach ($listP as $p){
+                array_push($listID, $p['id']);
+            }
+        }
+    }
+    echo(print_r($listID, true));
+
+
+}
+
 ?>
 
 <!-- top navigation -->
@@ -19,7 +39,9 @@ $th1688 = $th1688Repository->getConfig();
                            type="text" value="" id="inputMVD" onchange="updateMaVanDon()" placeholder="nhập mã vận đơn">
                 </div>
                 <!--                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Nhập Kho</button>-->
+
             </form>
+
         </div>
 
         <!--        --><?php
@@ -38,12 +60,21 @@ $th1688 = $th1688Repository->getConfig();
         //        ?>
         <div class="row container">
             <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive" style="padding-bottom: 20px;">
+                <form method="POST" enctype="multipart/form-data">
                 <table id="danhsachmavandon">
-                    <tr>
+
                         <th class="text-center" style="min-width:50px">STT</th>
-                        <th
+                        <th class="text-center" style="min-width:50px">Chọn</th>
+                        <th class="text-center" style="min-width:50px">MVĐ</th>
                     </tr>
+<!--                    <td><input type="checkbox" name="listproduct[]" value="--><?php //echo $product['id'] ?><!--"-->
+<!--                               id=""> Chọn-->
+<!--                    </td>-->
                 </table>
+                <button class="btn-sm btn-primary" type="submit" name="xuatkho"
+                        role="button">Xuất Phiếu
+                </button>
+                </form>
             </div>
         </div>
         <br>s
@@ -180,15 +211,23 @@ $th1688 = $th1688Repository->getConfig();
         var row = table.insertRow(1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
         var ladingCode = document.getElementById("inputMVD").value;
+
+
         list.push(ladingCode);
         cell1.innerHTML = table.rows.length -1;
         cell2.style.color = "blue";
         cell2.style.fontSize = "20px";
-        cell2.innerHTML = ladingCode;
+
+        // var myHTML= "<div><h1>Jimbo.</h1>\n<p>That's what she said</p></div>";
+        //
+        // var strippedHtml = myHTML.replace(/<[^>]+>/g, '');
+
+        cell3.innerHTML = '<input checked type="checkbox" name="listproduct[]" value="'+ ladingCode +'" id="">';
+        cell2.innerHTML=ladingCode;
         document.getElementById("inputMVD").value = '';
-        list1 = remove_duplicates(list);
-        console.log(list1);
+        // console.log(list1);
 
 
     }

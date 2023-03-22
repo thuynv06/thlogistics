@@ -1,87 +1,15 @@
 <?php include "headeradmin.php";
 require '../../vendor/autoload.php';
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Writer\Drawing;
-
 $loinhuan = 0;
 
 if (isset($_POST['xuatphieu'])) {
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-//Set sheet name.
-    $sheet->setTitle('Data');
-    //Make header(optional).
-    $sheet->setCellValue('A1', "STT");
-//    $sheet->setCellValue('B1', "Tên Sản Phẩm");
-
-    $sheet->setCellValue('B1', "Mã Vận Đơn");
-    $sheet->setCellValue('C1', "Mã Sản Phẩm");
-    $sheet->setCellValue('D1', "Cân Nặng (Kg) ");
-    $sheet->setCellValue('E1', "Đơn Giá (đ)");
-    $sheet->setCellValue('F1', "Thành Tiền (đ)");
-//Make a bottom border(optional).
-    $sheet->getStyle('A1:F1')->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-//Set header background color(optional).
-    $sheet->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('d2d3d1');
-//Set text bold.
-    $sheet->getStyle("A1:F1")->getFont()->setBold(true);
-//Set auto resize(optional).
-    $sheet->getColumnDimension('A')->setAutoSize(true);
-    $sheet->getColumnDimension('B')->setAutoSize(true);
-    $sheet->getColumnDimension('C')->setAutoSize(true);
-    $sheet->getColumnDimension('D')->setAutoSize(true);
-    $sheet->getColumnDimension('E')->setAutoSize(true);
-    $sheet->getColumnDimension('F')->setAutoSize(true);
-//For more styling/formatting info. check out the official documentation: https://phpspreadsheet.readthedocs.io/en/latest/
-    $listId = $_POST['listproduct'];
-    //Write data 1.
-    $tongcan = 0;
-    $tongtienvc = 0;
-    $i = 2;
-    foreach ($listId as $product_id) {
-
-        $tempProduct = $kienhangRepository->getById($product_id)->fetch_assoc();
-        $sheet->setCellValue('A' . $i, $i - 1);
-        $sheet->setCellValue('B' . $i, $tempProduct['ladingCode']);
-        $sheet->setCellValue('C' . $i, $tempProduct['orderCode']);
-        $sheet->setCellValue('D' . $i, $tempProduct['size']);
-        $sheet->setCellValue('E' . $i, $tempProduct['feetransport']);
-        $sheet->setCellValue('F' . $i, $tempProduct['size'] * $tempProduct['feetransport']);
-
-        $tongcan += $tempProduct['size'];
-        $tongtienvc += $tempProduct['size'] * $tempProduct['feetransport'];
-        $i++;
-    }
-    $sheet->setCellValue('D' . $i, $tongcan);
-    $sheet->setCellValue('F' . $i, $tongtienvc);
-//            echo  print_r($listId,true);
-    //Write excel file.
-    $savePath = "exports/";
-
-//    $writer = new Xlsx($spreadsheet);
-//    $filename = "filedetail".".xlsx";
-//    header('Content-Type: application/vnd.ms-excel');
-//    header('Content-Disposition: attachment;filename="'.$filename.'"');
-//    header('Cache-Control: max-age=0');
-////    $writer->save($filename);
-//    $writer->save($savePath . "$filename");
-//
-//    $excel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-//    $sheet = $excel->getActiveSheet();
-//    $sheet->setTitle('This is a test', true);
-
-    ob_end_clean();
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="filename_' . time() . '.xlsx"');
-    header('Cache-Control: max-age=0');
-
-    $xlsxWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $xlsxWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-    exit($xlsxWriter->save('php://output'));
-
+    $order = $orderRepository->getById($_GET['id']);
+//    echo $order['user_id'];
+    include "phieuxuatkho.php";
+    phieuxuatkho($_POST['listproduct'],$order['user_id']);
 }
+
 ?>
 
 <div class="right_col" role="main" style="font-size: 10px;">
@@ -527,6 +455,7 @@ if (isset($_POST['xuatphieu'])) {
                         $i = 1;
                         foreach ($arr_unserialize1 as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
+
                             if(isset($product )){
                                 $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
                             }
