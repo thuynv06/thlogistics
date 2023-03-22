@@ -7,7 +7,7 @@ $th1688 = $th1688Repository->getConfig();
 
 if (isset($_POST['xuatkho'])) {
     $listID = array();
-
+    $userID=null;
     $listsMVD = $_POST['listproduct'];
 //    echo(print_r($listsMVD, true));
 //    include "phieuxuatkho.php";
@@ -15,12 +15,14 @@ if (isset($_POST['xuatkho'])) {
         $listP = $kienhangRepository->findByMaVanDon($mavd);
         if(!empty($listP)) {
             foreach ($listP as $p){
+                $userID=$p['user_id'];
                 array_push($listID, $p['id']);
             }
         }
     }
     echo(print_r($listID, true));
-
+    include "phieuxuatkho.php";
+    phieuxuatkho($listID,$userID);
 
 }
 
