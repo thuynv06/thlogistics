@@ -1,14 +1,18 @@
 <?php
 require_once("../../repository/userRepository.php");
+require_once("../../repository/kienhangRepository.php");
+require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Drawing;
-$userRepository = new UserRepository();
+
 
 function phieuxuatkho($listId,$userID)
 {
-        echo(print_r($listId, true));
-    echo(print_r($userID, true));
+    $userRepository = new UserRepository();
+    $kienhangRepository = new KienHangRepository();
+//    echo(print_r($listId, true));
+//    echo(print_r($userID, true));
     if (!empty($listId) && !empty($userID)) {
         $kh = $userRepository->getById($userID);
         $spreadsheet = new Spreadsheet();

@@ -1,5 +1,4 @@
 <?php include "headeradmin.php";
-require '../../vendor/autoload.php';
 
 $loinhuan = 0;
 

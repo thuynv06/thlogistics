@@ -1,12 +1,17 @@
 <?php include "headeradmin.php";
-require '../../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Drawing;
 
 $loinhuan = 0;
-include "phieuxuatkho.php";
+if (isset($_POST['xuatphieu'])) {
+    $order = $orderRepository->getById($_GET['id']);
+//    echo $order['user_id'];
+    include "phieuxuatkho.php";
+    phieuxuatkho($_POST['listproduct'],$order['user_id']);
+}
+
 ?>
 
 <div class="right_col" role="main" style="font-size: 10px;">
