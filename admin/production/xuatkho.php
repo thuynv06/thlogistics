@@ -5,7 +5,7 @@ require_once("../../backend/filterAdmin.php");
 $th1688 = $th1688Repository->getConfig();
 
 
-if (isset($_POST['xuatkho']) ) {
+if (isset($_POST['xuatkho'])) {
     $listID = array();
     $userID = null;
     $listsMVD = $_POST['listproduct'];
@@ -14,12 +14,13 @@ if (isset($_POST['xuatkho']) ) {
 //    echo(print_r($result, true));
 //    include "phieuxuatkho.php";
     foreach ($result as $mavd) {
-        $listP = $kienhangRepository->findByMaVanDon($mavd);
+        $listP = $kienhangRepository->findByMaVanDon($mavd)->fetch_assoc();;
         if (!empty($listP)) {
-            foreach ($listP as $p) {
-                array_push($listID, $p['id']);
-            }
+                array_push($listID, $listP['id']);
         }
+    }
+    if (isset($_POST['user_id'])){
+        $userID =$_POST['user_id'];
     }
 
     if (isset($_POST['MaKH'])){
@@ -31,9 +32,7 @@ if (isset($_POST['xuatkho']) ) {
             echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
         }
     }
-    if (isset($_POST['user_id'])){
-        $userID =$_POST['user_id'];
-    }
+
 //    $result = array_unique($listID);
 //    echo(print_r($result, true));
     include "phieuxuatkho.php";
