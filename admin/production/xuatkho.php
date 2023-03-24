@@ -105,7 +105,7 @@ if (isset($_POST['xuatkho'])) {
                                 $listUser = $userRepository->getAllByType(0);
                                 foreach ($listUser as $user) {
                                     ?>
-                                    <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
+                                    <option value="<?php echo $user['id']; ?>"><?php echo $user['code']; ?></option>
                                     <?php
                                 }
                                 ?>

@@ -36,7 +36,7 @@ function phieuxuatkho($listId,$userID)
         $ngaythang = "(Ngày " . $date['mday'] . " Tháng " . $date['mon'] . " Năm " . $date['year'].")";
 
 
-        $sheet->setCellValue('A1', mb_strtoupper("Công Ty TNHH Thương Mại Dịch Vụ Trung Hoa Logistics", "UTF-8"));
+        $sheet->setCellValue('A1', mb_strtoupper("Trung Hoa Logistics Đặt Hàng - Vận Chuyển Trung Việt", "UTF-8"));
         $sheet->mergeCells('A1:F1');
 //        $sheet->getStyle('A1:G1')->getFont()->setSize(14);
 //        $sheet->getRowDimension(1)->setRowHeight(
