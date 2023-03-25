@@ -200,7 +200,7 @@ if (isset($_POST['xuatphieu'])) {
                     <table id="tableShoe">
                         <tr style="min-width:100px">
                             <th>Ngày Tạo</th>
-                            <td><input readonly value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
+                            <td><input  value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
                                        step="1"
                                        class="form-control"
                                        id="startdate"></td>
@@ -323,6 +323,13 @@ if (isset($_POST['xuatphieu'])) {
                 if (!empty($_POST['user_id'])) {
                     $user_id = $_POST['user_id'];
                 }
+
+                if (!empty($_POST['startdate'])) {
+//                    $startdate = $_POST['startdate'];
+                    $sdate = date("Y-m-d\TH:i:s", strtotime($_POST['startdate']));
+
+                }
+
                 $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
                 //
                 //                            echo(print_r($arr_unserialize1, true));
@@ -354,7 +361,8 @@ if (isset($_POST['xuatphieu'])) {
 
                 }
 
-                $orderRepository->update($_POST['orderId'],$user_id, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang, $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1);
+                $orderRepository->update($_POST['orderId'],$user_id, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang,
+                    $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1,$sdate);
                 echo "<script>window.location.href='$urlStr';</script>";
             }
             ?>
@@ -811,6 +819,9 @@ if (isset($_POST['xuatphieu'])) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnSaveChangeStautus" name="shopgui" type="submit" class="btn btn-success" data-id="">
+                    ShopGui
+                </button>
                 <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
                     KhoTQ Nhận
                 </button>

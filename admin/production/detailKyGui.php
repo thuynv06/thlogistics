@@ -119,7 +119,7 @@ if (isset($_POST['xuatphieu'])) {
                         </tr>
                         <tr style="min-width:100px">
                             <th>Ngày Tạo</th>
-                            <td><input readonly value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
+                            <td><input  value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
                                        step="1"
                                        class="form-control"
                                        id="startdate"></td>
@@ -293,6 +293,11 @@ if (isset($_POST['xuatphieu'])) {
                 if (!empty($_POST['user_id'])) {
                     $user_id = $_POST['user_id'];
                 }
+                if (!empty($_POST['startdate'])) {
+//                    $startdate = $_POST['startdate'];
+                    $sdate = date("Y-m-d\TH:i:s", strtotime($_POST['startdate']));
+
+                }
                 $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
                 //
                 //                            echo(print_r($arr_unserialize1, true));
@@ -324,7 +329,8 @@ if (isset($_POST['xuatphieu'])) {
 
                 }
 
-                $orderRepository->update($_POST['orderId'],$user_id, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang, $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1);
+                $orderRepository->update($_POST['orderId'],$user_id, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang,
+                    $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1,$sdate);
                 echo "<script>window.location.href='$urlStr';</script>";
             }
             ?>
@@ -723,7 +729,7 @@ if (isset($_POST['xuatphieu'])) {
                 if (isset($_POST['suacan'])) {
                     $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
                     $order = $orderRepository->getById($p['order_id']);
-                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $_POST['gianhap']);
+                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $p['gianhap']);
                     $tongcan = 0;
                     if (!empty($arr_unserialize1)) {
                         foreach ($arr_unserialize1 as $masp) {

@@ -76,7 +76,8 @@ if (isset($_POST["btnImportKG"])) {
                 $tongmagiamgia = 0;
                 $tienvanchuyen = 0;
                 $tongcan=0;
-
+                $date = new DateTime();
+                $dateCreadted = $date->format("Y-m-d\TH:i:s");
                 $orderId = $orderRepository->createOrder($userID, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,1);
 
                 for ($i = 1; $i < $sheetCount; $i++) {
@@ -115,8 +116,7 @@ if (isset($_POST["btnImportKG"])) {
                         $size = 0;
 
 //            if (! empty($name) || ! empty($description)) {
-                        $date = new DateTime();
-                        $dateCreadted = $date->format("Y-m-d\TH:i:s");
+
                         $myObj = new stdClass();
                         $myObj->{1} = "$dateCreadted";
                         $listStatusJSON = json_encode($myObj);
@@ -145,8 +145,7 @@ if (isset($_POST["btnImportKG"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-
-                $orderRepository->update($orderId,$userID, 0,$tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct);
+                $orderRepository->update($orderId,$userID, 0,$tygiate, $giavanchuyen,$phidichvu,$tongcan,$tamung,$tongtienhang,$tongtienshiptq,$tongmagiamgia,$tienvanchuyen,$tiencong,$tongall,null,$listproduct,$dateCreadted);
                 echo "<script>alert('Thêm thành công');window.location.href='kygui.php';</script>";
 
             } else {

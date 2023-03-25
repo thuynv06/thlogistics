@@ -91,6 +91,8 @@ if (isset($_POST["btnImport"])) {
                 $tongcan=0;
                 $giatenhap=0;
                 $j =1;
+                $date = new DateTime();
+                $dateCreadted = $date->format("Y-m-d\TH:i:s");
                 if (!empty($user_id) && isset($user_id)) {
                     $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {
@@ -155,8 +157,7 @@ if (isset($_POST["btnImport"])) {
 
 
 //            if (! empty($name) || ! empty($description)) {
-                            $date = new DateTime();
-                            $dateCreadted = $date->format("Y-m-d\TH:i:s");
+
                             $myObj = new stdClass();
                             $myObj->{1} = "$dateCreadted";
                             $listStatusJSON = json_encode($myObj);
@@ -217,7 +218,8 @@ if (isset($_POST["btnImport"])) {
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
-                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct);
+
+                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct,$dateCreadted);
                     echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
