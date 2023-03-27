@@ -262,28 +262,28 @@ if (isset($_POST['xuatphieu'])) {
 
 
             if (isset($_POST['updateOrder'])) {
-                $tygiate = $order['tygiate'];
-                if (!empty($_POST['tygiate'])) {
-                    $tygiate = $_POST['tygiate'];
-                }
-                $giatenhap = $order['giatenhap'];
-                if (!empty($_POST['giatenhap'])) {
-                    $giatenhap = $_POST['giatenhap'];
-                }
+//                $tygiate = $order['tygiate'];
+//                if (!empty($_POST['tygiate'])) {
+//                    $tygiate = $_POST['tygiate'];
+//                }
+//                $giatenhap = $order['giatenhap'];
+//                if (!empty($_POST['giatenhap'])) {
+//                    $giatenhap = $_POST['giatenhap'];
+//                }
                 $giavanchuyen = $order['giavanchuyen'];
                 if (!empty($_POST['giavanchuyen'])) {
                     $giavanchuyen = $_POST['giavanchuyen'];
                 }
-                $phidichvu = $order['phidichvu'];
-                if (!empty($_POST['phidichvu'])) {
-                    $phidichvu = $_POST['phidichvu'];
-                }
-                $phidichvu = $order['phidichvu'];
-                if (!empty($_POST['phidichvu'])) {
-                    $phidichvu = $_POST['phidichvu'];
-                }
+//                $phidichvu = $order['phidichvu'];
+//                if (!empty($_POST['phidichvu'])) {
+//                    $phidichvu = $_POST['phidichvu'];
+//                }
+//                $phidichvu = $order['phidichvu'];
+//                if (!empty($_POST['phidichvu'])) {
+//                    $phidichvu = $_POST['phidichvu'];
+//                }
                 $tamdung = $order['tamung'];
-                if (!empty($_POST['phidichvu'])) {
+                if (!empty($_POST['tamung'])) {
                     $tamdung = $_POST['tamung'];
                 }
                 $ghichu = $order['ghichu'];
@@ -304,33 +304,32 @@ if (isset($_POST['xuatphieu'])) {
                 $tongcan = 0;
                 $tongtienhang = 0;
                 $listproduct = array();
-                $shiptq = 0;
+//                $shiptq = 0;
                 $tongall = 0;
-                $giamgia = 0;
+//                $giamgia = 0;
                 $tienvanchuyen = 0;
                 $tongcan = 0;
                 if (!empty($arr_unserialize1)) {
                     foreach ($arr_unserialize1 as $masp) {
                         $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                        $tongtienhang += $product['price'] * $product['amount'];
-                        $shiptq += $product['shiptq'];
+//                        $tongtienhang += $product['price'] * $product['amount'];
+//                        $shiptq += $product['shiptq'];
                         $tongcan += $product['size'];
-                        $giamgia += $product['magiamgia'];
+//                        $giamgia += $product['magiamgia'];
                     }
                 }
                 $tienvanchuyen += $tongcan * $giavanchuyen;
-                $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
-                $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
+//                $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
+                $tongall =  $tienvanchuyen;
 
                 if (isset($_POST['tongcan']) && !empty($_POST['tongcan'])) {
                     $tongcan = $_POST['tongcan'];
                     $tienvanchuyen = $tongcan * $giavanchuyen;
-                    $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
-
+                    $tongall =  $tienvanchuyen;
                 }
 
-                $orderRepository->update($_POST['orderId'],$user_id, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamdung, $tongtienhang,
-                    $shiptq, $giamgia, $tienvanchuyen, $tiencong, $tongall, $ghichu, $arr_unserialize1,$sdate);
+                $orderRepository->update($_POST['orderId'],$user_id, 0, 0, $giavanchuyen, 0, $tongcan, $tamdung, $tongtienhang,
+                    0, 0, $tienvanchuyen, 0, $tongall, $ghichu, $arr_unserialize1,$sdate);
                 echo "<script>window.location.href='$urlStr';</script>";
             }
             ?>
@@ -340,6 +339,10 @@ if (isset($_POST['xuatphieu'])) {
     <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
             data-target="#vandon" data-id="<?php echo $order['id'] ?>"
             role="button" onclick="openVanDon()">Vận Đơn
+    </button>
+    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-success" id="modalMaVanDon" data-toggle="modal"
+                                                                data-target="#mavandon" data-id="<?php echo $order['id'] ?>"
+                                                                role="button" onclick="openUpdateAllMVD()">Update All MVĐ
     </button>
     <h3>Danh Sách Sản Phẩm</h3>
     <div class="row">
@@ -570,7 +573,7 @@ if (isset($_POST['xuatphieu'])) {
 
                             }
                             if (isset($_POST['khovn'])) {
-                                if ($_POST['status_id'] == 3) {
+                                if ($_POST['status_id'] == 3 ||$_POST['status_id'] == 2) {
                                     $date = new DateTime();
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
                                     $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
@@ -772,7 +775,10 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button id="btnSaveChangeStautus" name="shopgui" type="submit" class="btn btn-success" data-id="">
+                    Shop Gưi
+                </button>
                 <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
                     KhoTQ Nhận
                 </button>
@@ -876,6 +882,46 @@ if (isset($_POST['xuatphieu'])) {
         </div>
     </div>
 </div>
+<div id="mavandon" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhập tất cả MVĐ  </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+            </div>
+            <form action="" id="updateMVD" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input class="form-control" id="order_ID" name="order_ID" type="number" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Vận Đơn</label>
+                        <input class="form-control" name="mavandon"  type="text" value="" >
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="xxx" name="updateMVD" type="submit" class="btn btn-primary" data-id="">
+                            Update All MVD
+                        </button>
+                    </div>
+            </form>
+            <?php
+                if (isset($_POST['updateMVD'])) {
+                    if (isset($_POST['mavandon'])){
+                        $order_Id= $_POST['order_ID'];
+                        echo $order_Id;
+                        $kienhangRepository->updateAllMVDByOrderId($order_Id,$_POST['mavandon']);
+                        $urlStr = "detailKyGui.php?id=" . $order_Id;
+                        echo "<script>window.location.href='$urlStr';</script>";
+                    }
+                }
+            ?>
+
+        </div>
+    </div>
+</div>
 
 <?php include 'functionVanDon.php' ?>
 <script>
@@ -952,6 +998,15 @@ if (isset($_POST['xuatphieu'])) {
             document.getElementById('idOrder').value = id;
         });
         _getTimeZoneOffsetInMs();
+
+        document.getElementById('timeVanDon').value = timestampToDatetimeInputString(Date.now());
+    }
+
+    function openUpdateAllMVD() {
+        $(document).delegate("[data-target='#mavandon']", "click", function () {
+            var id = $(this).attr('data-id');
+            document.getElementById('order_ID').value = id;
+        });
 
         document.getElementById('timeVanDon').value = timestampToDatetimeInputString(Date.now());
     }

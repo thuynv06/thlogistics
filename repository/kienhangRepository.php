@@ -313,6 +313,15 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
         $sql = "delete from product_image where product_id=$id";
         mysqli_query($conn,$sql);
     }
+
+    public function updateAllMVDByOrderId($orderId, $mvd)
+    {
+        global $conn;
+        $sql = "update kienhang set ladingcode='$mvd' where order_id=$orderId";
+        echo $sql;
+        mysqli_query($conn, $sql);
+    }
+
 //    public function addImage($id,$linkImage){
 //        global $conn;
 //        $sql = "insert into product_image(shoe_id,link_image) values($id,'$linkImage')";

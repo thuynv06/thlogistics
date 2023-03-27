@@ -1,5 +1,25 @@
 <?php
-
+if (isset($_POST['shopgui'])) {
+    $idOrder = $_POST['idOrder'];
+    $date = $_POST['updateDateStatus'];
+    $order = $orderRepository->getById($idOrder);
+    if($order['type']==0){
+        $urlStr = "detailOrder.php?id=" . $_POST['idOrder'];
+    }else{
+        $urlStr = "detailKyGui.php?id=" . $_POST['idOrder'];
+    }
+    $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+    //                            echo(print_r($arr_unserialize1, true));
+    $arr = array();
+    if (!empty($arr_unserialize1)) {
+        foreach ($arr_unserialize1 as $masp) {
+            $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 1, $date);
+                array_push($arr, $product['ladingCode']);
+                echo "<script>window.location.href='$urlStr';</script>";
+        }
+    }
+}
 
 if (isset($_POST['nhapkhovn'])) {
 

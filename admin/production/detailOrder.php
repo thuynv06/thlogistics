@@ -373,6 +373,10 @@ if (isset($_POST['xuatphieu'])) {
             data-target="#vandon" data-id="<?php echo $order['id'] ?>"
             role="button" onclick="openVanDon()">Vận Đơn
     </button>
+    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-success" id="modalMaVanDon" data-toggle="modal"
+                                                                data-target="#mavandon" data-id="<?php echo $order['id'] ?>"
+                                                                role="button" onclick="openUpdateAllMVD()">Update All MVĐ
+    </button>
     <h3>Danh Sách Sản Phẩm</h3>
     <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
@@ -926,6 +930,47 @@ if (isset($_POST['xuatphieu'])) {
     </div>
 </div>
 
+<div id="mavandon" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhập tất cả MVĐ  </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+            </div>
+            <form action="" id="updateMVD" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input class="form-control" id="order_ID" name="order_ID" type="number" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Vận Đơn</label>
+                        <input class="form-control" name="mavandon"  type="text" value="" >
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="xxx" name="updateMVD" type="submit" class="btn btn-primary" data-id="">
+                            Update All MVD
+                        </button>
+                    </div>
+            </form>
+            <?php
+            if (isset($_POST['updateMVD'])) {
+                if (isset($_POST['mavandon'])){
+                    $order_Id= $_POST['order_ID'];
+                    echo $order_Id;
+                    $kienhangRepository->updateAllMVDByOrderId($order_Id,$_POST['mavandon']);
+                    $urlStr = "detailOrder.php?id=" . $order_Id;
+                    echo "<script>window.location.href='$urlStr';</script>";
+                }
+            }
+            ?>
+
+        </div>
+    </div>
+</div>
+
 <?php include 'functionVanDon.php';
 
 ob_end_flush();
@@ -971,7 +1016,14 @@ ob_end_flush();
         document.getElementById('timeadd').value = timestampToDatetimeInputString(Date.now());
 
     }
+    function openUpdateAllMVD() {
+        $(document).delegate("[data-target='#mavandon']", "click", function () {
+            var id = $(this).attr('data-id');
+            document.getElementById('order_ID').value = id;
+        });
 
+        document.getElementById('timeVanDon').value = timestampToDatetimeInputString(Date.now());
+    }
 
     function openModalSuaCan() {
         $(document).delegate("[data-target='#suacannang']", "click", function () {
