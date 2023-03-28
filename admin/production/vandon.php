@@ -187,13 +187,13 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
 <!--                                    Giá:--><?php //echo product_price($orders['tygiate']) ?><!--</p>-->
 <!--                                <p>Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?><!--</p>-->
 <!--                          <p>Phí DV:--><?php ////echo $orders['phidichvu'] ?><!--<</p></td>-->
-                            <td><p style="color: #00CC00"> <?php
+                            <td> <?php
                                     switch ($orders['status']) {
                                         case "0":
-                                            echo "Chưa Duyệt";
+                                            echo '<p style="'.'font-weight: bold;">'.'Chưa Giao';
                                             break;
                                         case "1":
-                                            echo "Đã Duyệt";
+                                            echo '<p style="'.'color: blue;font-weight: bold;">'.'Đã Giao';
                                             break;
                                         default:
                                             echo "--";

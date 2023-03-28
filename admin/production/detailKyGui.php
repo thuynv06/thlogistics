@@ -9,7 +9,7 @@ if (isset($_POST['xuatphieu'])) {
     $order = $orderRepository->getById($_GET['id']);
 //    echo $order['user_id'];
     include "phieuxuatkho.php";
-    phieuxuatkho($_POST['listproduct'],$order['user_id']);
+    phieuxuatkho($_POST['listproduct'], $order['user_id']);
 }
 
 ?>
@@ -20,21 +20,21 @@ if (isset($_POST['xuatphieu'])) {
         <form method="POST" enctype="multipart/form-data">
             <?php
             $order = $orderRepository->getById($_GET['id']);
-//            echo dirname(__FILE__, 5);
-//            echo dirname(__FILE__);
-//            $temppath="..".dirname(__FILE__);
-//            echo $temppath;
-//            echo $order['listsproduct'];
+            //            echo dirname(__FILE__, 5);
+            //            echo dirname(__FILE__);
+            //            $temppath="..".dirname(__FILE__);
+            //            echo $temppath;
+            //            echo $order['listsproduct'];
             $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-//                                        echo(print_r($arr_unserialize1, true));
-//            print_r($arr_unserialize1,true);
-//            $arr_unserialize1 = array_diff($arr_unserialize1, ["265"]);
-//            echo(print_r($arr_unserialize1, true));
+            //                                        echo(print_r($arr_unserialize1, true));
+            //            print_r($arr_unserialize1,true);
+            //            $arr_unserialize1 = array_diff($arr_unserialize1, ["265"]);
+            //            echo(print_r($arr_unserialize1, true));
             $startdate = date("Y-m-d\TH:i:s", strtotime($order['startdate']));
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
                     $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap']- $product['magiamgia'] * $product['currency'];
+                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap'] - $product['magiamgia'] * $product['currency'];
                     $thanhtienban = $product['price'] * $product['amount'] * $product['currency'] + $product['shiptq'] * $product['currency'] - $product['magiamgia'] * $product['currency'];
                     $phidv = $thanhtienban * $product['servicefee'];
 
@@ -119,7 +119,7 @@ if (isset($_POST['xuatphieu'])) {
                         </tr>
                         <tr style="min-width:100px">
                             <th>Ngày Tạo</th>
-                            <td><input  value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
+                            <td><input value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
                                        step="1"
                                        class="form-control"
                                        id="startdate"></td>
@@ -138,9 +138,6 @@ if (isset($_POST['xuatphieu'])) {
                                        id="exampleInputPassword1" value="<?php echo $order['giavanchuyen'] ?>"
                                        placeholder="Nhập giá tiền"></td>
                         </tr>
-
-
-
 
 
                         <tr style="min-width:100px">
@@ -227,15 +224,21 @@ if (isset($_POST['xuatphieu'])) {
                     </table>
                 </div>
                 <div class="col-md-4">
-                    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-primary" type="submit" name="updateOrder"
-                            href="detailKyGui.php?id=<?php echo $order['id'] ?>"
-                            role="button">Cập Nhật
+                    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-primary" type="submit"
+                                                                                name="updateOrder"
+                                                                                href="detailKyGui.php?id=<?php echo $order['id'] ?>"
+                                                                                role="button">Cập Nhật
                     </button>
-                    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-dark" type="submit" name="xuatdon" href="detailKyGui.php?id=<?php echo $order['id'] ?>"
-                            role="button">Xuất Đơn
+                    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-dark" type="submit"
+                                                                                name="xuatdon"
+                                                                                href="detailKyGui.php?id=<?php echo $order['id'] ?>"
+                                                                                role="button">Xuất Đơn
                     </button>
-                    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
-                            type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
+                    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-danger"
+                                                                                href="deleteOrder.php?id=<?php echo $order['id'] ?>"
+                                                                                type="submit"
+                                                                                onclick="return confirm('Bạn có muốn xóa không?');">
+                        Xóa
                     </button>
 
                 </div>
@@ -244,18 +247,18 @@ if (isset($_POST['xuatphieu'])) {
             <?php
             if (isset($_POST['xuatdon'])) {
 //                echo "xxxxxxxxxxxxx";
-                $flag=true;
+                $flag = true;
                 $arr_unserialize1 = unserialize($order['listsproduct']);
                 if (!empty($arr_unserialize1)) {
                     foreach ($arr_unserialize1 as $masp) {
                         $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                        if($product['status'] !=6){
-                            $flag=false;
+                        if ($product['status'] != 6) {
+                            $flag = false;
                             break;
                         }
                     }
                 }
-                if($flag){
+                if ($flag) {
                     $order = $orderRepository->xuatDon($_GET['id']);
                 }
             }
@@ -320,29 +323,34 @@ if (isset($_POST['xuatphieu'])) {
                 }
                 $tienvanchuyen += $tongcan * $giavanchuyen;
 //                $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
-                $tongall =  $tienvanchuyen;
+                $tongall = $tienvanchuyen;
 
                 if (isset($_POST['tongcan']) && !empty($_POST['tongcan'])) {
                     $tongcan = $_POST['tongcan'];
                     $tienvanchuyen = $tongcan * $giavanchuyen;
-                    $tongall =  $tienvanchuyen;
+                    $tongall = $tienvanchuyen;
                 }
 
-                $orderRepository->update($_POST['orderId'],$user_id, 0, 0, $giavanchuyen, 0, $tongcan, $tamdung, $tongtienhang,
-                    0, 0, $tienvanchuyen, 0, $tongall, $ghichu, $arr_unserialize1,$sdate);
+                $orderRepository->update($_POST['orderId'], $user_id, 0, 0, $giavanchuyen, 0, $tongcan, $tamdung, $tongtienhang,
+                    0, 0, $tienvanchuyen, 0, $tongall, $ghichu, $arr_unserialize1, $sdate);
                 echo "<script>window.location.href='$urlStr';</script>";
             }
             ?>
 
         </form>
     </div>
-    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
-            data-target="#vandon" data-id="<?php echo $order['id'] ?>"
-            role="button" onclick="openVanDon()">Vận Đơn
+    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-success" id="modalVanDon"
+                                                                data-toggle="modal"
+                                                                data-target="#vandon"
+                                                                data-id="<?php echo $order['id'] ?>"
+                                                                role="button" onclick="openVanDon()">Vận Đơn
     </button>
-    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-success" id="modalMaVanDon" data-toggle="modal"
-                                                                data-target="#mavandon" data-id="<?php echo $order['id'] ?>"
-                                                                role="button" onclick="openUpdateAllMVD()">Update All MVĐ
+    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-warning" id="modalMaVanDon"
+                                                                data-toggle="modal"
+                                                                data-target="#mavandon"
+                                                                data-id="<?php echo $order['id'] ?>"
+                                                                role="button" onclick="openUpdateAllMVD()">Update All
+        MVĐ
     </button>
     <h3>Danh Sách Sản Phẩm</h3>
     <div class="row">
@@ -357,20 +365,21 @@ if (isset($_POST['xuatphieu'])) {
                 <div class="form-group">
                     <select style="margin-right: 20px; margin-bottom: 5px;" name="trangthai"
                             class="form-select custom-select " onchange="searchStatus()">
-                            <?php
-                            $listStatus = $statusRepository->getAll();
-                            foreach ($listStatus as $status) {
-                                ?>
-                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
-                                <?php
-                            }
+                        <?php
+                        $listStatus = $statusRepository->getAll();
+                        foreach ($listStatus as $status) {
                             ?>
+                            <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
                 </div>
                 <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">
-                     Tra Cứu
+                    Tra Cứu
                 </button>
-                <a style="" href="detailKyGui.php?id=<?php echo $_GET['id']?>" class="btn btn-primary btn-large btn-th">RELOAD</a>
+                <a style="" href="detailKyGui.php?id=<?php echo $_GET['id'] ?>"
+                   class="btn btn-primary btn-large btn-th">RELOAD</a>
             </form>
         </div>
         <form method="POST" enctype="multipart/form-data">
@@ -378,13 +387,15 @@ if (isset($_POST['xuatphieu'])) {
             <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
                     role="button">Xuất Phiếu
             </button>
-<!--            <button class="btn-sm btn-primary" type="submit" name="addKienHang"-->
-<!--                    role="button">Thêm Sản Phẩm-->
-<!--            </button>-->
-            <button <?php if ($order['status']==1) echo "disabled" ?> type="button" id="modalthemSP" class="btn btn-primary btn-sm"
-                    data-toggle="modal"
-                    data-target="#modalThemSanPham" data-id="<?php echo $order['id'] ?>"
-                    onclick="openModalThemSanPham()">
+            <!--            <button class="btn-sm btn-primary" type="submit" name="addKienHang"-->
+            <!--                    role="button">Thêm Sản Phẩm-->
+            <!--            </button>-->
+            <button <?php if ($order['status'] == 1) echo "disabled" ?> type="button" id="modalthemSP"
+                                                                        class="btn btn-primary btn-sm"
+                                                                        data-toggle="modal"
+                                                                        data-target="#modalThemSanPham"
+                                                                        data-id="<?php echo $order['id'] ?>"
+                                                                        onclick="openModalThemSanPham()">
                 Thêm Sản Phẩm
             </button>
             <div class="table-responsive">
@@ -410,34 +421,41 @@ if (isset($_POST['xuatphieu'])) {
                         <th class="text-center" style="min-width:50px"></th>
                     </tr>
                     <?php
-                        if(isset($_POST['mavandon'])){
-                            $arr_unserialize1= array();
-                            $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'],$_GET['id']);
-                            foreach ($tempList as $p){
-                                array_push($arr_unserialize1,$p['id']);
-                            }
-                        }else{
-                            $order=$orderRepository->getById($_GET['id']);
-                            $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
-                        }
+                    $arr = array();
 
-                    if(isset($_POST['trangthai'])){
-                        $arr_unserialize1= array();
-                        $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['trangthai'],$_GET['id']);
-                        foreach ($tempList as $p){
-                            array_push($arr_unserialize1,$p['id']);
+                    if (isset($_POST['mavandon']) && !empty($_POST['mavandon'])) {
+//                        echo "tim mvd";
+                        $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'], $_GET['id']);
+                        foreach ($tempList as $p) {
+                            array_push($arr, $p['id']);
+//                            echo(print_r($arr, true));
                         }
+                    } else if (isset($_POST['trangthai'])) {
+//                        echo "trang thai";
+                        $arr = array();
+                        $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['trangthai'], $_GET['id']);
+                        foreach ($tempList as $p) {
+                            array_push($arr, $p['id']);
+                        }
+//                        echo(print_r($arr, true));
+                    } else {
+//                        echo "macdinh";
+                        $order = $orderRepository->getById($_GET['id']);
+                        $arr = unserialize($order['listsproduct']);// convert to array;
+//                        echo(print_r($arr, true));
                     }
                     //                            echo(print_r($arr_unserialize1, true));
-                    if (!empty($arr_unserialize1)) {
+//                    echo "-----";
+                    if (!empty($arr)) {
                         $i = 1;
-                        foreach ($arr_unserialize1 as $masp) {
+//                        echo(print_r($arr, true));
+                        foreach ($arr as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
 
 
                             //                    echo(print_r($product, true));?>
 
-                    <tr>
+                            <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>"
                                            id=""> Chọn
@@ -467,7 +485,8 @@ if (isset($_POST['xuatphieu'])) {
                                                 echo "--";
                                         }
                                         ?> </p>
-<!--                                    <p>--><?php //echo $product['shippingWay'] ?><!--</p>-->
+                                    <!--                                    <p>-->
+                                    <?php //echo $product['shippingWay'] ?><!--</p>-->
                                 </td>
                                 <td><?php echo $product['name'] ?></td>
 
@@ -489,10 +508,13 @@ if (isset($_POST['xuatphieu'])) {
 
                                 <td><?php echo $product['amount'] ?></td>
                                 <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
-                                    <button <?php if ($order['status']==1) echo "disabled" ?>  type="button" id="modalUpdateS" class="btn-sm btn-primary "
-                                            data-toggle="modal"
-                                            data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
-                                            onclick="openModalSuaCan()">
+                                    <button <?php if ($order['status'] == 1) echo "disabled" ?> type="button"
+                                                                                                id="modalUpdateS"
+                                                                                                class="btn-sm btn-primary "
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#suacannang"
+                                                                                                data-id="<?php echo $product['id'] ?>"
+                                                                                                onclick="openModalSuaCan()">
                                         Sửa Giá/Cân
                                     </button>
 
@@ -543,18 +565,24 @@ if (isset($_POST['xuatphieu'])) {
                                 <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
                                 <td><?php echo $product['note'] ?></td>
                                 <td>
-                                    <button  <?php if ($order['status']==1) echo "disabled" ?>  type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
-                                            data-toggle="modal"
-                                            data-target="#myModal" data-id="<?php echo $product['id'] ?>"
-                                            onclick="openModal()">
+                                    <button <?php if ($order['status'] == 1) echo "disabled" ?> type="button"
+                                                                                                id="modalUpdateS"
+                                                                                                class="btn btn-primary btn-sm"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#myModal"
+                                                                                                data-id="<?php echo $product['id'] ?>"
+                                                                                                onclick="openModal()">
                                         Cập Nhập
                                     </button>
                                 </td>
-                                <td><a class="btn btn-warning" <?php if ($order['status']==0) echo "href=".'"'."updateKH.php?id=".$product['id'].'"' ?>
+                                <td>
+                                    <a class="btn btn-warning" <?php if ($order['status'] == 0) echo "href=" . '"' . "updateKH.php?id=" . $product['id'] . '"' ?>
                                        role="button">Sửa</a></td>
-                                <td><a class="btn btn-danger" <?php if ($order['status']==0) echo "href=".'"'."deleteKHKyGui.php?id=".$product['id']."&orderId=".$order['id'].'"' ?>
-                                       role="button" <?php if ($order['status']==0) echo "onclick=".'"'."return confirm('Bạn có muốn xóa không?')".'"' ?> > Xóa</a></td>
-                                </tr>
+                                <td>
+                                    <a class="btn btn-danger" <?php if ($order['status'] == 0) echo "href=" . '"' . "deleteKHKyGui.php?id=" . $product['id'] . "&orderId=" . $order['id'] . '"' ?>
+                                       role="button" <?php if ($order['status'] == 0) echo "onclick=" . '"' . "return confirm('Bạn có muốn xóa không?')" . '"' ?> >
+                                        Xóa</a></td>
+                            </tr>
 
                             <?php
                             $urlStr = "detailKyGui.php?id=" . $_GET['id'];
@@ -573,7 +601,7 @@ if (isset($_POST['xuatphieu'])) {
 
                             }
                             if (isset($_POST['khovn'])) {
-                                if ($_POST['status_id'] == 3 ||$_POST['status_id'] == 2) {
+                                if ($_POST['status_id'] == 3 || $_POST['status_id'] == 2) {
                                     $date = new DateTime();
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
                                     $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
@@ -717,7 +745,8 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
                     <div class="form-group">
                         <label>Số KLG</label>
-                        <input required autofocus value="" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
+                        <input required autofocus value="" minlength="1" maxlength="250" name="socan" type="number"
+                               step="0.01"
                                class="form-control" placeholder="Nhập số cân">
                     </div>
 
@@ -792,7 +821,7 @@ if (isset($_POST['xuatphieu'])) {
                     Reset
                 </button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
@@ -801,7 +830,7 @@ if (isset($_POST['xuatphieu'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thêm Sản Phẩm  </h4>
+                <h4 class="modal-title">Thêm Sản Phẩm </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
             </div>
@@ -815,11 +844,11 @@ if (isset($_POST['xuatphieu'])) {
                     <div class="form-group">
                         <label>Têm Sản Phẩm</label>
                         <input required value="" minlength="5" maxlength="500" name="tensanpham" type="text"
-                               class="form-control" >
+                               class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Mã Vận Đơn</label>
-                        <input  required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
+                        <input required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
                                class="form-control">
                     </div>
 
@@ -828,23 +857,24 @@ if (isset($_POST['xuatphieu'])) {
                         <input required value="1" minlength="1" maxlength="250" name="soluong" type="number" step="1"
                                class="form-control" placeholder="Nhập số lương">
                     </div>
-<!--                    <div class="form-group">-->
-<!--                        <label>Status</label>-->
-<!--                        <select readonly name="status_id" class="form-control">-->
-<!--                            --><?php
-//                            $listStatus = $statusRepository->getAll();
-//                            foreach ($listStatus as $status) {
-//                                ?>
-<!--                                <option value="--><?php //echo $status['status_id']; ?><!--">--><?php //echo $status['name']; ?><!--</option>-->
-<!--                                --><?php
-//                            }
-//                            ?>
-<!--                        </select>-->
-<!--                    </div>-->
+                    <!--                    <div class="form-group">-->
+                    <!--                        <label>Status</label>-->
+                    <!--                        <select readonly name="status_id" class="form-control">-->
+                    <!--                            --><?php
+                    //                            $listStatus = $statusRepository->getAll();
+                    //                            foreach ($listStatus as $status) {
+                    //                                ?>
+                    <!--                                <option value="--><?php //echo $status['status_id']; ?><!--">-->
+                    <?php //echo $status['name']; ?><!--</option>-->
+                    <!--                                --><?php
+                    //                            }
+                    //                            ?>
+                    <!--                        </select>-->
+                    <!--                    </div>-->
                     <div class="form-group">
                         <label>Link SP</label>
-                        <input   value="" minlength="5" maxlength="100000" name="linksp" type="text"
-                                class="form-control">
+                        <input value="" minlength="5" maxlength="100000" name="linksp" type="text"
+                               class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Chọn Thời Gian</label>
@@ -860,7 +890,7 @@ if (isset($_POST['xuatphieu'])) {
                 </div>
                 <?php
                 if (isset($_POST['themsanpham'])) {
-                    $orderId= $_POST['orderID'];
+                    $orderId = $_POST['orderID'];
                     $o = $orderRepository->getById($orderId);
                     $date = new DateTime();
                     $dateCreadted = $date->format("Y-m-d\TH:i:s");
@@ -869,10 +899,10 @@ if (isset($_POST['xuatphieu'])) {
                     $listStatusJSON = json_encode($myObj);
 
                     $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $_POST['tensanpham'], null, $_POST['ladingCode'], $_POST['soluong'], "BT/HN1", 0, $o['giavanchuyen'], 1, 0, 0, $o['user_id'], $_POST['linksanpham'], 0, $dateCreadted, $listStatusJSON, 0, 0, 0, 0);
-                    $arrayList =$orderRepository-> getListProductById($orderId);
+                    $arrayList = $orderRepository->getListProductById($orderId);
                     $arr_unserialize1 = unserialize($arrayList['listsproduct']);
                     array_push($arr_unserialize1, $kienhang_id);
-                    $orderRepository->updatedListProductById($orderId,$arr_unserialize1);
+                    $orderRepository->updatedListProductById($orderId, $arr_unserialize1);
                     $kienhangRepository->updateMaKien($kienhang_id);
                     $urlStr = "detailKyGui.php?id=" . $orderId;
                     echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
@@ -886,7 +916,7 @@ if (isset($_POST['xuatphieu'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Cập nhập tất cả MVĐ  </h4>
+                <h4 class="modal-title">Cập nhập tất cả MVĐ </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
             </div>
@@ -898,7 +928,7 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
                     <div class="form-group">
                         <label>Mã Vận Đơn</label>
-                        <input class="form-control" name="mavandon"  type="text" value="" >
+                        <input class="form-control" name="mavandon" type="text" value="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -908,15 +938,15 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
             </form>
             <?php
-                if (isset($_POST['updateMVD'])) {
-                    if (isset($_POST['mavandon'])){
-                        $order_Id= $_POST['order_ID'];
-                        echo $order_Id;
-                        $kienhangRepository->updateAllMVDByOrderId($order_Id,$_POST['mavandon']);
-                        $urlStr = "detailKyGui.php?id=" . $order_Id;
-                        echo "<script>window.location.href='$urlStr';</script>";
-                    }
+            if (isset($_POST['updateMVD'])) {
+                if (isset($_POST['mavandon'])) {
+                    $order_Id = $_POST['order_ID'];
+                    echo $order_Id;
+                    $kienhangRepository->updateAllMVDByOrderId($order_Id, $_POST['mavandon']);
+                    $urlStr = "detailKyGui.php?id=" . $order_Id;
+                    echo "<script>window.location.href='$urlStr';</script>";
                 }
+            }
             ?>
 
         </div>
@@ -954,6 +984,7 @@ if (isset($_POST['xuatphieu'])) {
         _getTimeZoneOffsetInMs();
         document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
     }
+
     function openModalThemSanPham() {
         var id = $(this).attr('data-id');
 

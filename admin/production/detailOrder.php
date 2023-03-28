@@ -31,8 +31,7 @@ if (isset($_POST['xuatphieu'])) {
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
                     $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = $product['gianhap'] * $product['amount'] * $order['giatenhap'];
-
+                    $thanhtiennhap = ($product['gianhap'] * $product['amount'] + $product['shiptq'] - $product['magiamgia'] - $product['giamgiacuahang'])* $order['giatenhap'];
                     $thanhtienban = $product['price'] * $product['amount'] * $product['currency'] + $product['shiptq'] * $product['currency'] - $product['magiamgia'] * $product['currency'];
                     $phidv = $thanhtienban * $product['servicefee'];
 
@@ -373,7 +372,7 @@ if (isset($_POST['xuatphieu'])) {
             data-target="#vandon" data-id="<?php echo $order['id'] ?>"
             role="button" onclick="openVanDon()">Vận Đơn
     </button>
-    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-success" id="modalMaVanDon" data-toggle="modal"
+    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-warning" id="modalMaVanDon" data-toggle="modal"
                                                                 data-target="#mavandon" data-id="<?php echo $order['id'] ?>"
                                                                 role="button" onclick="openUpdateAllMVD()">Update All MVĐ
     </button>
@@ -445,26 +444,33 @@ if (isset($_POST['xuatphieu'])) {
                         <th class="text-center" style="min-width:50px"></th>
                     </tr>
                     <?php
-                        if(isset($_POST['mavandon'])){
-                            $arr_unserialize1= array();
-                            $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'],$_GET['id']);
-                            foreach ($tempList as $p){
-                                array_push($arr_unserialize1,$p['id']);
-                            }
-                        }else{
-                            $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
+                    $arr = array();
+
+                    if (isset($_POST['mavandon']) && !empty($_POST['mavandon'])) {
+//                        echo "tim mvd";
+                        $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'], $_GET['id']);
+                        foreach ($tempList as $p) {
+                            array_push($arr, $p['id']);
+//                            echo(print_r($arr, true));
                         }
-                    if(isset($_POST['trangthai'])){
-                        $arr_unserialize1= array();
-                        $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['trangthai'],$_GET['id']);
-                        foreach ($tempList as $p){
-                            array_push($arr_unserialize1,$p['id']);
+                    } else if (isset($_POST['trangthai'])) {
+//                        echo "trang thai";
+                        $arr = array();
+                        $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['trangthai'], $_GET['id']);
+                        foreach ($tempList as $p) {
+                            array_push($arr, $p['id']);
                         }
+//                        echo(print_r($arr, true));
+                    } else {
+//                        echo "macdinh";
+                        $order = $orderRepository->getById($_GET['id']);
+                        $arr = unserialize($order['listsproduct']);// convert to array;
+//                        echo(print_r($arr, true));
                     }
                     //                            echo(print_r($arr_unserialize1, true));
-                    if (!empty($arr_unserialize1)) {
+                    if (!empty($arr)) {
                         $i = 1;
-                        foreach ($arr_unserialize1 as $masp) {
+                        foreach ($arr as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
 
                             if(isset($product )){
@@ -758,14 +764,20 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
                     <div class="form-group">
                         <label>Số KLG</label>
-                        <input required value="" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
+                        <input  value="" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
                                class="form-control" placeholder="Nhập số cân">
                     </div>
                     <div class="form-group">
                         <label>Giá Nhập</label>
-                        <input required value="00" minlength="1" maxlength="250" name="gianhap" type="number"
+                        <input  value="" minlength="1" maxlength="250" name="gianhap" type="number"
                                step="0.01"
                                class="form-control" placeholder="Nhập Giá Nhập">
+                    </div>
+                    <div class="form-group">
+                        <label>Giảm giá cửa hàng</label>
+                        <input  value="" minlength="1" maxlength="250" name="giamgiacuahang" type="number"
+                               step="0.01"
+                               class="form-control" placeholder="Nhập tiền giảm giá cửa hàng">
                     </div>
 
                 </div>
@@ -779,7 +791,7 @@ if (isset($_POST['xuatphieu'])) {
                 if (isset($_POST['suacan'])) {
                     $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
                     $order = $orderRepository->getById($p['order_id']);
-                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $_POST['gianhap']);
+                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $_POST['gianhap'], $_POST['giamgiacuahang']);
                     $tongcan = 0;
                     if (!empty($arr_unserialize1)) {
                         foreach ($arr_unserialize1 as $masp) {
@@ -1045,6 +1057,7 @@ ob_end_flush();
                     $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
                     $("#edit-form [name=\"socan\"]").val(response.size);
                     $("#edit-form [name=\"gianhap\"]").val(response.gianhap);
+                    $("#edit-form [name=\"giamgiacuahang\"]").val(response.giamgiacuahang);
                 }
             });
         });

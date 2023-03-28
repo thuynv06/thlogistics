@@ -213,13 +213,13 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai']) ){
                             <!--                            </td>-->
                             <td style="background-color: #fec243;color: black;font-weight: bold">
                                Giá VC:<?php echo product_price($orders['giavanchuyen']) ?>
-                            <td style="color: #00CC00"><?php
+                            <td ><?php
                                     switch ($orders['status']) {
                                         case "0":
-                                            echo "Chưa Xuất";
+                                            echo '<p style="'.'font-weight: bold;">'.'Chưa Giao';
                                             break;
                                         case "1":
-                                            echo "Đã Xuất";
+                                            echo '<p style="'.'color: blue;font-weight: bold;">'.'Đã Giao';
                                             break;
                                         default:
                                             echo "--";

@@ -289,19 +289,19 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
         $sql = "select link_image from product_image where product_id=$id ORDER BY `id` DESC LIMIT 1";
         return mysqli_query($conn,$sql);
     }
-    public function updateCanNang($id, $cannang,$gianhap)
+    public function updateCanNang($id, $cannang,$gianhap,$giamgiacuahang)
     {
 //        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql=null;
-        if(!empty($cannang) && !empty($gianhap)){
-            $sql = "update kienhang set gianhap=$gianhap,size=$cannang where id=$id ";
+        if(!empty($cannang) && !empty($gianhap) && !empty($giamgiacuahang)){
+            $sql = "update kienhang set gianhap=$gianhap,size=$cannang,giamgiacuahang=$giamgiacuahang where id=$id ";
         }else{
             if(!empty($cannang) && empty($gianhap)){
                 $sql = "update kienhang set size=$cannang where id=$id ";
             }
             if(empty($cannang) && !empty($gianhap)){
-                $sql = "update kienhang set gianhap=$gianhap where id=$id ";
+                $sql = "update kienhang set gianhap=$gianhap,giamgiacuahang=$giamgiacuahang where id=$id ";
             }
         }
         
@@ -327,6 +327,12 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
 //        $sql = "insert into product_image(shoe_id,link_image) values($id,'$linkImage')";
 //        mysqli_query($conn,$sql);
 //    }
+    public function getType($orderID){
+        global $conn;
+        $sql = "select type from orders where id=$orderID ";
+//        echo $sql;
+        return mysqli_query($conn,$sql);
+    }
 }
 
 ?>

@@ -80,6 +80,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 <th class="text-center" style="min-width:50px">STT</th>
                 <th class="text-center" style="min-width:95px;">Mã Kiện</th>
                 <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
+                <th class="text-center" style="min-width:95px;">Ảnh</th>
                 <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
                 <th class="text-center" style="min-width:100px">Khách Hàng</th>
                 <th class="text-center" style="min-width:50px">Giá</th>
@@ -109,6 +110,12 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
             }
             $i = 1;
             foreach ($kienHangList as $kienHang) {
+
+                if(isset($kienHang )){
+                    $link_image = $kienhangRepository->getImage($kienHang['id'])->fetch_assoc();
+                    $typeP= $kienhangRepository ->getType($kienHang['order_id'])->fetch_assoc();
+//                    echo $typeP['type'];
+                }
                 ?>
                 <tr>
                     <td><?php echo $i++; ?></td>
@@ -140,6 +147,9 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         <p><?php echo $kienHang['shippingWay'] ?></p>
                     </td>
                     <td><?php echo $kienHang['name'] ?></td>
+                    <td><img width="150px" height="150px"
+                             src="<?php if ( !empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
+                             if ( empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
                     <td style="color: blue"><?php echo $kienHang['ladingCode'] ?></td>
                     <td>
                         <?php
