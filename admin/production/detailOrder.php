@@ -350,7 +350,7 @@ if (isset($_POST['xuatphieu'])) {
                     }
                 }
                 $tienvanchuyen += $tongcan * $giavanchuyen;
-                $tiencong = ($tongtienhang + $shiptq) * $phidichvu;
+                $tiencong = ($tongtienhang + $shiptq-$giamgia) * $phidichvu;
                 $tongall = ($tongtienhang + $shiptq + $tiencong - $giamgia) * $tygiate + $tienvanchuyen;
 
                 if (isset($_POST['tongcan']) && !empty($_POST['tongcan'])) {
