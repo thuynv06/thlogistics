@@ -761,7 +761,7 @@ if (isset($_POST['xuatphieu'])) {
                 if (isset($_POST['suacan'])) {
                     $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
                     $order = $orderRepository->getById($p['order_id']);
-                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $p['gianhap']);
+                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $p['gianhap'], $p['giamgiacuahang']);
                     $tongcan = 0;
                     if (!empty($arr_unserialize1)) {
                         foreach ($arr_unserialize1 as $masp) {
