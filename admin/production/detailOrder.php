@@ -30,12 +30,18 @@ if (isset($_POST['xuatphieu'])) {
             $startdate = date("Y-m-d\TH:i:s", strtotime($order['startdate']));
             if (!empty($arr_unserialize1)) {
                 foreach ($arr_unserialize1 as $masp) {
+                    $thanhtiennhap=0;
+                    $thanhtienban=0;
+                    $phidv=0;
                     $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = ($product['gianhap'] * $product['amount'] + $product['shiptq'] - $product['magiamgia'] - $product['giamgiacuahang'])* $order['giatenhap'];
-                    $thanhtienban = $product['price'] * $product['amount'] * $product['currency'] + $product['shiptq'] * $product['currency'] - $product['magiamgia'] * $product['currency'];
+                    $thanhtiennhap = $product['gianhap'] * $product['amount']* $order['giatenhap'] + $product['shiptq']* $order['giatenhap'] - $product['magiamgia']* $order['giatenhap'] - $product['giamgiacuahang']* $order['giatenhap'];
+                    $thanhtienban = $product['price'] * $product['amount'] * $order['tygiate'] + $product['shiptq'] * $order['tygiate'] - $product['magiamgia'] * $order['tygiate'];
                     $phidv = $thanhtienban * $product['servicefee'];
-
+//                    echo "thanhtien ban: ".$thanhtienban;
+//                    echo "phi dv  : ".$phidv;
                     $loinhuan += $thanhtienban + $phidv - $thanhtiennhap;
+//                    echo $loinhuan;
+//                    echo ">>> ";
                 }
                 $loinhuan = $loinhuan - $order['thukhac'];
             }
@@ -764,18 +770,18 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
                     <div class="form-group">
                         <label>Số KLG</label>
-                        <input  value="" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
+                        <input  value="00" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
                                class="form-control" placeholder="Nhập số cân">
                     </div>
                     <div class="form-group">
                         <label>Giá Nhập</label>
-                        <input  value="" minlength="1" maxlength="250" name="gianhap" type="number"
+                        <input  value="00" minlength="1" maxlength="250" name="gianhap" type="number"
                                step="0.01"
                                class="form-control" placeholder="Nhập Giá Nhập">
                     </div>
                     <div class="form-group">
                         <label>Giảm giá cửa hàng</label>
-                        <input  value="" minlength="1" maxlength="250" name="giamgiacuahang" type="number"
+                        <input  value="00" minlength="1" maxlength="250" name="giamgiacuahang" type="number"
                                step="0.01"
                                class="form-control" placeholder="Nhập tiền giảm giá cửa hàng">
                     </div>

@@ -191,7 +191,7 @@ $th1688 = $th1688Repository->getConfig();
 //                                 echo $_POST['mavandon'];
 //                                 echo $_POST['nhapsocan'];                  	
                             	$kienHang = $kienhangRepository->findByMaVanDon($_POST['mavandon'])->fetch_assoc();               
-                                $kienhangRepository->updateCanNang($kienHang['id'], $_POST['nhapsocan'], $kienHang['gianhap']);
+                                $kienhangRepository->updateCanNang($kienHang['id'], $_POST['nhapsocan'], $kienHang['gianhap'],$kienHang['giamgiacuahang']);
                                 $urlStr = "nhapkho.php?mavandon=" . $_POST['mavandon'];
                                 echo "<script>window.location.href='$urlStr';</script>";
 //                                 $_POST['ladingCode']=$_POST['mavandon'];

@@ -294,7 +294,7 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
 //        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql=null;
-        if(!empty($cannang) && !empty($gianhap) && !empty($giamgiacuahang)){
+        if(!empty($cannang) && !empty($gianhap) ){
             $sql = "update kienhang set gianhap=$gianhap,size=$cannang,giamgiacuahang=$giamgiacuahang where id=$id ";
         }else{
             if(!empty($cannang) && empty($gianhap)){
@@ -304,10 +304,12 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
                 $sql = "update kienhang set gianhap=$gianhap,giamgiacuahang=$giamgiacuahang where id=$id ";
             }
         }
-        
+
 //        echo $sql;
         mysqli_query($conn, $sql);
     }
+
+
     public function deleteImage($id){
         global $conn;
         $sql = "delete from product_image where product_id=$id";

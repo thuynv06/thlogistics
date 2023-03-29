@@ -29,9 +29,9 @@ if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
     $ordersList = $orderRepository->findByUserId($user_id);
 }
-if (isset($_POST['kieudon']) && !empty($_POST['kieudon'])) {
-    $type = $_POST['kieudon'];
-    $ordersList = $orderRepository->findByType($type);
+if (isset($_POST['status']) && !empty($_POST['status'])) {
+    $status = $_POST['status'];
+    $ordersList = $orderRepository->findByStatus(0,$status);
 }
 if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
     $maKH = $_POST['MaKH'];
@@ -89,12 +89,11 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                         </select>
                     </div>
                     <div class="form-group">
-                        <select style="margin-right: 20px; margin-bottom: 5px;" name="kieudon"
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="status"
                                 class="form-control custom-select " onchange="searchStatus()">
-                            <option value="">Lọc theo trạng thái</option>
-                            <option value="0"> Chưa Xuất</option>
-                            <option value="1"> Đã Xuất</option>
-
+                            <option value="2">Lọc theo trạng thái</option>
+                            <option value="0"> Chưa Giao</option>
+                            <option value="1"> Đã Giao</option>
                         </select>
                     </div>
                     <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra
