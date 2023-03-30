@@ -204,6 +204,11 @@ if (isset($_POST['xuatphieu'])) {
                     <h3>Tổng</h3>
                     <table id="tableShoe">
                         <tr style="min-width:100px">
+                            <th>Mã Đơn</th>
+                            <td><input readonly value="<?php echo $order['code'] ?>"
+                                       name="code" type="text" class="form-control"></td>
+                        </tr>
+                        <tr style="min-width:100px">
                             <th>Ngày Tạo</th>
                             <td><input  value="<?php echo $startdate ?>" name="startdate" type="datetime-local"
                                        step="1"
