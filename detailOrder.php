@@ -71,7 +71,7 @@
                         <table id="tableShoeIndex" class="fixinfo">
                             <tr style="min-width:100px">
                                 <th>Họ tên</th>
-                                <td><p><?php echo $checkCookie['fullname'] ?></p></td>
+                                <td><?php echo $checkCookie['fullname'] ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Mã Khách Hàng</th>
@@ -79,31 +79,31 @@
                             </tr>
                             <tr style="min-width:100px">
                                 <th>D.O.B</th>
-                                <td><p><?php echo $checkCookie['dob'] ?></p></td>
+                                <td><?php echo $checkCookie['dob'] ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Email</th>
-                                <td><p><?php echo $checkCookie['email'] ?></p></td>
+                                <td><?php echo $checkCookie['email'] ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>SĐT</th>
-                                <td><p><?php echo $checkCookie['phone'] ?></p></td>
+                                <td><?php echo $checkCookie['phone'] ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Địa Chỉ</th>
-                                <td><p><?php echo $checkCookie['address'] ?></p></td>
+                                <td><?php echo $checkCookie['address'] ?></td>
                             </tr>
                         </table>
                         <br>
 
                     </div>
-                    <div class="col-md-3 table-responsive " style="display: block;margin-top: 22px;
-                      margin-left: auto;
-                      margin-right: auto;
-                      text-align: center">
-                        <img width="300px" height="300px"
-                             src="<?php echo 'images/logoth1688.png' ?>">
-                    </div>
+<!--                    <div class="col-md-3 table-responsive " style="display: block;margin-top: 22px;-->
+<!--                      margin-left: auto;-->
+<!--                      margin-right: auto;-->
+<!--                      text-align: center">-->
+<!--                        <img width="300px" height="300px"-->
+<!--                             src="--><?php //echo 'images/logoth1688.png' ?><!--">-->
+<!--                    </div>-->
                     <div class="col-md-3 table-responsive">
                         <h3>Tổng Quan Đơn Hàng</h3>
                         <table id="tableShoeIndex">
@@ -144,11 +144,11 @@
                                 <td><?php if (!empty($order['phidichvu'])) echo $order['phidichvu'] * 100 ?>
                                     <span> %</span></td>
                             </tr>
-                            <tr style="min-width:100px">
-                                <th>Tiền Công</th>
-                                <td><?php if (!empty($order['tiencong'])) echo product_price($order['tiencong']) ?>
-                                    <span> VNĐ</span></td>
-                            </tr>
+<!--                            <tr style="min-width:100px">-->
+<!--                                <th>Tiền Công</th>-->
+<!--                                <td>--><?php //if (!empty($order['tiencong'])) echo product_price($order['tiencong']) ?>
+<!--                                    <span> VNĐ</span></td>-->
+<!--                            </tr>-->
                             <tr style="min-width:100px">
                                 <th>Ship về VN</th>
                                 <td><?php if (!empty($order['tienvanchuyen'])) echo product_price($order['tienvanchuyen']) ?>
@@ -218,7 +218,7 @@
                                 <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
                                 <th class="text-center" style="min-width:50px">Giá</th>
                                 <th class="text-center" style="min-width:50px">Tiền Hàng</th>
-                                <th class="text-center" style="min-width:50px">Mã Giảm Giá</th>
+                                <th class="text-center" style="min-width:50px">Giảm Giá</th>
                                 <th class="text-center" style="min-width:50px">ShipTQ</th>
                                 <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
                                 <th class="text-center" style="min-width:150px">Lộ Trình</th>
@@ -267,21 +267,21 @@
                                                         echo "--";
                                                 }
                                                 ?> </p>
-                                            <p><?php echo $product['shippingWay'] ?></p>
+<!--                                            <p>--><?php //echo $product['shippingWay'] ?><!--</p>-->
                                         </td>
                                         <td><p><?php echo $product['name'] ?></p></td>
                                         <td><img width="150px" height="150px"
                                                  src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo "admin/production/" . $link_image['link_image'];
-                                                 if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>">
+                                                 if (empty($link_image['link_image'])) echo 'admin/production/images/LogoTHzz.png' ?>">
                                         </td>
                                         <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
                                         <td style="font-weight: bold;"><p
                                                     style="color: blue"><?php echo $product['ladingCode'] ?> </p>
-                                            <?php echo "Cân nặng: " . $product['size'] . " /Kg"; ?>
+                                            <?php echo $product['size'] . " /Kg"; ?>
                                         </td>
                                         <td><p>Size: <?php echo $product['kichthuoc'] ?></p>
-                                            <p>Màu: <?php echo $product['color'] ?></p>
-                                            <p>Số Lượng: <?php echo $product['amount'] ?></p>
+                                            <p>Color: <?php echo $product['color'] ?></p>
+                                            <p>SL: <?php echo $product['amount'] ?></p>
                                         </td>
                                         <td><p style="color:green"><?php echo $product['price'] ?><span> &#165;</span>
                                             </p></td>

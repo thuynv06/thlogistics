@@ -212,7 +212,7 @@ if (isset($_POST['xuatphieu'])) {
                         </tr>
                         <tr style="min-width:100px">
                             <th>Ngày Xuất</th>
-                            <td><input readonly name="enddate" type="datetime-local" step="1"
+                            <td><input readonly name="enddate" value="<?php if(isset($order['enddate'])) echo $order['enddate'] ?>" type="datetime-local" step="1"
                                        class="form-control"
                                        id="enddate"></td>
                         </tr>

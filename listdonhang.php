@@ -61,8 +61,8 @@ function product_price($priceFloat)
                         <th class="text-center" style="min-width:100px">Ngày Tháng</th>
                         <th class="text-center" style="min-width:100px">Mã Đơn</th>
                         <th class="text-center" style="min-width:100px">Trạng Thái</th>
-                        <th class="text-center" style="min-width:100px">Số SP</th>
-                        <th class="text-center" style="min-width:150px">Danh Sách MVĐ</th>
+<!--                        <th class="text-center" style="min-width:100px">Số SP</th>-->
+<!--                        <th class="text-center" style="min-width:150px">Danh Sách MVĐ</th>-->
                         <th class="text-center" style="min-width:80px">Đã Ứng</th>
                         <th class="text-center" style="min-width:120px">Thu Khác</th>
                         <th class="text-center" style="min-width:120px">Tổng Tiền</th>
@@ -85,35 +85,35 @@ function product_price($priceFloat)
                                 <?php
                                 switch ($order['status']) {
                                     case "0":
-                                        echo "Chưa Xuất";
+                                        echo '<p style="'.'font-weight: bold;">'.'Chưa Giao';
                                         break;
                                     case "1":
-                                        echo "Đã Giao";
-                                        break; ?><?php
+                                        echo '<p style="'.'color: blue;font-weight: bold;">'.'Đã Giao';
+                                        break;
+                                    default:
+                                        echo "--";
                                 } ?>
                             </td>
-                            <td>
-                                <?php
-                                echo $count;
-                                ?>
-                            </td>
-                            <td>
-                                <?php
-                                if (!empty($arr_unserialize1)) {
-                                    $count=0;
-                                foreach ($arr_unserialize1 as $masp) {
-                                    if(!empty($masp)){
-                                        $count++;
-                                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                                    if(!empty($product['ladingCode'])){
-                                     echo "<p style='font-weight: 700;color: blue'>".$product['ladingCode']."</p>";}
-                                    }else{
-                                        break;
-                                    }
-                                }
-                                }
-                                ?>
-                            </td>
+<!--                            <td>-->
+<!--                                --><?php
+//                                echo $count;
+//                                ?>
+<!--                            </td>-->
+<!--                                --><?php
+//                                if (!empty($arr_unserialize1)) {
+//                                    $count=0;
+//                                foreach ($arr_unserialize1 as $masp) {
+//                                    if(!empty($masp)){
+//                                        $count++;
+//                                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
+//                                    if(!empty($product['ladingCode'])){
+//                                     echo "<p style='font-weight: 700;color: blue'>".$product['ladingCode']."</p>";}
+//                                    }else{
+//                                        break;
+//                                    }
+//                                }
+//                                }
+//                                ?>
                             <td>
                                 <?php echo product_price($order['tamung']) ?>
                             </td>

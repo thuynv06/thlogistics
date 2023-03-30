@@ -163,10 +163,9 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                         foreach ($ordersList as $orders) {
                             ?>
                             <td><?php echo $i++; ?></td>
-                            <td>
+                            <td><p style="font-weight: 700;"><?php echo $orders['code'] ?></p>
                                 <?php
                                 $startdate = date("Y-m-d", strtotime($orders['startdate']));
-
                                 echo $startdate ?>
                             </td>
                             <td>

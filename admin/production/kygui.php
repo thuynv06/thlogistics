@@ -143,6 +143,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai']) ){
                     <tr>
                         <th class="text-center" style="min-width:50px">STT</th>
                         <th class="text-center" style="min-width:80px">Ngày</th>
+                        <th class="text-center" style="min-width:80px">Mã Đơn</th>
                         <th class="text-center" style="min-width:100px">Mã KH</th>
                         <th class="text-center" style="min-width:100px">Tên KH</th>
                         <th class="text-center" style="min-width:130px">Deal</th>
@@ -197,6 +198,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai']) ){
 
                                 echo $startdate ?>
                             </td>
+                            <td style="font-weight: 700;"><?php echo $orders['code'] ?></td>
                             <td style="color: blue">
                                 <?php
                                 $user = $userRepository->getById($orders['user_id']);

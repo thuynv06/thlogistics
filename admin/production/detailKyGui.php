@@ -260,6 +260,10 @@ if (isset($_POST['xuatphieu'])) {
                 }
                 if ($flag) {
                     $order = $orderRepository->xuatDon($_GET['id']);
+                    $urlStr = "detailKyGui.php?id=" . $_GET['id'];
+                    echo "<script>alert('Xuất Đơn Hàng Thành Công');
+                            window.location.href='$urlStr';
+                            </script>";
                 }
             }
 

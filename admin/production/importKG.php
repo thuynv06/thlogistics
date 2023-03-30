@@ -60,8 +60,8 @@ if (isset($_POST["btnImportKG"])) {
 //        echo $sheetCount;
 //        die(print_r($spreadSheetAry, true));
 //        echo(print_r($spreadSheetAry, true));
-                echo $_POST['giavc'];
-                echo $_POST['userId'];
+//                echo $_POST['giavc'];
+//                echo $_POST['userId'];
                 $userID =$_POST["userId"];
 //            echo(print_r($user, true));
 
@@ -78,7 +78,20 @@ if (isset($_POST["btnImportKG"])) {
                 $tongcan=0;
                 $date = new DateTime();
                 $dateCreadted = $date->format("Y-m-d\TH:i:s");
-                $orderId = $orderRepository->createOrder($userID, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,1);
+
+                $code= $orderRepository->getLastOrderCodeByUserId($userID);
+                if(!empty($code)){
+                    $user = $userRepository->getById($userID);
+                    if(empty($code['code'] )){
+                        $newCode= $user['code'].".No099";
+                    }else{
+                        $numCode = substr($code['code'],-3) +1;
+                        $newCode = $user['code'].".No".$numCode;
+                    }
+
+                }
+
+                $orderId = $orderRepository->createOrder($userID, $newCode,null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,1);
 
                 for ($i = 1; $i < $sheetCount; $i++) {
 
@@ -95,16 +108,21 @@ if (isset($_POST["btnImportKG"])) {
                         } else {
                             break;
                         }
-                        $linksp = "";
+                        $amount = 0;
                         if (isset($spreadSheetAry[$i][3])) {
-                            $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+                            $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+                        }
+                        $klg = 0;
+                        if (isset($spreadSheetAry[$i][4])) {
+                            $klg = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
+                        }
+                        $linksp = "";
+                        if (isset($spreadSheetAry[$i][5])) {
+                            $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
                         }
                         $kichthuoc = "";
                         $color = "";
-                        $amount = $spreadSheetAry[$i][4];
-                        if (isset($spreadSheetAry[$i][4])) {
-                            $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
-                        }
+
 //            echo $amount;
                         $price = 0;
                         $shiptq = 0;
@@ -122,7 +140,7 @@ if (isset($_POST["btnImportKG"])) {
                         $listStatusJSON = json_encode($myObj);
 
 
-                        $kienhang_id = $kienhangRepository->insert($orderId,0,$phidichvu, $name, NULL, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $userID, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
+                        $kienhang_id = $kienhangRepository->insert($orderId,0,$phidichvu, $name, NULL, $ladingCode, $amount, "BT/HN1", $klg, $giavanchuyen, 1, $price, $tygiate, $userID, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
                         $kienhangRepository->updateMaKien($kienhang_id);
                         array_push($listproduct, $kienhang_id);
 

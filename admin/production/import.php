@@ -94,7 +94,18 @@ if (isset($_POST["btnImport"])) {
                 $date = new DateTime();
                 $dateCreadted = $date->format("Y-m-d\TH:i:s");
                 if (!empty($user_id) && isset($user_id)) {
-                    $orderId = $orderRepository->createOrder($user_id, null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    $code= $orderRepository->getLastOrderCodeByUserId($user_id);
+                    if(!empty($code)){
+                        if(empty($code['code'] )){
+                            $newCode= $user['code'].".No099";
+                        }else{
+                            $numCode = substr($code['code'],-3) +1;
+                            $newCode = $user['code'].".No".$numCode;
+                        }
+//                        $numCode = substr($code['code'],-3) +1;
+//                        $newCode = $userCode.".No".$numCode;
+                    }
+                    $orderId = $orderRepository->createOrder($user_id,$newCode ,null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {
 
 //                    $drawing = $spreadSheetAry[$i]->getDrawingCollection();
@@ -180,7 +191,7 @@ if (isset($_POST["btnImport"])) {
                                 $zipReader = fopen($drawing->getPath(), 'r');
                                 $imageContents = '';
                                 while (!feof($zipReader)) {
-                                    $imageContents .= fread($zipReader, 2048);
+                                    $imageContents .= fread($zipReader, 4096);
                                 }
                                 fclose($zipReader);
                                 $extension = $drawing->getExtension();
