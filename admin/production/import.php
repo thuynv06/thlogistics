@@ -97,13 +97,11 @@ if (isset($_POST["btnImport"])) {
                     $code= $orderRepository->getLastOrderCodeByUserId($user_id);
                     if(!empty($code)){
                         if(empty($code['code'] )){
-                            $newCode= $user['code'].".No099";
+                            $newCode= $userCode.".No099";
                         }else{
                             $numCode = substr($code['code'],-3) +1;
-                            $newCode = $user['code'].".No".$numCode;
+                            $newCode = $userCode.".No".$numCode;
                         }
-//                        $numCode = substr($code['code'],-3) +1;
-//                        $newCode = $userCode.".No".$numCode;
                     }
                     $orderId = $orderRepository->createOrder($user_id,$newCode ,null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {
