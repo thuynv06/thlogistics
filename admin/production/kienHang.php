@@ -295,7 +295,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 if (isset($_POST['khotq'])) {
                     if ($_POST['status_id'] == 1) {
                         $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
-//                        echo "<script>window.location.href='$urlStr';</script>";
+                        echo "<script>window.location.href='$urlStr';</script>";
                     } else {
                         echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
                     }

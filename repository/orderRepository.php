@@ -183,7 +183,11 @@ class OrderRepository
         $sql = "SELECT code FROM orders where user_id=$userid ORDER BY id DESC LIMIT 1";
 
         mysqli_query($conn, $sql);
-        return mysqli_query($conn, $sql)->fetch_assoc();
+//        if (mysqli_query($conn, $sql)){
+            return mysqli_query($conn, $sql)->fetch_assoc();
+//        }else{
+//            return mysqli_query($conn, $sql);
+//        }
     }
 }
 
