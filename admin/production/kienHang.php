@@ -262,7 +262,6 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             <input value="" name="updateDateStatus" type="datetime-local" step="1"
                                    class="form-control" id="updateDate">
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -275,7 +274,6 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         <button id="btnSaveChangeStautus" name="khovn" type="submit" class="btn btn-success" data-id="">
                             NhậpKho VN
                         </button>
-
                         <button id="btnSaveAllStatus" name="dagiao" type="submit" class="btn btn-warning" data-id="">
                             Đã Giao
                         </button>
@@ -297,7 +295,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 if (isset($_POST['khotq'])) {
                     if ($_POST['status_id'] == 1) {
                         $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
-                        echo "<script>window.location.href='$urlStr';</script>";
+//                        echo "<script>window.location.href='$urlStr';</script>";
                     } else {
                         echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
                     }
