@@ -217,28 +217,28 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
         return mysqli_query($conn, $sql);
     }
 
-    public function updateStatusAll($id)
-    {
-        global $conn;
-        $date1 = new DateTime();
-//        $string1 = $date1->add(new DateInterval("PT10H"))->format("Y-m-d\TH:i:s");
-        $string2 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-        $string3 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-        $string4 = date_add($date1,date_interval_create_from_date_string("4 days"))->format("Y-m-d\TH:i:s");
-        $string5 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-        $string6 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-
-        $sql = "update kienhang set status=6,
-                    listTimeStatus =JSON_SET (listTimeStatus,
-                     '\$.\"2\"','$string2',
-                     '\$.\"3\"','$string3',
-                     '\$.\"4\"','$string4',
-                    '\$.\"5\"','$string5',
-                    '\$.\"6\"','$string6' )
-                    where id=$id ";
-//        echo $sql;
-        mysqli_query($conn, $sql);
-    }
+//    public function updateStatusAll($id)
+//    {
+//        global $conn;
+//        $date1 = new DateTime();
+////        $string1 = $date1->add(new DateInterval("PT10H"))->format("Y-m-d\TH:i:s");
+//        $string2 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//        $string3 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//        $string4 = date_add($date1,date_interval_create_from_date_string("4 days"))->format("Y-m-d\TH:i:s");
+//        $string5 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//        $string6 = date_add($date1,date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//
+//        $sql = "update kienhang set status=6,
+//                    listTimeStatus =JSON_SET (listTimeStatus,
+//                     '\$.\"2\"','$string2',
+//                     '\$.\"3\"','$string3',
+//                     '\$.\"4\"','$string4',
+//                    '\$.\"5\"','$string5',
+//                    '\$.\"6\"','$string6' )
+//                    where id=$id ";
+////        echo $sql;
+//        mysqli_query($conn, $sql);
+//    }
 
     public function updatekhoTQNhan($id)
     {

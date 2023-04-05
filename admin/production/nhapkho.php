@@ -35,11 +35,11 @@ $th1688 = $th1688Repository->getConfig();
             if (! empty($kienhang) && $kienhang['status'] < 4) {
                 $result = $kienhangRepository->updateByLadingCode($_POST['ladingCode'], 4, $temp);
                 if ($result) {
-                    $dategdanggiao = $date->add(new DateInterval('P1D'))->format("Y-m-d\TH:i:s");
-                    $kienhangRepository->updateByLadingCode($_POST['ladingCode'], 5, $dategdanggiao);
+//                    $dategdanggiao = $date->add(new DateInterval('P1D'))->format("Y-m-d\TH:i:s");
+//                    $kienhangRepository->updateByLadingCode($_POST['ladingCode'], 5, $dategdanggiao);
                  
                   
-//                     echo "success";
+                     echo "success";
                 } else {
                     echo "cập nhập lỗi";
                 }

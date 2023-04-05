@@ -614,10 +614,10 @@ if (isset($_POST['xuatphieu'])) {
                                     $date = new DateTime();
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
                                     $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
+//                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
-                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
+                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
                                 }
 
                             }

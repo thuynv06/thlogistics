@@ -222,14 +222,14 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
     <?php include 'paginantionList.php' ?>
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Cập Nhập Trạng Thái Kiện Hàng</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
+            <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cập Nhập Trạng Thái Kiện Hàng</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-group">
                             <label>ID</label>
                             <input class="form-control" name="idKH" type="number" value="" readonly>
@@ -262,51 +262,81 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             <input value="" name="updateDateStatus" type="datetime-local" step="1"
                                    class="form-control" id="updateDate">
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary" data-id="">
-                        Lưu
-                    </button>
-                    <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
-                        KhoTQ Nhận
-                    </button>
-                    <button id="btnSaveAllStatus" name="submitAll" type="submit" class="btn btn-warning" data-id="">
-                        UpdatedAll
-                    </button>
-                    <button id="btnResetStatus" name="resetStatus" type="submit" class="btn btn-danger" data-id="">
-                        Reset
-                    </button>
-                </div>
-                </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary" data-id="">
+                            Lưu
+                        </button>
+                        <button id="btnSaveChangeStautus" name="khotq" type="submit" class="btn btn-success" data-id="">
+                            KhoTQ Nhận
+                        </button>
+                        <button id="btnSaveChangeStautus" name="khovn" type="submit" class="btn btn-success" data-id="">
+                            NhậpKho VN
+                        </button>
+
+                        <button id="btnSaveAllStatus" name="dagiao" type="submit" class="btn btn-warning" data-id="">
+                            Đã Giao
+                        </button>
+                        <button id="btnResetStatus" name="resetStatus" type="submit" class="btn btn-danger" data-id="">
+                            Reset
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
                 <?php
+                $urlStr = "kienHang.php?id=" . $_POST['idKH'];
+
                 if (isset($_POST['submit'])) {
                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
-                    echo "<script>window.location.href='kienHang.php';</script>";
+                    echo "<script>window.location.href='$urlStr';</script>";
                 }
-                if (isset($_POST['tqnhan'])) {
-                    if($_POST['status_id'] ==1){
+                if (isset($_POST['khotq'])) {
+                    if ($_POST['status_id'] == 1) {
                         $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
-                        echo "<script>window.location.href='kienHang.php';</script>";
-                    }else{
-                        echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='kienHang.php';</script>";
+                        echo "<script>window.location.href='$urlStr';</script>";
+                    } else {
+                        echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
+                    }
+
+                }
+                if (isset($_POST['khovn'])) {
+                    if ($_POST['status_id'] == 2 || $_POST['status_id'] == 3) {
+                        $date = new DateTime();
+                        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
+//                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate); update đang giao hàng
+                        echo "<script>window.location.href='$urlStr';</script>";
+                    } else {
+                        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
                     }
 
                 }
                 ?>
 
                 <?php
-                if (isset($_POST['submitAll'])) {
-                    $kienhangRepository->updateStatusAll($_POST['idKH']);
-                    echo "<script>window.location.href='kienHang.php';</script>";
+                if (isset($_POST['dagiao'])) {
+                    if ($_POST['status_id'] == 4 || $_POST['status_id'] == 5) {
+                        $date = new DateTime();
+                        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
+                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
+                        echo "<script>window.location.href='$urlStr';</script>";
+                    } else {
+                        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!');window.location.href='$urlStr';</script>";
+                    }
                 }
                 ?>
                 <?php
                 if (isset($_POST['resetStatus'])) {
                     $kienhangRepository->resetStatus($_POST['idKH']);
-                    echo "<script>window.location.href='kienHang.php';</script>";
+                    echo "<script>window.location.href='$urlStr';</script>";
                 }
                 ?>
+
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

@@ -44,8 +44,8 @@ if (isset($_POST['nhapkhovn'])) {
             if ($product['status'] == 3) {
                 $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 4, $date);
                 $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $date);
-                $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 5, $tempDate);
+//                $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
+//                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 5, $tempDate);
                 array_push($arr, $product['ladingCode']);
                 echo "<script>window.location.href='$urlStr';</script>";
             } else {

@@ -127,7 +127,7 @@
                             <tr style="min-width:100px">
                                 <th>Tiền Hàng</th>
                                 <td><?php if (!empty($order['tongtienhang'])) echo product_price($order['tongtienhang']) ?>
-                                    <span> VNĐ</span></td>
+                                    <span> ¥</span></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tiền Ship TQ</th>
@@ -178,7 +178,7 @@
                                 <th>Ngày Xuất</th>
                                 <td><?php if (!empty($order['ngayxuat'])) {
                                         echo $order['ngayxuat'];
-                                    } else echo "--/--/---" ?></td>
+                                    } else echo "--/--/----" ?></td>
                             </tr>
                             <tr style="min-width:100px">
                                 <th>Tổng Tiền</th>

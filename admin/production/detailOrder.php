@@ -631,23 +631,30 @@ if (isset($_POST['xuatphieu'])) {
 
                             }
                             if (isset($_POST['khovn'])) {
-                                if ($_POST['status_id'] == 3) {
+                                if ($_POST['status_id'] == 2 || $_POST['status_id'] == 3) {
                                     $date = new DateTime();
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
-                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
+//                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate); update đang giao hàng
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
-                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
+                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!');window.location.href='$urlStr';</script>";
                                 }
 
                             }
                             ?>
 
                             <?php
-                            if (isset($_POST['submitAll'])) {
-                                $kienhangRepository->updateStatusAll($_POST['idKH']);
-                                echo "<script>window.location.href='$urlStr';</script>";
+                            if (isset($_POST['dagiao'])) {
+                                if ($_POST['status_id'] == 4 || $_POST['status_id'] == 5) {
+                                    $date = new DateTime();
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
+                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
+                                    echo "<script>window.location.href='$urlStr';</script>";
+                                } else {
+                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
+                                }
                             }
                             ?>
                             <?php
@@ -669,6 +676,7 @@ if (isset($_POST['xuatphieu'])) {
 </div>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
+        <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Cập Nhập Trạng Thái Kiện Hàng</h4>
@@ -676,7 +684,6 @@ if (isset($_POST['xuatphieu'])) {
                             aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>ID</label>
                         <input class="form-control" name="idKH" type="number" value="" readonly>
@@ -723,8 +730,8 @@ if (isset($_POST['xuatphieu'])) {
                     NhậpKho VN
                 </button>
 
-                <button id="btnSaveAllStatus" name="submitAll" type="submit" class="btn btn-warning" data-id="">
-                    Updated All
+                <button id="btnSaveAllStatus" name="dagiao" type="submit" class="btn btn-warning" data-id="">
+                    Đã Giao
                 </button>
                 <button id="btnResetStatus" name="resetStatus" type="submit" class="btn btn-danger" data-id="">
                     Reset
