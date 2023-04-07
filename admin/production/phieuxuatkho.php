@@ -47,7 +47,7 @@ function phieuxuatkho($listId,$userID)
         $sheet->setCellValue('A2', ("Địa Chỉ: Ngõ 15 - Phố Ba La - Tổ 10 Phường Phú La - Hà Đông - Hà Nội"));
         $sheet->setCellValue('A3', ("Hotline: 033.699.1688 - 0399.322.668"));
 
-        $sheet->setCellValue('A5', mb_strtoupper("Phiếu Xuất Kho", "UTF-8"));
+        $sheet->setCellValue('A5', mb_strtoupper("Phiếu Thu Kiêm Phiếu Xuất Kho", "UTF-8"));
         $sheet->mergeCells('A5:G5');
         $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal('center');
 

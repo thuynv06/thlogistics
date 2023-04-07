@@ -862,7 +862,7 @@ if (isset($_POST['xuatphieu'])) {
                 <button id="btnSaveChangeStautus" name="nhapkhovn" type="submit" class="btn btn-success" data-id="">
                     NhậpKho VN
                 </button>
-                <button id="btnSaveChangeStautus" name="dagiao" type="submit" class="btn btn-success" data-id="">
+                <button id="btnSaveChangeStautus" name="dagiaoall" type="submit" class="btn btn-success" data-id="">
                     Đã Giao
                 </button>
                 <button id="btnSaveChangeStautus" name="reset" type="submit" class="btn btn-danger" data-id="">
