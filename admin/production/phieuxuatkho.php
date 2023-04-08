@@ -102,8 +102,9 @@ function phieuxuatkho($listId,$userID)
         $tongcan = 0;
         $tongtienvc = 0;
         $i = 14;
+        $sokien=0;
         foreach ($listId as $product_id) {
-
+            $sokien++;
             $tempProduct = $kienhangRepository->getById($product_id)->fetch_assoc();
 
             $obj = json_decode($tempProduct['listTimeStatus']);
@@ -132,11 +133,13 @@ function phieuxuatkho($listId,$userID)
 
         $sheet->setCellValue('E' . $i, $tongcan);
         $sheet->setCellValue('G' . $i, $tongtienvc);
+        $sheet->setCellValue('B' . $i, "Số Kiện: ".$sokien);
 
-        $sheet->getStyle('E' . $i . ':G' . $i)->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+        $sheet->getStyle('A' . $i . ':G' . $i)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 //Set header background color(optional).
-        $sheet->getStyle('E' . $i . ':G' . $i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('d2d3d1');
-        $sheet->getStyle('E' . $i . ':G' . $i)->getNumberFormat()->setFormatCode('#,##');
+        $sheet->getStyle('A' . $i . ':G' . $i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('d2d3d1');
+        $sheet->getStyle('A' . $i . ':G' . $i)->getNumberFormat()->setFormatCode('#,##');
         $sheet->getStyle('F13:F' . $i)->getNumberFormat()->setFormatCode('#,##');
         $sheet->getStyle('G13:G' . $i)->getNumberFormat()->setFormatCode('#,##');
         $sheet->getStyle('E13:E' . $i)->getNumberFormat()->setFormatCode('#,##0.00');

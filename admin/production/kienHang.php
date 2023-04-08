@@ -32,11 +32,13 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 <form name="search" class="form-inline ps-subscribe__form" method="POST"
                       enctype="multipart/form-data">
                     <div class="form-group">
-                        <input required style="margin-right: 20px; margin-bottom: 5px;" class="form-control input-large " name="ladingCode"
+                        <input required style="margin-right: 20px; margin-bottom: 5px;"
+                               class="form-control input-large " name="ladingCode"
                                type="text" value="" placeholder="Tìm theo mã vận đơn">
                     </div>
                     <div class="form-group">
-                        <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id" class="form-control custom-select " onchange="searchStatus()">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id"
+                                class="form-control custom-select " onchange="searchStatus()">
                             <option value="">Lọc theo trang thái</option>
                             <?php
                             $listStatus = $statusRepository->getAll();
@@ -49,7 +51,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         </select>
                     </div>
                     <div class="form-group">
-                        <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id" class="form-control custom-select " onchange="searchStatus()">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
+                                class="form-control custom-select " onchange="searchStatus()">
                             <option value="">Lọc theo khách hàng</option>
                             <?php
                             $listUser = $userRepository->getAll();
@@ -61,7 +64,9 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             ?>
                         </select>
                     </div>
-                    <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra Cứu</button>
+                    <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                        Cứu
+                    </button>
                     <a style="" href="kienHang.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
                 </form>
             </div>
@@ -106,14 +111,14 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
             }
             if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
                 $user_id = $_POST['user_id'];
-                $kienHangList = $kienhangRepository->findByUserId($user_id,$offset,$total_records_per_page);
+                $kienHangList = $kienhangRepository->findByUserId($user_id, $offset, $total_records_per_page);
             }
             $i = 1;
             foreach ($kienHangList as $kienHang) {
 
-                if(isset($kienHang )){
+                if (isset($kienHang)) {
                     $link_image = $kienhangRepository->getImage($kienHang['id'])->fetch_assoc();
-                    $typeP= $kienhangRepository ->getType($kienHang['order_id'])->fetch_assoc();
+                    $typeP = $kienhangRepository->getType($kienHang['order_id'])->fetch_assoc();
 //                    echo $typeP['type'];
                 }
                 ?>
@@ -148,8 +153,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     </td>
                     <td><?php echo $kienHang['name'] ?></td>
                     <td><img width="150px" height="150px"
-                             src="<?php if ( !empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
-                             if ( empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
+                             src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
+                             if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
                     <td style="color: blue"><?php echo $kienHang['ladingCode'] ?></td>
                     <td>
                         <?php
@@ -265,7 +270,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary" data-id="">
+                        <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary"
+                                data-id="">
                             Lưu
                         </button>
                         <button id="btnSaveChangeStautus" name="khotq" type="submit" class="btn btn-success" data-id="">
@@ -285,59 +291,62 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
         </div>
     </div>
 </div>
-                <?php
-                $urlStr = "kienHang.php?id=" . $_POST['idKH'];
+<?php
+if (!empty($_POST['idKH'])) {
+    $urlStr = "kienHang.php?id=" . $_POST['idKH'];
+}
 
-                if (isset($_POST['submit'])) {
-                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
-                    echo "<script>window.location.href='$urlStr';</script>";
-                }
-                if (isset($_POST['khotq'])) {
-                    if ($_POST['status_id'] == 1) {
-                        $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
-                        echo "<script>window.location.href='$urlStr';</script>";
-                    } else {
-                        echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
-                    }
+if (isset($_POST['submit'])) {
+    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
+    echo "<script>window.location.href='$urlStr';</script>";
+}
+if (isset($_POST['khotq'])) {
+    if ($_POST['status_id'] == 1) {
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 2, $_POST['updateDateStatus']);
+        $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
+        $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 3, $tempDate);
+        echo "<script>window.location.href='$urlStr';</script>";
+    } else {
+        echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
+    }
 
-                }
-                if (isset($_POST['khovn'])) {
-                    if ($_POST['status_id'] == 2 || $_POST['status_id'] == 3) {
-                        $date = new DateTime();
-                        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
+}
+if (isset($_POST['khovn'])) {
+    if ($_POST['status_id'] == 2 || $_POST['status_id'] == 3) {
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
 //                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 //                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate); update đang giao hàng
-                        echo "<script>window.location.href='$urlStr';</script>";
-                    } else {
-                        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
-                    }
+        echo "<script>window.location.href='$urlStr';</script>";
+    } else {
+        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!');window.location.href='$urlStr';</script>";
+    }
+}
+?>
 
-                }
-                ?>
+<?php
+if (isset($_POST['dagiao'])) {
+    if ($_POST['status_id'] == 4 || $_POST['status_id'] == 5) {
+        $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
+        $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
+        echo "<script>window.location.href='$urlStr';</script>";
+    } else {
+        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
+    }
+}
+?>
+<?php
+if (isset($_POST['resetStatus'])) {
+    $kienhangRepository->resetStatus($_POST['idKH']);
+    echo "<script>window.location.href='$urlStr';</script>";
+}
+?>
 
-                <?php
-                if (isset($_POST['dagiao'])) {
-                    if ($_POST['status_id'] == 4 || $_POST['status_id'] == 5) {
-                        $date = new DateTime();
-                        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
-                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
-                        echo "<script>window.location.href='$urlStr';</script>";
-                    } else {
-                        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!');window.location.href='$urlStr';</script>";
-                    }
-                }
-                ?>
-                <?php
-                if (isset($_POST['resetStatus'])) {
-                    $kienhangRepository->resetStatus($_POST['idKH']);
-                    echo "<script>window.location.href='$urlStr';</script>";
-                }
-                ?>
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </div>
 
 <script>
@@ -388,7 +397,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
         return new Date().getTimezoneOffset() * -60 * 1000;
     }
 
-    function searchStatus(){
+    function searchStatus() {
         document.search.submit();
     }
 </script>

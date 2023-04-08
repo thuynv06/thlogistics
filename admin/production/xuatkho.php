@@ -84,7 +84,7 @@ if (isset($_POST['xuatkho'])) {
                         <div class="form-group col-md-12">
                             <label for="exampleFormControlTextarea1">Nhập List MVĐ</label>
                             <textarea class="form-control" name="mvdlst" id="exampleFormControlTextarea1"
-                                      rows="10"></textarea>
+                                      rows="15"></textarea>
                         </div>
                     </div>
                     <div class="form-row">

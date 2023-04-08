@@ -240,13 +240,13 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
 //        mysqli_query($conn, $sql);
 //    }
 
-    public function updatekhoTQNhan($id)
+    public function updatekhoTQNhan($id,$date)
     {
         global $conn;
-        $date1 = new DateTime();
-        $string2 = date_format($date1,"Y-m-d\TH:i:s");
-        date_add($date1,date_interval_create_from_date_string("2 days"));
-        $string3 = date_format($date1,"Y-m-d\TH:i:s");
+//        $date1 = new DateTime();
+        $string2 = date_format($date,"Y-m-d\TH:i:s");
+        date_add($date,date_interval_create_from_date_string("2 days"));
+        $string3 = date_format($date,"Y-m-d\TH:i:s");
 
         $sql = "update kienhang set status=3,
                     listTimeStatus =JSON_SET (listTimeStatus,

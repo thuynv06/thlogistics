@@ -37,9 +37,9 @@ $th1688 = $th1688Repository->getConfig();
                 if ($result) {
 //                    $dategdanggiao = $date->add(new DateInterval('P1D'))->format("Y-m-d\TH:i:s");
 //                    $kienhangRepository->updateByLadingCode($_POST['ladingCode'], 5, $dategdanggiao);
-                 
-                  
-                     echo "success";
+
+//                    echo "<script>document.getElementById.("socan").autofocus;</script>";
+//                     echo "success";
                 } else {
                     echo "cập nhập lỗi";
                 }
@@ -176,7 +176,7 @@ $th1688 = $th1688Repository->getConfig();
 				</div>
 				<div class="form-group">
 					<input autofocus required style=""
-						class="form-control input-large " name="nhapsocan" type="number"
+						class="form-control input-large " id="socan" name="nhapsocan" type="number"
 						value="" step="0.01" placeholder="nhập số cân">
 				</div>
 				<button class="btn-sm btn-primary" type="submit" 

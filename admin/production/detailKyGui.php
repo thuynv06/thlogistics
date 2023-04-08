@@ -602,7 +602,10 @@ if (isset($_POST['xuatphieu'])) {
                             }
                             if (isset($_POST['khotq'])) {
                                 if ($_POST['status_id'] == 1) {
-                                    $kienhangRepository->updatekhoTQNhan($_POST['idKH']);
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 2, $_POST['updateDateStatus']);
+                                    $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
+                                    $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 3,$tempDate );
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
                                     echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
@@ -611,9 +614,9 @@ if (isset($_POST['xuatphieu'])) {
                             }
                             if (isset($_POST['khovn'])) {
                                 if ($_POST['status_id'] == 3 || $_POST['status_id'] == 2) {
-                                    $date = new DateTime();
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
-                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+//                                    $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
+//                                    $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 //                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
@@ -624,9 +627,16 @@ if (isset($_POST['xuatphieu'])) {
                             ?>
 
                             <?php
-                            if (isset($_POST['submitAll'])) {
-                                $kienhangRepository->updateStatusAll($_POST['idKH']);
-                                echo "<script>window.location.href='$urlStr';</script>";
+                            if (isset($_POST['dagiao'])) {
+                                if ($_POST['status_id'] == 4 || $_POST['status_id'] == 5) {
+                                    $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
+                                    $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
+                                    echo "<script>window.location.href='$urlStr';</script>";
+                                } else {
+                                    echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
+                                }
                             }
                             ?>
                             <?php
