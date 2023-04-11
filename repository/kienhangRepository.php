@@ -183,12 +183,12 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
         return mysqli_query($conn, $sql)->fetch_assoc();;
     }
 
-    public function update($id, $name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note, $linksp, $date,$shiptq,$magiamgia,$kichthuoc,$color)
+    public function update($id,$phivc,$name, $ladingCode, $amount, $shippingWay, $size, $status, $price, $user_id, $note, $linksp, $date,$shiptq,$magiamgia,$kichthuoc,$color)
     {
 //        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql = "update kienhang set name='$name',ladingCode='$ladingCode',amount=$amount,shippingWay='$shippingWay',
-                    size=$size,status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',
+                    size=$size,status=$status,price=$price,user_id=$user_id,note='$note',linksp='$linksp',feetransport=$phivc,
                     listTimeStatus =JSON_SET (listTimeStatus,'\$.\"$status\"','$date') ,shiptq=$shiptq,magiamgia=$magiamgia,kichthuoc='$kichthuoc',color='$color'
                     where id=$id ";
 //        echo $sql;

@@ -5,7 +5,7 @@ if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
 } else {
     $page_no = 1;
 }
-$total_records_per_page = 10;
+$total_records_per_page = 20;
 $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -241,12 +241,12 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         </div>
                         <div class="form-group">
                             <label>Mã Kiện Hàng</label>
-                            <input required value="" minlength="5" maxlength="250" name="orderCode" type="text"
+                            <input required value="" minlength="5" maxlength="250" name="makienhang" type="text"
                                    class="form-control" disabled>
                         </div>
                         <div class="form-group">
                             <label>Mã Vận Đơn</label>
-                            <input required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
+                            <input required value="" minlength="5" maxlength="250" name="mavandon" type="text"
                                    class="form-control">
                         </div>
                         <div class="form-group">
@@ -297,15 +297,15 @@ if (!empty($_POST['idKH'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
+    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], $_POST['status_id'], $_POST['updateDateStatus']);
     echo "<script>window.location.href='$urlStr';</script>";
 }
 if (isset($_POST['khotq'])) {
     if ($_POST['status_id'] == 1) {
-        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 2, $_POST['updateDateStatus']);
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 2, $_POST['updateDateStatus']);
         $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
         $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
-        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 3, $tempDate);
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 3, $tempDate);
         echo "<script>window.location.href='$urlStr';</script>";
     } else {
         echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
@@ -314,7 +314,7 @@ if (isset($_POST['khotq'])) {
 }
 if (isset($_POST['khovn'])) {
     if ($_POST['status_id'] == 2 || $_POST['status_id'] == 3) {
-        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 4, $_POST['updateDateStatus']);
 //                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 //                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate); update đang giao hàng
         echo "<script>window.location.href='$urlStr';</script>";
@@ -328,9 +328,9 @@ if (isset($_POST['khovn'])) {
 if (isset($_POST['dagiao'])) {
     if ($_POST['status_id'] == 4 || $_POST['status_id'] == 5) {
         $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
-        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 5, $_POST['updateDateStatus']);
         $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
-        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
+        $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 6, $tempDate);
         echo "<script>window.location.href='$urlStr';</script>";
     } else {
         echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
@@ -366,8 +366,8 @@ if (isset($_POST['resetStatus'])) {
                 success: function (response) {//once the request successfully process to the server side it will return result here
                     response = JSON.parse(response);
                     $("#edit-form [name=\"idKH\"]").val(response.id);
-                    $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
-                    $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
+                    $("#edit-form [name=\"makienhang\"]").val(response.orderCode);
+                    $("#edit-form [name=\"mavandon\"]").val(response.ladingCode);
                     $("#edit-form [name=\"status_id\"]").val(response.status);
                 }
             });
