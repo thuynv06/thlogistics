@@ -456,7 +456,6 @@ if (isset($_POST['xuatphieu'])) {
                     </tr>
                     <?php
                     $arr = array();
-
                     if (isset($_POST['mavandon']) && !empty($_POST['mavandon'])) {
 //                        echo "tim mvd";
                         $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['mavandon'], $_GET['id']);
@@ -472,7 +471,12 @@ if (isset($_POST['xuatphieu'])) {
                             array_push($arr, $p['id']);
                         }
 //                        echo(print_r($arr, true));
-                    } else {
+                    } else if (!empty($_GET['mvd'])) {
+                       $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_GET['mvd'], $_GET['id']);
+                        foreach ($tempList as $p) {
+                            array_push($arr, $p['id']);
+                        }
+                    }else{
 //                        echo "macdinh";
                         $order = $orderRepository->getById($_GET['id']);
                         $arr = unserialize($order['listsproduct']);// convert to array;
@@ -615,10 +619,11 @@ if (isset($_POST['xuatphieu'])) {
 
 
                             <?php
-                            $urlStr = "detailOrder.php?id=" . $_GET['id'];
+
 
                             if (isset($_POST['submit'])) {
                                 $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
+                                $urlStr = "detailOrder.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
                                 echo "<script>window.location.href='$urlStr';</script>";
                             }
                             if (isset($_POST['khotq'])) {
@@ -627,7 +632,7 @@ if (isset($_POST['xuatphieu'])) {
                                     $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
                                     $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 3,$tempDate );
-
+                                    $urlStr = "detailOrder.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
 //                                    $kienhangRepository->updatekhoTQNhan($_POST['idKH'],$_POST['updateDateStatus']);
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
@@ -640,6 +645,8 @@ if (isset($_POST['xuatphieu'])) {
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 4, $_POST['updateDateStatus']);
 //                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 //                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate); update đang giao hàng
+                                    $urlStr = "detailOrder.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
+
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
                                     echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!');window.location.href='$urlStr';</script>";
@@ -655,6 +662,7 @@ if (isset($_POST['xuatphieu'])) {
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
                                     $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
+                                    $urlStr = "detailOrder.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
                                     echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
@@ -664,6 +672,7 @@ if (isset($_POST['xuatphieu'])) {
                             <?php
                             if (isset($_POST['resetStatus'])) {
                                 $kienhangRepository->resetStatus($_POST['idKH']);
+                                $urlStr = "detailOrder.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
                                 echo "<script>window.location.href='$urlStr';</script>";
                             }
                             ?>

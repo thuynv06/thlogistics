@@ -101,7 +101,11 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 <th class="text-center" style="min-width:50px"></th>
             </tr>
             <?php
-            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+            if (!empty($_GET['mvd'])){
+                $ladingCode = $_GET['mvd'];
+                $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
+            }
+            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode']) ) {
                 $ladingCode = $_POST['ladingCode'];
                 $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
             }
@@ -118,7 +122,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
 
                 if (isset($kienHang)) {
                     $link_image = $kienhangRepository->getImage($kienHang['id'])->fetch_assoc();
-                    $typeP = $kienhangRepository->getType($kienHang['order_id'])->fetch_assoc();
+//                    $typeP = $kienhangRepository->getType($kienHang['order_id'])->fetch_assoc();
 //                    echo $typeP['type'];
                 }
                 ?>
@@ -292,9 +296,9 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
     </div>
 </div>
 <?php
-if (!empty($_POST['idKH'])) {
-    $urlStr = "kienHang.php?id=" . $_POST['idKH'];
-}
+
+
+
 
 if (isset($_POST['submit'])) {
     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], $_POST['status_id'], $_POST['updateDateStatus']);
@@ -306,6 +310,7 @@ if (isset($_POST['khotq'])) {
         $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
         $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
         $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 3, $tempDate);
+        $urlStr = "kienHang.php?mvd=".$_POST['mavandon'];
         echo "<script>window.location.href='$urlStr';</script>";
     } else {
         echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
@@ -317,9 +322,10 @@ if (isset($_POST['khovn'])) {
         $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 4, $_POST['updateDateStatus']);
 //                                    $tempDate = date_add($date, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 //                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate); update đang giao hàng
+        $urlStr = "kienHang.php?mvd=".$_POST['mavandon'];
         echo "<script>window.location.href='$urlStr';</script>";
     } else {
-        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!');window.location.href='$urlStr';</script>";
+        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho VN hoặc đang VC!')</script>";
     }
 }
 ?>
@@ -331,15 +337,17 @@ if (isset($_POST['dagiao'])) {
         $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 5, $_POST['updateDateStatus']);
         $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
         $kienhangRepository->updateStatus($_POST['idKH'], $_POST['mavandon'], 6, $tempDate);
+        $urlStr = "kienHang.php?mvd=".$_POST['mavandon'];
         echo "<script>window.location.href='$urlStr';</script>";
     } else {
-        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
+        echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!')</script>";
     }
 }
 ?>
 <?php
 if (isset($_POST['resetStatus'])) {
     $kienhangRepository->resetStatus($_POST['idKH']);
+    $urlStr = "kienHang.php?mvd=".$_POST['mavandon'];
     echo "<script>window.location.href='$urlStr';</script>";
 }
 ?>
