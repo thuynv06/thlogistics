@@ -795,7 +795,7 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
                     <div class="form-group">
                         <label>Số KLG</label>
-                        <input  value="00" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
+                        <input  autofocus value="00" minlength="1" maxlength="250" name="socan" type="number" step="0.01"
                                class="form-control" placeholder="Nhập số cân">
                     </div>
                     <div class="form-group">

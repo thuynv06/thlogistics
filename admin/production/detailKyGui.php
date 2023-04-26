@@ -118,7 +118,7 @@ if (isset($_POST['xuatphieu'])) {
                                        name="orderId" type="text" class="form-control"></td>
                         </tr>
                         <tr style="min-width:100px">
-                            <th> Mã Đơn </th>
+                            <th> Mã Đơn</th>
                             <td><input readonly value="<?php echo $order['code'] ?>"
                                        name="code" type="text" class="form-control"></td>
                         </tr>
@@ -407,6 +407,14 @@ if (isset($_POST['xuatphieu'])) {
                                                                         onclick="openModalThemSanPham()">
                 Thêm Sản Phẩm
             </button>
+            <button <?php if ($order['status'] == 1) echo "disabled" ?> type="button" id="modalThemNhieuSP"
+                                                                        class="btn btn-warning btn-sm"
+                                                                        data-toggle="modal"
+                                                                        data-target="#modalKienHangs"
+                                                                        data-id="<?php echo $order['id'] ?>"
+                                                                        onclick="openModalThemKienHangs()">
+                Thêm Nhiều SP
+            </button>
             <div class="table-responsive">
                 <table id="tableShoe">
                     <tr>
@@ -452,14 +460,14 @@ if (isset($_POST['xuatphieu'])) {
                         foreach ($tempList as $p) {
                             array_push($arr, $p['id']);
                         }
-                    }else{
+                    } else {
 //                        echo "macdinh";
                         $order = $orderRepository->getById($_GET['id']);
                         $arr = unserialize($order['listsproduct']);// convert to array;
 //                        echo(print_r($arr, true));
                     }
                     //                            echo(print_r($arr_unserialize1, true));
-//                    echo "-----";
+                    //                    echo "-----";
                     if (!empty($arr)) {
                         $i = 1;
 //                        echo(print_r($arr, true));
@@ -602,7 +610,7 @@ if (isset($_POST['xuatphieu'])) {
 
                             if (isset($_POST['submit'])) {
                                 $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], $_POST['status_id'], $_POST['updateDateStatus']);
-                                $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];;
+                                $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];;
                                 echo "<script>window.location.href='$urlStr';</script>";
                             }
                             if (isset($_POST['khotq'])) {
@@ -610,8 +618,8 @@ if (isset($_POST['xuatphieu'])) {
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 2, $_POST['updateDateStatus']);
                                     $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
                                     $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
-                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 3,$tempDate );
-                                    $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];;
+                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 3, $tempDate);
+                                    $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];;
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
                                     echo "<script>alert('Chỉ update khi hàng ở trạng thái shop gửi!');window.location.href='$urlStr';</script>";
@@ -624,7 +632,7 @@ if (isset($_POST['xuatphieu'])) {
 //                                    $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
 //                                    $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
 //                                    $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $tempDate);
-                                    $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];;
+                                    $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];;
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
                                     echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
@@ -640,7 +648,7 @@ if (isset($_POST['xuatphieu'])) {
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 5, $_POST['updateDateStatus']);
                                     $tempDate = date_add($tempDate, date_interval_create_from_date_string("1 days"))->format("Y-m-d\TH:i:s");
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 6, $tempDate);
-                                    $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];;
+                                    $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];;
                                     echo "<script>window.location.href='$urlStr';</script>";
                                 } else {
                                     echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!');window.location.href='$urlStr';</script>";
@@ -650,7 +658,7 @@ if (isset($_POST['xuatphieu'])) {
                             <?php
                             if (isset($_POST['resetStatus'])) {
                                 $kienhangRepository->resetStatus($_POST['idKH']);
-                                $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];;
+                                $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];;
                                 echo "<script>window.location.href='$urlStr';</script>";
                             }
                             ?>
@@ -801,10 +809,9 @@ if (isset($_POST['xuatphieu'])) {
                     $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
                     $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
 
-                    $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
+                    $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];
                     echo "<script>window.location.href='$urlStr';</script>";
                 }
-
                 ?>
             </form>
         </div>
@@ -909,6 +916,7 @@ if (isset($_POST['xuatphieu'])) {
                         <input value="" name="updateDateStatus" type="datetime-local" step="1"
                                class="form-control" id="timeadd">
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -980,7 +988,99 @@ if (isset($_POST['xuatphieu'])) {
         </div>
     </div>
 </div>
+</div>
+<div id="modalKienHangs" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm Sản Phẩm </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">X</span></button>
+            </div>
+            <form action="" id="addProducts" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Mã Đơn Hàng</label>
+                        <input class="form-control" name="madonhang" id="madonhang" type="number" value="" readonly>
+                    </div>
+                    <div class=" form-group ">
+                        <label>Ngày shop gửi hàng</label>
+                        <input value="" name="startdate" type="datetime-local" step="1"
+                               class="form-control" id="sdate">
+                    </div>
+                    <div class="form-group ">
+                        <label>Ngày Kho TQ Nhận </label>
+                        <input value="" name="khotqnhan" type="datetime-local" step="1"
+                               class="form-control" id="datetq">
+                    </div>
+                    <div class="form-group ">
+                        <label>Nhập List MVĐ</label>
+                        <textarea class="form-control" name="listMVD" id=""
+                                  rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="xzczxv" name="themnhsanpham" type="submit" class="btn btn-primary" data-id="">
+                        Thêm Sản Phẩm
+                    </button>
+                </div>
+            </form>
+            <?php
 
+            if (isset($_POST['themnhsanpham'])) {
+                $detail = $_POST['listMVD'];
+                if (!empty($detail)) {
+                    // Xử lý khi người dùng chưa nhập dữ liệu
+//                        echo $_POST['listMVD'];
+//                        echo nl2br($_POST['listMVD']);
+                    $array = preg_split('/\n|\r\n/', $_POST['listMVD']);
+
+//                    $orderIds = $_POST['madonhang'];
+                    $orderCurrent= $orderRepository->getById($_POST['madonhang']);
+                    $arrayList = $orderRepository->getListProductById($_POST['madonhang']);
+                    $listproduct = unserialize($arrayList['listsproduct']);
+                    if (!empty($_POST['startdate'])) {
+//                    $startdate = $_POST['startdate'];
+                        $startdate = date("Y-m-d\TH:i:s", strtotime($_POST['startdate']));
+//                        echo $startdate;
+                    }
+                    if (!empty($_POST['khotqnhan'])) {
+//                    $startdate = $_POST['startdate'];
+                        $ngayTQNHAN = date("Y-m-d\TH:i:s", strtotime($_POST['khotqnhan']));
+//                        echo $ngayTQNHAN;
+                    }
+                    $orderId = $_POST['madonhang'];
+//                    $orderId = $orderRepository->createOrder($orderCurrent['user_id'], $newCode, null, 0, 0, 28000, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+//                        $dateCreadted = $_POST['startdate']->format("Y-m-d\TH:i:s");
+                    $myObj = new stdClass();
+                    $myObj->{1} = "$startdate";
+                    $listStatusJSON = json_encode($myObj);
+//                    $listproduct = array();
+                    foreach ($array as $mavd) {
+//                            $o = $orderRepository->getById($orderId);
+//                            $date = new DateTime();
+                        $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $mavd, null, $mavd, 1, "BT/HN1", 0, 28000, 1, 0, 0, $orderCurrent['user_id'], null, 0, $startdate, $listStatusJSON, 0, 0, 0, 0);
+//                            $arr_unserialize1 = unserialize($arrayList['listsproduct']);
+                        array_push($listproduct, $kienhang_id);
+                        $kienhangRepository->updateMaKien($kienhang_id);
+                        if (!empty($ngayTQNHAN)) {
+                            $kienhangRepository->updateStatus($kienhang_id, $mavd, 2, $ngayTQNHAN);
+                        }
+                    }
+////                        echo print_r($array,true)  ;
+                    $orderRepository->updatedListProductById($orderId, $listproduct);
+
+                    $urlStr = "detailKyGui.php?id=" . $orderId;
+                    echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
+
+                }
+            }
+
+            ?>
+        </div>
+    </div>
+</div>
 <?php include 'functionVanDon.php' ?>
 <script>
     function get() {
@@ -1014,7 +1114,7 @@ if (isset($_POST['xuatphieu'])) {
     }
 
     function openModalThemSanPham() {
-        var id = $(this).attr('data-id');
+        // var id = $(this).attr('data-id');
 
         $(document).delegate("[data-target='#modalThemSanPham']", "click", function () {
             var id = $(this).attr('data-id');
@@ -1022,7 +1122,17 @@ if (isset($_POST['xuatphieu'])) {
         });
         _getTimeZoneOffsetInMs();
         document.getElementById('timeadd').value = timestampToDatetimeInputString(Date.now());
+    }
 
+    function openModalThemKienHangs() {
+
+        $(document).delegate("[data-target='#modalKienHangs']", "click", function () {
+            var id = $(this).attr('data-id');
+            document.getElementById('madonhang').value = id;
+        });
+        _getTimeZoneOffsetInMs();
+        document.getElementById('sdate').value = timestampToDatetimeInputString(Date.now());
+        document.getElementById('datetq').value = timestampToDatetimeInputString(Date.now());
     }
 
 
