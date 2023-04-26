@@ -801,7 +801,7 @@ if (isset($_POST['xuatphieu'])) {
                     $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
                     $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
 
-                    $urlStr = "detailKyGui.php?id=" . $_GET['id'];
+                    $urlStr = "detailKyGui.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];
                     echo "<script>window.location.href='$urlStr';</script>";
                 }
 

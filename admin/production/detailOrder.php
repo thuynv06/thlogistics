@@ -627,7 +627,7 @@ if (isset($_POST['xuatphieu'])) {
                                 echo "<script>window.location.href='$urlStr';</script>";
                             }
                             if (isset($_POST['khotq'])) {
-                                if ($_POST['status_id'] == 1) {
+                                if ($_POST['status_id'] < 5) {
                                     $kienhangRepository->updateStatus($_POST['idKH'], $_POST['ladingCode'], 2, $_POST['updateDateStatus']);
                                     $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['updateDateStatus']);
                                     $tempDate = date_add($tempDate, date_interval_create_from_date_string("2 days"))->format("Y-m-d\TH:i:s");
@@ -834,7 +834,7 @@ if (isset($_POST['xuatphieu'])) {
                     $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
                     $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
 
-                    $urlStr = "detailOrder.php?id=" . $_GET['id'];
+                    $urlStr = "detailOrder.php?id=" . $_GET['id']."&mvd=".$_POST['ladingCode'];;
                     echo "<script>window.location.href='$urlStr';</script>";
                 }
 

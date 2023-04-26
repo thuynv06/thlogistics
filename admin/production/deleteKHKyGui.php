@@ -11,7 +11,7 @@
     $arr_unserialize1 = array_diff($arr_unserialize1,[ $_GET['id']]);
 //    echo(print_r($arr_unserialize1, true));
 
-//    $khRepository->deleteById($_GET['id']);
+    $khRepository->deleteById($_GET['id']);
     $urlStr = "detailKyGui.php?id=" . $_GET['orderId'];
     $orderRepository->updatedListProductById($_GET['orderId'],$arr_unserialize1);
 
