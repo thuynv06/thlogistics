@@ -41,8 +41,11 @@
         $checkCookie = Auth::loginWithCookie();
         require_once("repository/kienhangRepository.php");
         require_once("repository/orderRepository.php");
+        require_once("repository/statusRepository.php");
+
         $kienhangRepository = new KienHangRepository();
         $orderRepository = new OrderRepository();
+        $statusRepository = new StatusRepository();
         $order = $orderRepository->getById($_GET['id']);
         $kienHangList = null;
         function product_price($priceFloat)
@@ -201,6 +204,33 @@
             </div>
             <div class="row">
                 <h3>Danh Sách Sản Phẩm</h3>
+
+                    <form name="search" class="form-inline ps-subscribe__form" method="POST"
+                          enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input required style="margin-right: 20px; margin-bottom: 5px;"
+                                   class="form-control input-large " name="mavandon"
+                                   type="text" value="" placeholder="Nhập Mã Vận Đơn">
+                        </div>
+                        <div class="form-group">
+                            <select style="margin-right: 20px; margin-bottom: 5px;" name="trangthai"
+                                    class="form-select custom-select" onchange="searchStatus()">
+                                <?php
+                                $listStatus = $statusRepository->getAll();
+                                foreach ($listStatus as $status) {
+                                    ?>
+                                    <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">
+                            Tra Cứu
+                        </button>
+                        <a style="" href="detailOrder.php?id=<?php echo $_GET['id']?>" class="btn btn-primary btn-large btn-th">RELOAD</a>
+                    </form>
+
                 <form method="POST" enctype="multipart/form-data">
                     <!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
                     <!--                            role="button">Xuất Phiếu-->
@@ -351,6 +381,7 @@
                         </table>
                         <div>
                 </form>
+
             </div>
         </div>
 

@@ -11,7 +11,7 @@ if (isset($_POST['xuatphieu'])) {
 
 ?>
 
-<div class="right_col" role="main" style="font-size: 10px;">
+<div class="right_col" role="main" style="font-size: 11px;">
     <a class="btn btn-primary" href="vandon.php" role="button">Trở Về</a>
     <div class="row" style="margin-left: 0px;">
         <form method="POST" enctype="multipart/form-data">
@@ -399,7 +399,7 @@ if (isset($_POST['xuatphieu'])) {
                 </div>
                 <div class="form-group">
                     <select style="margin-right: 20px; margin-bottom: 5px;" name="trangthai"
-                            class="form-select custom-select " onchange="searchStatus()">
+                            class="form-select custom-select" onchange="searchStatus()">
                         <?php
                         $listStatus = $statusRepository->getAll();
                         foreach ($listStatus as $status) {
@@ -438,7 +438,7 @@ if (isset($_POST['xuatphieu'])) {
                                                                               id="selectall"/>All
                         </th>
                         <th class="text-center" style="min-width:95px;">Mã Kiện</th>
-                        <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
+                        <th class="text-center" style="min-width:130px">Tên Kiện Hàng</th>
                         <th class="text-center" style="min-width:95px;">Ảnh</th>
                         <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
                         <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
@@ -446,8 +446,8 @@ if (isset($_POST['xuatphieu'])) {
                         <th class="text-center" style="min-width:50px">Số Lượng</th>
                         <th class="text-center" style="min-width:50px">Cân nặng</th>
                         <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
-                        <th class="text-center" style="min-width:100px">Lộ Trình</th>
-                        <th class="text-center" style="min-width:120px">Chi tiết</th>
+                        <th class="text-center" style="min-width:90px">Lộ Trình</th>
+                        <th class="text-center" style="min-width:130px">Chi tiết</th>
                         <th class="text-center" style="min-width:50px">Link SP</th>
                         <th class="text-center" style="min-width:50px">Ghi Chú</th>
                         <th class="text-center" style="min-width:50px"></th>
@@ -530,7 +530,7 @@ if (isset($_POST['xuatphieu'])) {
                                 <td><img width="150px" height="150px"
                                          src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
                                          if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
-                                <td style="font-weight: bold"><?php echo $product['ladingCode'] ?></td>
+                                <td style="font-weight: bold;color: blue"><?php echo $product['ladingCode'] ?></td>
                                 <!--                        <td>-->
                                 <!--                            --><?php
                                 //                            $listUser = $userRepository->getAll();
@@ -545,11 +545,11 @@ if (isset($_POST['xuatphieu'])) {
                                 //                            }
                                 //                            ?>
                                 <!--                        </td>-->
-                                <td><p style="color:red"><?php echo $product['price'] ?><span> &#165;</span></p>
-                                    <p style="color:green"><?php echo $product['gianhap'] ?><span> &#165;</span></p>
+                                <td><p style="color:red;font-weight: 700"><?php echo $product['price'] ?><span> &#165;</span></p>
+                                    <p style="color:green;font-weight: 700"><?php echo $product['gianhap'] ?><span> &#165;</span></p>
                                 </td>
                                 <td><?php echo $product['amount'] ?></td>
-                                <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
+                                <td><p style="font-weight: 700"><?php echo $product['size'] ?> <span>/Kg</span></p>
                                     <button <?php if ($order['status']==1) echo "disabled" ?> type="button" id="modalUpdateS" class="btn-sm btn-primary "
                                             data-toggle="modal"
                                             data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
@@ -562,9 +562,9 @@ if (isset($_POST['xuatphieu'])) {
                                     <ul style="text-align: left ;">
                                         <li><p class="fix-status">Shop Gửi</p></li>
                                         <li><p class="fix-status">TQ Nhận</p></li>
-                                        <li><p class="fix-status">Vận chuyển</p></li>
+                                        <li><p class="fix-status">XuấtKho TQ</p></li>
                                         <li><p class="fix-status">NhậpKho VN</p></li>
-                                        <li><p class="fix-status">Đang giao</p></li>
+<!--                                        <li><p class="fix-status">Đang giao</p></li>-->
                                         <li><p class="fix-status">Đã giao </p></li>
                                     </ul>
                                 </td>
@@ -575,7 +575,7 @@ if (isset($_POST['xuatphieu'])) {
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
-                                            <li><p class="fix-status">............</p></li>
+<!--                                            <li><p class="fix-status">............</p></li>-->
                                             <li><p class="fix-status">............</p></li>
                                         </ul><?php
                                     } else { ?>
@@ -591,9 +591,9 @@ if (isset($_POST['xuatphieu'])) {
                                             <li>
                                                 <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
                                             </li>
-                                            <li>
-                                                <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
-                                            </li>
+<!--                                            <li>-->
+<!--                                                <p class="fix-status">--><?php //if (!empty($obj->{5})) echo $obj->{5}; ?><!--</p>-->
+<!--                                            </li>-->
                                             <li>
                                                 <p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
                                             </li>
@@ -770,28 +770,40 @@ if (isset($_POST['xuatphieu'])) {
                         <label>ID</label>
                         <input class="form-control" name="idKH" type="number" value="" readonly>
                     </div>
-                    <div class="form-group">
-                        <label>Mã Kiện Hàng</label>
-                        <input required value="" minlength="5" maxlength="250" name="orderCode" type="text"
-                               class="form-control" disabled>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>Mã Kiện Hàng</label>-->
+<!--                        <input required value="" minlength="5" maxlength="250" name="orderCode" type="text"-->
+<!--                               class="form-control" disabled>-->
+<!--                    </div>-->
                     <div class="form-group">
                         <label>Mã Vận Đơn</label>
                         <input readonly required value="" minlength="5" maxlength="250" name="ladingCode" type="text"
                                class="form-control">
                     </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>Status</label>-->
+<!--                        <select readonly name="status_id" class="form-control">-->
+<!--                            --><?php
+//                            $listStatus = $statusRepository->getAll();
+//                            foreach ($listStatus as $status) {
+//                                ?>
+<!--                                <option value="--><?php //echo $status['status_id']; ?><!--">--><?php //echo $status['name']; ?><!--</option>-->
+<!--                                --><?php
+//                            }
+//                            ?>
+<!--                        </select>-->
+<!--                    </div>-->
                     <div class="form-group">
-                        <label>Status</label>
-                        <select readonly name="status_id" class="form-control">
-                            <?php
-                            $listStatus = $statusRepository->getAll();
-                            foreach ($listStatus as $status) {
-                                ?>
-                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
+                        <label class="radio-container m-r-45">Hàng TMDT
+                            <input id="tmdt" onclick="checkButton()" type="radio" value=1 name="type">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-container">Hàng KM
+                            <input id="km" onclick="checkButton()" type="radio" value=0 name="type">
+                            <span class="checkmark"></span>
+                        </label>
+                        <input  value="" minlength="5" maxlength="250" id="giavc" name="giavchuyen" type="number"
+                                class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Số KLG</label>
@@ -823,14 +835,17 @@ if (isset($_POST['xuatphieu'])) {
                     $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
                     $order = $orderRepository->getById($p['order_id']);
                     $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $_POST['gianhap'], $_POST['giamgiacuahang']);
+                    $kienhangRepository->updateGiaVC($_POST['idKH'],$_POST['giavchuyen']);
                     $tongcan = 0;
+                    $tienvanchuyen=0;
                     if (!empty($arr_unserialize1)) {
                         foreach ($arr_unserialize1 as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
                             $tongcan += $product['size'];
+                            $tienvanchuyen += $product['size'] * $product['feetransport'];
                         }
                     }
-                    $tienvanchuyen = $tongcan * $order['giavanchuyen'];
+//                    $tienvanchuyen = $tongcan * $order['giavanchuyen'];
                     $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
                     $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
 
@@ -1084,11 +1099,18 @@ ob_end_flush();
                 success: function (response) {//once the request successfully process to the server side it will return result here
                     response = JSON.parse(response);
                     $("#edit-form [name=\"idKH\"]").val(response.id);
-                    $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
+                    // $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
                     $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
                     $("#edit-form [name=\"socan\"]").val(response.size);
                     $("#edit-form [name=\"gianhap\"]").val(response.gianhap);
                     $("#edit-form [name=\"giamgiacuahang\"]").val(response.giamgiacuahang);
+                    $("#edit-form [name=\"giavchuyen\"]").val(response.feetransport);
+
+                    if (response.feetransport == 28000){
+                        document.getElementById('tmdt').checked=true;
+                    }else{
+                        document.getElementById('km').checked=true;
+                    }
                 }
             });
         });
@@ -1143,6 +1165,15 @@ ob_end_flush();
         }
 
 
+    }
+    function checkButton() {
+        if (document.getElementById('tmdt').checked) {
+            document.getElementById('giavc').value = "28000" ;
+
+        }
+        if (document.getElementById('km').checked) {
+            document.getElementById('giavc').value = "33000";
+        }
     }
 
     // document.getElementById('enddate').value = timestampToDatetimeInputString(Date.now());

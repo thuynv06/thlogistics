@@ -53,6 +53,7 @@ function product_price($priceFloat)
             <div class="titleTH">
                 <h3 style="font-weight: 700;">DANH SÁCH ĐƠN HÀNG</h3>
                 <img src="images/devider.png">
+
             </div>
             <div class="table-responsive">
                 <table id="tableShoeIndex">

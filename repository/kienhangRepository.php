@@ -278,6 +278,13 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
 //        echo $sql;
         mysqli_query($conn, $sql);
     }
+    public function updateGiaVC($id,$giavc)
+    {
+        global $conn;
+        $sql = "update kienhang set feetransport=$giavc where id=$id ";
+//        echo $sql;
+        mysqli_query($conn, $sql);
+    }
 
     public function addImage($id,$linkImage){
         global $conn;
@@ -289,7 +296,7 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
         $sql = "select link_image from product_image where product_id=$id ORDER BY `id` DESC LIMIT 1";
         return mysqli_query($conn,$sql);
     }
-    public function updateCanNang($id, $cannang,$gianhap,$giamgiacuahang)
+    public function updateCanNang($id,$cannang,$gianhap,$giamgiacuahang)
     {
 //        $s='$.'.'"'.$status.'"';
         global $conn;
@@ -305,7 +312,12 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
             }
         }
 
-//        echo $sql;
+        //echo $sql;
+        mysqli_query($conn, $sql);
+    }
+    public function updateCanKyGui($id,$cannang){
+        global $conn;
+        $sql = "update kienhang set size=$cannang where id=$id ";
         mysqli_query($conn, $sql);
     }
 

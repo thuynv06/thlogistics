@@ -14,7 +14,7 @@ if (isset($_POST['xuatphieu'])) {
 
 ?>
 
-<div class="right_col" role="main" style="font-size: 10px;">
+<div class="right_col" role="main" style="font-size: 12px;">
     <a class="btn btn-primary" href="kygui.php" role="button">Trở Về</a>
     <div class="row" style="margin-left: 0px;">
         <form method="POST" enctype="multipart/form-data">
@@ -423,14 +423,15 @@ if (isset($_POST['xuatphieu'])) {
                                                                               id="selectall"/>All
                         </th>
                         <th class="text-center" style="min-width:95px;">Mã Kiện</th>
-                        <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
-                        <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
+                        <th class="text-center" style="min-width:130px">Tên Kiện Hàng</th>
+                        <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
                         <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
                         <th class="text-center" style="min-width:50px">Số Lượng</th>
                         <th class="text-center" style="min-width:50px">Cân nặng</th>
+                        <th class="text-center" style="min-width:50px">Giá Vchuyen</th>
                         <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
-                        <th class="text-center" style="min-width:100px">Lộ Trình</th>
-                        <th class="text-center" style="min-width:120px">Chi tiết</th>
+                        <th class="text-center" style="min-width:120px">Lộ Trình</th>
+                        <th class="text-center" style="min-width:140px">Chi tiết</th>
                         <th class="text-center" style="min-width:50px">Link SP</th>
                         <th class="text-center" style="min-width:50px">Ghi Chú</th>
                         <th class="text-center" style="min-width:50px"></th>
@@ -529,7 +530,7 @@ if (isset($_POST['xuatphieu'])) {
                                 <!--                        </td>-->
 
                                 <td><?php echo $product['amount'] ?></td>
-                                <td><p><?php echo $product['size'] ?> <span>/Kg</span></p>
+                                <td><p style="font-weight: 700"><?php echo $product['size'] ?> <span>/Kg</span></p>
                                     <button <?php if ($order['status'] == 1) echo "disabled" ?> type="button"
                                                                                                 id="modalUpdateS"
                                                                                                 class="btn-sm btn-primary "
@@ -541,13 +542,14 @@ if (isset($_POST['xuatphieu'])) {
                                     </button>
 
                                 </td>
+                                <td style="color: blue"><?php echo product_price($product['feetransport']) ?></td>
                                 <td>
                                     <ul style="text-align: left ;">
                                         <li><p class="fix-status">Shop Gửi</p></li>
                                         <li><p class="fix-status">TQ Nhận</p></li>
-                                        <li><p class="fix-status">Vận chuyển</p></li>
+                                        <li><p class="fix-status">XuấtKho TQ</p></li>
                                         <li><p class="fix-status">NhậpKho VN</p></li>
-                                        <li><p class="fix-status">Đang giao</p></li>
+<!--                                        <li><p class="fix-status">XuấtKho VN</p></li>-->
                                         <li><p class="fix-status">Đã giao </p></li>
                                     </ul>
                                 </td>
@@ -558,7 +560,7 @@ if (isset($_POST['xuatphieu'])) {
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
-                                            <li><p class="fix-status">............</p></li>
+<!--                                            <li><p class="fix-status">............</p></li>-->
                                             <li><p class="fix-status">............</p></li>
                                         </ul><?php
                                     } else { ?>
@@ -574,9 +576,9 @@ if (isset($_POST['xuatphieu'])) {
                                             <li>
                                                 <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
                                             </li>
-                                            <li>
-                                                <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
-                                            </li>
+<!--                                            <li>-->
+<!--                                                <p class="fix-status">--><?php //if (!empty($obj->{5})) echo $obj->{5}; ?><!--</p>-->
+<!--                                            </li>-->
                                             <li>
                                                 <p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
                                             </li>
@@ -779,13 +781,27 @@ if (isset($_POST['xuatphieu'])) {
                             ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Số KLG</label>
-                        <input required autofocus value="" minlength="1" maxlength="250" name="socan" type="number"
-                               step="0.01"
-                               class="form-control" placeholder="Nhập số cân">
-                    </div>
 
+                    <div class="form-group">
+                        <label class="radio-container m-r-45">Hàng TMDT
+                            <input id="tmdt" onclick="checkButton()" type="radio" value=1 name="type">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-container">Hàng KM
+                            <input id="km" onclick="checkButton()" type="radio" value=0 name="type">
+                            <span class="checkmark"></span>
+                        </label>
+                        <input  value="" minlength="5" maxlength="250" id="giavc" name="giavchuyen" type="number"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>Số KLG</label>
+                            <input required autofocus value="00" minlength="1" maxlength="250" name="socan" type="number"
+                                   step="0.01"
+                                   class="form-control" placeholder="Nhập số cân">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -797,18 +813,24 @@ if (isset($_POST['xuatphieu'])) {
                 if (isset($_POST['suacan'])) {
                     $p = $kienhangRepository->getById($_POST['idKH'])->fetch_assoc();
                     $order = $orderRepository->getById($p['order_id']);
-                    $kienhangRepository->updateCanNang($_POST['idKH'], $_POST['socan'], $p['gianhap'], $p['giamgiacuahang']);
+                    $cannang= 0;
+                    if (isset($_POST['socan'])){
+                        $cannang =$_POST['socan'];
+                    }
+//                    echo $cannang;
+                    $kienhangRepository->updateCanKyGui($_POST['idKH'], $cannang);
+                    $kienhangRepository->updateGiaVC($_POST['idKH'],$_POST['giavchuyen']);
                     $tongcan = 0;
+                    $tienvanchuyen=0;
                     if (!empty($arr_unserialize1)) {
                         foreach ($arr_unserialize1 as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
                             $tongcan += $product['size'];
+                            $tienvanchuyen += $product['size'] * $product['feetransport'];
                         }
                     }
-                    $tienvanchuyen = $tongcan * $order['giavanchuyen'];
                     $tongall = ($order['tongtienhang'] + $order['shiptq'] + $order['tiencong'] - $order['giamgia']) * $order['tygiate'] + $tienvanchuyen;
                     $orderRepository->updateCan($p['order_id'], $tongcan, $tienvanchuyen, $tongall);
-
                     $urlStr = "detailKyGui.php?id=" . $_GET['id'] . "&mvd=" . $_POST['ladingCode'];
                     echo "<script>window.location.href='$urlStr';</script>";
                 }
@@ -1037,7 +1059,7 @@ if (isset($_POST['xuatphieu'])) {
                     $array = preg_split('/\n|\r\n/', $_POST['listMVD']);
 
 //                    $orderIds = $_POST['madonhang'];
-                    $orderCurrent= $orderRepository->getById($_POST['madonhang']);
+                    $orderCurrent = $orderRepository->getById($_POST['madonhang']);
                     $arrayList = $orderRepository->getListProductById($_POST['madonhang']);
                     $listproduct = unserialize($arrayList['listsproduct']);
                     if (!empty($_POST['startdate'])) {
@@ -1155,7 +1177,13 @@ if (isset($_POST['xuatphieu'])) {
                     $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
                     $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
                     $("#edit-form [name=\"socan\"]").val(response.size);
+                    $("#edit-form [name=\"giavchuyen\"]").val(response.feetransport);
                     $("#edit-form [name=\"gianhap\"]").val(response.gianhap);
+                    if (response.feetransport == 28000){
+                        document.getElementById('tmdt').checked=true;
+                    }else{
+                        document.getElementById('km').checked=true;
+                    }
                 }
             });
         });
@@ -1219,6 +1247,15 @@ if (isset($_POST['xuatphieu'])) {
         }
 
 
+    }
+    function checkButton() {
+        if (document.getElementById('tmdt').checked) {
+            document.getElementById('giavc').value = "28000" ;
+
+        }
+        if (document.getElementById('km').checked) {
+            document.getElementById('giavc').value = "33000";
+        }
     }
 
     // document.getElementById('enddate').value = timestampToDatetimeInputString(Date.now());

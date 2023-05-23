@@ -41,6 +41,9 @@ td{
     font-weight: 500;
     color: #000000d1;
 }
+#tableShoe td ul, #tableShoe th ul{
+    padding-inline-start: 20px;
+}
 #tableDei td
 {
     border: 1px solid #ddd;
