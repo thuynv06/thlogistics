@@ -197,6 +197,149 @@ $th1688 = $th1688Repository->getConfig();
 //                                 $_POST['ladingCode']=$_POST['mavandon'];
                             }
                         ?>
+
+    <hr>
+    <h3>Form Nhập Kho Hàng Ký Gửi Nhanh</h3>
+    <div class="row container">
+        <form name="taodon" class="ps-subscribe__form" method="POST"
+              enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label> Nhập Mã KH </label>
+                    <input style="margin-right: 20px; margin-bottom: 5px;"
+                           class="form-control input-large " name="makhachhang"
+                           type="text" value="" placeholder="Nhập Mã Khách Hàng">
+                </div>
+<!--                <div class="form-group col-md-6">-->
+<!--                    <label> Hoặc chọn mã KH </label>-->
+<!--                    <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"-->
+<!--                            class="form-control custom-select " onchange="searchStatus()">-->
+<!--                        <option value="">Lọc theo khách hàng</option>-->
+<!--                        --><?php
+//                        $listUser = $userRepository->getAllByType(1);
+//                        foreach ($listUser as $user) {
+//                            ?>
+<!--                            <option value="--><?php //echo $user['id']; ?><!--">--><?php //echo $user['code']; ?><!--</option>-->
+<!--                            --><?php
+//                        }
+//                        ?>
+<!--                    </select>-->
+<!--                </div>-->
+            </div>
+            <div class="form-row">
+                <div class=" form-group col-md-6">
+                    <label>Ngay Shop Gui Hang</label>
+                    <input value="" name="startdate" type="datetime-local" step="1"
+                           class="form-control" id="startdate">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Ngay Kho TQ Nhan</label>
+                    <input value="" name="khotqnhan" type="datetime-local" step="1"
+                           class="form-control" id="khotqnhan">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="exampleFormControlTextarea1">Nhập List MVĐ</label>
+                    <textarea class="form-control" name="listMVD" id="exampleFormControlTextarea1"
+                              rows="10"></textarea>
+                </div>
+            </div>
+
+            <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Import
+            </button>
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                $detail = $_POST['listMVD'];
+                if (!empty($detail)) {
+                    // Xử lý khi người dùng chưa nhập dữ liệu
+//                        echo $_POST['listMVD'];
+//                        echo nl2br($_POST['listMVD']);
+//                    $array = preg_split('/\n|\r\n/', $_POST['listMVD']);
+                    $lines = explode("\n", $_POST['listMVD']);
+
+//                    $array = [];
+
+
+                    if (isset($_POST['user_id'])) {
+                        $user_ID = $_POST['user_id'];
+                    }
+
+                    if (isset($_POST['makhachhang'])) {
+                        $ma = $_POST['makhachhang'];
+                        $u = $userRepository->getByCode($ma);
+                        if (isset($user)) {
+                            $user_ID = $u['id'];
+                        } else {
+                            echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
+                        }
+                    }
+                    if (!empty($_POST['startdate'])) {
+//                    $startdate = $_POST['startdate'];
+                        $startdate = date("Y-m-d\TH:i:s", strtotime($_POST['startdate']));
+                        echo $startdate;
+                    }
+                    if (!empty($_POST['khotqnhan'])) {
+//                    $startdate = $_POST['startdate'];
+                        $ngayTQNHAN = date("Y-m-d\TH:i:s", strtotime($_POST['khotqnhan']));
+                        echo $ngayTQNHAN;
+                    }
+
+                    $code = $orderRepository->getLastOrderCodeByUserId($user_ID);
+                    if (!empty($code)) {
+                        $user = $userRepository->getById($user_ID);
+                        if (empty($code['code'])) {
+                            $newCode = $user['code'] . ".No099";
+                        } else {
+                            $numCode = substr($code['code'], -3) + 1;
+                            $newCode = $user['code'] . ".No" . $numCode;
+                        }
+                    } else {
+                        $newCode = $user['code'] . ".No099";
+                    }
+                    $orderId = $orderRepository->createOrder($user_ID, $newCode, null, 0, 0, 28000, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+//                        $dateCreadted = $_POST['startdate']->format("Y-m-d\TH:i:s");
+                    $myObj = new stdClass();
+                    $myObj->{1} = "$startdate";
+                    $listStatusJSON = json_encode($myObj);
+                    $listproduct = array();
+
+                    for ($i = 0; $i < count($lines); $i += 2) {
+                        $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $lines[$i], null, $lines[$i], 1, "BT/HN1", $lines[$i + 1], 28000, 1, 0, 0, $user_ID, null, 0, $startdate, $listStatusJSON, 0, 0, 0, 0);
+//                            $arr_unserialize1 = unserialize($arrayList['listsproduct']);
+                        array_push($listproduct, $kienhang_id);
+                        $kienhangRepository->updateMaKien($kienhang_id);
+                        if (!empty($ngayTQNHAN)) {
+                            $kienhangRepository->updateStatus($kienhang_id, $lines[$i], 2, $ngayTQNHAN);
+                        }
+//                        $key = $lines[$i];
+//                        $value = $lines[$i + 1];
+//                        $array[$key] = $value;
+                    }
+
+//                    foreach ($array as $mavd) {
+////                            $o = $orderRepository->getById($orderId);
+////                            $date = new DateTime();
+//                        $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $mavd, null, $mavd, 1, "BT/HN1", 0, 28000, 1, 0, 0, $user_ID, null, 0, $startdate, $listStatusJSON, 0, 0, 0, 0);
+////                            $arr_unserialize1 = unserialize($arrayList['listsproduct']);
+//                        array_push($listproduct, $kienhang_id);
+//                        $kienhangRepository->updateMaKien($kienhang_id);
+//                        if (!empty($ngayTQNHAN)) {
+//                            $kienhangRepository->updateStatus($kienhang_id, $mavd, 2, $ngayTQNHAN);
+//                        }
+//                    }
+////                        echo print_r($array,true)  ;
+                    $orderRepository->updatedListProductById($orderId, $listproduct);
+
+                    $urlStr = "detailKyGui.php?id=" . $orderId;
+                    echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
+
+                }
+            }
+            ?>
+        </form>
+    </div>
+</div>
   
 </div>
 
@@ -205,5 +348,19 @@ $th1688 = $th1688Repository->getConfig();
     function updateMaVanDon(){
         document.nhapma.submit();
     }
+
+    function timestampToDatetimeInputString(timestamp) {
+        const date = new Date((timestamp + _getTimeZoneOffsetInMs()));
+        // slice(0, 19) includes seconds
+        return date.toISOString().slice(0, 19);
+    }
+
+    function _getTimeZoneOffsetInMs() {
+        return new Date().getTimezoneOffset() * -60 * 1000;
+    }
+
+    document.getElementById('startdate').value = timestampToDatetimeInputString(Date.now());
+    document.getElementById('khotqnhan').value = timestampToDatetimeInputString(Date.now());
+
 </script>
 <?php include 'footeradmin.php' ?>

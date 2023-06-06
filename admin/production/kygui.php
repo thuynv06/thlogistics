@@ -168,12 +168,12 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                         if (!empty($_POST['startdate'])) {
 //                    $startdate = $_POST['startdate'];
                             $startdate = date("Y-m-d\TH:i:s", strtotime($_POST['startdate']));
-                            echo $startdate;
+//                            echo $startdate;
                         }
                         if (!empty($_POST['khotqnhan'])) {
 //                    $startdate = $_POST['startdate'];
                             $ngayTQNHAN = date("Y-m-d\TH:i:s", strtotime($_POST['khotqnhan']));
-                            echo $ngayTQNHAN;
+//                            echo $ngayTQNHAN;
                         }
 
                         $code = $orderRepository->getLastOrderCodeByUserId($user_ID);

@@ -947,13 +947,13 @@ if (isset($_POST['xuatphieu'])) {
 <!--                        </select>-->
 <!--                    </div>-->
                     <div class="form-group">
-                        <label>Link SP</label>
-                        <input   value="" minlength="5" maxlength="100000" name="linksp" type="text"
-                                class="form-control">
+                        <label>Kg/Khối</label>
+                        <input  value="0" minlength="1" maxlength="250" name="khoiluong" type="number" step="0.01"
+                                class="form-control" placeholder="Nhập số cân nang">
                     </div>
                     <div class="form-group">
                         <label>Chọn Thời Gian</label>
-                        <input value="" name="updateDateStatus" type="datetime-local" step="1"
+                        <input value="" name="dateCreate" type="datetime-local" step="1"
                                class="form-control" id="timeadd">
                     </div>
                 </div>
@@ -967,13 +967,16 @@ if (isset($_POST['xuatphieu'])) {
                 if (isset($_POST['themsanpham'])) {
                     $orderId= $_POST['orderID'];
                     $o = $orderRepository->getById($orderId);
-                    $date = new DateTime();
-                    $dateCreadted = $date->format("Y-m-d\TH:i:s");
+                    if (!empty($_POST['dateCreate'])) {
+//                    $startdate = $_POST['startdate'];
+                        $dateCreadted = date("Y-m-d\TH:i:s", strtotime($_POST['dateCreate']));
+//                            echo $startdate;
+                    }
                     $myObj = new stdClass();
                     $myObj->{1} = "$dateCreadted";
                     $listStatusJSON = json_encode($myObj);
 
-                    $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $_POST['tensanpham'], null, $_POST['ladingCode'], $_POST['soluong'], "BT/HN1", 0, $o['giavanchuyen'], 1, 0, 0, $o['user_id'], $_POST['linksanpham'], 0, $dateCreadted, $listStatusJSON, 0, 0, 0, 0);
+                    $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $_POST['tensanpham'], null, $_POST['ladingCode'], $_POST['soluong'], "BT/HN1",  $_POST['khoiluong'], $o['giavanchuyen'], 1, 0, 0, $o['user_id'], $_POST['linksanpham'], 0, $dateCreadted, $listStatusJSON, 0, 0, 0, 0);
                     $arrayList =$orderRepository-> getListProductById($orderId);
                     $arr_unserialize1 = unserialize($arrayList['listsproduct']);
                     array_push($arr_unserialize1, $kienhang_id);
