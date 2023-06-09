@@ -75,11 +75,11 @@ function phieuxuatkho($listId,$userID)
         $sheet->setCellValue('A11',"Địa Chỉ: ".$kh['address']);
 
 
-            $sheet->setCellValue('A13', "STT");
-        $sheet->setCellValue('B13', "Mã Vận Đơn");
-        $sheet->setCellValue('C13', "TQ Nhận");
-        $sheet->setCellValue('D13', "VN Nhận");
-        $sheet->setCellValue('E13', "Cân Nặng (Kg) ");
+        $sheet->setCellValue('A13', "STT");
+        $sheet->setCellValue('B13', "Kiện Hàng");
+        $sheet->setCellValue('C13', "Mã Vận Đơn");
+        $sheet->setCellValue('D13', "SL");
+        $sheet->setCellValue('E13', "Cân Nặng(Kg) ");
         $sheet->setCellValue('F13', "Đơn Giá (VNĐ)");
         $sheet->setCellValue('G13', "Thành Tiền (VNĐ)");
 //Make a bottom border(optional).
@@ -91,8 +91,11 @@ function phieuxuatkho($listId,$userID)
 //Set auto resize(optional).
         $sheet->getColumnDimension('A')->setWidth(30, 'pt');
         $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('D')->setAutoSize(true);
+//        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setWidth(110, 'pt');
+        $sheet->getColumnDimension('D')->setWidth(30, 'pt');
+
+//        $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
         $sheet->getColumnDimension('G')->setAutoSize(true);
@@ -120,18 +123,23 @@ function phieuxuatkho($listId,$userID)
             }
             $sheet->setCellValue('A' . $i, $i - 13);
             $sheet->setCellValue('B' . $i, $tempProduct['ladingCode']);
-            $sheet->setCellValue('C' . $i, $tqnhan);
-            $sheet->setCellValue('D' . $i, $vnnhan);
-            $sheet->setCellValue('E' . $i, $tempProduct['size']);
+            $sheet->setCellValue('C' . $i, $tempProduct['ladingCode']);
+            $sheet->setCellValue('D' . $i, $tempProduct['amount']);
+            $sheet->setCellValue('E' . $i, $tempProduct['size']."Kg");
             $sheet->setCellValue('F' . $i, $tempProduct['feetransport']);
-            $sheet->setCellValue('G' . $i, $tempProduct['size'] * $tempProduct['feetransport']);
+            if(!empty($tempProduct['size'] * $tempProduct['feetransport'])){
+                $sheet->setCellValue('G' . $i, $tempProduct['size'] * $tempProduct['feetransport']);
+
+            }else{
+                $sheet->setCellValue('G' . $i,0 );
+            }
 
             $tongcan += $tempProduct['size'];
             $tongtienvc += $tempProduct['size'] * $tempProduct['feetransport'];
             $i++;
         }
 
-        $sheet->setCellValue('E' . $i, $tongcan);
+        $sheet->setCellValue('E' . $i, $tongcan."Kg");
         $sheet->setCellValue('G' . $i, $tongtienvc);
         $sheet->setCellValue('B' . $i, "Số Kiện: ".$sokien);
 
@@ -149,8 +157,11 @@ function phieuxuatkho($listId,$userID)
         $sheet->getStyle('A13:G' . $i - 1)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         $sheet->getStyle('E' . $i . ':G' . $i)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
-
+        $sheet->getStyle('A13:' . 'A' . $i)->getAlignment()->setHorizontal('center');
         $sheet->getStyle('B13:' . 'B' . $i)->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('C13:' . 'C' . $i)->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('D13:' . 'D' . $i)->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('E13:' . 'E' . $i)->getAlignment()->setHorizontal('center');
         include "convert_number_to_words.php";
 
 
