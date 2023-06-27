@@ -28,7 +28,19 @@ class OrderRepository
     {
         global $conn;
         $sql = "select * from orders where id=$id";
-        return mysqli_query($conn, $sql)->fetch_assoc();;
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            // mysqli_query returns false on failure
+            echo "Query failed: " . mysqli_error($conn);
+        } elseif (mysqli_num_rows($result) == 0) {
+            // mysqli_num_rows returns 0 if the result is empty
+            echo "No rows found.";
+        } else {
+            // Process the result
+            return mysqli_query($conn, $sql)->fetch_assoc();
+        }
+
     }
 
     public function getTotalResult($type)

@@ -5,7 +5,7 @@ $kh = $kienhangRepository->getById($_GET['id'])->fetch_assoc();
 $link_image = $kienhangRepository->getImage($_GET['id'])->fetch_assoc();
 $order_id = $kh['order_id'];
 //echo $order_id;
-$order= $orderRepository->getById($order_id );
+$order= $orderRepository->getById($order_id);
 if($order['type']==0){
     $trove = "detailOrder.php?id=" . $order_id;
 }else{

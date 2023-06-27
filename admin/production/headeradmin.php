@@ -4,10 +4,12 @@ require_once("../../backend/filterAdmin.php");
 require_once("../../repository/userRepository.php");
 require_once("../../repository/kienhangRepository.php");
 require_once("../../repository/statusRepository.php");
+require_once("../../repository/mvdRepository.php");
 require_once("../../repository/th1688Repository.php");
 require_once("../../repository/orderRepository.php");
 $orderRepository = new OrderRepository();
 $kienhangRepository = new KienHangRepository();
+$mvdRepository = new MaVanDonRepository();
 $userRepository = new UserRepository();
 $statusRepository = new StatusRepository();
 $th1688Repository = new Th1688Repository();
@@ -47,7 +49,7 @@ $th1688Repository = new Th1688Repository();
 </head>
 
 <body class="nav-md">
-<div class="container body" style="font-size: 11px;">
+<div class="container body" style="font-size: 13px;">
     <div class="main_container">
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
@@ -80,8 +82,8 @@ $th1688Repository = new Th1688Repository();
                                     <li><a href="kygui.php">Đơn Ký Gửi</a>
                                     <li><a href="nhapkho.php">Nhập Kho TH1688</a></li>
                                     <li><a href="xuatkho.php">Xuất Kho TH1688</a></li>
-
-                                    <li><a href="kienHang.php">Quản Lý Kiện Hàng</a></li>
+                                    <li><a href="mvd.php">Quản Lý Mã Vận Đơn</a></li>
+                                    <li><a href="kienHang.php">Quản Lý Hàng Order</a></li>
                                         <ul class="nav child_menu">
                                             <li>
 <!--                                                <a href="yeucaugiaohang.php">Tạo Phiếu YC Giao Hàng</a>-->

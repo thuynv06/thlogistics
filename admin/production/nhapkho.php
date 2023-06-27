@@ -197,10 +197,117 @@ $th1688 = $th1688Repository->getConfig();
 //                                 $_POST['ladingCode']=$_POST['mavandon'];
                             }
                         ?>
+    <hr>
+     <h3> Nhập Kho  </h3>                   
+
+    <div class="row container">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <form name="nhapkho" class="ps-subscribe__form" method="POST"
+                      enctype="multipart/form-data">
+                    <!--                    <div class="form-group col-md-6">-->
+                    <!--                        <input autofocus required style="margin-right: 20px;font-size: 45px; margin-bottom: 5px;"-->
+                    <!--                               class="form-control input-xxlarge" name="ladingCode"-->
+                    <!--                               type="text" value="" id="inputMVD" onchange="updateMaVanDon()"-->
+                    <!--                               placeholder="nhập mã vận đơn">-->
+                    <!--                    </div>-->
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="exampleFormControlTextarea1">Nhập List MVĐ</label>
+                            <textarea class="form-control" name="ListMVDNhap" id="exampleFormControlTextarea1"
+                                      rows="15"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <input style="margin-right: 20px; margin-bottom: 5px;"
+                               class="form-control input-large " name="makhnhap"
+                               type="text" value="" placeholder="Nhập Mã Khách Hàng">
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
+                                class="form-control custom-select ">
+                            <option value="">Lọc theo khách hàng</option>
+                            <?php
+                            $listUser = $userRepository->getAllByType(0);
+                            foreach ($listUser as $user) {
+                                ?>
+                                <option value="<?php echo $user['id']; ?>">
+                                    <?php echo $user['code']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    </div>
+                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
+                            role="button"> Nhập Kho
+                    </button>
+                    </form>
+            </div>
+            <br>
+        </div>
+        <?php
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    $detail = $_POST['ListMVDNhap'];
+                    if (!empty($detail)) {
+                        // Xử lý khi người dùng chưa nhập dữ liệu
+//                        echo $_POST['listMVD'];
+//                        echo nl2br($_POST['listMVD']);
+                        $ListMVDNhap = preg_split('/\n|\r\n/', $_POST['ListMVDNhap']);
+
+                        if (isset($_POST['user_id'])) {
+                            $user_ID = $_POST['user_id'];
+                        }
+
+                        if (isset($_POST['makhnhap']) && !empty($_POST['makhnhap'])) {
+                            $ma = $_POST['makhnhap'];
+                            $u = $userRepository->getByCode($ma);
+                            if (isset($u)) {
+                                $user_ID = $u['id'];
+                            } else {
+                                echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
+                            }
+                        }
+
+                        $code = $orderRepository->getLastOrderCodeByUserId($user_ID);
+                        if (!empty($code)) {
+                            $user = $userRepository->getById($user_ID);
+                            if (empty($code['code'])) {
+                                $newCode = $user['code'] . ".No099";
+                            } else {
+                                $numCode = substr($code['code'], -3) + 1;
+                                $newCode = $user['code'] . ".No" . $numCode;
+                            }
+                        } else {
+                            $newCode = $user['code'] . ".No099";
+                        }
+                        $orderId = $orderRepository->createOrder($user_ID, $newCode, null, 0, 0, 25000, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+                        $listproduct = array();
+                        foreach ($ListMVDNhap as $mavd){
+                            
+                            $results=$mvdRepository->findByMaVanDon($mavd)->fetch_assoc();
+                            $mvdRepository->updateUserIdById($results['id'],$user_ID,$newCode);
+                            array_push($listproduct, $results['id']);
+                        
+                        }
+                        echo print_r($array,true)  ;
+                        $orderRepository->updatedListProductById($orderId, $listproduct);
+
+                        $urlStr = "detailKyGui.php?id=" . $orderId;
+                        echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
+
+                    }
+                }
+
+        ?>
+
 
     <hr>
+
+
     <h3>Form Nhập Kho Hàng Ký Gửi Nhanh</h3>
     <div class="row container">
+
         <form name="taodon" class="ps-subscribe__form" method="POST"
               enctype="multipart/form-data">
             <div class="form-row">
