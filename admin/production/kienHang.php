@@ -119,47 +119,52 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
             }
             $i = 1;
             foreach ($kienHangList as $kienHang) {
-
+//                $tempMaVanDon=null;
                 if (isset($kienHang)) {
                     $link_image = $kienhangRepository->getImage($kienHang['id'])->fetch_assoc();
+                    print_r($kienHang['ladingcode']);
+                    $tempMaVanDon=null;
+                    $mvd =$mvdRepository->findByMaVanDon($kienHang['ladingcode']);
+//                    print_r($mvd);
+                    if (isset($mvd) && !empty($mvd) && !empty($kienHang['ladingcode']) && isset($kienHang['ladingcode'])){
+                        $tempMaVanDon=$mvd->fetch_assoc();
+//                        print_r($tempMaVanDon);
+                    }
 //                    $typeP = $kienhangRepository->getType($kienHang['order_id'])->fetch_assoc();
 //                    echo $typeP['type'];
                 }
                 ?>
                 <tr>
-                    <td><?php echo $i++; ?></td>
-                    <td><p style="font-weight: 700;"><?php echo $kienHang['orderCode'] ?></p>
+                    <td><?php echo $i++; $kienHang['ladingcode']; ?></td>
+                    <td><p style="font-weight: 700;"><?php echo $kienHang['ordercode'] ?></p>
                         <p style="color: blue"> <?php
                             switch ($kienHang['status']) {
                                 case "1":
-                                    echo "Shop gửi hàng";
-                                    break;
-                                case "2":
                                     echo "Kho Trung Quốc Nhận";
                                     break;
-                                case "3":
+                                case "2":
                                     echo "Đang Vận Chuyển";
                                     break;
-                                case "4":
+                                case "3":
                                     echo "Nhập Kho Việt Nam";
                                     break;
-                                case "5":
-                                    echo "Đang Giao";
+                                case "4":
+                                    echo "Yêu Cầu Giao";
                                     break;
-                                case "6":
+                                case "5":
                                     echo "Đã Giao";
                                     break;
                                 default:
                                     echo "--";
                             }
                             ?> </p>
-                        <p><?php echo $kienHang['shippingWay'] ?></p>
+<!--                        <p>--><?php //echo $kienHang['shippingWay'] ?><!--</p>-->
                     </td>
                     <td><?php echo $kienHang['name'] ?></td>
                     <td><img width="150px" height="150px"
                              src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
                              if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
-                    <td style="color: blue"><?php echo $kienHang['ladingCode'] ?></td>
+                    <td style="color: blue"><?php echo $kienHang['ladingcode'] ?></td>
                     <td>
                         <?php
                         $listUser = $userRepository->getAll();
@@ -176,7 +181,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     <td><?php echo $kienHang['size'] ?> <span>/Kg</span></td>
                     <td>
                         <ul style="text-align: left ;">
-                            <li><p class="fix-status">Shop gửi hàng</p></li>
+                            <li><p class="fix-status">Ngày Đặt Hàng</p></li>
                             <li><p class="fix-status">TQ Nhận hàng</p></li>
                             <li><p class="fix-status">Vận chuyển</p></li>
                             <li><p class="fix-status">Nhập kho VN</p></li>
@@ -184,7 +189,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             <li><p class="fix-status">Đã giao hàng</p></li>
                         </ul>
                     </td>
-                    <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
+                    <td><?php $obj=null; if (!empty($tempMaVanDon['times'])) { $obj = json_decode($tempMaVanDon['times']);} ?>
                         <?php if (empty($obj)) { ?>
                             <ul style="text-align: left;">
                                 <li><p class="fix-status">............</p></li>
@@ -196,12 +201,14 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             </ul><?php
                         } else { ?>
                             <ul style="text-align: left;">
-                                <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?></li>
+                                <?php
+//                                echo print_r($obj) ?>
+                                <li><p class="fix-status"><?php if (!empty($obj->{0})) echo $obj->{0}; ?></li>
+                                <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?></p></li>
                                 <li><p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p></li>
                                 <li><p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p></li>
                                 <li><p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p></li>
                                 <li><p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p></li>
-                                <li><p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p></li>
                             </ul>
                             <?php
                         } ?>

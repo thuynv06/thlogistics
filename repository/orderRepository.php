@@ -42,7 +42,12 @@ class OrderRepository
         }
 
     }
-
+    public function getOrderCodeById($id)
+    {
+        global $conn;
+        $sql = "select code from orders where id=$id";
+        return mysqli_query($conn, $sql)->fetch_assoc();
+    }
     public function getTotalResult($type)
     {
         global $conn;
@@ -175,6 +180,14 @@ class OrderRepository
         $array_data = serialize($array_data);
         global $conn;
         $sql = "update orders set listsproduct= '" . $array_data . "'  where id=$id";
+//            echo $sql;
+        return mysqli_query($conn, $sql);
+    }
+
+    public function updatedTongCan($id, $tongcan,$tienvanchuyen)
+    {
+        global $conn;
+        $sql = "update orders set tongcan= $tongcan, tienvanchuyen=$tienvanchuyen where id=$id";
 //            echo $sql;
         return mysqli_query($conn, $sql);
     }

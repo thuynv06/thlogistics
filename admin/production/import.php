@@ -168,11 +168,11 @@ if (isset($_POST["btnImport"])) {
 //            if (! empty($name) || ! empty($description)) {
 
                             $myObj = new stdClass();
-                            $myObj->{1} = "$dateCreadted";
-                            $listStatusJSON = json_encode($myObj);
+//                            $myObj->{0} = "$dateCreadted";
+//                            $listStatusJSON = json_encode($myObj);
 
 
-                            $kienhang_id = $kienhangRepository->insert($orderId, $price, $phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 1, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, $listStatusJSON, $shiptq, $magiamgia, $kichthuoc, $color);
+                            $kienhang_id = $kienhangRepository->insert($orderId, $price, $phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 0, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, null, $shiptq, $magiamgia, $kichthuoc, $color);
                             $kienhangRepository->updateMaKien($kienhang_id);
                             array_push($listproduct, $kienhang_id);
                             $tongtienhang += $price * $amount;

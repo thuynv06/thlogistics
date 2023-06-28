@@ -41,30 +41,87 @@ if (isset($_POST['xuatphieu'])) {
     phieuxuatkho($listID, $userID);
 
 }
-if (isset($_POST['xuatkho'])) {
+if (isset($_POST['taoyeucaugiao'])) {
     $array = preg_split('/\n|\r\n/', $_POST['mvdlst']);
+
     $listID = array();
-//    $userID = null;
+    $userID = null;
 //    $listsMVD = $_POST['listproduct'];
-    $result = array_unique($array);
-    $date = new DateTime();
-    $string2 = date_format($date, "Y-m-d\TH:i:s");
-//    echo(print_r($result, true));
-//    include "phieuxuatkho.php";
-    foreach ($result as $mavd) {
-        $listP = $kienhangRepository->findByMaVanDon($mavd);
-        if (!empty($listP)) {
-            foreach ($listP as $product){
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 5, $string2);
-                $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $string2);
-                $tempDate = date_add($tempDate, date_interval_create_from_date_string("6 hours"))->format("Y-m-d\TH:i:s");
-                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 6, $tempDate);
-            }
+    $ListMVDNhap = array_unique($array);
+    if (isset($_POST['user_id'])) {
+        $user_ID = $_POST['user_id'];
+//                echo $user_ID;
+    }
+    if (isset($_POST['makhnhap']) && !empty($_POST['makhnhap'])) {
+        $ma = $_POST['makhnhap'];
+        $u = $userRepository->getByCode($ma);
+        if (isset($u)) {
+            $user_ID = $u['id'];
+//                    echo $user_ID;
+        } else {
+            echo "<script>alert('Không tồn tại mã KH');window.location.href='xuatkho.php';</script>";
         }
     }
+    $code = $orderRepository->getLastOrderCodeByUserId($user_ID);
+//    echo $code['code'];
+//    $date = getdate();
+//    $ngaythang = $date['mday']. $date['mon'].$date['year'];
+    $user = $userRepository->getById($user_ID);
+    if (!empty($code)) {
+        if (empty($code['code'])) {
+            $newYeuCauGiao = "YCG_".$user['code']."_". "188";
+        } else {
+            $numCode = substr($code['code'], -3) + 1;
+            $newYeuCauGiao = "YCG_".$user['code']."_".$numCode;
+        }
+    } else {
+        $newYeuCauGiao = "YCG_".$user['code']."_188";
+    }
+    // tạo yeu cau giao
+    $orderId = $orderRepository->createOrder($user_ID, $newYeuCauGiao, null, 0, 0, 25000, 0, 0, 0, 0, 0, 0, 0, 0, 1);
 
-    echo "<script>alert('Xuất Kho Thành Công!');</script>";
+    //day ma van don vào yeu cau
+    $listproduct = array();
+    $tienvanchuyen=0;
+    $tongcan=0;
+    foreach ($ListMVDNhap as $mavd) {
+        $maVD = $mvdRepository->findByMaVanDon($mavd)->fetch_assoc();
+        if(isset($maVD) && !empty($maVD)){
+            $tongcan += $maVD['cannang'];
+            $tienvanchuyen+=$maVD['cannang']*$maVD['giavc'];
+            array_push($listproduct, $maVD['id']);
+        }
+    }
+    $orderRepository->updatedListProductById($orderId, $listproduct);
+    $orderRepository->updatedTongCan($orderId, $tongcan,$tienvanchuyen);
+    $urlStr = "detailKyGui.php?id=" . $orderId;
+    echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
+
 }
+//if (isset($_POST['xuatkho'])) {
+//    $array = preg_split('/\n|\r\n/', $_POST['mvdlst']);
+//    $listID = array();
+////    $userID = null;
+////    $listsMVD = $_POST['listproduct'];
+//    $result = array_unique($array);
+//    $date = new DateTime();
+//    $string2 = date_format($date, "Y-m-d\TH:i:s");
+////    echo(print_r($result, true));
+////    include "phieuxuatkho.php";
+//    foreach ($result as $mavd) {
+//        $listP = $kienhangRepository->findByMaVanDon($mavd);
+//        if (!empty($listP)) {
+//            foreach ($listP as $product){
+//                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 5, $string2);
+//                $tempDate = DateTime::createFromFormat("Y-m-d\TH:i:s", $string2);
+//                $tempDate = date_add($tempDate, date_interval_create_from_date_string("6 hours"))->format("Y-m-d\TH:i:s");
+//                $kienhangRepository->updateStatus($product['id'], $product['ladingCode'], 6, $tempDate);
+//            }
+//        }
+//    }
+//
+//    echo "<script>alert('Xuất Kho Thành Công!');</script>";
+//}
 
 ?>
     <!-- top navigation -->
@@ -90,13 +147,13 @@ if (isset($_POST['xuatkho'])) {
                     <div class="form-row">
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
                         <input style="margin-right: 20px; margin-bottom: 5px;"
-                               class="form-control input-large " name="MaKH"
+                               class="form-control input-large " name="makhnhap"
                                type="text" value="" placeholder="Nhập Mã Khách Hàng">
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
                                 class="form-control custom-select " onchange="searchStatus()">
-                            <option value="">Lọc theo khách hàng</option>
+                            <option value="">Chọn Khách Hàng</option>
                             <?php
                             $listUser = $userRepository->getAllByType(0);
                             foreach ($listUser as $user) {
@@ -109,12 +166,13 @@ if (isset($_POST['xuatkho'])) {
                         </select>
                     </div>
                     </div>
-                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
-                            role="button">Xuất Phiếu
+                    <button class="btn-sm btn-danger" type="submit" name="taoyeucaugiao"
+                            role="button">Tạo Yêu Cầu Giao
                     </button>
-                    <button class="btn-sm btn-danger" type="submit" name="xuatkho"
-                            role="button">Xuất Kho
-                    </button>
+<!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
+<!--                            role="button">Xuất Phiếu-->
+<!--                    </button>-->
+
                     <!--                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Nhập Kho</button>-->
                 </form>
                 <!--                <div class="row">-->
@@ -192,7 +250,7 @@ if (isset($_POST['xuatkho'])) {
                 <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Import
                 </button>
                 <?php
-                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if (isset($_POST['taodon'])) {
                     $detail = $_POST['listMVD'];
                     if (!empty($detail)) {
                         // Xử lý khi người dùng chưa nhập dữ liệu
@@ -268,7 +326,6 @@ if (isset($_POST['xuatkho'])) {
     </div>
     <script>
         var i = 0;
-
         function updateMaVanDon() {
             var list = [];
             var table = document.getElementById("danhsachmavandon");

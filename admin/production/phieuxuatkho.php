@@ -1,6 +1,7 @@
 <?php
 require_once("../../repository/userRepository.php");
-require_once("../../repository/kienhangRepository.php");
+//require_once("../../repository/kienhangRepository.php");
+require_once("../../repository/mvdRepository.php");
 require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -10,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Drawing;
 function phieuxuatkho($listId,$userID)
 {
     $userRepository = new UserRepository();
-    $kienhangRepository = new KienHangRepository();
+    $mvdRepository = new MaVanDonRepository();
 //    echo(print_r($listId, true));
 //    echo(print_r($userID, true));
     if (!empty($listId) && !empty($userID)) {
@@ -76,9 +77,9 @@ function phieuxuatkho($listId,$userID)
 
 
         $sheet->setCellValue('A13', "STT");
-        $sheet->setCellValue('B13', "Kiện Hàng");
-        $sheet->setCellValue('C13', "Mã Vận Đơn");
-        $sheet->setCellValue('D13', "SL");
+        $sheet->setCellValue('B13', "Mã Vận Đơn");
+        $sheet->setCellValue('C13', "TQ Nhận");
+        $sheet->setCellValue('D13', "VN Nhận");
         $sheet->setCellValue('E13', "Cân Nặng(Kg) ");
         $sheet->setCellValue('F13', "Đơn Giá (VNĐ)");
         $sheet->setCellValue('G13', "Thành Tiền (VNĐ)");
@@ -92,8 +93,8 @@ function phieuxuatkho($listId,$userID)
         $sheet->getColumnDimension('A')->setWidth(30, 'pt');
         $sheet->getColumnDimension('B')->setAutoSize(true);
 //        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setWidth(110, 'pt');
-        $sheet->getColumnDimension('D')->setWidth(30, 'pt');
+        $sheet->getColumnDimension('C')->setWidth(70, 'pt');
+        $sheet->getColumnDimension('D')->setWidth(70, 'pt');
 
 //        $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
@@ -108,34 +109,34 @@ function phieuxuatkho($listId,$userID)
         $sokien=0;
         foreach ($listId as $product_id) {
             $sokien++;
-            $tempProduct = $kienhangRepository->getById($product_id)->fetch_assoc();
+            $tempProduct = $mvdRepository->getById($product_id)->fetch_assoc();
 
-            $obj = json_decode($tempProduct['listTimeStatus']);
+            $obj = json_decode($tempProduct['times']);
             $tqnhan = '';
             $vnnhan = '';
             if (!empty($obj)) {
-                if (!empty($obj->{2})) {
-                    $tqnhan = date('Y-m-d', strtotime($obj->{2}));
+                if (!empty($obj->{1})) {
+                    $tqnhan = date('Y-m-d', strtotime($obj->{1}));
                 }
-                if (!empty($obj->{4})) {
-                    $vnnhan = date('Y-m-d', strtotime($obj->{4}));
+                if (!empty($obj->{3})) {
+                    $vnnhan = date('Y-m-d', strtotime($obj->{3}));
                 }
             }
             $sheet->setCellValue('A' . $i, $i - 13);
-            $sheet->setCellValue('B' . $i, $tempProduct['ladingCode']);
-            $sheet->setCellValue('C' . $i, $tempProduct['ladingCode']);
-            $sheet->setCellValue('D' . $i, $tempProduct['amount']);
-            $sheet->setCellValue('E' . $i, $tempProduct['size']."Kg");
-            $sheet->setCellValue('F' . $i, $tempProduct['feetransport']);
-            if(!empty($tempProduct['size'] * $tempProduct['feetransport'])){
-                $sheet->setCellValue('G' . $i, $tempProduct['size'] * $tempProduct['feetransport']);
+            $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
+            $sheet->setCellValue('C' . $i, $tqnhan);
+            $sheet->setCellValue('D' . $i, $vnnhan);
+            $sheet->setCellValue('E' . $i, $tempProduct['cannang']."Kg");
+            $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
+            if(!empty($tempProduct['cannang'] * $tempProduct['giavc'])){
+                $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
 
             }else{
                 $sheet->setCellValue('G' . $i,0 );
             }
 
-            $tongcan += $tempProduct['size'];
-            $tongtienvc += $tempProduct['size'] * $tempProduct['feetransport'];
+            $tongcan += $tempProduct['cannang'];
+            $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
             $i++;
         }
 

@@ -70,157 +70,178 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     <a style="" href="mvd.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
                 </form>
             </div>
-           
+
         </div>
         <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <?php include 'paginantionList.php' ?>
-                        </div>
-        <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-        <div class="table-responsive">
-        <table id="tableShoe">
-            <tr>
-                <th class="text-center" style="min-width:50px">STT</th>
-                <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
-                <th class="text-center" style="min-width:100px">Khách Hàng</th>
-                <th class="text-center" style="min-width:60px">Cân nặng</th>
-                <th class="text-center" style="min-width:80px">Giá</th>
-                <th class="text-center" style="min-width:100px">Thành Tiền</th>
-                <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
-                <th class="text-center" style="min-width:120px">Lộ Trình</th>
-                <th class="text-center" style="min-width:150px">Chi tiết</th>
-                <th class="text-center" style="min-width:100px">Ghi Chú</th>
-                <th class="text-center" style="min-width:50px"></th>
-                <th class="text-center" style="min-width:50px"></th>
-                <th class="text-center" style="min-width:50px"></th>
-            </tr>
-            <?php
-            if (!empty($_GET['mvd'])){
-                $ladingCode = $_GET['mvd'];
-                $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
-            }
-            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode']) ) {
-                $ladingCode = $_POST['ladingCode'];
-                $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
-            }
-            if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
-                $statusid = $_POST['status_id'];
-                $listMVD = $mvdRepository->findByStatus($statusid);
-            }
-            if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
-                $user_id = $_POST['user_id'];
-                $listMVD = $mvdRepository->findByUserId($user_id, $offset, $total_records_per_page);
-            }
-            $i = 1;
-
-            function product_price($priceFloat)
-            {
-                $symbol = ' VNĐ';
-                $symbol_thousand = '.';
-                $decimal_place = 0;
-                $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
-                return $price . $symbol;
-            }
-            foreach ($listMVD as $mvd) {
-
-                ?>
-                <tr>
-                    <td><?php echo $i++; ?></td>
-                    <td><p style="font-weight: 800"><?php echo $mvd['mvd'] ?></p>
-                        <p style="font-weight: 800;color: blue"> <?php
-                            switch ($mvd['status']) {
-                                case "1":
-                                    echo "Kho Trung Quốc Nhận";
-                                    break;
-                                case "2":
-                                    echo "Vận Chuyển";
-                                    break;
-                                case "3":
-                                    echo "Nhập Kho Việt Nam";
-                                    break;
-                                case "4":
-                                    echo "Yêu Cầu Giao";
-                                    break;
-                                case "5":
-                                    echo "Đã Giao";
-                                    break;
-                                default:
-                                    echo "--";
-                            }
-                            ?> </p>
-                        <p><?php echo $mvd['line'] ?></p>
-                    </td>
-                    <td><p style="font-weight: 800"><?php echo $mvd['order_code'] ?></p>
+            </div>
+            <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                <div class="table-responsive">
+                    <table id="tableShoe">
+                        <tr>
+                            <th class="text-center" style="min-width:50px">STT</th>
+                            <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
+                            <th class="text-center" style="min-width:100px">Khách Hàng</th>
+                            <th class="text-center" style="min-width:60px">Cân nặng</th>
+                            <th class="text-center" style="min-width:80px">Giá</th>
+                            <th class="text-center" style="min-width:100px">Thành Tiền</th>
+                            <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
+                            <th class="text-center" style="min-width:120px">Lộ Trình</th>
+                            <th class="text-center" style="min-width:150px">Chi tiết</th>
+                            <th class="text-center" style="min-width:100px">Ghi Chú</th>
+                            <th class="text-center" style="min-width:50px"></th>
+                            <th class="text-center" style="min-width:50px"></th>
+                            <th class="text-center" style="min-width:50px"></th>
+                        </tr>
                         <?php
-                        $listUser = $userRepository->getAll();
-                        foreach ($listUser as $user) {
-                            if ($user['id'] == $mvd['user_id']) {
-                                ?>
-                                <?php echo $user['username'] ?><span> &#45; </span><?php echo $user['code'] ?>
-                            <?php }
+                        if (!empty($_GET['mvd'])) {
+                            $ladingCode = $_GET['mvd'];
+                            $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
+                        }
+                        if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                            $ladingCode = $_POST['ladingCode'];
+                            $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
+                        }
+                        if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                            $statusid = $_POST['status_id'];
+                            $listMVD = $mvdRepository->findByStatus($statusid);
+                        }
+                        if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+                            $user_id = $_POST['user_id'];
+                            $listMVD = $mvdRepository->findByUserId($user_id, $offset, $total_records_per_page);
+                        }
+                        $i = 1;
+
+                        function product_price($priceFloat)
+                        {
+                            $symbol = ' VNĐ';
+                            $symbol_thousand = '.';
+                            $decimal_place = 0;
+                            $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+                            return $price . $symbol;
+                        }
+
+                        foreach ($listMVD as $mvd) {
+
+                            ?>
+                            <tr>
+                                <td><?php echo $i++; ?></td>
+                                <td><p style="font-weight: 800"><?php echo $mvd['mvd'] ?></p>
+                                    <p style="font-weight: 800;color: blue"> <?php
+                                        switch ($mvd['status']) {
+                                            case "1":
+                                                echo "Kho Trung Quốc Nhận";
+                                                break;
+                                            case "2":
+                                                echo "Vận Chuyển";
+                                                break;
+                                            case "3":
+                                                echo "Nhập Kho Việt Nam";
+                                                break;
+                                            case "4":
+                                                echo "Yêu Cầu Giao";
+                                                break;
+                                            case "5":
+                                                echo "Đã Giao";
+                                                break;
+                                            default:
+                                                echo "--";
+                                        }
+                                        ?> </p>
+                                    <p><?php echo $mvd['line'] ?></p>
+                                </td>
+                                <td><p style="font-weight: 800">
+                                        <?php
+                                        if (isset($mvd['order_id'])) {
+                                            $orderCode = $orderRepository->getOrderCodeById($mvd['order_id']);
+                                            if (isset($orderCode['code'])) {
+                                                echo $orderCode['code'];
+                                            }
+                                        } else {
+                                            echo "- - -";
+                                        }
+                                        ?>
+                                    </p>
+                                    <?php
+                                    $listUser = $userRepository->getAll();
+                                    foreach ($listUser as $user) {
+                                        if ($user['id'] == $mvd['user_id']) {
+                                            ?>
+                                            <?php echo $user['username'] ?>
+                                            <span> &#45; </span><?php echo $user['code'] ?>
+                                        <?php }
+                                    }
+                                    ?>
+                                </td>
+                                <td style="font-weight: 800"><?php echo $mvd['cannang'] ?><span> /Kg</span></td>
+                                <td><?php echo product_price($mvd['giavc']) ?></td>
+                                <td style="font-weight: 800;color: blue"><?php echo product_price($mvd['thanhtien']) ?></td>
+                                <td>
+                                    <ul style="text-align: left ;">
+                                        <!-- <li><p class="fix-status">Shop gửi hàng</p></li> -->
+                                        <li><p class="fix-status">TQ Nhận hàng</p></li>
+                                        <li><p class="fix-status">Vận chuyển</p></li>
+                                        <li><p class="fix-status">Nhập kho VN</p></li>
+                                        <li><p class="fix-status">Yêu Cầu Giao</p></li>
+                                        <li><p class="fix-status">Đã giao hàng</p></li>
+                                    </ul>
+                                </td>
+                                <td><?php $obj = json_decode($mvd['times']); ?>
+                                    <?php if (empty($obj)) { ?>
+                                        <ul style="text-align: left;">
+                                            <!-- <li><p class="fix-status">............</p></li> -->
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                        </ul><?php
+                                    } else { ?>
+                                        <ul style="text-align: left;">
+                                            <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
+                                            </li>
+                                        </ul>
+                                        <?php
+                                    } ?>
+                                </td>
+                                <td><?php echo $mvd['ghichu'] ?></td>
+                                <td>
+                                    <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#myModal" data-id="<?php echo $mvd['id'] ?>"
+                                            onclick="openModal()">
+                                        Update
+                                    </button>
+                                </td>
+                                <td><a class="btn btn-warning" href="updateMVD.php?id=<?php echo $mvd['id'] ?>"
+                                       role="button">Sửa</a></td>
+                                <td><a class="btn btn-danger" href="deleteMVD.php?id=<?php echo $mvd['id'] ?>"
+                                       role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+                            </tr>
+                            <?php
                         }
                         ?>
-                    </td>
-                    <td style="font-weight: 800"><?php echo $mvd['cannang'] ?><span> /Kg</span></td>
-                    <td><?php echo product_price($mvd['giavc']) ?></td>
-                    <td style="font-weight: 800;color: blue"><?php echo product_price($mvd['thanhtien']) ?></td>
-                    <td>
-                        <ul style="text-align: left ;">
-                            <!-- <li><p class="fix-status">Shop gửi hàng</p></li> -->
-                            <li><p class="fix-status">TQ Nhận hàng</p></li>
-                            <li><p class="fix-status">Vận chuyển</p></li>
-                            <li><p class="fix-status">Nhập kho VN</p></li>
-                            <li><p class="fix-status">Yêu Cầu Giao</p></li>
-                            <li><p class="fix-status">Đã giao hàng</p></li>
-                        </ul>
-                    </td>
-                    <td><?php $obj = json_decode($mvd['times']); ?>
-                        <?php if (empty($obj)) { ?>
-                            <ul style="text-align: left;">
-                                <!-- <li><p class="fix-status">............</p></li> -->
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                            </ul><?php
-                        } else { ?>
-                            <ul style="text-align: left;">
-                                <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?></li>
-                                <li><p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p></li>
-                                <li><p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p></li>
-                                <li><p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p></li>
-                                <li><p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p></li>
-                            </ul>
-                            <?php
-                        } ?>
-                    </td>
-                    <td><?php echo $mvd['ghichu'] ?></td>
-                    <td>
-                        <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm" data-toggle="modal"
-                                data-target="#myModal" data-id="<?php echo $mvd['id'] ?>"
-                                onclick="openModal()">
-                            Update
-                        </button>
-                    </td>
-                    <td><a class="btn btn-warning" href="updateMVD.php?id=<?php echo $mvd['id'] ?>"
-                           role="button">Sửa</a></td>
-                    <td><a class="btn btn-danger" href="deleteMVD.php?id=<?php echo $mvd['id'] ?>"
-                           role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
-                </tr>
-                <?php
-            }
-            ?>
-        </table>
-        </div>
-        </div>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
         <a class="btn btn-primary" href="addKienHang.php" role="button">Thêm Kiện Hàng</a>
     </div> -->
-   
-    
 
 
     <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
@@ -253,7 +274,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                         </div>
                         <div class="form-group">
                             <label>Giá</label>
-                            <input required value=""  name="giavc" type="number" type="number" step="0.01"
+                            <input required value="" name="giavc" type="number" type="number" step="0.01"
                                    class="form-control">
                         </div>
                         <div class="form-group">
@@ -263,8 +284,8 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                                 $listStatus = $statusRepository->getAll();
                                 foreach ($listStatus as $status) {
                                     ?>
-                                    <option 
-                                        value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                    <option
+                                            value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -278,13 +299,16 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="btnSaveChangeStautus" name="submit" type="submit" class="btn btn-primary custom-tooltip"
-                         data-toggle="tooltip" data-placement="top" title="Chỉ cập nhập t.tin cân/Giá VC/sửa MVD"
+                        <button id="btnSaveChangeStautus" name="submit" type="submit"
+                                class="btn btn-primary custom-tooltip"
+                                data-toggle="tooltip" data-placement="top" title="Chỉ cập nhập t.tin cân/Giá VC/sửa MVD"
                                 data-id="">
                             Lưu T.tin
                         </button>
-                        <button id="btnSaveChangeStautus" name="luustatus" type="submit" class="btn btn-success custom-tooltip"
-                         data-toggle="tooltip" data-placement="top" title="Chỉ cập nhập trạng thái MVD" data-id="">
+                        <button id="btnSaveChangeStautus" name="luustatus" type="submit"
+                                class="btn btn-success custom-tooltip"
+                                data-toggle="tooltip" data-placement="top" title="Chỉ cập nhập trạng thái MVD"
+                                data-id="">
                             Lưu Status
                         </button>
                         <!-- <button id="btnSaveChangeStautus" name="khovn" type="submit" class="btn btn-success" data-id="">
@@ -302,15 +326,13 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
     </div>
 </div>
 <?php
-
-
 if (isset($_POST['submit'])) {
     $mvdRepository->updateMVD($_POST['idMVD'], $_POST['mavandon'], $_POST['cannang'], $_POST['giavc']);
     echo "<script>window.location.href='$urlStr';</script>";
 }
 if (isset($_POST['luustatus'])) {
     $mvdRepository->updateTimesById($_POST['idMVD'], $_POST['status_id'], $_POST['updateDateStatus']);
-    $urlStr = "mvd.php?mvd=".$_POST['mavandon'];
+    $urlStr = "mvd.php?mvd=" . $_POST['mavandon'];
     echo "<script>window.location.href='$urlStr';</script>";
 }
 
@@ -344,7 +366,7 @@ if (isset($_POST['luustatus'])) {
 if (isset($_POST['dagiao'])) {
     if ($_POST['status_id'] == 3 || $_POST['status_id'] == 4) {
         $mvdRepository->updateTimesById($_POST['idMVD'], 5, $_POST['updateDateStatus']);
-        $urlStr = "mvd.php?mvd=".$_POST['mavandon'];
+        $urlStr = "mvd.php?mvd=" . $_POST['mavandon'];
         echo "<script>window.location.href='$urlStr';</script>";
     } else {
         echo "<script>alert('Chỉ update khi hàng ở trạng thái nhập kho TQ hoặc đang VC!')</script>";
@@ -354,7 +376,7 @@ if (isset($_POST['dagiao'])) {
 <?php
 if (isset($_POST['resetStatus'])) {
     $mvdRepository->resetStatus($_POST['idMVD']);
-    $urlStr = "mvd.php?mvd=".$_POST['mavandon'];
+    $urlStr = "mvd.php?mvd=" . $_POST['mavandon'];
     echo "<script>window.location.href='$urlStr';</script>";
 }
 ?>
@@ -399,8 +421,9 @@ if (isset($_POST['resetStatus'])) {
             });
         });
     }
+
     $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     function openModal() {

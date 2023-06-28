@@ -45,7 +45,7 @@ class MaVanDonRepository
     public function findByMaVanDon($ladingCode)
     {
         global $conn;
-        $sql = "select * from mvd as m where m.mvd LIKE '%$ladingCode%' ORDER BY id DESC";
+        $sql = "select * from mvd as m where m.mvd like '%$ladingCode%' ORDER BY id DESC";
 //        echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
@@ -122,26 +122,14 @@ class MaVanDonRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function insert($orderId,$gianhap,$servicefee, $name, $nametq, $ladingCode, $amount, $shippingWay, $size, $feetransport, $status, $price, $currency, $user_id, $linksp, $note, $dateCreated, $listTimeStatus,$shiptq,$magiamgia,$kichthuoc,$color)
+    public function insert($mvd,$name,$cannang, $giavc, $line, $user_id,$order_id,$times,$ghichu)
     {
         global $conn;
-        $totalmoney = 0;
-        $totalyen = 0;
-        $totalservicefee = 0;
-        $totalfeetransport = 0;
-        if (!empty($price) && !empty($amount) & !empty($currency)) {
-            $totalmoney = $amount * $currency;
-            $totalyen = $amount * $price;
-            $totalservicefee = $servicefee * $totalmoney / 100;
-        }
-        if (!empty($feetransport) && !empty($amount)) {
-            $totalfeetransport = $feetransport * $amount;
-        }
-        $alltotal = $totalmoney + $totalfeetransport + $totalservicefee;
+        $thanhtien = $giavc*$cannang;
 
-        $sql = "insert into kienhang(order_id,gianhap,servicefee,total,name,nametq,ladingCode,amount,shippingWay,size,feetransport,status,totalfeetransport,price,totalmoney,totalyen,totalservicefee,currency,user_id,linksp,note,dateCreated,listTimeStatus,shiptq,magiamgia,kichthuoc,color) 
-values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$amount,'$shippingWay',$size,$feetransport,$status,$totalfeetransport
-       ,$price,$totalmoney,$totalyen,$totalservicefee,$currency,$user_id,'$linksp','$note','$dateCreated','$listTimeStatus',$shiptq,$magiamgia,'$kichthuoc','$color')";
+
+        $sql = "insert into mvd(mvd,name,giavc,cannang,thanhtien,line,user_id,order_id,times,ghichu) 
+        values('$mvd','$name',$giavc,$cannang,$thanhtien,'$line',$user_id,$order_id,'$times','$ghichu')";
 //        echo $sql;
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
@@ -203,8 +191,14 @@ values($orderId,$gianhap,$servicefee,$alltotal,'$name','$nametq','$ladingCode',$
        echo $sql;
         mysqli_query($conn, $sql);
     }
-
-    public function updateUserIdById($id,$user_id,$order_code)
+    public function updateUserIdById($id,$user_id)
+    {
+        global $conn;
+        $sql = "update mvd set user_id=$user_id where id=$id";
+//        echo $sql;
+        mysqli_query($conn, $sql);
+    }
+    public function updateUserIdAndOrderIdById($id,$user_id,$order_code)
     {
 //        $s='$.'.'"'.$status.'"';
         global $conn;

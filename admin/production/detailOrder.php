@@ -490,6 +490,10 @@ if (isset($_POST['xuatphieu'])) {
 
                             if(isset($product )){
                                 $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
+                                $mvd =$mvdRepository->findByMaVanDon($product['ladingcode']);
+                                if (isset($mvd) && !empty($mvd)){
+                                    $tempMaVanDon=$mvd->fetch_assoc();
+                                }
                             }
 
                             //                    echo(print_r($product, true));?>
@@ -499,7 +503,7 @@ if (isset($_POST['xuatphieu'])) {
                                 <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>"
                                            id=""> Chọn
                                 </td>
-                                <td><p style="font-weight: 700;"><?php echo $product['orderCode'] ?></p>
+                                <td><p style="font-weight: 700;"><?php echo $product['ordercode'] ?></p>
                                     <p style="color: blue"> <?php
                                         switch ($product['status']) {
                                             case "1":
@@ -524,13 +528,13 @@ if (isset($_POST['xuatphieu'])) {
                                                 echo "--";
                                         }
                                         ?> </p>
-                                    <p><?php echo $product['shippingWay'] ?></p>
+                                    <p><?php echo $product['shippingway'] ?></p>
                                 </td>
                                 <td><?php echo $product['name'] ?></td>
                                 <td><img width="150px" height="150px"
                                          src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
                                          if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
-                                <td style="font-weight: bold;color: blue"><?php echo $product['ladingCode'] ?></td>
+                                <td style="font-weight: bold;color: blue"><?php echo $product['ladingcode'] ?></td>
                                 <!--                        <td>-->
                                 <!--                            --><?php
                                 //                            $listUser = $userRepository->getAll();
@@ -568,14 +572,15 @@ if (isset($_POST['xuatphieu'])) {
                                         <li><p class="fix-status">Đã giao </p></li>
                                     </ul>
                                 </td>
-                                <td><?php $obj = json_decode($product['listTimeStatus']); ?>
-                                    <?php if (empty($obj)) { ?>
+                                <td><?php if (!empty($tempMaVanDon['times'])) { $obj = json_decode($tempMaVanDon['times']);} ?>
+
+                                     <?php if (empty($obj)) { ?>
                                         <ul style="text-align: left;">
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
-<!--                                            <li><p class="fix-status">............</p></li>-->
+                                            <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
                                         </ul><?php
                                     } else { ?>
