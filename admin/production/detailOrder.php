@@ -28,23 +28,23 @@ if (isset($_POST['xuatphieu'])) {
 //            $arr_unserialize1 = array_diff($arr_unserialize1, ["265"]);
 //            echo(print_r($arr_unserialize1, true));
             $startdate = date("Y-m-d\TH:i:s", strtotime($order['startdate']));
-            if (!empty($arr_unserialize1)) {
-                foreach ($arr_unserialize1 as $masp) {
-                    $thanhtiennhap=0;
-                    $thanhtienban=0;
-                    $phidv=0;
-                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                    $thanhtiennhap = $product['gianhap'] * $product['amount']* $order['giatenhap'] + $product['shiptq']* $order['giatenhap'] - $product['magiamgia']* $order['giatenhap'] - $product['giamgiacuahang']* $order['giatenhap'];
-                    $thanhtienban = $product['price'] * $product['amount'] * $order['tygiate'] + $product['shiptq'] * $order['tygiate'] - $product['magiamgia'] * $order['tygiate'];
-                    $phidv = $thanhtienban * $product['servicefee'];
-//                    echo "thanhtien ban: ".$thanhtienban;
-//                    echo "phi dv  : ".$phidv;
-                    $loinhuan += $thanhtienban + $phidv - $thanhtiennhap;
-//                    echo $loinhuan;
-//                    echo ">>> ";
-                }
-                $loinhuan = $loinhuan - $order['thukhac'];
-            }
+//            if (!empty($arr_unserialize1)) {
+//                foreach ($arr_unserialize1 as $masp) {
+//                    $thanhtiennhap=0;
+//                    $thanhtienban=0;
+//                    $phidv=0;
+//                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
+//                    $thanhtiennhap = $product['gianhap'] * $product['amount']* $order['giatenhap'] + $product['shiptq']* $order['giatenhap'] - $product['magiamgia']* $order['giatenhap'] - $product['giamgiacuahang']* $order['giatenhap'];
+//                    $thanhtienban = $product['price'] * $product['amount'] * $order['tygiate'] + $product['shiptq'] * $order['tygiate'] - $product['magiamgia'] * $order['tygiate'];
+//                    $phidv = $thanhtienban * $product['servicefee'];
+////                    echo "thanhtien ban: ".$thanhtienban;
+////                    echo "phi dv  : ".$phidv;
+//                    $loinhuan += $thanhtienban + $phidv - $thanhtiennhap;
+////                    echo $loinhuan;
+////                    echo ">>> ";
+//                }
+//                $loinhuan = $loinhuan - $order['thukhac'];
+//            }
             ?>
             <?php
             $listUser = $userRepository->getAll();
@@ -487,12 +487,13 @@ if (isset($_POST['xuatphieu'])) {
                         $i = 1;
                         foreach ($arr as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
-
+                            $tempMaVanDon=null;
                             if(isset($product )){
                                 $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
-                                $mvd =$mvdRepository->findByMaVanDon($product['ladingcode']);
-                                if (isset($mvd) && !empty($mvd)){
+                                $mvd =$mvdRepository->findByMaVanDon($product['mavandon']);
+                                if (isset($mvd) && !empty($mvd) && !empty($product['mavandon']) && isset($product['mavandon'])){
                                     $tempMaVanDon=$mvd->fetch_assoc();
+//                        print_r($tempMaVanDon);
                                 }
                             }
 
@@ -503,7 +504,7 @@ if (isset($_POST['xuatphieu'])) {
                                 <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>"
                                            id=""> Chọn
                                 </td>
-                                <td><p style="font-weight: 700;"><?php echo $product['ordercode'] ?></p>
+                                <td><p style="font-weight: 700;"><?php echo $product['code'] ?></p>
                                     <p style="color: blue"> <?php
                                         switch ($product['status']) {
                                             case "1":
@@ -525,16 +526,16 @@ if (isset($_POST['xuatphieu'])) {
                                                 echo "Đã Giao";
                                                 break;
                                             default:
-                                                echo "--";
+                                                echo "Đang updated...";
                                         }
                                         ?> </p>
-                                    <p><?php echo $product['shippingway'] ?></p>
+                                    <p><?php echo $product['line'] ?></p>
                                 </td>
                                 <td><?php echo $product['name'] ?></td>
                                 <td><img width="150px" height="150px"
                                          src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
                                          if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
-                                <td style="font-weight: bold;color: blue"><?php echo $product['ladingcode'] ?></td>
+                                <td style="font-weight: bold;color: blue"><?php echo $product['mavandon'] ?></td>
                                 <!--                        <td>-->
                                 <!--                            --><?php
                                 //                            $listUser = $userRepository->getAll();
@@ -549,11 +550,11 @@ if (isset($_POST['xuatphieu'])) {
                                 //                            }
                                 //                            ?>
                                 <!--                        </td>-->
-                                <td><p style="color:red;font-weight: 700"><?php echo $product['price'] ?><span> &#165;</span></p>
+                                <td><p style="color:red;font-weight: 700"><?php echo $product['giasp'] ?><span> &#165;</span></p>
                                     <p style="color:green;font-weight: 700"><?php echo $product['gianhap'] ?><span> &#165;</span></p>
                                 </td>
-                                <td><?php echo $product['amount'] ?></td>
-                                <td><p style="font-weight: 700"><?php echo $product['size'] ?> <span>/Kg</span></p>
+                                <td><?php echo $product['soluong'] ?></td>
+                                <td><p style="font-weight: 700"><?php echo $product['cannang'] ?> <span>/Kg</span></p>
                                     <button <?php if ($order['status']==1) echo "disabled" ?> type="button" id="modalUpdateS" class="btn-sm btn-primary "
                                             data-toggle="modal"
                                             data-target="#suacannang" data-id="<?php echo $product['id'] ?>"
@@ -564,19 +565,19 @@ if (isset($_POST['xuatphieu'])) {
                                 </td>
                                 <td>
                                     <ul style="text-align: left ;">
-                                        <li><p class="fix-status">Shop Gửi</p></li>
+<!--                                        <li><p class="fix-status">Shop Gửi</p></li>-->
                                         <li><p class="fix-status">TQ Nhận</p></li>
-                                        <li><p class="fix-status">XuấtKho TQ</p></li>
+                                        <li><p class="fix-status">Vận Chuyển </p></li>
                                         <li><p class="fix-status">NhậpKho VN</p></li>
-<!--                                        <li><p class="fix-status">Đang giao</p></li>-->
+                                        <li><p class="fix-status">Yêu cầu giao</p></li>
                                         <li><p class="fix-status">Đã giao </p></li>
                                     </ul>
                                 </td>
-                                <td><?php if (!empty($tempMaVanDon['times'])) { $obj = json_decode($tempMaVanDon['times']);} ?>
+                                <td><?php $obj=null; if (!empty($tempMaVanDon['times'])) { $obj = json_decode($tempMaVanDon['times']);} ?>
 
                                      <?php if (empty($obj)) { ?>
                                         <ul style="text-align: left;">
-                                            <li><p class="fix-status">............</p></li>
+<!--                                            <li><p class="fix-status">............</p></li>-->
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
                                             <li><p class="fix-status">............</p></li>
@@ -585,6 +586,7 @@ if (isset($_POST['xuatphieu'])) {
                                         </ul><?php
                                     } else { ?>
                                         <ul style="text-align: left;">
+<!--                                            <li><p class="fix-status">............</p></li>-->
                                             <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?>
                                             </li>
                                             <li>
@@ -596,12 +598,12 @@ if (isset($_POST['xuatphieu'])) {
                                             <li>
                                                 <p class="fix-status"><?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
                                             </li>
-<!--                                            <li>-->
-<!--                                                <p class="fix-status">--><?php //if (!empty($obj->{5})) echo $obj->{5}; ?><!--</p>-->
-<!--                                            </li>-->
                                             <li>
-                                                <p class="fix-status"><?php if (!empty($obj->{6})) echo $obj->{6}; ?></p>
+                                                <p class="fix-status"><?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
                                             </li>
+<!--                                            <li>-->
+<!--                                                <p class="fix-status">--><?php //if (!empty($obj->{6})) echo $obj->{6}; ?><!--</p>-->
+<!--                                            </li>-->
                                         </ul>
                                         <?php
                                     } ?>
@@ -1058,8 +1060,8 @@ ob_end_flush();
                 success: function (response) {//once the request successfully process to the server side it will return result here
                     response = JSON.parse(response);
                     $("#edit-form [name=\"idKH\"]").val(response.id);
-                    $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
-                    $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
+                    $("#edit-form [name=\"orderCode\"]").val(response.code);
+                    $("#edit-form [name=\"ladingCode\"]").val(response.mavandon);
                     $("#edit-form [name=\"status_id\"]").val(response.status);
                 }
             });

@@ -122,11 +122,11 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
 //                $tempMaVanDon=null;
                 if (isset($kienHang)) {
                     $link_image = $kienhangRepository->getImage($kienHang['id'])->fetch_assoc();
-                    print_r($kienHang['ladingcode']);
+//                    print_r($kienHang['ladingcode']);
                     $tempMaVanDon=null;
-                    $mvd =$mvdRepository->findByMaVanDon($kienHang['ladingcode']);
+                    $mvd =$mvdRepository->findByMaVanDon($kienHang['mavandon']);
 //                    print_r($mvd);
-                    if (isset($mvd) && !empty($mvd) && !empty($kienHang['ladingcode']) && isset($kienHang['ladingcode'])){
+                    if (isset($mvd) && !empty($mvd) && !empty($kienHang['mavandon']) && isset($kienHang['mavandon'])){
                         $tempMaVanDon=$mvd->fetch_assoc();
 //                        print_r($tempMaVanDon);
                     }
@@ -135,8 +135,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 }
                 ?>
                 <tr>
-                    <td><?php echo $i++; $kienHang['ladingcode']; ?></td>
-                    <td><p style="font-weight: 700;"><?php echo $kienHang['ordercode'] ?></p>
+                    <td><?php echo $i++; $kienHang['mavandon']; ?></td>
+                    <td><p style="font-weight: 700;"><?php echo $kienHang['mavandon'] ?></p>
                         <p style="color: blue"> <?php
                             switch ($kienHang['status']) {
                                 case "1":
@@ -164,7 +164,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     <td><img width="150px" height="150px"
                              src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo $link_image['link_image'];
                              if (empty($link_image['link_image'])) echo 'images/LogoTHzz.png' ?>"></td>
-                    <td style="color: blue"><?php echo $kienHang['ladingcode'] ?></td>
+                    <td style="color: blue"><?php echo $kienHang['mavandon'] ?></td>
                     <td>
                         <?php
                         $listUser = $userRepository->getAll();
@@ -176,34 +176,34 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         }
                         ?>
                     </td>
-                    <td><?php echo $kienHang['price'] ?><span> &#165;</span></td>
-                    <td><?php echo $kienHang['amount'] ?></td>
-                    <td><?php echo $kienHang['size'] ?> <span>/Kg</span></td>
+                    <td><?php echo $kienHang['giasp'] ?><span> &#165;</span></td>
+                    <td><?php echo $kienHang['soluong'] ?></td>
+                    <td><?php echo $kienHang['cannang'] ?> <span>/Kg</span></td>
                     <td>
                         <ul style="text-align: left ;">
-                            <li><p class="fix-status">Ngày Đặt Hàng</p></li>
+<!--                            <li><p class="fix-status">Ngày Đặt Hàng</p></li>-->
                             <li><p class="fix-status">TQ Nhận hàng</p></li>
                             <li><p class="fix-status">Vận chuyển</p></li>
                             <li><p class="fix-status">Nhập kho VN</p></li>
-                            <li><p class="fix-status">Đang giao hàng</p></li>
+                            <li><p class="fix-status">Yêu cầu giao</p></li>
                             <li><p class="fix-status">Đã giao hàng</p></li>
                         </ul>
                     </td>
                     <td><?php $obj=null; if (!empty($tempMaVanDon['times'])) { $obj = json_decode($tempMaVanDon['times']);} ?>
                         <?php if (empty($obj)) { ?>
                             <ul style="text-align: left;">
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
-                                <li><p class="fix-status">............</p></li>
+                                <li><p class="fix-status">................</p></li>
+                                <li><p class="fix-status">................</p></li>
+                                <li><p class="fix-status">................</p></li>
+                                <li><p class="fix-status">................</p></li>
+                                <li><p class="fix-status">................</p></li>
+<!--                                <li><p class="fix-status">............</p></li>-->
                             </ul><?php
                         } else { ?>
                             <ul style="text-align: left;">
                                 <?php
 //                                echo print_r($obj) ?>
-                                <li><p class="fix-status"><?php if (!empty($obj->{0})) echo $obj->{0}; ?></li>
+<!--                                <li><p class="fix-status">--><?php //if (!empty($obj->{0})) echo $obj->{0}; ?><!--</li>-->
                                 <li><p class="fix-status"><?php if (!empty($obj->{1})) echo $obj->{1}; ?></p></li>
                                 <li><p class="fix-status"><?php if (!empty($obj->{2})) echo $obj->{2}; ?></p></li>
                                 <li><p class="fix-status"><?php if (!empty($obj->{3})) echo $obj->{3}; ?></p></li>
@@ -381,8 +381,8 @@ if (isset($_POST['resetStatus'])) {
                 success: function (response) {//once the request successfully process to the server side it will return result here
                     response = JSON.parse(response);
                     $("#edit-form [name=\"idKH\"]").val(response.id);
-                    $("#edit-form [name=\"makienhang\"]").val(response.orderCode);
-                    $("#edit-form [name=\"mavandon\"]").val(response.ladingCode);
+                    $("#edit-form [name=\"makienhang\"]").val(response.code);
+                    $("#edit-form [name=\"mavandon\"]").val(response.mavandon);
                     $("#edit-form [name=\"status_id\"]").val(response.status);
                 }
             });

@@ -84,9 +84,11 @@ if (isset($_POST['taoyeucaugiao'])) {
     $listproduct = array();
     $tienvanchuyen=0;
     $tongcan=0;
+    $date= new DateTime();
     foreach ($ListMVDNhap as $mavd) {
         $maVD = $mvdRepository->findByMaVanDon($mavd)->fetch_assoc();
         if(isset($maVD) && !empty($maVD)){
+            $mvdRepository->updateTimesById($maVD['id'], 4,$date->format('Y-m-d\TH:i:s'));
             $tongcan += $maVD['cannang'];
             $tienvanchuyen+=$maVD['cannang']*$maVD['giavc'];
             array_push($listproduct, $maVD['id']);

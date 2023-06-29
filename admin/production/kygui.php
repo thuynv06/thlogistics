@@ -217,6 +217,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
         </div>
     </div>
     <hr>
+    <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
         <form name="search" class="form-inline ps-subscribe__form" method="POST"
               enctype="multipart/form-data">
@@ -254,7 +255,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
             <a style="" href="kygui.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
         </form>
     </div>
-    <div class="row">
+    <div class="col-lg-10 col-xs-12">
         <h3>Danh Sách Đơn Hàng</h3>
         <div class="table-responsive" style="padding-bottom: 20px;">
             <table id="tableShoe">
@@ -264,14 +265,13 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                     <th class="text-center" style="min-width:80px">Mã Đơn</th>
                     <th class="text-center" style="min-width:100px">Mã KH</th>
                     <th class="text-center" style="min-width:100px">Tên KH</th>
-                    <th class="text-center" style="min-width:130px">Deal</th>
+<!--                    <th class="text-center" style="min-width:130px">Deal</th>-->
                     <th class="text-center" style="min-width:100px">Status</th>
                     <th class="text-center" style="min-width:100px">Tổng Kg</th>
                     <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>
                     <th class="text-center" style="min-width:100px">Đã TT</th>
                     <th class="text-center" style="min-width:100px">Công Nợ</th>
                     <th class="text-center" style="min-width:100px">Ghi Chú</th>
-                    <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
@@ -331,8 +331,8 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
 
 
                         <!--                            </td>-->
-                        <td style="background-color: #fec243;color: black;font-weight: bold">
-                            Giá VC:<?php echo product_price($orders['giavanchuyen']) ?>
+<!--                        <td style="background-color: #fec243;color: black;font-weight: bold">-->
+<!--                            Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?>
                         <td><?php
                             switch ($orders['status']) {
                                 case "0":
@@ -355,11 +355,11 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                         <td><?php echo $orders['ghichu'] ?> </td>
                         <td><a class="btn-sm btn-dark" href="detailKyGui.php?id=<?php echo $orders['id'] ?>"
                                role="button">Chi tiết</a>
-                        <td>
-                            <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"
-                               data-toggle="modal"
-                               data-target="#myModal" data-id="<?php echo $orders['id'] ?>"
-                               role="button" onclick="openModal()">Vận Đơn</a></td>
+<!--                        <td>-->
+<!--                            <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"-->
+<!--                               data-toggle="modal"-->
+<!--                               data-target="#myModal" data-id="--><?php //echo $orders['id'] ?><!--"-->
+<!--                               role="button" onclick="openModal()">Vận Đơn</a></td>-->
                         <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
                                role="button">Sửa</a></td>
                         <td><a class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $orders['id'] ?>"
@@ -370,8 +370,8 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                 ?>
             </table>
         </div>
-
         <?php include 'paginantionList.php' ?>
+    </div>
     </div>
 </div>
 <script>

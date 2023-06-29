@@ -4,6 +4,6 @@
     $orderRepository = new OrderRepository();
     $orderRepository->deleteById($_GET['id']);
     echo "<script>alert('Hủy đơn thành công');
-        window.location.href='vandon.php';
+        window.location.href='kygui.php';
         </script>";
 ?>

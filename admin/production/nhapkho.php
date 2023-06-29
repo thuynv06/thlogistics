@@ -245,7 +245,18 @@ $ListMVDNhap=[];
                             ?> </p>
                         <p><?php echo $mvd['line'] ?></p>
                     </td>
-                    <td><p style="font-weight: 800"><?php echo $mvd['order_code'] ?></p>
+                    <td><p style="font-weight: 800"> <?php
+                            if (isset($mvd['order_id'])) {
+                                $orderCode = $orderRepository->getOrderCodeById($mvd['order_id']);
+                                if (isset($orderCode['code'])) {
+                                    echo $orderCode['code'];
+                                }
+                            } else {
+                                echo "- - -";
+                            }
+                            ?>
+
+                        </p>
                         <?php
                         $listUser = $userRepository->getAll();
                         foreach ($listUser as $user) {

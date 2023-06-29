@@ -21,7 +21,7 @@ $uploadFile = new UploadFile();
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1">Mã Kiện</label>
-                        <input readonly minlength="5" value="<?php echo $kh['orderCode'] ?>" maxlength="250"
+                        <input readonly minlength="5" value="<?php echo $kh['code'] ?>" maxlength="250"
                                name="orderCode" type="text" class="form-control"
                         >
                     </div>
@@ -58,7 +58,7 @@ $uploadFile = new UploadFile();
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="exampleInputPassword1">Size</label>
-                        <input  min="0" max="99999999999" value="<?php echo $kh['kichthuoc'] ?>" name="kichthuoc"
+                        <input  min="0" max="99999999999" value="<?php echo $kh['size'] ?>" name="kichthuoc"
                                type="text"
                                class="form-control"
                                id="exampleInputPassword1" placeholder="Nhập size S/M?L?XL ...">
@@ -90,7 +90,7 @@ $uploadFile = new UploadFile();
                         <input required min="0" max="99999999999" name="price" type="number" size="50"
                                class="form-control"
                                step="0.01"
-                               id="exampleInputPassword1" value="<?php echo $kh['price'] ?>"
+                               id="exampleInputPassword1" value="<?php echo $kh['giasp'] ?>"
                                placeholder="Nhập giá tiền">
                     </div>
                     <div class="form-group col-md-6">
@@ -104,14 +104,14 @@ $uploadFile = new UploadFile();
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="exampleInputPassword1">Số Lượng</label>
-                        <input required min="0" max="99999999999" value="<?php echo $kh['amount'] ?>" name="amount"
+                        <input required min="0" max="99999999999" value="<?php echo $kh['soluong'] ?>" name="amount"
                                type="number" step="0.01"
                                class="form-control"
                                id="exampleInputPassword1" placeholder="Nhập số lượng">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="exampleInputPassword1">Số Cân KLG</label>
-                        <input min="0" max="99999999999" name="size" value="<?php echo $kh['size'] ?>" type="number"
+                        <input min="0" max="99999999999" name="size" value="<?php echo $kh['cannang'] ?>" type="number"
                                step="0.01" class="form-control"
                                id="exampleInputPassword1" placeholder="Nhập kích cỡ (Kg)">
                     </div>
@@ -119,27 +119,27 @@ $uploadFile = new UploadFile();
                         <label for="exampleInputPassword1">Giá Vận Chuyển (VNĐ)/Kg</label>
                         <input required min="0" max="99999999999" name="feetransport" type="number" class="form-control"
                                step="0.01"
-                               id="exampleInputPassword1" value="<?php echo $kh['feetransport'] ?>"
+                               id="exampleInputPassword1" value="<?php echo $kh['giavc'] ?>"
                                placeholder="Nhập giá vận chuyển (VNĐ)">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="exampleInputPassword1">Phí Dịch Vụ</label>
                         <input required min="0" max="99999999999" name="servicefee" type="number" step="0.01"
                                class="form-control"
-                               id="exampleInputPassword1" value="<?php echo $kh['servicefee'] ?>"
+                               id="exampleInputPassword1" value="<?php echo $kh['phidv'] ?>"
                                placeholder="Nhập phí dịch vụ %: 1.6">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputPassword1">Mã Vận Đơn</label>
-                        <input minlength="5" maxlength="250" name="ladingCode" value="<?php echo $kh['ladingCode'] ?>"
+                        <input minlength="5" maxlength="250" name="ladingCode" value="<?php echo $kh['mavandon'] ?>"
                                type="text" class="form-control"
                                placeholder="Nhập mã vận đơn">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputPassword1">Hình thức vận chuyển </label>
-                        <input minlength="1" maxlength="50" name="shippingWay" value="<?php echo $kh['shippingWay'] ?>"
+                        <input minlength="1" maxlength="50" name="shippingWay" value="<?php echo $kh['line'] ?>"
                                type="text" class="form-control"
                                id="exampleInputPassword1" placeholder="Nhập hình thức vận chuyển">
                     </div>
