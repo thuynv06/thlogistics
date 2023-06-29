@@ -156,7 +156,7 @@ if (isset($_POST["btnImport"])) {
 
                             $mavandon = "";
                             if (isset($spreadSheetAry[$i][11])) {
-                                $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
+                                $mavandon = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
                             }
 
                             $cannang = 0;
@@ -177,8 +177,8 @@ if (isset($_POST["btnImport"])) {
                             array_push($listproduct, $kienhang_id);
                             $tongtienhang += $giasp * $soluong;
                             $tongtienshiptq += $shiptq;
-                            $tongcan += $size;
-                            $tienvanchuyen += $size * $giavc;
+                            $tongcan += $cannang;
+                            $tienvanchuyen += $cannang * $giavc;
                             $tongmagiamgia += $magiamgia;
 
                             // Code luu annh

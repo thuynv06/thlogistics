@@ -272,25 +272,25 @@
 
                                     <tr>
                                         <td><?php echo $i++; ?></td>
-                                        <td><p style="font-weight: 700;"><?php echo $product['orderCode'] ?></p>
+                                        <td><p style="font-weight: 700;"><?php echo $product['code'] ?></p>
                                             <p style="color: blue"> <?php
                                                 switch ($product['status']) {
+                                                    case "0":
+                                                        echo "Chờ phát hàng";
+                                                        break;
                                                     case "1":
-                                                        echo "Shop Gửi hàng";
+                                                        echo "Kho TQ Nhận";
                                                         break;
                                                     case "2":
-                                                        echo "Kho Trung Quốc Nhận";
+                                                        echo "Vận Chuyển";
                                                         break;
                                                     case "3":
-                                                        echo "Đang Vận Chuyển";
+                                                        echo "Nhập Kho VN";
                                                         break;
                                                     case "4":
-                                                        echo "Nhập Kho Việt Nam";
+                                                        echo "Yêu Cầu Giao";
                                                         break;
                                                     case "5":
-                                                        echo "Đang Giao";
-                                                        break;
-                                                    case "6":
                                                         echo "Đã Giao";
                                                         break;
                                                     default:
@@ -306,16 +306,16 @@
                                         </td>
                                         <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
                                         <td style="font-weight: bold;"><p
-                                                    style="color: blue"><?php echo $product['ladingCode'] ?> </p>
-                                            <?php echo $product['size'] . " /Kg"; ?>
+                                                    style="color: blue"><?php echo $product['mavandon'] ?> </p>
+                                            <?php echo $product['cannang'] . " /Kg"; ?>
                                         </td>
-                                        <td><p>Size: <?php echo $product['kichthuoc'] ?></p>
+                                        <td><p>Size: <?php echo $product['size'] ?></p>
                                             <p>Color: <?php echo $product['color'] ?></p>
-                                            <p>SL: <?php echo $product['amount'] ?></p>
+                                            <p>SL: <?php echo $product['soluong'] ?></p>
                                         </td>
-                                        <td><p style="color:green"><?php echo $product['price'] ?><span> &#165;</span>
+                                        <td><p style="color:green"><?php echo $product['giasp'] ?><span> &#165;</span>
                                             </p></td>
-                                        <td><p style="color:blue"><?php echo $product['totalyen'] ?> <span> ¥</span></p>
+                                        <td><p style="color:blue"><?php echo $product['tongte'] ?> <span> ¥</span></p>
                                         </td>
                                         <td><p style=""><?php echo $product['shiptq'] ?> <span> ¥</span></p></td>
                                         <td><p style=""><?php echo $product['magiamgia'] ?> <span> ¥</span></p></td>
@@ -329,7 +329,7 @@
                                                 <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
                                             </ul>
                                         </td>
-                                        <td><?php $obj = json_decode($product['listTimeStatus']); ?>
+                                        <td><?php $obj = json_decode($product['times']); ?>
                                             <ul style="text-align: left;">
                                                 <li><p class="fix-status"><?php
                                                         if (!empty($obj->{1})) {

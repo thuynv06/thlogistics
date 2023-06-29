@@ -63,27 +63,27 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                             ?>
                             <tr>
                             <td><?php echo $i++; ?></td>
-                            <td><p style="font-weight: 500;color: #0b0b0b"><?php echo $kienHang['orderCode'] ?></p>
-                                <p><?php echo $kienHang['shippingWay'] ?></p>
+                            <td><p style="font-weight: 500;color: #0b0b0b"><?php echo $kienHang['code'] ?></p>
+                                <p><?php echo $kienHang['line'] ?></p>
                             </td>
                             <td style="color: blue"><?php
                                 switch ($kienHang['status']) {
+                                    case "0":
+                                        echo "---";
+                                        break;
                                     case "1":
-                                        echo "Shop gửi hàng";
+                                        echo "Kho TQ Nhận";
                                         break;
-                                    case "2":
-                                        echo "Kho Trung Quốc Nhận";
+                                     case "2":
+                                         echo "Vận Chuyển";
+                                         break;
+                                    case "3":
+                                        echo "Nhập Kho VN";
                                         break;
-                                    // case "3":
-                                    //     echo "Đang Vận Chuyển";
-                                    //     break;
                                     case "4":
-                                        echo "Nhập Kho Việt Nam";
-                                        break;
-                                    case "5":
                                         echo "Đang Giao";
                                         break;
-                                    case "6":
+                                    case "5":
                                         echo "Đã Giao";
                                         break;
                                     default:
@@ -91,8 +91,8 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                                 }
                                 ?>
                             </td>
-                            <td><?php echo $kienHang['ladingCode'] ?></td>
-                            <td><?php echo $kienHang['size'] ?><span> Kg</span></td>
+                            <td><?php echo $kienHang['mavandon'] ?></td>
+                            <td><?php echo $kienHang['cannang'] ?><span> Kg</span></td>
                             <td>
                                 <ul style="text-align: left ;">
                                     <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>
@@ -103,7 +103,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPage($checkCookie['id'], $
                                     <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
                                 </ul>
                             </td>
-                            <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
+                            <td><?php $obj = json_decode($kienHang['times']); ?>
                                 <ul style="text-align: left;">
                                     <li><p class="fix-status"><?php
                                             if (!empty($obj->{1})) {
