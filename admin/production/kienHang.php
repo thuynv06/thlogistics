@@ -124,11 +124,13 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     $link_image = $kienhangRepository->getImage($kienHang['id'])->fetch_assoc();
 //                    print_r($kienHang['ladingcode']);
                     $tempMaVanDon=null;
-                    $mvd =$mvdRepository->findByMaVanDon($kienHang['mavandon']);
+                    if(!empty($kienHang['mavandon']) && isset($kienHang['mavandon'])){
+                        $mvd =$mvdRepository->findByMaVanDon($kienHang['mavandon']);
 //                    print_r($mvd);
-                    if (isset($mvd) && !empty($mvd) && !empty($kienHang['mavandon']) && isset($kienHang['mavandon'])){
-                        $tempMaVanDon=$mvd->fetch_assoc();
+                        if (isset($mvd) && !empty($mvd) && !empty($kienHang['mavandon']) && isset($kienHang['mavandon'])){
+                            $tempMaVanDon=$mvd->fetch_assoc();
 //                        print_r($tempMaVanDon);
+                        }
                     }
 //                    $typeP = $kienhangRepository->getType($kienHang['order_id'])->fetch_assoc();
 //                    echo $typeP['type'];
@@ -139,8 +141,11 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     <td><p style="font-weight: 700;"><?php echo $kienHang['mavandon'] ?></p>
                         <p style="color: blue"> <?php
                             switch ($kienHang['status']) {
+                                case "0":
+                                    echo "Chờ Phát Hàng";
+                                    break;
                                 case "1":
-                                    echo "Kho Trung Quốc Nhận";
+                                    echo "K";
                                     break;
                                 case "2":
                                     echo "Đang Vận Chuyển";

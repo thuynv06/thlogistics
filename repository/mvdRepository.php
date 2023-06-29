@@ -76,6 +76,14 @@ class MaVanDonRepository
         return mysqli_query($conn, $sql);
     }
 
+    public  function  updatedMVDJoinKienHang(){
+        global $conn;
+        $sql='update mvd as m join kienhang as k set m.user_id=k.user_id,m.order_id=k.order_id 
+                                   where m.mvd = k.mavandon and m.user_id is null and m.order_id is null';
+        mysqli_query($conn, $sql);
+
+    }
+
     public function getTotalResult()
     {
         global $conn;

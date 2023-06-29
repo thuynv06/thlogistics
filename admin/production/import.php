@@ -80,7 +80,7 @@ if (isset($_POST["btnImport"])) {
                 }
 
                 $tygiate = $spreadSheetAry[1][13];
-                $giavanchuyen = $spreadSheetAry[2][13];
+                $giavc = $spreadSheetAry[2][13];
                 $phidichvu = $spreadSheetAry[6][13];
                 $listproduct = array();
                 $tongtienhang = 0;
@@ -103,7 +103,7 @@ if (isset($_POST["btnImport"])) {
                             $newCode = $userCode.".No".$numCode;
                         }
                     }
-                    $orderId = $orderRepository->createOrder($user_id,$newCode ,null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    $orderId = $orderRepository->createOrder($user_id,$newCode ,null, $tygiate, $phidichvu, $giavc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     for ($i = 14; $i < $sheetCount; $i++) {
 
 //                    $drawing = $spreadSheetAry[$i]->getDrawingCollection();
@@ -123,22 +123,22 @@ if (isset($_POST["btnImport"])) {
                             if (isset($spreadSheetAry[$i][2])) {
                                 $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
                             }
-                            $kichthuoc = "";
+                            $size = "";
                             if (isset($spreadSheetAry[$i][3])) {
-                                $kichthuoc = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+                                $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
                             }
                             $color = "";
                             if (isset($spreadSheetAry[$i][4])) {
                                 $color = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
                             }
-                            $amount = $spreadSheetAry[$i][5];
+                            $soluong = $spreadSheetAry[$i][5];
                             if (isset($spreadSheetAry[$i][5])) {
-                                $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
+                                $soluong = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
                             }
 //            echo $amount;
-                            $price = 0;
+                            $giasp = 0;
                             if (isset($spreadSheetAry[$i][6])) {
-                                $price = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
+                                $giasp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
                             }
 
                             $shiptq = 0;
@@ -154,14 +154,14 @@ if (isset($_POST["btnImport"])) {
                                 $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
                             }
 
-                            $ladingCode = "";
+                            $mavandon = "";
                             if (isset($spreadSheetAry[$i][11])) {
                                 $ladingCode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][11]);
                             }
 
-                            $size = 0;
+                            $cannang = 0;
                             if (isset($spreadSheetAry[$i][13])) {
-                                $size = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
+                                $cannang = mysqli_real_escape_string($conn, $spreadSheetAry[$i][13]);
                             }
 
 
@@ -171,14 +171,14 @@ if (isset($_POST["btnImport"])) {
 //                            $myObj->{0} = "$dateCreadted";
 //                            $listStatusJSON = json_encode($myObj);
 
-
-                            $kienhang_id = $kienhangRepository->insert($orderId, $price, $phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 0, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, null, $shiptq, $magiamgia, $kichthuoc, $color);
+                            $kienhang_id = $kienhangRepository->insert($orderId,$giasp,$phidichvu, $name, $nametq, $mavandon, $soluong, "BT/HN1", $cannang, $giavc, 0, $giasp, $tygiate, $user_id, $linksp, $note, $dateCreadted, null,$shiptq,$magiamgia,$size,$color);
+//                            $kienhang_id = $kienhangRepository->insert($orderId, $price, $phidichvu, $name, $nametq, $ladingCode, $amount, "BT/HN1", $size, $giavanchuyen, 0, $price, $tygiate, $user_id, $linksp, $note, $dateCreadted, null, $shiptq, $magiamgia, $kichthuoc, $color);
                             $kienhangRepository->updateMaKien($kienhang_id);
                             array_push($listproduct, $kienhang_id);
-                            $tongtienhang += $price * $amount;
+                            $tongtienhang += $giasp * $soluong;
                             $tongtienshiptq += $shiptq;
                             $tongcan += $size;
-                            $tienvanchuyen += $size * $giavanchuyen;
+                            $tienvanchuyen += $size * $giavc;
                             $tongmagiamgia += $magiamgia;
 
                             // Code luu annh
@@ -228,7 +228,7 @@ if (isset($_POST["btnImport"])) {
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
 
-                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct,$dateCreadted);
+                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavc, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct,$dateCreadted);
                     echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";

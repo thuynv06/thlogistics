@@ -296,11 +296,39 @@ if (isset($_POST['xuatphieu'])) {
                     <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
                             type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
                     </button>
+                    <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-primary" type="submit" name="updatedMaVanDon"
+                                                                              href="detailOrder.php?id=<?php echo $order['id'] ?>"
+                                                                              role="button">Cập Nhật MVĐ
+                    </button>
+
 
                 </div>
 
             </div>
             <?php
+
+            if (isset($_POST['updatedMaVanDon'])) {
+                $arr_unserialize1 = unserialize($order['listsproduct']);
+//                print_r($arr_unserialize1);
+                    foreach ($arr_unserialize1 as $idKH) {
+                        $product = $kienhangRepository->getById($idKH)->fetch_assoc();
+//                        $tempMaVanDon=null;
+                        if(!empty($product['mavandon']) && isset($product['mavandon'])){
+                            $mvd =$mvdRepository->findByMaVanDon($product['mavandon']);
+//                    print_r($mvd);
+                            if (isset($mvd) && !empty($mvd) && !empty($product['mavandon']) && isset($product['mavandon'])){
+                                $tempMaVanDon=$mvd->fetch_assoc();
+                                print_r($tempMaVanDon);
+                                if(isset($tempMaVanDon) && !empty($tempMaVanDon)){
+                                    $kienhangRepository->updateKienHangByMVD($idKH,$tempMaVanDon['id'],$tempMaVanDon['cannang'],$tempMaVanDon['giavc'],$tempMaVanDon['status'],$tempMaVanDon['times']);
+                                }
+//                        print_r($tempMaVanDon);
+                            }
+                        }
+                    }
+            }
+
+
             if (isset($_POST['updateOrder'])) {
                 $tygiate = $order['tygiate'];
                 if (!empty($_POST['tygiate'])) {
@@ -354,9 +382,9 @@ if (isset($_POST['xuatphieu'])) {
                 if (!empty($arr_unserialize1)) {
                     foreach ($arr_unserialize1 as $masp) {
                         $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                        $tongtienhang += $product['price'] * $product['amount'];
+                        $tongtienhang += $product['giasp'] * $product['soluong'];
                         $shiptq += $product['shiptq'];
-                        $tongcan += $product['size'];
+                        $tongcan += $product['cannang'];
                         $giamgia += $product['magiamgia'];
                     }
                 }
@@ -383,10 +411,12 @@ if (isset($_POST['xuatphieu'])) {
             data-target="#vandon" data-id="<?php echo $order['id'] ?>"
             role="button" onclick="openVanDon()">Vận Đơn
     </button>
-    <button  <?php if ($order['status']==1) echo "disabled" ?>  class="btn-sm btn-warning" id="modalMaVanDon" data-toggle="modal"
-                                                                data-target="#mavandon" data-id="<?php echo $order['id'] ?>"
-                                                                role="button" onclick="openUpdateAllMVD()">Update All MVĐ
-    </button>
+<!--    <button  --><?php //if ($order['status']==1) echo "disabled" ?><!--  class="btn-sm btn-warning" id="modalMaVanDon" data-toggle="modal"-->
+<!--                                                                data-target="#mavandon" data-id="--><?php //echo $order['id'] ?><!--"-->
+<!--                                                                role="button" onclick="openUpdateAllMVD()">Update All MVĐ-->
+<!--    </button>-->
+
+
     <h3>Danh Sách Sản Phẩm</h3>
     <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
@@ -507,22 +537,22 @@ if (isset($_POST['xuatphieu'])) {
                                 <td><p style="font-weight: 700;"><?php echo $product['code'] ?></p>
                                     <p style="color: blue"> <?php
                                         switch ($product['status']) {
+                                            case "0":
+                                                echo "Chờ Phát Hàng";
+                                                break;
                                             case "1":
-                                                echo "Shop Gửi hàng";
+                                                echo "Kho TQốc Nhận";
                                                 break;
                                             case "2":
-                                                echo "Kho Trung Quốc Nhận";
-                                                break;
-                                            case "3":
                                                 echo "Đang Vận Chuyển";
                                                 break;
-                                            case "4":
-                                                echo "Nhập Kho Việt Nam";
+                                            case "3":
+                                                echo "Nhập Kho VN";
                                                 break;
-                                            case "5":
+                                            case "4":
                                                 echo "Đang Giao";
                                                 break;
-                                            case "6":
+                                            case "5":
                                                 echo "Đã Giao";
                                                 break;
                                             default:
@@ -561,7 +591,6 @@ if (isset($_POST['xuatphieu'])) {
                                             onclick="openModalSuaCan()">
                                         Sửa Giá/Cân
                                     </button>
-
                                 </td>
                                 <td>
                                     <ul style="text-align: left ;">
@@ -848,8 +877,8 @@ if (isset($_POST['xuatphieu'])) {
                     if (!empty($arr_unserialize1)) {
                         foreach ($arr_unserialize1 as $masp) {
                             $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                            $tongcan += $product['size'];
-                            $tienvanchuyen += $product['size'] * $product['feetransport'];
+                            $tongcan += $product['cannang'];
+                            $tienvanchuyen += $product['cannang'] * $product['giavc'];
                         }
                     }
 //                    $tienvanchuyen = $tongcan * $order['giavanchuyen'];
@@ -1110,11 +1139,11 @@ ob_end_flush();
                     response = JSON.parse(response);
                     $("#edit-form [name=\"idKH\"]").val(response.id);
                     // $("#edit-form [name=\"orderCode\"]").val(response.orderCode);
-                    $("#edit-form [name=\"ladingCode\"]").val(response.ladingCode);
-                    $("#edit-form [name=\"socan\"]").val(response.size);
+                    $("#edit-form [name=\"ladingCode\"]").val(response.mavandon);
+                    $("#edit-form [name=\"socan\"]").val(response.cannang);
                     $("#edit-form [name=\"gianhap\"]").val(response.gianhap);
                     $("#edit-form [name=\"giamgiacuahang\"]").val(response.giamgiacuahang);
-                    $("#edit-form [name=\"giavchuyen\"]").val(response.feetransport);
+                    $("#edit-form [name=\"giavchuyen\"]").val(response.giavc);
 
                     if (response.feetransport == 28000){
                         document.getElementById('tmdt').checked=true;

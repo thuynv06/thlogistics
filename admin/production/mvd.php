@@ -32,7 +32,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                 <form name="search" class="form-inline ps-subscribe__form" method="POST"
                       enctype="multipart/form-data">
                     <div class="form-group">
-                        <input required style="margin-right: 20px; margin-bottom: 5px;"
+                        <input  style="margin-right: 20px; margin-bottom: 5px;"
                                class="form-control input-large " name="ladingCode"
                                type="text" value="" placeholder="Tìm theo mã vận đơn">
                     </div>
@@ -68,12 +68,23 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                         Cứu
                     </button>
                     <a style="" href="mvd.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
+
+                    <button name="updatedMaVanDon" class="btn btn-warning" style="margin-right: 20px; "> Cập nhập Mã Vận Đơn
+                    </button>
+                    <?php // cập nhập mã vận đơn link với bảng kiện hàng các đơn hàng order.
+                    if (isset($_POST['updatedMaVanDon'])) {
+                        $mvdRepository->updatedMVDJoinKienHang();
+                        echo "<script>window.location.href='mvd.php';</script>";
+                    }
+                    ?>
+
                 </form>
             </div>
 
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                 <?php include 'paginantionList.php' ?>
             </div>
             <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
