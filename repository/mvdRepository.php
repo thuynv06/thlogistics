@@ -76,6 +76,15 @@ class MaVanDonRepository
         return mysqli_query($conn, $sql);
     }
 
+    public function findByStatusAndUserId($status_id,$user_id)
+    {
+        global $conn;
+        $sql = "select * from mvd as m where m.status=$status_id and m.user_id=$user_id ORDER BY id DESC";
+        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
+
     public  function  updatedMVDJoinKienHang(){
         global $conn;
         $sql='update mvd as m join kienhang as k set m.user_id=k.user_id,m.order_id=k.order_id 
@@ -112,7 +121,7 @@ class MaVanDonRepository
         global $conn;
         $sql = "SELECT * FROM `mvd` where user_id=$user_id ORDER BY id DESC  LIMIT $offset, $total_records_per_page ";
         if (!empty($ladingCode)) {
-            $sql = "SELECT * FROM `mvd` as k where m.user_id=$user_id and m.mvd='$ladingCode' ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
+            $sql = "SELECT * FROM `mvd` as m where m.user_id=$user_id and m.mvd='$ladingCode' ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
         }
         mysqli_query($conn, 'set names "utf8"');
 

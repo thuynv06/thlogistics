@@ -9,7 +9,19 @@
 <body class="ie9 lt-ie10"><![endif]-->
 
 <body class="ps-loading">
-<?php include 'header.php'; ?>
+<?php include 'header.php';
+
+require_once("repository/mvdRepository.php");
+require_once("repository/statusRepository.php");
+require_once("repository/orderRepository.php");
+require_once("repository/userRepository.php");
+$userRepository = new UserRepository();
+$orderRepository = new OrderRepository();
+//$kienhangRepository = new KienHangRepository();
+$mvdRepository = new MaVanDonRepository();
+$statusRepository = new StatusRepository();
+?>
+
 <main class="ps-main">
     <div class="ps-container">
 
@@ -19,20 +31,38 @@
                 <img src="images/devider.png">
             </div>
             <div class="row">
-                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-xs-12">
                 </div>
-                <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 " style="padding-bottom: 30px;">
-                    <form id="tracuu" class="ps-subscribe__form" method="POST"
-                    >
-                    <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"
-                           placeholder="Nhập mã vận đơn…">
-                    <button style="background-color: #ff6c00;">Tra Cứu</button>
-                    </form>
+                <div class="col-lg-10 col-xs-12 " style="padding-bottom: 30px;">
+<!--                    <form name="search" class="form-inline ps-subscribe__form" method="POST"-->
+<!--                          enctype="multipart/form-data">-->
+<!--                        <div class="form-group">-->
+<!--                            <input  style="margin-right: 20px; margin-bottom: 5px;"-->
+<!--                                    class="form-control input-large " name="ladingCode"-->
+<!--                                    type="text" value="" placeholder="Tìm theo mã vận đơn">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id"-->
+<!--                                    class="form-control custom-select " onchange="searchStatus()">-->
+<!--                                <option value="">Lọc theo trang thái</option>-->
+<!--                                --><?php
+//                                $listStatus = $statusRepository->getAll();
+//                                foreach ($listStatus as $status) {
+//                                    ?>
+<!--                                    <option value="--><?php //echo $status['status_id']; ?><!--">--><?php //echo $status['name']; ?><!--</option>-->
+<!--                                    --><?php
+//                                }
+//                                ?>
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra-->
+<!--                            Cứu-->
+<!--                        </button>-->
+<!--                    </form>-->
                 </div>
-                <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
+                <div class="col-lg-2 col-xs-12 ">
                 </div>
             </div>
-
         </div>
         <?php include "listkienhang.php"; ?>
     </div>

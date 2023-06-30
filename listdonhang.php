@@ -45,16 +45,18 @@ function product_price($priceFloat)
 <div class="ps-danhsachkienhang">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            <div class="btnquanlykienhang">
-                <a href="danhsachdonhang.php" class="btn btn-primary btn-th">Tất cả kiện hàng</a>
-                <a href="vandon.php" class="btn btn-primary btn-th">Vận đơn</a>
-<!--                <a href="" class="btn btn-primary btn-th">Giao hàng</a>-->
-            </div>
             <div class="titleTH">
                 <h3 style="font-weight: 700;">DANH SÁCH ĐƠN HÀNG</h3>
                 <img src="images/devider.png">
 
             </div>
+            <hr>
+            <div class="btnquanlykienhang">
+                <a href="customer-packages.php" class="btn btn-primary ">Tất cả kiện hàng</a>
+                <a href="vandon.php" class="btn btn-primary ">Danh Sách Đơn Hàng /Phiếu Xuất</a>
+<!--                <a href="" class="btn btn-primary btn-th">Giao hàng</a>-->
+            </div>
+            <hr>
             <div class="table-responsive">
                 <table id="tableShoeIndex">
                     <tr>

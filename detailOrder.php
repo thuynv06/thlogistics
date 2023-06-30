@@ -42,12 +42,15 @@
         require_once("repository/kienhangRepository.php");
         require_once("repository/orderRepository.php");
         require_once("repository/statusRepository.php");
-
+        require_once("repository/mvdRepository.php");
+        require_once("repository/userRepository.php");
+        $userRepository = new UserRepository();
         $kienhangRepository = new KienHangRepository();
+        $mvdRepository = new MaVanDonRepository();
         $orderRepository = new OrderRepository();
         $statusRepository = new StatusRepository();
         $order = $orderRepository->getById($_GET['id']);
-        $kienHangList = null;
+//        $kienHangList = null;
         function product_price($priceFloat)
         {
 //            $symbol = ' VNĐ';
@@ -61,13 +64,12 @@
 
         ?>
         <div class="ps-danhsachkienhang">
-
             <div class="row" style="background-color: #ffe6d3; border-radius: 33px;">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding: 15px;">
                     <div class="btnquanlykienhang">
-                        <a href="danhsachdonhang.php" class="btn btn-primary btn-th">Tất cả kiện hàng</a>
-                        <a href="vandon.php" class="btn btn-primary btn-th">Vận đơn</a>
-                        <a href="" class="btn btn-primary btn-th">Giao hàng</a>
+                        <a href="customer-packages.php" class="btn btn-primary ">Tất cả kiện hàng</a>
+                        <a href="vandon.php" class="btn btn-primary "> Danh Sách Đơn Hàng /Phiếu Xuất</a>
+                        <a href="" class="btn btn-primary ">Reload</a>
                     </div>
                     <div class="col-md-3 table-responsive">
                         <h3>Thông Tin Khách Hàng</h3>
@@ -100,13 +102,13 @@
                         <br>
 
                     </div>
-<!--                    <div class="col-md-3 table-responsive " style="display: block;margin-top: 22px;-->
-<!--                      margin-left: auto;-->
-<!--                      margin-right: auto;-->
-<!--                      text-align: center">-->
-<!--                        <img width="300px" height="300px"-->
-<!--                             src="--><?php //echo 'images/logoth1688.png' ?><!--">-->
-<!--                    </div>-->
+                    <!--                    <div class="col-md-3 table-responsive " style="display: block;margin-top: 22px;-->
+                    <!--                      margin-left: auto;-->
+                    <!--                      margin-right: auto;-->
+                    <!--                      text-align: center">-->
+                    <!--                        <img width="300px" height="300px"-->
+                    <!--                             src="--><?php //echo 'images/logoth1688.png' ?><!--">-->
+                    <!--                    </div>-->
                     <div class="col-md-3 table-responsive">
                         <h3>Tổng Quan Đơn Hàng</h3>
                         <table id="tableShoeIndex">
@@ -147,11 +149,11 @@
                                 <td><?php if (!empty($order['phidichvu'])) echo $order['phidichvu'] * 100 ?>
                                     <span> %</span></td>
                             </tr>
-<!--                            <tr style="min-width:100px">-->
-<!--                                <th>Tiền Công</th>-->
-<!--                                <td>--><?php //if (!empty($order['tiencong'])) echo product_price($order['tiencong']) ?>
-<!--                                    <span> VNĐ</span></td>-->
-<!--                            </tr>-->
+                            <!--                            <tr style="min-width:100px">-->
+                            <!--                                <th>Tiền Công</th>-->
+                            <!--                                <td>--><?php //if (!empty($order['tiencong'])) echo product_price($order['tiencong']) ?>
+                            <!--                                    <span> VNĐ</span></td>-->
+                            <!--                            </tr>-->
                             <tr style="min-width:100px">
                                 <th>Ship về VN</th>
                                 <td><?php if (!empty($order['tienvanchuyen'])) echo product_price($order['tienvanchuyen']) ?>
@@ -204,188 +206,37 @@
             </div>
             <div class="row">
                 <h3>Danh Sách Sản Phẩm</h3>
+                <hr>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
 
-                    <form name="search" class="form-inline ps-subscribe__form" method="POST"
-                          enctype="multipart/form-data">
-                        <div class="form-group">
-                            <input required style="margin-right: 20px; margin-bottom: 5px;"
-                                   class="form-control input-large " name="mavandon"
-                                   type="text" value="" placeholder="Nhập Mã Vận Đơn">
-                        </div>
-                        <div class="form-group">
-                            <select style="margin-right: 20px; margin-bottom: 5px;" name="trangthai"
-                                    class="form-select custom-select" onchange="searchStatus()">
-                                <?php
-                                $listStatus = $statusRepository->getAll();
-                                foreach ($listStatus as $status) {
-                                    ?>
-                                    <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">
-                            Tra Cứu
-                        </button>
-                        <a style="" href="detailOrder.php?id=<?php echo $_GET['id']?>" class="btn btn-primary btn-large btn-th">RELOAD</a>
-                    </form>
-
-                <form method="POST" enctype="multipart/form-data">
-                    <!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
-                    <!--                            role="button">Xuất Phiếu-->
-                    <!--                    </button>-->
-                    <div class="table-responsive">
-                        <table id="tableShoeIndex">
-                            <tr>
-                                <th class="text-center" style="min-width:50px">STT</th>
-                                <th class="text-center" style="min-width:95px;">Mã Kiện</th>
-                                <th class="text-center" style="min-width:150px">Tên Kiện Hàng</th>
-                                <th class="text-center" style="min-width:95px;">Ảnh</th>
-                                <th class="text-center" style="min-width:50px">Link SP</th>
-                                <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
-                                <th class="text-center" style="min-width:50px">Size/Color/SL</th>
-                                <!--                <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
-                                <th class="text-center" style="min-width:50px">Giá</th>
-                                <th class="text-center" style="min-width:50px">Tiền Hàng</th>
-                                <th class="text-center" style="min-width:50px">Giảm Giá</th>
-                                <th class="text-center" style="min-width:50px">ShipTQ</th>
-                                <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
-                                <th class="text-center" style="min-width:150px">Lộ Trình</th>
-                                <th class="text-center" style="min-width:150px">Chi tiết</th>
-                                <th class="text-center" style="min-width:100px">Ghi Chú</th>
-
-                            </tr>
-                            <?php
-                            //            $order = $orderRepository->getById($_GET['id']);
-                            //            echo print_r($listOrder, true);
-                            //            echo(print_r($order, true));
-                            $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
-                            //                            echo(print_r($arr_unserialize1, true));
-                            if (!empty($arr_unserialize1)) {
-                                $i = 1;
-                                foreach ($arr_unserialize1 as $masp) {
-                                    $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                                    $link_image = $kienhangRepository->getImage($product['id'])->fetch_assoc();
-
-                                    //                    echo(print_r($product, true));?>
-
-                                    <tr>
-                                        <td><?php echo $i++; ?></td>
-                                        <td><p style="font-weight: 700;"><?php echo $product['code'] ?></p>
-                                            <p style="color: blue"> <?php
-                                                switch ($product['status']) {
-                                                    case "0":
-                                                        echo "Chờ phát hàng";
-                                                        break;
-                                                    case "1":
-                                                        echo "Kho TQ Nhận";
-                                                        break;
-                                                    case "2":
-                                                        echo "Vận Chuyển";
-                                                        break;
-                                                    case "3":
-                                                        echo "Nhập Kho VN";
-                                                        break;
-                                                    case "4":
-                                                        echo "Yêu Cầu Giao";
-                                                        break;
-                                                    case "5":
-                                                        echo "Đã Giao";
-                                                        break;
-                                                    default:
-                                                        echo "--";
-                                                }
-                                                ?> </p>
-<!--                                            <p>--><?php //echo $product['shippingWay'] ?><!--</p>-->
-                                        </td>
-                                        <td><p><?php echo $product['name'] ?></p></td>
-                                        <td><img width="150px" height="150px"
-                                                 src="<?php if (!empty($link_image['link_image']) && isset($link_image['link_image'])) echo "admin/production/" . $link_image['link_image'];
-                                                 if (empty($link_image['link_image'])) echo 'admin/production/images/LogoTHzz.png' ?>">
-                                        </td>
-                                        <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
-                                        <td style="font-weight: bold;"><p
-                                                    style="color: blue"><?php echo $product['mavandon'] ?> </p>
-                                            <?php echo $product['cannang'] . " /Kg"; ?>
-                                        </td>
-                                        <td><p>Size: <?php echo $product['size'] ?></p>
-                                            <p>Color: <?php echo $product['color'] ?></p>
-                                            <p>SL: <?php echo $product['soluong'] ?></p>
-                                        </td>
-                                        <td><p style="color:green"><?php echo $product['giasp'] ?><span> &#165;</span>
-                                            </p></td>
-                                        <td><p style="color:blue"><?php echo $product['tongte'] ?> <span> ¥</span></p>
-                                        </td>
-                                        <td><p style=""><?php echo $product['shiptq'] ?> <span> ¥</span></p></td>
-                                        <td><p style=""><?php echo $product['magiamgia'] ?> <span> ¥</span></p></td>
-                                        <td>
-                                            <ul style="text-align: left ;">
-                                                <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>
-                                                <li><p class="fix-status"><span>&#8658;</span> TQ Nhận hàng</p></li>
-                                                <!-- <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li> -->
-                                                <li><p class="fix-status"><span>&#8658;</span> Nhập kho VN</p></li>
-                                                <li><p class="fix-status"><span>&#8658;</span> Đang giao hàng</p></li>
-                                                <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
-                                            </ul>
-                                        </td>
-                                        <td><?php $obj = json_decode($product['times']); ?>
-                                            <ul style="text-align: left;">
-                                                <li><p class="fix-status"><?php
-                                                        if (!empty($obj->{1})) {
-                                                            echo $obj->{1};
-                                                        } else {
-                                                            echo "--------------";
-                                                        }
-                                                        ?></p></li>
-                                                <li><p class="fix-status"><?php
-                                                        if (!empty($obj->{2})) {
-                                                            echo $obj->{2};
-                                                        } else {
-                                                            echo "--------------";
-                                                        } ?></p></li>
-                                                <!-- <li><p class="fix-status"><?php
-                                                // if (!empty($obj->{3})) {
-                                                //     echo $obj->{3};
-                                                // } else {
-                                                //     echo "--------------";
-                                                // } ?></p></li> -->
-                                                <li>
-                                                    <p class="fix-status"><?php if (!empty($obj->{4})) {
-                                                            echo $obj->{4};
-                                                        } else {
-                                                            echo "--------------";
-                                                        } ?></p></li>
-                                                <li><p class="fix-status"><?php
-                                                        if (!empty($obj->{5})) {
-                                                            echo $obj->{5};
-                                                        } else {
-                                                            echo "--------------";
-                                                        } ?></p></li>
-                                                <li><p class="fix-status"><?php
-                                                        if (!empty($obj->{6})) {
-                                                            echo $obj->{6};
-                                                        } else {
-                                                            echo "--------------";
-                                                        } ?></p></li>
-                                            </ul>
-                                        </td>
-                                        <td><p><?php if (!empty($product['note'])) {
-                                                    echo $product['note'];
-                                                } else echo "---" ?></p></td>
-                                    </tr>
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </table>
-                        <div>
-                </form>
-
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                </div>
             </div>
-        </div>
+            <hr>
+            <!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
+            <!--                            role="button">Xuất Phiếu-->
+            <!--                    </button>-->
+            <div class="row">
+            <?php
+            if ($order['type']==0){
+                include 'renderkienhang.php';
+            }else{
+                $listMaVanDon = array();
+                $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
+//                                        echo(print_r($arr_unserialize1, true));
+                if (!empty($arr_unserialize1)) {
+                    foreach ($arr_unserialize1 as $id) {
+                        $temp = $mvdRepository->getById($id)->fetch_assoc();
+//                        print_r($temp);
+                        array_push($listMaVanDon, $temp);
+                    }
+                }
+//                print_r($listMaVanDon);
+                include 'renderMVD.php';
+            }?>
+            </div>
 
-    </div>
 </main>
 <?php include 'footer.php'; ?>
 <!-- JS Library-->
