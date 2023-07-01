@@ -50,11 +50,21 @@ class MaVanDonRepository
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
+
+//    public function findByMaVanDonAndOrderId($ladingCode,$orderId)
+//    {
+//        global $conn;
+//        $sql = "select * from mvd as m where m.mvd like '%$ladingCode%' and m.order_id = $orderId ORDER BY id DESC";
+////        echo $sql;
+//        mysqli_query($conn, 'set names "utf8"');
+//        return mysqli_query($conn, $sql);
+//    }
+
     public function findByMaVanDonAndOrderId($ladingCode,$OrderID)
     {
         global $conn;
-        $sql = "select * from mvd as m where m.mvd LIKE '%$ladingCode%' and m.order_id=$OrderID ORDER BY id DESC";
-//        echo $sql;
+        $sql = "select * from mvd as m where  m.order_id=$OrderID and m.mvd LIKE'%$ladingCode%' ORDER BY id DESC";
+        echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
@@ -80,7 +90,15 @@ class MaVanDonRepository
     {
         global $conn;
         $sql = "select * from mvd as m where m.status=$status_id and m.user_id=$user_id ORDER BY id DESC";
-        echo $sql;
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
+    public function findByStatusAndUserIdAndOrderID($status_id,$user_id,$order_id)
+    {
+        global $conn;
+        $sql = "select * from mvd as m where m.status=$status_id and m.user_id=$user_id && order_id=$order_id ORDER BY id DESC";
+//        echo $sql;
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }

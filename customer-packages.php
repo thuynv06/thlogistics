@@ -27,7 +27,7 @@ $statusRepository = new StatusRepository();
         <?php
         require_once("backend/auth.php");
         $checkCookie = Auth::loginWithCookie();
-        $listMaVanDon = Array();
+        $listMaVanDon = array();
 
 
         if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
@@ -102,11 +102,27 @@ $statusRepository = new StatusRepository();
                             </button>
                         </form>
 
-                    </div>
-<!--                    // do du lieu ra bang-->
-                    <?php include 'renderMVD.php'; ?>
 
-<!--                    // phan trang-->
+                    </div>
+                    <!--                    // do du lieu ra bang-->
+                    <?php
+                    if (!empty($_GET['mvd'])) {
+                        $ladingCode = $_GET['mvd'];
+                        $listMaVanDon = $mvdRepository->findByMaVanDon($ladingCode);
+                    }
+
+                    if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                        $ladingCode = $_POST['ladingCode'];
+                        $listMaVanDon = $mvdRepository->findByMaVanDon($ladingCode);
+                    }
+                    if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                        $statusid = $_POST['status_id'];
+                        $listMaVanDon = $mvdRepository->findByStatusAndUserId($statusid, $checkCookie['id']);
+                    }
+
+                    include 'renderMVD.php'; ?>
+
+                    <!--                    // phan trang-->
                     <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
                         <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
                     </div>

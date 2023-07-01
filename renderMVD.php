@@ -16,33 +16,23 @@
             </tr>
             <?php
 
-            if (!empty($_GET['mvd'])) {
-                $ladingCode = $_GET['mvd'];
-                $listMaVanDon = $mvdRepository->findByMaVanDon($ladingCode);
-            }
 
-            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
-                $ladingCode = $_POST['ladingCode'];
-                $listMaVanDon = $mvdRepository->findByMaVanDon($ladingCode);
-            }
-            if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
-                $statusid = $_POST['status_id'];
-                $listMaVanDon = $mvdRepository->findByStatusAndUserId($statusid, $checkCookie['id']);
-            }
+
+
             //                            if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
             //                                $user_id = $_POST['user_id'];
             //                                $listMaVanDon = $mvdRepository->findByStatusAndUserId($user_id, $offset, $total_records_per_page);
             //                            }
 
             $i = 1;
-//            function product_price($priceFloat)
-//            {
-//                $symbol = ' VNĐ';
-//                $symbol_thousand = '.';
-//                $decimal_place = 0;
-//                $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
-//                return $price . $symbol;
-//            }
+            function product_price1($priceFloat)
+            {
+                $symbol = ' VNĐ';
+                $symbol_thousand = '.';
+                $decimal_place = 0;
+                $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+                return $price . $symbol;
+            }
 
             foreach ($listMaVanDon as $mvd) {
                 ?>
@@ -96,8 +86,8 @@
                     ?>
                 </td>
                 <td style="font-weight: 800"><?php echo $mvd['cannang'] ?><span> /Kg</span></td>
-                <td><?php echo product_price($mvd['giavc']) ?></td>
-                <td style="font-weight: 800;color: blue"><?php echo product_price($mvd['thanhtien']) ?></td>
+                <td><?php echo product_price1($mvd['giavc']) ?></td>
+                <td style="font-weight: 800;color: blue"><?php echo product_price1($mvd['thanhtien']) ?></td>
                 <td>
                     <ul style="text-align: left ;">
                         <!-- <li><p class="fix-status">Shop gửi hàng</p></li> -->

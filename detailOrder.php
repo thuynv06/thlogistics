@@ -214,14 +214,75 @@
                 </div>
             </div>
             <hr>
+            <div>
+                <form name="search" class="form-inline ps-subscribe__form" method="POST"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input style="margin-right: 20px; margin-bottom: 5px;font-size: 20px"
+                               class="form-control" name="ladingCode"
+                               type="text" value="" placeholder="Tìm theo mã vận đơn">
+                    </div>
+                    <div class="form-group">
+                        <select style="margin-right: 20px; margin-bottom: 5px;font-size: 20px" name="status_id"
+                                class="form-control" onchange="searchStatus()">
+                            <option value="">Lọc theo trang thái</option>
+                            <?php
+                            $listStatus = $statusRepository->getAll();
+                            foreach ($listStatus as $status) {
+                                if ($status['status_id'] != 0) {
+                                    ?>
+                                    <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <button class="btn btn--green btn-th"
+                            style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                        Cứu
+                    </button>
+                </form>
+
+
+            </div>
             <!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->
             <!--                            role="button">Xuất Phiếu-->
             <!--                    </button>-->
             <div class="row">
             <?php
             if ($order['type']==0){
+                $arr_unserialize1 = array();
+                if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+//                        echo "tim mvd";
+                    $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_POST['ladingCode'], $_GET['id']);
+                    foreach ($tempList as $p) {
+                        array_push($arr_unserialize1, $p['id']);
+//                            echo(print_r($arr, true));
+                    }
+                } else if (isset($_POST['status_id'])) {
+//                        echo "trang thai";
+                    $arr_unserialize1 = array();
+                    $tempList = $kienhangRepository->findByStatusAndOrderId($_POST['status_id'], $_GET['id']);
+                    foreach ($tempList as $p) {
+                        array_push($arr_unserialize1, $p['id']);
+                    }
+//                        echo(print_r($arr, true));
+                } else if (!empty($_GET['ladingCode'])) {
+                    $tempList = $kienhangRepository->findByMaVanDonAndOrderId($_GET['ladingCode'], $_GET['id']);
+                    foreach ($tempList as $p) {
+                        array_push($arr_unserialize1, $p['id']);
+                    }
+                }else{
+//                        echo "macdinh";
+                    $order = $orderRepository->getById($_GET['id']);
+                    $arr_unserialize1 = unserialize($order['listsproduct']);// convert to array;
+//                        echo(print_r($arr, true));
+                }
+
                 include 'renderkienhang.php';
             }else{
+
                 $listMaVanDon = array();
                 $arr_unserialize1 = unserialize($order['listsproduct']); // convert to array;
 //                                        echo(print_r($arr_unserialize1, true));
@@ -233,6 +294,24 @@
                     }
                 }
 //                print_r($listMaVanDon);
+
+                if (!empty($_GET['mvd'])) {
+                    $ladingCode = $_GET['mvd'];
+                    $listMaVanDon = $mvdRepository->findByMaVanDon($ladingCode);
+                }
+
+                if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                    $ladingCode = $_POST['ladingCode'];
+                    $listMaVanDon = $mvdRepository->findByMaVanDon($ladingCode);
+//                    $listMaVanDon = $mvdRepository->findByMaVanDonAndOrderId($ladingCode,$order['id']);
+
+                }
+                if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                    $statusid = $_POST['status_id'];
+                    $listMaVanDon = $mvdRepository->findByStatusAndUserIdAndOrderID($statusid, $checkCookie['id'],$order['id']);
+                }
+
+
                 include 'renderMVD.php';
             }?>
             </div>
@@ -242,7 +321,9 @@
 <!-- JS Library-->
 <?php include 'script.php'; ?>
 <script>
-
+    function searchStatus() {
+        document.search.submit();
+    }
 </script>
 </body>
 </html>

@@ -1,8 +1,11 @@
 <?php
 require_once("sendemail.php");
-require_once("repository/kienhangRepository.php");
+//require_once("repository/kienhangRepository.php");
+require_once("repository/mvdRepository.php");
+$mvdRepository = new MaVanDonRepository();
+
 $sendEmail = new SendEMail();
-$kienhangRepository = new KienHangRepository();
+//$kienhangRepository = new KienHangRepository();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,50 +41,49 @@ $kienhangRepository = new KienHangRepository();
                 <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
                 </div>
             </div>
-            <div class="row ">
+            <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
+            </div>
+            <div class="row col-lg-10 col-xs-12 ">
                 <div class="table-responsive">
                     <table id="tableShoeIndex">
                         <tr>
                             <th class="text-center" style="min-width:50px">STT</th>
-                            <th class="text-center" style="min-width:100px">Mã Kiện</th>
-                            <th class="text-center" style="min-width:100px">Trạng Thái</th>
                             <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>
+                            <th class="text-center" style="min-width:100px">Trạng Thái</th>
+<!--                            <th class="text-center" style="min-width:100px">Mã Vận Đơn</th>-->
                             <th class="text-center" style="min-width:80px">Cân nặng</th>
-                            <th class="text-center" style="min-width:80px">Đường Vận Chuyển</th>
-                            <th class="text-center" style="min-width:150px">Lộ Trình</th>
-                            <th class="text-center" style="min-width:150px">Chi tiết</th>
+<!--                            <th class="text-center" style="min-width:80px">Đường Vận Chuyển</th>-->
+                            <th class="text-center" style="min-width:150px;max-width: 200px;">Lộ Trình</th>
+                            <th class="text-center" style="min-width:150px;max-width: 200px;">Chi tiết</th>
                         </tr>
                         <?php
                         if (!empty($_POST['ladingCode'])) {
                             $ladingCode = $_POST['ladingCode'];
 //                echo $orderCode;
-                            $result = $kienhangRepository->findByMaVanDon($ladingCode);
+                            $result = $mvdRepository->findByMaVanDon($ladingCode);
                             $i = 1;
-                            foreach ($result as $kienHang) {
+                            foreach ($result as $mvd) {
                                 ?>
                                 <tr>
                                 <td><?php echo $i++; ?></td>
-                                <td><p><?php echo $kienHang['orderCode'] ?></p>
-                                <p style="font-weight: 700;color:#000"><?php echo $kienHang['name'] ?></p>
+                                <td><p style="font-weight: 700;color:#000"><?php echo $mvd['mvd'] ?></p>
+                                <p ><?php echo $mvd['line'] ?></p>
                                 </td>
                                 <td style="color: blue"><?php
-                                    switch ($kienHang['status']) {
+                                    switch ($mvd['status']) {
                                         case "1":
-                                            echo "Shop Gửi Hàng";
+                                            echo "Kho TQ Nhận";
                                             break;
-                                        case "2":
-                                            echo "Kho Trung Quốc Nhận";
+                                         case "2":
+                                             echo "Vận Chuyển";
+                                             break;
+                                        case "3":
+                                            echo "Nhập Kho VN";
                                             break;
-                                        // case "3":
-                                        //     echo "Đang Vận Chuyển";
-                                        //     break;
                                         case "4":
-                                            echo "Nhập Kho Việt Nam";
+                                            echo "Yêu Cầu Giao";
                                             break;
                                         case "5":
-                                            echo "Đang Giao";
-                                            break;
-                                        case "6":
                                             echo "Đã Giao";
                                             break;
                                         default:
@@ -89,59 +91,53 @@ $kienhangRepository = new KienHangRepository();
                                     }
                                     ?>
                                 </td>
-                                <td><?php echo $kienHang['ladingCode'] ?>
-                                </td>
-                                <td><?php echo $kienHang['size'] ?></td>
-                                <td><?php echo $kienHang['shippingWay'] ?></td>
+<!--                                <td>--><?php //echo $mvd['mvd'] ?>
+<!--                                </td>-->
+                                <td><?php echo $mvd['cannang'] ?><span> /Kg</span></td>
+<!--                                <td>--><?php //echo $mvd['line'] ?><!--</td>-->
                                 <td>
                                     <ul style="text-align: left ;">
-                                        <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>
+<!--                                        <li><p class="fix-status"><span>&#8658;</span> Shop Gửi Hàng</p></li>-->
                                         <li><p class="fix-status"><span>&#8658;</span> TQ Nhận hàng</p></li>
-                                        <!-- <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li> -->
+                                         <li><p class="fix-status"><span>&#8658;</span> Vận chuyển</p></li>
                                         <li><p class="fix-status"><span>&#8658;</span> Nhập kho VN</p></li>
-                                        <li><p class="fix-status"><span>&#8658;</span> Đang giao hàng</p></li>
+                                        <li><p class="fix-status"><span>&#8658;</span> Yêu cầu giao</p></li>
                                         <li><p class="fix-status"><span>&#8658;</span> Đã giao hàng</p></li>
                                     </ul>
                                 </td>
-                                <td><?php $obj = json_decode($kienHang['listTimeStatus']); ?>
-                                    <ul style="text-align: left;">
-                                        <li><p class="fix-status"><?php
-                                                if (!empty($obj->{1})) {
-                                                    echo $obj->{1};
-                                                } else {
-                                                    echo "--------------";
-                                                }
-                                                ?></p></li>
-                                        <li><p class="fix-status"><?php
-                                                if (!empty($obj->{2})) {
-                                                    echo $obj->{2};
-                                                } else {
-                                                    echo "--------------";
-                                                } ?></p></li>
-                                        <!-- <li><p class="fix-status"><?php
-                                                // if (!empty($obj->{3})) {
-                                                //     echo $obj->{3};
-                                                // } else {
-                                                //     echo "--------------";
-                                                // } ?></p></li> -->
-                                        <li><p class="fix-status"><?php if (!empty($obj->{4})) {
-                                                    echo $obj->{4};
-                                                } else {
-                                                    echo "--------------";
-                                                } ?></p></li>
-                                        <li><p class="fix-status"><?php
-                                                if (!empty($obj->{5})) {
-                                                    echo $obj->{5};
-                                                } else {
-                                                    echo "--------------";
-                                                } ?></p></li>
-                                        <li><p class="fix-status"><?php
-                                                if (!empty($obj->{6})) {
-                                                    echo $obj->{6};
-                                                } else {
-                                                    echo "--------------";
-                                                } ?></p></li>
-                                    </ul>
+                                <td><?php $obj = json_decode($mvd['times']); ?>
+                                    <?php if (empty($obj)) { ?>
+                                        <ul style="text-align: left;">
+                                            <!-- <li><p class="fix-status">............</p></li> -->
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                            <li><p class="fix-status">............</p></li>
+                                        </ul><?php
+                                    } else { ?>
+                                        <ul style="text-align: left;">
+                                            <li><p class="fix-status">=> <?php if (!empty($obj->{1})) echo $obj->{1}; ?>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status">
+                                                    => <?php if (!empty($obj->{2})) echo $obj->{2}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status">
+                                                    => <?php if (!empty($obj->{3})) echo $obj->{3}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status">
+                                                    => <?php if (!empty($obj->{4})) echo $obj->{4}; ?></p>
+                                            </li>
+                                            <li>
+                                                <p class="fix-status">
+                                                    => <?php if (!empty($obj->{5})) echo $obj->{5}; ?></p>
+                                            </li>
+                                        </ul>
+                                        <?php
+                                    } ?>
                                 </td>
                                 </tr><?php
                             }
@@ -149,6 +145,8 @@ $kienhangRepository = new KienHangRepository();
                         ?>
                     </table>
                 </div>
+            </div>
+            <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
             </div>
         </div>
     </div>
