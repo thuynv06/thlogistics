@@ -32,7 +32,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                 <form name="search" class="form-inline ps-subscribe__form" method="POST"
                       enctype="multipart/form-data">
                     <div class="form-group">
-                        <input  style="margin-right: 20px; margin-bottom: 5px;"
+                        <input style="margin-right: 20px; margin-bottom: 5px;"
                                class="form-control input-large " name="ladingCode"
                                type="text" value="" placeholder="Tìm theo mã vận đơn">
                     </div>
@@ -69,7 +69,8 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     </button>
                     <a style="" href="mvd.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
 
-                    <button name="updatedMaVanDon" class="btn btn-warning" style="margin-right: 20px; "> Cập nhập Mã Vận Đơn
+                    <button name="updatedMaVanDon" class="btn btn-warning" style="margin-right: 20px; "> Cập nhập Mã Vận
+                        Đơn
                     </button>
                     <?php // cập nhập mã vận đơn link với bảng kiện hàng các đơn hàng order.
                     if (isset($_POST['updatedMaVanDon'])) {
@@ -172,6 +173,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                                         }
                                         ?>
                                     </p>
+
                                     <?php
                                     $listUser = $userRepository->getAll();
                                     foreach ($listUser as $user) {
@@ -182,6 +184,12 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                                         <?php }
                                     }
                                     ?>
+                                    <button type="button" id="chonKH" class="btn-primary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#modalChonKH" data-id="<?php echo $mvd['id'] ?>"
+                                            onclick="openModalChonKH()">
+                                        Chọn
+                                    </button>
                                 </td>
                                 <td style="font-weight: 800"><?php echo $mvd['cannang'] ?><span> /Kg</span></td>
                                 <td><?php echo product_price($mvd['giavc']) ?></td>
@@ -332,8 +340,65 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     </div>
             </form>
         </div>
+        </div>
+    </div>
+
+<div id="modalChonKH" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form action="" id="form-chonKH" method="POST" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập Nhập Trạng Thái Mã Vận Đơn</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input class="form-control" name="mvd_id" type="number" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Vận Đơn</label>
+                        <input readonly value="" minlength="5" maxlength="250" name="mvd" type="text"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label> Khách Hàng </label>
+                        <select id="selectUserId" name="user_id" class="form-control">
+                            <?php
+                            $listUsers = $userRepository->getAll();
+                            foreach ($listUsers as $user) {
+                                ?>
+                                <option
+                                        value="<?php echo $user['id']; ?>"><?php echo $user['code']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="btnSaveChangeStautus" name="assignKH" type="submit"
+                            class="btn btn-primary custom-tooltip"
+                            data-toggle="tooltip" data-placement="top" title="Assign mã vận đơn cho khách hàng"
+                            data-id="">
+                        Lưu
+                    </button>
+                </div>
+
+        </form>
     </div>
 </div>
+<?php
+    if (isset($_POST["assignKH"])){
+        $mvdRepository->updateUserIdById($_POST['mvd_id'], $_POST['user_id']);
+        $url ="mvd.php?mvd=".$_POST['mvd'];
+        echo "<script>window.location.href='$url';</script>";
+    }
+?>
+</div>
+
 <?php
 if (isset($_POST['submit'])) {
     $mvdRepository->updateMVD($_POST['idMVD'], $_POST['mavandon'], $_POST['cannang'], $_POST['giavc']);
@@ -439,6 +504,41 @@ if (isset($_POST['resetStatus'])) {
         get();
         _getTimeZoneOffsetInMs();
         document.getElementById('updateDate').value = timestampToDatetimeInputString(Date.now());
+    }
+
+    function openModalChonKH() {
+        $(document).delegate("[data-target='#modalChonKH']", "click", function () {
+
+            var id = $(this).attr('data-id');
+
+            // Ajax config
+            $.ajax({
+                type: "GET", //we are using GET method to get data from server side
+                url: 'getMaVanDon.php', // get the route value
+                data: {id: id}, //set data
+                beforeSend: function () {//We add this before send to disable the button once we submit it so that we prevent the multiple click
+
+                },
+                success: function (response) {//once the request successfully process to the server side it will return result here
+                    // console.log(response);
+                    response = JSON.parse(response);
+                    $("#form-chonKH [name=\"mvd_id\"]").val(response.id);
+                    $("#form-chonKH [name=\"mvd\"]").val(response.mvd);
+                    $("#form-chonKH [name=\"user_id\"]").val(response.user_id);
+                    // $("#edit-form [name=\"giavc\"]").val(response.giavc);
+                    // $("#edit-form [name=\"status_id\"]").val(response.status);
+
+                    var selectElement = document.getElementById("selectUserId");
+                    for (var i = 0; i < selectElement.options.length; i++) {
+                        var option = selectElement.options[i];
+                        if (option.value === response.user_id) {
+                            option.selected = true;
+                            break;
+                        }
+                    }
+                }
+            });
+        });
     }
 
     function checkInputTraCuu() {
