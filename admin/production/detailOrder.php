@@ -318,7 +318,7 @@ if (isset($_POST['xuatphieu'])) {
 //                    print_r($mvd);
                             if (isset($mvd) && !empty($mvd) && !empty($product['mavandon']) && isset($product['mavandon'])){
                                 $tempMaVanDon=$mvd->fetch_assoc();
-                                print_r($tempMaVanDon);
+//                                print_r($tempMaVanDon);
                                 if(isset($tempMaVanDon) && !empty($tempMaVanDon)){
                                     $kienhangRepository->updateKienHangByMVD($idKH,$tempMaVanDon['id'],$tempMaVanDon['cannang'],$tempMaVanDon['giavc'],$tempMaVanDon['status'],$tempMaVanDon['times']);
                                 }
@@ -531,7 +531,7 @@ if (isset($_POST['xuatphieu'])) {
 
                     <tr>
                                 <td><?php echo $i++; ?></td>
-                                <td><input type="checkbox" name="listproduct[]" value="<?php echo $product['id'] ?>"
+                                <td><input type="checkbox" name="listproduct[]" value="<?php if (!empty($tempMaVanDon)) { echo $tempMaVanDon['id'];}  ?>"
                                            id=""> Chọn
                                 </td>
                                 <td><p style="font-weight: 700;"><?php echo $product['code'] ?></p>
