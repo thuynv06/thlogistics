@@ -262,7 +262,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                 <tr>
                     <th class="text-center" style="min-width:50px">STT</th>
                     <th class="text-center" style="min-width:80px">Ngày</th>
-                    <th class="text-center" style="min-width:80px">Mã Đơn</th>
+                    <th class="text-center" style="min-width:150px">Mã Đơn</th>
                     <th class="text-center" style="min-width:100px">Mã KH</th>
                     <th class="text-center" style="min-width:100px">Tên KH</th>
 <!--                    <th class="text-center" style="min-width:130px">Deal</th>-->
@@ -271,7 +271,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                     <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>
                     <th class="text-center" style="min-width:100px">Đã TT</th>
                     <th class="text-center" style="min-width:100px">Công Nợ</th>
-                    <th class="text-center" style="min-width:100px">Ghi Chú</th>
+<!--                    <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
                     <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
@@ -352,7 +352,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                         <td><?php echo product_price($orders['tienvanchuyen']) ?></td>
                         <td style="color: limegreen;font-weight: bold"><?php echo product_price($orders['tamung']) ?> </td>
                         <td style="color: red;font-weight: bold"><?php echo product_price($orders['tongall'] - $orders['tamung']) ?></td>
-                        <td><?php echo $orders['ghichu'] ?> </td>
+<!--                        <td>--><?php //echo $orders['ghichu'] ?><!-- </td>-->
                         <td><a class="btn-sm btn-dark" href="detailKyGui.php?id=<?php echo $orders['id'] ?>"
                                role="button">Chi tiết</a>
 <!--                        <td>-->

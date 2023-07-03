@@ -431,7 +431,7 @@ if (isset($_POST['xuatphieu'])) {
                                                                                   id="selectall"/>All
                             </th>
                             <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
-                            <th class="text-center" style="min-width:100px">Khách Hàng</th>
+<!--                            <th class="text-center" style="min-width:100px">Khách Hàng</th>-->
                             <th class="text-center" style="min-width:60px">Cân nặng</th>
                             <th class="text-center" style="min-width:80px">Giá</th>
                             <th class="text-center" style="min-width:100px">Thành Tiền</th>
@@ -502,23 +502,23 @@ if (isset($_POST['xuatphieu'])) {
                                         ?> </p>
                                     <p><?php echo $mvd['line'] ?></p>
                                 </td>
-                                <td>
-<!--                                    <p style="font-weight: 800">--><?php
-//                                        $orderCode= $orderRepository->getOrderCodeById($order['id']);
-//                                        echo $orderCode['code'];
-//                                        ?>
-<!--                                    </p>-->
-<!--                                    --><?php
-                                    $listUser = $userRepository->getAll();
-                                    foreach ($listUser as $user) {
-                                        if ($user['id'] == $mvd['user_id']) {
-                                            ?>
-                                            <?php echo $user['username'] ?>
-                                            <span> &#45; </span><?php echo $user['code'] ?>
-                                        <?php }
-                                    }
-                                    ?>
-                                </td>
+<!--                                <td>-->
+<!--<!--                                    <p style="font-weight: 800">-->--><?php
+////                                        $orderCode= $orderRepository->getOrderCodeById($order['id']);
+////                                        echo $orderCode['code'];
+////                                        ?>
+<!--<!--                                    </p>-->-->
+<!--<!--                                    -->--><?php
+//                                    $listUser = $userRepository->getAll();
+//                                    foreach ($listUser as $user) {
+//                                        if ($user['id'] == $mvd['user_id']) {
+//                                            ?>
+<!--                                            --><?php //echo $user['username'] ?>
+<!--                                            <span> &#45; </span>--><?php //echo $user['code'] ?>
+<!--                                        --><?php //}
+//                                    }
+//                                    ?>
+<!--                                </td>-->
                                 <td style="font-weight: 800"><?php echo $mvd['cannang'] ?><span> /Kg</span></td>
                                 <td><?php echo product_price($mvd['giavc']) ?></td>
                                 <td style="font-weight: 800;color: blue"><?php echo product_price($mvd['thanhtien']) ?></td>
