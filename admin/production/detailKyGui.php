@@ -503,12 +503,12 @@ if (isset($_POST['xuatphieu'])) {
                                     <p><?php echo $mvd['line'] ?></p>
                                 </td>
 <!--                                <td>-->
-<!--<!--                                    <p style="font-weight: 800">-->--><?php
+<!--                                  <p style="font-weight: 800">--><?php
 ////                                        $orderCode= $orderRepository->getOrderCodeById($order['id']);
 ////                                        echo $orderCode['code'];
 ////                                        ?>
-<!--<!--                                    </p>-->-->
-<!--<!--                                    -->--><?php
+<!--                                  </p>-->
+<!--                                 --><?php
 //                                    $listUser = $userRepository->getAll();
 //                                    foreach ($listUser as $user) {
 //                                        if ($user['id'] == $mvd['user_id']) {
