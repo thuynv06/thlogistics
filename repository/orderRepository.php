@@ -129,7 +129,7 @@ class OrderRepository
     {
         global $conn;
         $sql = "select * from orders where type = $type and status=$status ORDER BY id DESC LIMIT 0, 30";
-        echo $sql;
+//        echo $sql;
         return mysqli_query($conn, $sql);
     }
 

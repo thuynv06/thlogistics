@@ -319,7 +319,7 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
     {
         global $conn;
         $sql = "update kienhang set mvd_id=$mvd_id, giavc=$giavc,cannang=$cannang,status=$sattus,times='$times' where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn, $sql);
 
     }
