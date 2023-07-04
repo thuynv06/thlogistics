@@ -49,7 +49,8 @@ if (isset($_POST['xuatphieu'])) {
                             $listStatus = $statusRepository->getAll();
                             foreach ($listStatus as $status) {
                                 ?>
-                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                <option value="<?php if($status['status_id']!=0) { echo $status['status_id']; ?>"><?php echo $status['name']; }?></option>
+
                                 <?php
                             }
                             ?>

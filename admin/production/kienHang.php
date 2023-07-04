@@ -44,7 +44,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             $listStatus = $statusRepository->getAll();
                             foreach ($listStatus as $status) {
                                 ?>
-                                <option value="<?php echo $status['status_id']; ?>"><?php echo $status['name']; ?></option>
+                                <option value="<?php if($status['status_id']!=0) { echo $status['status_id']; ?>"><?php echo $status['name']; }?></option>
                                 <?php
                             }
                             ?>
@@ -55,7 +55,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                                 class="form-control custom-select " onchange="">
                             <option value="">Lọc theo khách hàng</option>
                             <?php
-                            $listUser = $userRepository->getAll();
+                            $listUser = $userRepository->getAllByType(0);
                             foreach ($listUser as $user) {
                                 ?>
                                 <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
