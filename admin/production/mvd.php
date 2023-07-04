@@ -175,13 +175,13 @@ if (isset($_POST['xuatphieu'])) {
                                     <p style="font-weight: 800;color: blue"> <?php
                                         switch ($mvd['status']) {
                                             case "1":
-                                                echo "Kho Trung Quốc Nhận";
+                                                echo "KhoTQ Nhận";
                                                 break;
                                             case "2":
                                                 echo "Vận Chuyển";
                                                 break;
                                             case "3":
-                                                echo "Nhập Kho Việt Nam";
+                                                echo "NhậpKho VN";
                                                 break;
                                             case "4":
                                                 echo "Yêu Cầu Giao";
@@ -305,7 +305,7 @@ if (isset($_POST['xuatphieu'])) {
     </div>
     <?php include 'paginantionList.php' ?>
     </form>
-    
+
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
