@@ -103,6 +103,33 @@ class MaVanDonRepository
         return mysqli_query($conn, $sql);
     }
 
+    public function findByStatusAndUserIdAndMaVanDon($mavandon,$status_id,$user_id)
+    {
+        global $conn;
+        if (!empty($user_id) && !empty($status_id) && !empty($mavandon)){
+            $sql = "select * from mvd as m where m.status=$status_id and m.user_id=$user_id && m.mvd=$mavandon ORDER BY id DESC";
+        }else{
+            if(empty($mavandon)){
+                if(!empty($user_id) && !empty($status_id)){
+                    $sql = "select * from mvd as m where m.status=$status_id and m.user_id=$user_id ORDER BY id DESC";
+                }else{
+                    if(!empty($status_id)){
+                        $sql = "select * from mvd as m where m.status=$status_id ORDER BY id DESC";
+                    }
+                    if(!empty($user_id)){
+                        $sql = "select * from mvd as m where m.user_id=$user_id ORDER BY id DESC";
+                    }
+                }
+            }else{
+                $sql = "select * from mvd as m where m.mvd like '%$mavandon%' ORDER BY id DESC";
+            }
+        }
+
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
+
     public  function  updatedMVDJoinKienHang(){
         global $conn;
         $sql='update mvd as m join kienhang as k set m.user_id=k.user_id,m.order_id=k.order_id 

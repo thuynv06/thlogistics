@@ -32,13 +32,13 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 <form name="search" class="form-inline ps-subscribe__form" method="POST"
                       enctype="multipart/form-data">
                     <div class="form-group">
-                        <input required style="margin-right: 20px; margin-bottom: 5px;"
+                        <input  style="margin-right: 20px; margin-bottom: 5px;"
                                class="form-control input-large " name="ladingCode"
                                type="text" value="" placeholder="Tìm theo mã vận đơn">
                     </div>
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id"
-                                class="form-control custom-select " onchange="searchStatus()">
+                                class="form-control custom-select " onchange="">
                             <option value="">Lọc theo trang thái</option>
                             <?php
                             $listStatus = $statusRepository->getAll();
@@ -52,7 +52,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     </div>
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
-                                class="form-control custom-select " onchange="searchStatus()">
+                                class="form-control custom-select " onchange="">
                             <option value="">Lọc theo khách hàng</option>
                             <?php
                             $listUser = $userRepository->getAll();
@@ -64,10 +64,10 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                             ?>
                         </select>
                     </div>
-                    <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                    <button class="btn btn--green btn-th" name="tracuu" style="background-color: #ff6c00;margin-right: 20px; ">Tra
                         Cứu
                     </button>
-                    <a style="" href="kienHang.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
+                    <a style="" href="kienHang.php" class="btn btn-primary btn-large btn-th">RELOAD</a>
                 </form>
             </div>
 
@@ -105,18 +105,27 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 $ladingCode = $_GET['mvd'];
                 $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
             }
-            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode']) ) {
-                $ladingCode = $_POST['ladingCode'];
-                $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
+            if (isset($_POST['tracuu'])){
+                if (!empty($_POST['ladingCode']) && empty($_POST['status_id'] && empty($_POST['user_id']))) {
+                    $ladingCode = $_POST['ladingCode'];
+                    $kienHangList = $kienhangRepository->findByMaVanDon($ladingCode);
+                }
+
+                if (empty($_POST['ladingCode']) && !empty($_POST['status_id'] && !empty($_POST['user_id']))){
+                    $kienHangList = $kienhangRepository->findByStatusAndUserId($_POST['status_id'],$_POST['user_id']);
+                }
+
+                if (isset($_POST['status_id']) && !empty($_POST['status_id']) && empty($_POST['user_id']) && empty($_POST['ladingCode'])) {
+                    $statusid = $_POST['status_id'];
+                    $kienHangList = $kienhangRepository->findByStatus($statusid);
+                }
+                if (isset($_POST['user_id']) && !empty($_POST['user_id']) && empty($_POST['status_id']) && empty($_POST['ladingCode'])) {
+                    $user_id = $_POST['user_id'];
+                    $kienHangList = $kienhangRepository->findByUserId($user_id, $offset, $total_records_per_page);
+                }
+
             }
-            if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
-                $statusid = $_POST['status_id'];
-                $kienHangList = $kienhangRepository->findByStatus($statusid);
-            }
-            if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
-                $user_id = $_POST['user_id'];
-                $kienHangList = $kienhangRepository->findByUserId($user_id, $offset, $total_records_per_page);
-            }
+
             $i = 1;
             foreach ($kienHangList as $kienHang) {
 //                $tempMaVanDon=null;
@@ -219,7 +228,11 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         } ?>
                     </td>
                     <td><a href="<?php echo $kienHang['linksp'] ?>">Link</a></td>
-                    <td><?php echo $kienHang['note'] ?></td>
+                    <td>
+                        <textarea rows="3">
+                            <?php echo $kienHang['note'] ?>
+                        </textarea>
+                    </td>
                     <td>
                         <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm" data-toggle="modal"
                                 data-target="#myModal" data-id="<?php echo $kienHang['id'] ?>"

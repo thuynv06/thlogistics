@@ -479,7 +479,7 @@ if (isset($_POST['xuatphieu'])) {
                         <th class="text-center" style="min-width:90px">Lộ Trình</th>
                         <th class="text-center" style="min-width:130px">Chi tiết</th>
                         <th class="text-center" style="min-width:50px">Link SP</th>
-                        <th class="text-center" style="min-width:50px">Ghi Chú</th>
+                        <th class="text-center" style="min-width:50px;max-height: 80px;">Ghi Chú</th>
                         <th class="text-center" style="min-width:50px"></th>
                         <th class="text-center" style="min-width:50px"></th>
                         <th class="text-center" style="min-width:50px"></th>
@@ -638,7 +638,10 @@ if (isset($_POST['xuatphieu'])) {
                                     } ?>
                                 </td>
                                 <td><a href="<?php echo $product['linksp'] ?>">Link</a></td>
-                                <td><?php echo $product['note'] ?></td>
+                                <td>
+                                    <textarea rows="3" cols=""><?php echo $product['note'] ?>
+                                    </textarea>
+                                </td>
                                 <td>
                                     <button <?php if ($order['status']==1) echo "disabled" ?> type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
                                             data-toggle="modal"

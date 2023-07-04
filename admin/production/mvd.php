@@ -29,7 +29,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                <form name="search" class="form-inline ps-subscribe__form" method="POST"
+                <form name="tracumvd" class="form-inline ps-subscribe__form" method="POST"
                       enctype="multipart/form-data">
                     <div class="form-group">
                         <input style="margin-right: 20px; margin-bottom: 5px;"
@@ -38,7 +38,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     </div>
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id"
-                                class="form-control custom-select " onchange="searchStatus()">
+                                class="form-control custom-select " onchange="">
                             <option value="">Lọc theo trang thái</option>
                             <?php
                             $listStatus = $statusRepository->getAll();
@@ -52,7 +52,7 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     </div>
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
-                                class="form-control custom-select " onchange="searchStatus()">
+                                class="form-control custom-select " onchange="">
                             <option value="">Lọc theo khách hàng</option>
                             <?php
                             $listUser = $userRepository->getAll();
@@ -64,24 +64,42 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                             ?>
                         </select>
                     </div>
-                    <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                    <button class="btn btn--green btn-th" name="tracuumvd"
+                            style="background-color: #ff6c00;margin-right: 20px; ">Tra
                         Cứu
                     </button>
-                    <a style="" href="mvd.php" class="btn btn-primary btn-large btn-th">TRỞ LẠI</a>
 
                     <button name="updatedMaVanDon" class="btn btn-warning" style="margin-right: 20px; "> Cập nhập Mã Vận
                         Đơn
                     </button>
+                    <a style="" href="mvd.php" class="btn btn-primary btn-large btn-th">RELOAD</a>
+
                     <?php // cập nhập mã vận đơn link với bảng kiện hàng các đơn hàng order.
                     if (isset($_POST['updatedMaVanDon'])) {
                         $mvdRepository->updatedMVDJoinKienHang();
                         echo "<script>window.location.href='mvd.php';</script>";
+                    }
+
+                    if (isset($_POST['tracuumvd'])) {
+
+                        $listMVD = $mvdRepository->findByStatusAndUserIdAndMaVanDon($_POST['ladingCode'], $_POST['status_id'], $_POST['user_id']);
+//                            if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+//
+//                                if()
+//                                $ladingCode = $_POST['ladingCode'];
+//                                $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
+//                            }
+//                            if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+//                                $statusid = $_POST['status_id'];
+//                               $listMVD = $mvdRepository->findByStatus($statusid);
+//                           }
                     }
                     ?>
                 </form>
             </div>
         </div>
         <div class="row">
+            <p>Tổng số : <?php echo $total_records ?> Kiện Hàng </p>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                 <?php include 'paginantionList.php' ?>
@@ -105,22 +123,25 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                             <th class="text-center" style="min-width:50px"></th>
                         </tr>
                         <?php
+
                         if (!empty($_GET['mvd'])) {
                             $ladingCode = $_GET['mvd'];
                             $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
                         }
-                        if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
-                            $ladingCode = $_POST['ladingCode'];
-                            $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
-                        }
-                        if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
-                            $statusid = $_POST['status_id'];
-                            $listMVD = $mvdRepository->findByStatus($statusid);
-                        }
-                        if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
-                            $user_id = $_POST['user_id'];
-                            $listMVD = $mvdRepository->findByUserId($user_id, $offset, $total_records_per_page);
-                        }
+
+
+                        //                        if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                        //                            $ladingCode = $_POST['ladingCode'];
+                        //                            $listMVD = $mvdRepository->findByMaVanDon($ladingCode);
+                        //                        }
+                        //                        if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                        //                            $statusid = $_POST['status_id'];
+                        //                            $listMVD = $mvdRepository->findByStatus($statusid);
+                        //                        }
+                        //                        if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+                        //                            $user_id = $_POST['user_id'];
+                        //                            $listMVD = $mvdRepository->findByUserId($user_id, $offset, $total_records_per_page);
+                        //                        }
                         $i = 1;
 
                         function product_price($priceFloat)
@@ -234,7 +255,12 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                                         <?php
                                     } ?>
                                 </td>
-                                <td><?php echo $mvd['ghichu'] ?></td>
+                                <td>
+                                    <textarea rows="3">
+                                     <?php echo $mvd['ghichu'] ?>
+                                    </textarea>
+
+                                </td>
                                 <td>
                                     <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
                                             data-toggle="modal"
@@ -340,8 +366,8 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                     </div>
             </form>
         </div>
-        </div>
     </div>
+</div>
 
 <div id="modalChonKH" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -391,11 +417,11 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
     </div>
 </div>
 <?php
-    if (isset($_POST["assignKH"])){
-        $mvdRepository->updateUserIdById($_POST['mvd_id'], $_POST['user_id']);
-        $url ="mvd.php?mvd=".$_POST['mvd'];
-        echo "<script>window.location.href='$url';</script>";
-    }
+if (isset($_POST["assignKH"])) {
+    $mvdRepository->updateUserIdById($_POST['mvd_id'], $_POST['user_id']);
+    $url = "mvd.php?mvd=" . $_POST['mvd'];
+    echo "<script>window.location.href='$url';</script>";
+}
 ?>
 </div>
 

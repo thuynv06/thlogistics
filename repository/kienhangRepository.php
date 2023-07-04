@@ -66,6 +66,14 @@ class KienHangRepository
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
+    public function findByStatusAndUserId($status,$userID)
+    {
+        global $conn;
+        $sql = "select * from kienhang as k where status=$status and k.user_id=$userID ORDER BY id DESC";
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
 
     public function findByStatus($status_id)
     {
