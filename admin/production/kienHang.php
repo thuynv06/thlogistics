@@ -150,17 +150,14 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                     <td><p style="font-weight: 700;"><?php echo $kienHang['mavandon'] ?></p>
                         <p style="color: blue"> <?php
                             switch ($kienHang['status']) {
-                                case "0":
-                                    echo "Chờ Phát Hàng";
-                                    break;
                                 case "1":
-                                    echo "K";
+                                    echo "KhoTQ Nhận";
                                     break;
                                 case "2":
-                                    echo "Đang Vận Chuyển";
+                                    echo "Vận Chuyển";
                                     break;
                                 case "3":
-                                    echo "Nhập Kho Việt Nam";
+                                    echo "NhậpKho VN";
                                     break;
                                 case "4":
                                     echo "Yêu Cầu Giao";
