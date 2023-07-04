@@ -1107,8 +1107,6 @@ if (isset($_POST['resetStatus'])) {
                     ele[i].checked = false;
             }
         }
-
-
     }
 
     function checkButton() {

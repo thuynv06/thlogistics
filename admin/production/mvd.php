@@ -21,7 +21,12 @@ $total_records = $result_count['total_records'];
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1; // total page minus 1
 $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_per_page);
-
+if (isset($_POST['xuatphieu'])) {
+//    $order = $orderRepository->getById($_GET['id']);
+//    echo $order['user_id'];
+    include "phieuxuatkho.php";
+    phieuxuatkho($_POST['listproduct'], 1);
+}
 
 ?>
 
@@ -105,10 +110,16 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                 <?php include 'paginantionList.php' ?>
             </div>
             <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                <form method="POST" enctype="multipart/form-data">
+                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
+                            role="button">Xuất Phiếu
+                    </button>
                 <div class="table-responsive">
                     <table id="tableShoe">
                         <tr>
                             <th class="text-center" style="min-width:50px">STT</th>
+                            <th class="text-center" style="min-width:50px"><input onclick="clickAll()" type="checkbox"
+                                                                                  id="selectall"/>All
                             <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
                             <th class="text-center" style="min-width:100px">Khách Hàng</th>
                             <th class="text-center" style="min-width:60px">Cân nặng</th>
@@ -158,6 +169,8 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
                             ?>
                             <tr>
                                 <td><?php echo $i++; ?></td>
+                                <td><input type="checkbox" name="listproduct[]" value="<?php echo $mvd['id'] ?>"
+                                           id=""> Chọn
                                 <td><p style="font-weight: 800"><?php echo $mvd['mvd'] ?></p>
                                     <p style="font-weight: 800;color: blue"> <?php
                                         switch ($mvd['status']) {
@@ -291,6 +304,8 @@ $listMVD = $mvdRepository->getTotalRecordPerPageAdmin($offset, $total_records_pe
         <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
     </div>
     <?php include 'paginantionList.php' ?>
+    </form>
+    
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <form action="" id="edit-form" method="POST" enctype="multipart/form-data">
@@ -522,9 +537,9 @@ if (isset($_POST['resetStatus'])) {
         });
     }
 
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    // $(document).ready(function () {
+    //     $('[data-toggle="tooltip"]').tooltip();
+    // });
 
     function openModal() {
         get();
@@ -586,6 +601,23 @@ if (isset($_POST['resetStatus'])) {
 
     function searchStatus() {
         document.search.submit();
+    }
+    function clickAll() {
+        if (document.getElementById('selectall').checked == true) {
+            var ele = document.getElementsByName('listproduct[]');
+
+            for (var i = 0; i < ele.length; i++) {
+                if (ele[i].type == 'checkbox')
+                    ele[i].checked = true;
+            }
+        } else {
+            var ele = document.getElementsByName('listproduct[]');
+
+            for (var i = 0; i < ele.length; i++) {
+                if (ele[i].type == 'checkbox')
+                    ele[i].checked = false;
+            }
+        }
     }
 </script>
 
