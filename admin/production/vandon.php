@@ -219,7 +219,7 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                                    role="button" onclick="openModal()">Vận Đơn</a></td>
                             <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
                                    role="button">Sửa</a></td>
-                            <td><a class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $orders['id'] ?>"
+                            <td><a class="btn-sm btn-danger" href="deleteOrders.php?id=<?php echo $orders['id'] ?>"
                                    role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
                             </tr><?php
                         }

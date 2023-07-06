@@ -179,6 +179,13 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
         mysqli_query($conn, $sql);
     }
 
+    public function deleteByOrderId($order_id)
+    {
+        global $conn;
+        $sql = "delete from kienhang where order_id=$order_id";
+        mysqli_query($conn, $sql);
+    }
+
     public function getById($id)
     {
         global $conn;
