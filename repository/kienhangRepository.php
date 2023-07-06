@@ -149,7 +149,7 @@ class KienHangRepository
         $tongtien = $totalmoney + $totalfeetransport + $totalservicefee;
 
         $sql = "insert into kienhang(order_id,gianhap,phidv,tongtien,name,nametq,mavandon,soluong,line,cannang,giavc,status,giasp,tongte,currency,user_id,linksp,note,dateCreated,times,shiptq,magiamgia,size,color) 
-values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong,'$line',$giavc,$cannang,$status
+values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong,'$line',$cannang,$giavc,$status
        ,$giasp,$tongte,$currency,$user_id,'$linksp','$note','$dateCreated','$times',$shiptq,$magiamgia,'$size','$color')";
 //        echo $sql;
         mysqli_query($conn, $sql);
