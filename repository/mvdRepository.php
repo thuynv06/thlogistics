@@ -137,6 +137,20 @@ class MaVanDonRepository
         mysqli_query($conn, $sql);
 
     }
+    public  function  updatedKienHangJoinMVD(){
+        global $conn;
+        $sql='update kienhang as k join mvd as m set k.mvd_id=m.id, k.status=m.status, k.cannang=m.cannang,k.giavc=m.giavc ,k.tienvc=m.thanhtien
+                where k.mavandon=m.mvd and k.status != m.status and k.mvd_id is null;';
+        mysqli_query($conn, $sql);
+
+    }
+    public  function  updatedAllStatusKH(){
+        global $conn;
+        $sql='update kienhang as k join mvd as m set k.status=m.status
+                where k.mavandon=m.mvd and k.status != m.status and k.mvd_id =m.id;';
+        mysqli_query($conn, $sql);
+
+    }
 
     public function getTotalResult()
     {
@@ -334,7 +348,7 @@ class MaVanDonRepository
         global $conn;
 
         $sql = "update mvd set status=1,
-                    times = JSON_REMOVE (times,'\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"')
+                    times = JSON_REMOVE (times,'\$.\"0\"','\$.\"1\"','\$.\"2\"', '\$.\"3\"','\$.\"4\"', '\$.\"5\"','\$.\"6\"')
                     where id=$id ";
 //        echo $sql;
         mysqli_query($conn, $sql);

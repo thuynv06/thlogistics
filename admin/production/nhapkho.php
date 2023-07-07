@@ -120,8 +120,8 @@ $ListMVDNhap=[];
                         </select>
                     </div>
                 </div>
-                <button class="btn-sm btn-primary" type="submit" name="nhapkhovn"
-                        role="button"> Nhập Kho
+                <button class="btn-lg btn-primary" type="submit" name="nhapkhovn"
+                        role="button"> NHẬP KHO TRUNG HOA
                 </button>
             </form>
         </div>
@@ -165,11 +165,13 @@ $ListMVDNhap=[];
 //                        }
 //                        $orderId = $orderRepository->createOrder($user_ID, $newCode, null, 0, 0, 25000, 0, 0, 0, 0, 0, 0, 0, 0, 1);
 //            echo $user_ID;
+            $date= new DateTime();
             if (isset($user_ID) && !empty($user_ID)) {
                 foreach ($ListMVDNhap as $mavd) {
                     $results = $mvdRepository->findByMaVanDon($mavd)->fetch_assoc();
                     if(isset($results) && !empty($results)){
                         $mvdRepository->updateUserIdById($results['id'], $user_ID);
+                        $mvdRepository->updateTimesById($results['id'], 3,$date->format('Y-m-d\TH:i:s'));
                     }
                 }
 //                $newLangs = implode("; ",$ListMVDNhap);

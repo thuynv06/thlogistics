@@ -293,15 +293,14 @@ if (isset($_POST['xuatphieu'])) {
                     <a  class="btn btn-success"  href="xuatdon.php?id=<?php echo $order['id'] ?>"
                        role="button" onclick="return confirm('Bạn có chắc chắn Xuất Đơn ?');">Xuất Đơn</a>
 
-                    <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-danger" href="deleteOrder.php?id=<?php echo $order['id'] ?>"
-                            type="submit" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
-                    </button>
+
                     <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-primary" type="submit" name="updatedMaVanDon"
                                                                               href="detailOrder.php?id=<?php echo $order['id'] ?>"
                                                                               role="button">Cập Nhật MVĐ
                     </button>
-
-
+                    <a <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-danger" href="deleteOrders.php?id=<?php echo $order['id'] ?>"
+                                                                         type="buton" onclick="return confirm('Bạn có muốn xóa không?');">Xóa
+                    </a>
                 </div>
 
             </div>
@@ -407,10 +406,10 @@ if (isset($_POST['xuatphieu'])) {
 
         </form>
     </div>
-    <button <?php if ($order['status']==1) echo "disabled" ?> class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"
-            data-target="#vandon" data-id="<?php echo $order['id'] ?>"
-            role="button" onclick="openVanDon()">Vận Đơn
-    </button>
+<!--    <button --><?php //if ($order['status']==1) echo "disabled" ?><!-- class="btn-sm btn-success" id="modalVanDon" data-toggle="modal"-->
+<!--            data-target="#vandon" data-id="--><?php //echo $order['id'] ?><!--"-->
+<!--            role="button" onclick="openVanDon()">Vận Đơn-->
+<!--    </button>-->
 <!--    <button  --><?php //if ($order['status']==1) echo "disabled" ?><!--  class="btn-sm btn-warning" id="modalMaVanDon" data-toggle="modal"-->
 <!--                                                                data-target="#mavandon" data-id="--><?php //echo $order['id'] ?><!--"-->
 <!--                                                                role="button" onclick="openUpdateAllMVD()">Update All MVĐ-->
@@ -919,14 +918,11 @@ if (isset($_POST['xuatphieu'])) {
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="btnSaveChangeStautus" name="shopgui" type="submit" class="btn btn-success" data-id="">
-                    ShopGui
-                </button>
-                <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-primary" data-id="">
                     KhoTQ Nhận
                 </button>
-                <button id="btnSaveChangeStautus" name="nhapkhovn" type="submit" class="btn btn-success" data-id="">
+                <button id="btnSaveChangeStautus" name="nhapkhovn" type="submit" class="btn btn-warning" data-id="">
                     NhậpKho VN
                 </button>
                 <button id="btnSaveChangeStautus" name="dagiaoall" type="submit" class="btn btn-success" data-id="">

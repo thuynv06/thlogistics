@@ -168,7 +168,7 @@ if (isset($_POST['taoyeucaugiao'])) {
                         </select>
                     </div>
                     </div>
-                    <button class="btn-sm btn-danger" type="submit" name="taoyeucaugiao"
+                    <button class="btn-lg btn-danger" type="submit" name="taoyeucaugiao"
                             role="button">Tạo Yêu Cầu Giao
                     </button>
 <!--                    <button class="btn-sm btn-primary" type="submit" name="xuatphieu"-->

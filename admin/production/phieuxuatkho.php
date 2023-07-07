@@ -3,12 +3,13 @@ require_once("../../repository/userRepository.php");
 //require_once("../../repository/kienhangRepository.php");
 require_once("../../repository/mvdRepository.php");
 require '../../vendor/autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Drawing;
 
 
-function phieuxuatkho($listId,$userID)
+function phieuxuatkho($listId, $userID)
 {
     $userRepository = new UserRepository();
     $mvdRepository = new MaVanDonRepository();
@@ -34,7 +35,7 @@ function phieuxuatkho($listId,$userID)
 //    echo "Ngày: ".$date['mday']."<hr>";
 //    echo "Tháng: ".$date['mon']."<hr>";
 //    echo "Năm: ".$date['year']."<hr>";
-        $ngaythang = "(Ngày " . $date['mday'] . " Tháng " . $date['mon'] . " Năm " . $date['year'].")";
+        $ngaythang = "(Ngày " . $date['mday'] . " Tháng " . $date['mon'] . " Năm " . $date['year'] . ")";
 
 
         $sheet->setCellValue('A1', mb_strtoupper("Trung Hoa Logistics Đặt Hàng - Vận Chuyển Trung Việt", "UTF-8"));
@@ -60,7 +61,7 @@ function phieuxuatkho($listId,$userID)
 
 
 //    $sheet->setCellValue('B1', "Tên Sản Phẩm");
-        $sheet->setCellValue('G1', "Số Phiếu:".$kh['code']);
+        $sheet->setCellValue('G1', "Số Phiếu:" . $kh['code']);
 //        $sheet->getStyle('1')->getAlignment()->setHorizontal('right');
 //        $sheet->setCellValue('G5', $kh['code']);
         $sheet->setCellValue('A6', $ngaythang);
@@ -71,9 +72,9 @@ function phieuxuatkho($listId,$userID)
 
         $sheet->setCellValue('A8', "Khách Hàng: " . strtoupper($kh['code']) . " - " . mb_strtoupper($kh['fullname'], "UTF-8"));
         $sheet->getStyle('A8:G8')->getFont()->setBold(true);
-        $sheet->setCellValue('A9',"Điện thoại: ".$kh['phone']);
-        $sheet->setCellValue('A10',"Email: ".$kh['email']);
-        $sheet->setCellValue('A11',"Địa Chỉ: ".$kh['address']);
+        $sheet->setCellValue('A9', "Điện thoại: " . $kh['phone']);
+        $sheet->setCellValue('A10', "Email: " . $kh['email']);
+        $sheet->setCellValue('A11', "Địa Chỉ: " . $kh['address']);
 
 
         $sheet->setCellValue('A13', "STT");
@@ -106,10 +107,17 @@ function phieuxuatkho($listId,$userID)
         $tongcan = 0;
         $tongtienvc = 0;
         $i = 14;
-        $sokien=0;
-        foreach ($listId as $product_id) {
-            $sokien++;
-            $tempProduct = $mvdRepository->getById($product_id)->fetch_assoc();
+        $sokien = 0;
+        $listPrint = array();
+//        array_push($listproduct, $kienhang_id);
+//        print_r($listId);
+        $flag = false;
+        for ($x = 0; $x < count($listId); $x++) {
+            $element = $listId[$x];
+
+            // Perform any operations on $element
+//            echo $element . "\n";
+            $tempProduct = $mvdRepository->getById($element)->fetch_assoc();
 
             $obj = json_decode($tempProduct['times']);
             $tqnhan = '';
@@ -126,23 +134,91 @@ function phieuxuatkho($listId,$userID)
             $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
             $sheet->setCellValue('C' . $i, $tqnhan);
             $sheet->setCellValue('D' . $i, $vnnhan);
-            $sheet->setCellValue('E' . $i, $tempProduct['cannang']."Kg");
-            $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
-            if(!empty($tempProduct['cannang'] * $tempProduct['giavc'])){
-                $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
+            //chưa thì print số cân ra
+            if ($x == 0) { //dong đầu tiên
+                $sheet->setCellValue('E' . $i, $tempProduct['cannang']);
+                $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
+                if (!empty($tempProduct['cannang'] * $tempProduct['giavc'])) {
+                    $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
+                    $tongcan += $tempProduct['cannang'];
+                    $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
+                } else {
+                    $sheet->setCellValue('G' . $i, 0);
+                }
+                $sokien++;
 
-            }else{
-                $sheet->setCellValue('G' . $i,0 );
+                array_push($listPrint, $element);
+            } else {// print rồi thì thôi
+                if (in_array($element, $listPrint)) {
+                    $sheet->setCellValue('E' . $i, "0");
+                    $sheet->setCellValue('F' . $i, "0");
+                    $sheet->setCellValue('G' . $i, "0");
+
+                } else {
+                    $sheet->setCellValue('E' . $i, $tempProduct['cannang']);
+                    $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
+                    if (!empty($tempProduct['cannang'] * $tempProduct['giavc'])) {
+                        $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
+                        $tongcan += $tempProduct['cannang'];
+                        $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
+                    } else {
+                        $sheet->setCellValue('G' . $i, 0);
+                    }
+                    $sokien++;
+
+                    array_push($listPrint, $element);
+                }
             }
 
-            $tongcan += $tempProduct['cannang'];
-            $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
+
+//            $tongcan += $tempProduct['cannang'];
+//            $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
             $i++;
         }
+//        foreach ($listId as $product_id) {
+//            $sokien++;
+//            $tempProduct = $mvdRepository->getById($product_id)->fetch_assoc();
+//
+//            $obj = json_decode($tempProduct['times']);
+//            $tqnhan = '';
+//            $vnnhan = '';
+//            $tempID=null;
+//            if (!empty($obj)) {
+//                if (!empty($obj->{1})) {
+//                    $tqnhan = date('Y-m-d', strtotime($obj->{1}));
+//                }
+//                if (!empty($obj->{3})) {
+//                    $vnnhan = date('Y-m-d', strtotime($obj->{3}));
+//                }
+//            }
+//            $sheet->setCellValue('A' . $i, $i - 13);
+//            $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
+//            $sheet->setCellValue('C' . $i, $tqnhan);
+//            $sheet->setCellValue('D' . $i, $vnnhan);
+//            //chưa thì print số cân ra
+//            if ($tempID!=$tempProduct['id']){
+//                $sheet->setCellValue('E' . $i, $tempProduct['cannang']);
+//                $tempID=$tempProduct['id'];
+//            }else{// print rồi thì thôi
+//                $sheet->setCellValue('E' . $i, "0");
+//            }
+//
+//            $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
+//            if(!empty($tempProduct['cannang'] * $tempProduct['giavc'])){
+//                $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
+//
+//            }else{
+//                $sheet->setCellValue('G' . $i,0 );
+//            }
+//
+//            $tongcan += $tempProduct['cannang'];
+//            $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
+//            $i++;
+//        }
 
-        $sheet->setCellValue('E' . $i, $tongcan."Kg");
+        $sheet->setCellValue('E' . $i, $tongcan . "Kg");
         $sheet->setCellValue('G' . $i, $tongtienvc);
-        $sheet->setCellValue('B' . $i, "Số Kiện: ".$sokien);
+        $sheet->setCellValue('B' . $i, "Số Kiện: " . $sokien);
 
 
         $sheet->getStyle('A' . $i . ':G' . $i)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
@@ -222,4 +298,5 @@ function phieuxuatkho($listId,$userID)
 
     }
 }
+
 ?>

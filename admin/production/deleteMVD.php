@@ -7,7 +7,7 @@
 //    echo(print_r($arr_unserialize1, true));
 
     $mvdRepository->deleteById($_GET['id']);
-    $urlStr = "mvd.php";
+    $urlStr = "detailKyGui.php?id=".$_GET['id'];
 
     echo "<script>alert('Xóa thành công');
         window.location.href='$urlStr';

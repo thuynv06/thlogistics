@@ -21,6 +21,25 @@ if (isset($_POST['xuatphieu'])) {
     include "phieuxuatkho.php";
     phieuxuatkho($_POST['listproduct'], $order['user_id']);
 }
+
+
+if (isset($_POST['removeKyGui'])) {
+//    print_r($arr_unserialize1);
+//    echo "sau: \n";
+    if (isset($_POST['listproduct'])){
+        $listRemove =$_POST['listproduct'];
+//        print_r($listRemove);
+        $arr_unserialize1=array_diff($arr_unserialize1,$listRemove);
+//        echo "kq: \n";
+//        print_r($arr_unserialize1);
+        $orderRepository->updatedListProductById($_GET['id'], $arr_unserialize1);
+        $urlStr = "detailKyGui.php?id=".$_GET['id'];
+        echo "<script>alert('Gỡ bỏ MVD ra khỏi YCGiao');   window.location.href='$urlStr';
+        </script>";
+    }
+}
+
+
 ?>
 
 <div class="right_col" role="main" style="font-size: 12px;">
@@ -139,7 +158,7 @@ if (isset($_POST['xuatphieu'])) {
                         </tr>
                         <tr style="min-width:100px">
                             <th>Ngày Xuất</th>
-                            <td><input readonly name="enddate" type="datetime-local" step="1"
+                            <td><input readonly name="enddate" type="datetime-local" step="1" value="<?php echo $startdate ?>" name="startdate"
                                        class="form-control"
                                        id="enddate"></td>
                         </tr>
@@ -204,7 +223,7 @@ if (isset($_POST['xuatphieu'])) {
                         <tr style="min-width:100px">
                             <th>Còn Thiếu</th>
                             <td><label style="color: red;font-weight: bold">Công Nợ (VNĐ)
-                                    - <?php echo product_price($order['tongall'] - $order['tamung']) ?></label></td>
+                                    - <?php echo product_price( $order['tienvanchuyen']-$order['tamung']) ?></label></td>
                         </tr>
                         <tr style="min-width:100px">
                             <th>Trạng Thái</th>
@@ -246,34 +265,40 @@ if (isset($_POST['xuatphieu'])) {
                                                                                 href="detailKyGui.php?id=<?php echo $order['id'] ?>"
                                                                                 role="button">Xuất Đơn
                     </button>
-                    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-danger"
-                                                                                href="deleteOrder.php?id=<?php echo $order['id'] ?>"
-                                                                                type="submit"
-                                                                                onclick="return confirm('Bạn có muốn xóa không?');">
-                        Xóa
-                    </button>
+                    <a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=<?php echo $order['id'] ?>"
+                               role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>
+
 
                 </div>
 
             </div>
             <?php
             if (isset($_POST['xuatdon'])) {
-//                echo "xxxxxxxxxxxxx";
+                $urlStr = "detailKyGui.php?id=" . $_GET['id'];
                 $flag = true;
 //                $arr_unserialize1 = unserialize($order['listsproduct']);
                 if (!empty($listMVD)) {
-                    foreach ($listMVD as $masp) {
-                        $product = $kienhangRepository->getById($masp)->fetch_assoc();
-                        if ($product['status'] != 6) {
+                    foreach ($listMVD as $mvd) {
+//                        $product = $kienhangRepository->getById($masp)->fetch_assoc();
+                        if ($mvd['status'] != 5) {
                             $flag = false;
                             break;
                         }
                     }
                 }
                 if ($flag) {
-                    $order = $orderRepository->xuatDon($_GET['id']);
-                    $urlStr = "detailKyGui.php?id=" . $_GET['id'];
-                    echo "<script>alert('Xuất Đơn Hàng Thành Công');
+                    if ($order['tamung'] - $order['tienvanchuyen'] >=0){
+                        $order = $orderRepository->xuatDon($_GET['id']);
+                        echo "<script>alert('Xuất Đơn Hàng Thành Công');
+                            window.location.href='$urlStr';
+                            </script>";
+                    }else{
+                        echo "<script>alert('Khách Hàng Chưa Thanh Toán Đủ!!!');
+                            window.location.href='$urlStr';
+                            </script>";
+                    }
+                }else{
+                    echo "<script>alert('Tất cả mã vận đơn chưa chuyển trạng thái đã giao!!!');
                             window.location.href='$urlStr';
                             </script>";
                 }
@@ -349,18 +374,18 @@ if (isset($_POST['xuatphieu'])) {
                 }
                 $orderRepository->update($_POST['orderId'], $user_id, 0, 0, $giavanchuyen, 0, $tongcan, $tamdung, 0,
                     0, 0, $tienvanchuyen, 0, $tongall, $ghichu, $arr_unserialize1, $sdate);
-//                echo "<script>window.location.href='$urlStr';</script>";
+                echo "<script>window.location.href='$urlStr';</script>";
             }
             ?>
 
         </form>
     </div>
-<!--    <button --><?php //if ($order['status'] == 1) echo "disabled" ?><!-- class="btn-sm btn-success" id="modalVanDon"-->
-<!--                                                                data-toggle="modal"-->
-<!--                                                                data-target="#vandon"-->
-<!--                                                                data-id="--><?php //echo $order['id'] ?><!--"-->
-<!--                                                                role="button" onclick="openVanDon()">Vận Đơn-->
-<!--    </button>-->
+    <button <?php if ($order['status'] == 1) echo "disabled" ?> class="btn-sm btn-success" id="modalVanDon"
+                                                                data-toggle="modal"
+                                                                data-target="#vandon"
+                                                                data-id="<?php echo $order['id'] ?>"
+                                                                role="button" onclick="openVanDon()">Vận Đơn
+    </button>
 <!--    <button --><?php //if ($order['status'] == 1) echo "disabled" ?><!-- class="btn-sm btn-warning" id="modalMaVanDon"-->
 <!--                                                                data-toggle="modal"-->
 <!--                                                                data-target="#mavandon"-->
@@ -427,7 +452,7 @@ if (isset($_POST['xuatphieu'])) {
                     <table id="tableShoe">
                         <tr>
                             <th class="text-center" style="min-width:50px">STT</th>
-                            <th class="text-center" style="min-width:50px"><input onclick="clickAll()" type="checkbox"
+                            <th class="text-center" style="min-width:50px;max-width: 60px;"><input onclick="clickAll()" type="checkbox"
                                                                                   id="selectall"/>All
                             </th>
                             <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
@@ -438,9 +463,8 @@ if (isset($_POST['xuatphieu'])) {
                             <!--                    <th class="text-center" style="min-width:100px">Đường Vận Chuyển</th>-->
                             <th class="text-center" style="min-width:120px">Lộ Trình</th>
                             <th class="text-center" style="min-width:150px">Chi tiết</th>
-                            <th class="text-center" style="min-width:100px">Ghi Chú</th>
-                            <th class="text-center" style="min-width:50px"></th>
-                            <th class="text-center" style="min-width:50px"></th>
+<!--                            <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
+<!--                            <th class="text-center" style="min-width:50px"></th>-->
                             <th class="text-center" style="min-width:50px"></th>
                         </tr>
                         <?php
@@ -476,7 +500,9 @@ if (isset($_POST['xuatphieu'])) {
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><input type="checkbox" name="listproduct[]" value="<?php echo $mvd['id'] ?>"
-                                           id=""> Chọn
+                                           id="">Chọn
+                                    <button role="button" name="removeKyGui" class="btn-danger btn-small" type="submit">Remove
+                                    </button>
                                 </td>
                                 <td><p style="font-weight: 800"><?php echo $mvd['mvd'] ?></p>
                                     <p style="font-weight: 800;color: blue"> <?php
@@ -562,7 +588,7 @@ if (isset($_POST['xuatphieu'])) {
                                         <?php
                                     } ?>
                                 </td>
-                                <td><?php echo $mvd['ghichu'] ?></td>
+<!--                                <td>--><?php //echo $mvd['ghichu'] ?><!--</td>-->
                                 <td>
                                     <button type="button" id="modalUpdateS" class="btn btn-primary btn-sm"
                                             data-toggle="modal"
@@ -571,10 +597,11 @@ if (isset($_POST['xuatphieu'])) {
                                         Update
                                     </button>
                                 </td>
-                                <td><a class="btn btn-warning" href="updateMVD.php?id=<?php echo $mvd['id'] ?>"
-                                       role="button">Sửa</a></td>
-                                <td><a class="btn btn-danger" href="deleteMVD.php?id=<?php echo $mvd['id'] ?>"
-                                       role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+<!--                                <td><a class="btn btn-warning" href="updateMVD.php?id=--><?php //echo $mvd['id'] ?><!--"-->
+<!--                                       role="button">Sửa</a></td>-->
+<!--                                <td>-->
+<!--                                   -->
+<!--                                </td>-->
                             </tr>
                             <?php
                         }
@@ -586,6 +613,7 @@ if (isset($_POST['xuatphieu'])) {
     </div>
 
 </div>
+
 <?php include 'footeradmin.php' ?>
 
 </div>
@@ -716,13 +744,10 @@ if (isset($_POST['resetStatus'])) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                <button id="btnSaveChangeStautus" name="shopgui" type="submit" class="btn btn-success" data-id="">
-                    Shop Gưi
-                </button>
-                <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-success" data-id="">
+                <button id="btnSaveChangeStautus" name="tqnhan" type="submit" class="btn btn-primary" data-id="">
                     KhoTQ Nhận
                 </button>
-                <button id="btnSaveChangeStautus" name="nhapkhovn" type="submit" class="btn btn-success" data-id="">
+                <button id="btnSaveChangeStautus" name="nhapkhovn" type="submit" class="btn btn-warning" data-id="">
                     NhậpKho VN
                 </button>
                 <button id="btnSaveChangeStautus" name="dagiaoall" type="submit" class="btn btn-success" data-id="">
