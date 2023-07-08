@@ -87,7 +87,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                 echo "<script>window.location.href='kienHang.php';</script>";
             }
             ?>
-            ?>
+            
 
         </div>
     </div>
