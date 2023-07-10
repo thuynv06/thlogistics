@@ -77,7 +77,7 @@ $th1688Repository = new Th1688Repository();
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-
+<!--                                    <li><a href="dashboard.php">Tổng Quan</a></li>-->
                                     <li><a href="vandon.php">Đơn Order</a></li>
                                     <li><a href="kygui.php">Đơn Ký Gửi</a>
                                     <li><a href="nhapkho.php">Nhập Kho TH1688</a></li>

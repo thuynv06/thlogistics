@@ -221,7 +221,14 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
 //        echo $sql;
         mysqli_query($conn, $sql);
     }
-
+    public function updateMaVanDon($id, $ladingCode)
+    {
+//        $s='$.'.'"'.$status.'"';
+        global $conn;
+        $sql = "update kienhang set mavandon='$ladingCode' where id=$id ";
+//        echo $sql;
+        mysqli_query($conn, $sql);
+    }
 
     public function updateByLadingCode($ladingCode, $status, $date)
     {
