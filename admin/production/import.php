@@ -222,13 +222,13 @@ if (isset($_POST["btnImport"])) {
                     if (isset($spreadSheetAry[10][13])) {
                         $tamung = mysqli_real_escape_string($conn, $spreadSheetAry[10][13]);
                     }
-                    $tiencong = ($tongtienhang + $tongtienshiptq) * $phidichvu;
-                    $tongall = ($tongtienhang + $tongtienshiptq + $tiencong - $tongmagiamgia) * $tygiate + $tienvanchuyen;
+//                    $tiencong = ($tongtienhang + $tongtienshiptq) * ;
+                    $tongall = ($tongtienhang + $tongtienshiptq + $phidichvu - $tongmagiamgia) * $tygiate + $tienvanchuyen;
 
 //                echo (print_r($listproduct,true));
 //                echo $phidichvu;
 
-                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavc, $phidichvu, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $tiencong, $tongall, null, $listproduct,$dateCreadted);
+                    $orderRepository->update($orderId, $user_id,$giatenhap, $tygiate, $giavc, 0.02, $tongcan, $tamung, $tongtienhang, $tongtienshiptq, $tongmagiamgia, $tienvanchuyen, $phidichvu, $tongall, null, $listproduct,$dateCreadted);
                     echo "<script>alert('Thêm thành công');window.location.href='vandon.php';</script>";
                 }else{
                     echo "<script>alert('Không tồn tại Mã Khách Hàng');window.location.href='vandon.php';</script>";
