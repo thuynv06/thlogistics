@@ -362,7 +362,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
 <!--                               role="button" onclick="openModal()">Vận Đơn</a></td>-->
                         <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
                                role="button">Sửa</a></td>
-                        <td><a class="btn-sm btn-danger" href="deleteOrderKyGui.php"
+                        <td><a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=<?php echo $orders['id'] ?>"
                                role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
                         </tr><?php
                     }

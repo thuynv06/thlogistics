@@ -23,66 +23,96 @@ $total_records = $result_count['total_records'];
 //echo $total_records;
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1; // total page minus 1
-$ordersList = $orderRepository->getTotalRecordPerPageAdmin(0,$offset, $total_records_per_page);
+$ordersList = $orderRepository->getTotalRecordPerPageAdmin(0, $offset, $total_records_per_page);
 
-if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
-    $user_id = $_POST['user_id'];
-    $ordersList = $orderRepository->findByUserId($user_id);
-}
-if (isset($_POST['status']) && !empty($_POST['status'])) {
+//if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+//    $user_id = $_POST['user_id'];
+//    $ordersList = $orderRepository->findByUserId($user_id);
+//}
+//if (isset($_POST['status']) && !empty($_POST['status'])) {
+//    $status = $_POST['status'];
+//    $ordersList = $orderRepository->findByStatus(0, $status);
+//}
+//if(empty($_POST['MaKH']) && isset($_POST['MaKH'])){
+//    $ordersList=null;
+//    $maKH = $_POST['MaKH'];
+//    $user = $userRepository->getByCode($maKH);
+//    if (isset($user)) {
+//        $ordersList = $orderRepository->findByUserId($user['id']);
+//    } else {
+//        echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
+//    }
+//}
+if (isset($_POST['searchvandon'])) {
+    $ordersList=null;
+
     $status = $_POST['status'];
-    $ordersList = $orderRepository->findByStatus(0,$status);
-}
-if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
-    $maKH = $_POST['MaKH'];
-    $user = $userRepository->getByCode($maKH);
-    if(isset($user)){
-        $ordersList = $orderRepository->findByUserId($user['id']);
+    $user_id = $_POST['user_id'];
+    echo "user_id".$user_id;
+    echo "status".$status;
+    echo "MaKH".$_POST['MaKH'];
+    if(empty($_POST['MaKH'])){
+        if(!empty($user_id) && !empty($status) ){
+            //find by user id and statusfindByUserIdAndStatus
+            $ordersList = $orderRepository->findByUserIdAndStatus(0,$user_id,$status);
+        }else{
+            if(empty($user_id)){ //tim kiem theo trang thai
+                $ordersList = $orderRepository->findByStatus(0,$status);
+            }
+            if(!empty($user_id) && empty($status) ){ // tim kiem theo user_id
+                $ordersList = $orderRepository->findByUserId(0,$user_id);
+            }
+        }
     }else{
-        echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
+        $maKH = $_POST['MaKH'];
+        $user = $userRepository->getByCode($maKH);
+        if (isset($user)) {
+            $ordersList = $orderRepository->findByUserId(0,$user['id']);
+        } else {
+            echo "<script>alert('Không tồn tại mã KH');window.location.href='vandon.php';</script>";
+        }
     }
 }
 ?>
     <div class="right_col" role="main">
-    <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
-            <div class=" " style="padding: 20px;">
-                <form action="import.php" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Vận Đơn:</span></label>
-                        <input required type="file" name="file">
-                        <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
-                                                                              href="../production/uploads/filemau.xlsx">đây</a>
-                        </p>
-                    </div>
-
-                    <button class="btn btn-primary" type="submit" name="btnImport">UpLoad</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
-
-        </div>
-    </div>
         <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+                <div class=" " style="padding: 20px;">
+                    <form action="import.php" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Vận Đơn:</span></label>
+                            <input required type="file" name="file">
+                            <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
+                                                                                  href="../production/uploads/filemau.xlsx">đây</a>
+                            </p>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit" name="btnImport">UpLoad</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                 <form name="search" class="form-inline ps-subscribe__form" method="POST"
                       enctype="multipart/form-data">
                     <div class="form-group">
-                        <input required style="margin-right: 20px; margin-bottom: 5px;"
-                               class="form-control input-large " name="MaKH"
+                        <input  style="margin-right: 20px; margin-bottom: 5px;"
+                               class="form-control input-large " name="MaKH" onchange=""
                                type="text" value="" placeholder="Nhập Mã Khách Hàng">
                     </div>
-
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="user_id"
-                                class="form-control custom-select " onchange="searchStatus()">
-                            <option value="">Lọc theo khách hàng</option>
+                                class="form-control custom-select " onchange="">
+                            <option value="" selected>Lọc theo khách hàng</option>
                             <?php
                             $listUser = $userRepository->getAllByType(0);
                             foreach ($listUser as $user) {
                                 ?>
-                                <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
+                                <option value="<?php echo $user['id']; ?>"><?php echo $user['code']; ?></option>
                                 <?php
                             }
                             ?>
@@ -90,19 +120,27 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                     </div>
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="status"
-                                class="form-control custom-select " onchange="searchStatus()">
-                            <option value="2">Lọc theo trạng thái</option>
+                                class="form-control custom-select " onchange="">
+                            <option value="" selected>Lọc theo trạng thái</option>
                             <option value="0"> Chưa Giao</option>
                             <option value="1"> Đã Giao</option>
                         </select>
                     </div>
-                    <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Tra
-                        Cứu
-                    </button>
-                    <a style="" href="vandon.php" class="btn btn-primary btn-large btn-th">RELOAD</a>
+<!--                    <div class="form-group">-->
+<!--                        <input value="" name="searchdate" type="datetime-local"-->
+<!--                               step="1"-->
+<!--                               class="form-control"-->
+<!--                               id="searchdate">-->
+<!--                    </div>-->
+                    <div class="form-group">
+                        <button class="btn btn--green btn-th" name="searchvandon" style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                            Cứu
+                        </button>
+                        <a style="" href="vandon.php" class="btn btn-primary btn-large btn-th">RELOAD</a>
+                    </div>
+
                 </form>
             </div>
-
         </div>
         <div>
 
@@ -115,7 +153,7 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                         <th class="text-center" style="min-width:50px">STT</th>
                         <th class="text-center" style="min-width:80px">Ngày</th>
                         <th class="text-center" style="min-width:100px">Khách Hàng</th>
-<!--                        <th class="text-center" style="min-width:130px">Deal</th>-->
+                        <!--                        <th class="text-center" style="min-width:130px">Deal</th>-->
                         <th class="text-center" style="min-width:100px">Status</th>
                         <th class="text-center" style="min-width:130px">Tổng Tiền Hàng</th>
                         <th class="text-center" style="min-width:100px">Tiền Công</th>
@@ -171,35 +209,36 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                             <td>
                                 <?php
                                 $user = $userRepository->getById($orders['user_id']);
-                                if(!empty($user)){ ?>
-                                <p style="font-weight: 500;color: blue"><?php echo $user['username'] ?></p>
-                                <p><?php echo $user['code'] ?></p>
+                                if (!empty($user)) { ?>
+                                    <p style="font-weight: 500;color: blue"><?php echo $user['username'] ?></p>
+                                    <p><?php echo $user['code'] ?></p>
                                     <?php
-                                    } ?>
+                                } ?>
                             </td>
                             <!--                            <td>-->
 
 
                             <!--                            </td>-->
-<!--                            <td style="background-color: #fec243;color: black;font-weight: bold"><p>Tỷ-->
-<!--                                    Giá:--><?php //echo product_price($orders['tygiate']) ?><!--</p>-->
-<!--                                <p>Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?><!--</p>-->
-<!--                          <p>Phí DV:--><?php ////echo $orders['phidichvu'] ?><!--<</p></td>-->
+                            <!--                            <td style="background-color: #fec243;color: black;font-weight: bold"><p>Tỷ-->
+                            <!--                                    Giá:--><?php //echo product_price($orders['tygiate']) ?><!--</p>-->
+                            <!--                                <p>Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?><!--</p>-->
+                            <!--                          <p>Phí DV:--><?php ////echo $orders['phidichvu'] ?><!--<</p></td>-->
                             <td> <?php
-                                    switch ($orders['status']) {
-                                        case "0":
-                                            echo '<p style="'.'font-weight: bold;">'.'Chưa Giao';
-                                            break;
-                                        case "1":
-                                            echo '<p style="'.'color: blue;font-weight: bold;">'.'Đã Giao';
-                                            break;
-                                        default:
-                                            echo "--";
-                                    }
-                                    ?> </p></td>
+                                switch ($orders['status']) {
+                                    case "0":
+                                        echo '<p style="' . 'font-weight: bold;">' . 'Chưa Giao';
+                                        break;
+                                    case "1":
+                                        echo '<p style="' . 'color: blue;font-weight: bold;">' . 'Đã Giao';
+                                        break;
+                                    default:
+                                        echo "--";
+                                }
+                                ?> </p></td>
                             <td><p>Tiền Hàng:<?php echo product_priceyen($orders['tongtienhang']) ?></p>
                                 <p>Tiền Ship TQ:<?php echo product_priceyen($orders['shiptq']) ?> </p>
-<!--                                <p>Tổng MGG:--><?php //echo product_priceyen($orders['giamgia']) ?><!-- </p></td>-->
+                                <!--                                <p>Tổng MGG:-->
+                                <?php //echo product_priceyen($orders['giamgia']) ?><!-- </p></td>-->
                             <td><?php echo product_price($orders['tiencong']) ?> </td>
                             <td><p style="font-weight: bold">Tiền
                                     VC:<?php echo product_price($orders['tienvanchuyen']) ?></p>
@@ -214,7 +253,8 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
                                 <p><a class="btn-sm btn-primary" href=""
                                       role="button">Duyệt</a></p></td>
                             <td>
-                                <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS" data-toggle="modal"
+                                <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"
+                                   data-toggle="modal"
                                    data-target="#myModal" data-id="<?php echo $orders['id'] ?>"
                                    role="button" onclick="openModal()">Vận Đơn</a></td>
                             <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
@@ -301,8 +341,8 @@ if (isset($_POST['MaKH']) && !empty($_POST['MaKH'])) {
             return new Date().getTimezoneOffset() * -60 * 1000;
         }
 
-        function searchStatus() {
-            document.search.submit();
-        }
+        // function searchStatus() {
+        //     document.search.submit();
+        // }
     </script>
 <?php include 'footeradmin.php' ?>

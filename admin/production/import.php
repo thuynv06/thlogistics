@@ -81,7 +81,11 @@ if (isset($_POST["btnImport"])) {
 
                 $tygiate = $spreadSheetAry[1][13];
                 $giavc = $spreadSheetAry[2][13];
-                $phidichvu = $spreadSheetAry[6][13];
+                $phidichvu = 2;
+
+                if (isset($spreadSheetAry[6][13])) {
+                    $phidichvu = mysqli_real_escape_string($conn, $spreadSheetAry[6][13]);
+                }
                 $listproduct = array();
                 $tongtienhang = 0;
                 $tongtienshiptq = 0;
@@ -93,6 +97,7 @@ if (isset($_POST["btnImport"])) {
                 $j =1;
                 $date = new DateTime();
                 $dateCreadted = $date->format("Y-m-d\TH:i:s");
+                $newCode="";
                 if (!empty($user_id) && isset($user_id)) {
                     $code= $orderRepository->getLastOrderCodeByUserId($user_id);
                     if(!empty($code)){

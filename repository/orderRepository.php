@@ -111,13 +111,20 @@ class OrderRepository
         mysqli_query($conn, $sql);
     }
 
-    public function findByUserId($user_id)
+    public function findByUserId($type,$user_id)
     {
         global $conn;
-        $sql = "select * from orders where user_id = $user_id ORDER BY id DESC LIMIT 0, 30";
+        $sql = "select * from orders where user_id = $user_id and type= $type ORDER BY id DESC LIMIT 0, 30";
+//        echo $sql;
         return mysqli_query($conn, $sql);
     }
-
+    public function findByUserIdAndStatus($type,$user_id,$status)
+    {
+        global $conn;
+        $sql = "select * from orders where user_id = $user_id and type= $type and status=$status ORDER BY id DESC LIMIT 0, 30";
+//        echo $sql;
+        return mysqli_query($conn, $sql);
+    }
     public function findByType($type)
     {
         global $conn;

@@ -39,7 +39,7 @@ if (isset($_POST['xuatphieu'])) {
                     <div class="form-group">
                         <input style="margin-right: 20px; margin-bottom: 5px;"
                                class="form-control input-large " name="ladingCode"
-                               type="text" value="" placeholder="Tìm theo mã vận đơn">
+                               type="text" value="" placeholder="Tìm theo mã vận đơn" onchange="searchStatus()">
                     </div>
                     <div class="form-group">
                         <select style="margin-right: 20px; margin-bottom: 5px;" name="status_id"
