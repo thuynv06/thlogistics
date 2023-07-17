@@ -201,7 +201,7 @@ $kienHangList = $kienhangRepository->getTotalRecordPerPageAdmin($offset, $total_
                         foreach ($listUser as $user) {
                             if ($user['id'] == $kienHang['user_id']) {
                                 ?>
-                                <?php echo $user['username'] ?><span> &#45; </span><?php echo $user['code'] ?>
+                                <?php echo $user['code'] ?>
                             <?php }
                         }
                         ?>

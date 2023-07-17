@@ -8,7 +8,19 @@ if (isset($_POST['xuatphieu'])) {
     include "phieuxuatkho.php";
     phieuxuatkho($_POST['listproduct'],$order['user_id']);
 }
-
+if (isset($_POST['xuatKho'])) {
+    $order = $orderRepository->getById($_GET['id']);
+//    echo $order['user_id'];
+if (!empty($_POST['listproduct'])) {
+    $listID=$_POST['listproduct'];
+    foreach ($listID as $idMVD){
+        $date = new DateTime();
+        $string = date_format($date,"Y-m-d\TH:i:s");
+        $mvdRepository->updateTimesById($idMVD, 5, $string);
+        $kienhangRepository->updateStatusByIdMVD($idMVD,5,$string);
+    }
+}
+}
 ?>
 
 <div class="right_col" role="main" style="font-size: 11px;">
@@ -449,6 +461,9 @@ if (isset($_POST['xuatphieu'])) {
 
             <button class="btn-sm btn-primary" type="submit" name="xuatphieu"
                     role="button">Xuất Phiếu
+            </button>
+            <button class="btn-sm btn-warning" type="submit" name="xuatKho"
+                    role="button">Xuất Kho
             </button>
 <!--            <button class="btn-sm btn-primary" type="submit" name="addKienHang"-->
 <!--                    role="button">Thêm Sản Phẩm-->

@@ -110,51 +110,33 @@ function phieuxuatkho($listId, $userID)
         $sokien = 0;
         $listPrint = array();
 //        array_push($listproduct, $kienhang_id);
-//        print_r($listId);
+        print_r($listId);
         $flag = false;
         for ($x = 0; $x < count($listId); $x++) {
             $element = $listId[$x];
 
             // Perform any operations on $element
 //            echo $element . "\n";
-            $tempProduct = $mvdRepository->getById($element)->fetch_assoc();
+            if(!empty($element)){
+                $tempProduct = $mvdRepository->getById($element)->fetch_assoc();
 
-            $obj = json_decode($tempProduct['times']);
-            $tqnhan = '';
-            $vnnhan = '';
-            if (!empty($obj)) {
-                if (!empty($obj->{1})) {
-                    $tqnhan = date('Y-m-d', strtotime($obj->{1}));
+                $obj = json_decode($tempProduct['times']);
+                $tqnhan = '';
+                $vnnhan = '';
+                if (!empty($obj)) {
+                    if (!empty($obj->{1})) {
+                        $tqnhan = date('Y-m-d', strtotime($obj->{1}));
+                    }
+                    if (!empty($obj->{3})) {
+                        $vnnhan = date('Y-m-d', strtotime($obj->{3}));
+                    }
                 }
-                if (!empty($obj->{3})) {
-                    $vnnhan = date('Y-m-d', strtotime($obj->{3}));
-                }
-            }
-            $sheet->setCellValue('A' . $i, $i - 13);
-            $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
-            $sheet->setCellValue('C' . $i, $tqnhan);
-            $sheet->setCellValue('D' . $i, $vnnhan);
-            //chưa thì print số cân ra
-            if ($x == 0) { //dong đầu tiên
-                $sheet->setCellValue('E' . $i, $tempProduct['cannang']);
-                $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
-                if (!empty($tempProduct['cannang'] * $tempProduct['giavc'])) {
-                    $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
-                    $tongcan += $tempProduct['cannang'];
-                    $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
-                } else {
-                    $sheet->setCellValue('G' . $i, 0);
-                }
-                $sokien++;
-
-                array_push($listPrint, $element);
-            } else {// print rồi thì thôi
-                if (in_array($element, $listPrint)) {
-                    $sheet->setCellValue('E' . $i, "0");
-                    $sheet->setCellValue('F' . $i, "0");
-                    $sheet->setCellValue('G' . $i, "0");
-
-                } else {
+                $sheet->setCellValue('A' . $i, $i - 13);
+                $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
+                $sheet->setCellValue('C' . $i, $tqnhan);
+                $sheet->setCellValue('D' . $i, $vnnhan);
+                //chưa thì print số cân ra
+                if ($x == 0) { //dong đầu tiên
                     $sheet->setCellValue('E' . $i, $tempProduct['cannang']);
                     $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
                     if (!empty($tempProduct['cannang'] * $tempProduct['giavc'])) {
@@ -167,13 +149,32 @@ function phieuxuatkho($listId, $userID)
                     $sokien++;
 
                     array_push($listPrint, $element);
+                } else {// print rồi thì thôi
+                    if (in_array($element, $listPrint)) {
+                        $sheet->setCellValue('E' . $i, "0");
+                        $sheet->setCellValue('F' . $i, "0");
+                        $sheet->setCellValue('G' . $i, "0");
+
+                    } else {
+                        $sheet->setCellValue('E' . $i, $tempProduct['cannang']);
+                        $sheet->setCellValue('F' . $i, $tempProduct['giavc']);
+                        if (!empty($tempProduct['cannang'] * $tempProduct['giavc'])) {
+                            $sheet->setCellValue('G' . $i, $tempProduct['cannang'] * $tempProduct['giavc']);
+                            $tongcan += $tempProduct['cannang'];
+                            $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
+                        } else {
+                            $sheet->setCellValue('G' . $i, 0);
+                        }
+                        $sokien++;
+
+                        array_push($listPrint, $element);
+                    }
                 }
-            }
-
-
 //            $tongcan += $tempProduct['cannang'];
 //            $tongtienvc += $tempProduct['cannang'] * $tempProduct['giavc'];
-            $i++;
+                $i++;
+            }
+
         }
 //        foreach ($listId as $product_id) {
 //            $sokien++;

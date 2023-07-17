@@ -196,7 +196,7 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
     {
         global $conn;
         $sql = "select * from kienhang where code='$code'";
-        return mysqli_query($conn, $sql)->fetch_assoc();;
+        return mysqli_query($conn, $sql)->fetch_assoc();
     }
 
     public function update($id,$giavc,$name, $mavandon, $soluong, $line, $cannang, $status, $giasp, $user_id, $note, $linksp, $date,$shiptq,$magiamgia,$size,$color)
@@ -218,7 +218,7 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
         $sql = "update kienhang set mavandon='$ladingCode', status=$status,
                     times =JSON_SET (times,'\$.\"$status\"','$date')
                     where id=$id ";
-//        echo $sql;
+        echo $sql;
         mysqli_query($conn, $sql);
     }
     public function updateMaVanDon($id, $ladingCode)
@@ -226,6 +226,16 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
 //        $s='$.'.'"'.$status.'"';
         global $conn;
         $sql = "update kienhang set mavandon='$ladingCode' where id=$id ";
+//        echo $sql;
+        mysqli_query($conn, $sql);
+    }
+    public function updateStatusByIdMVD($mvd_id, $status, $date)
+    {
+//        $s='$.'.'"'.$status.'"';
+        global $conn;
+        $sql = "update kienhang set status=$status,
+                    times =JSON_SET (times,'\$.\"$status\"','$date')
+                    where mvd_id=$mvd_id ";
 //        echo $sql;
         mysqli_query($conn, $sql);
     }
@@ -277,7 +287,7 @@ values($orderId,$gianhap,$phidv,$tongtien,'$name','$nametq','$mavandon',$soluong
                      '\$.\"3\"','$string3'
                     )
                     where id=$id ";
-        echo $sql;
+//        echo $sql;
         mysqli_query($conn, $sql);
     }
 

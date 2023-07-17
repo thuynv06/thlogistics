@@ -155,13 +155,13 @@ if (isset($_POST['searchvandon'])) {
                         <th class="text-center" style="min-width:100px">Khách Hàng</th>
                         <!--                        <th class="text-center" style="min-width:130px">Deal</th>-->
                         <th class="text-center" style="min-width:100px">Status</th>
-                        <th class="text-center" style="min-width:130px">Tổng Tiền Hàng</th>
-                        <th class="text-center" style="min-width:100px">Tiền Công</th>
-                        <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>
+<!--                        <th class="text-center" style="min-width:130px">Tổng Tiền Hàng</th>-->
+<!--                        <th class="text-center" style="min-width:100px">Tiền Công</th>-->
+<!--                        <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>-->
                         <th class="text-center" style="min-width:130px">Tổng Tiền</th>
                         <th class="text-center" style="min-width:100px">Đã TT</th>
                         <th class="text-center" style="min-width:100px">Công Nợ</th>
-                        <th class="text-center" style="min-width:100px">Ghi Chú</th>
+<!--                        <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
                         <th class="text-center" style="min-width:80px"></th>
                         <th class="text-center" style="min-width:80px"></th>
                         <th class="text-center" style="min-width:80px"></th>
@@ -235,19 +235,19 @@ if (isset($_POST['searchvandon'])) {
                                         echo "--";
                                 }
                                 ?> </p></td>
-                            <td><p>Tiền Hàng:<?php echo product_priceyen($orders['tongtienhang']) ?></p>
-                                <p>Tiền Ship TQ:<?php echo product_priceyen($orders['shiptq']) ?> </p>
-                                <!--                                <p>Tổng MGG:-->
-                                <?php //echo product_priceyen($orders['giamgia']) ?><!-- </p></td>-->
-                            <td><?php echo product_price($orders['tiencong']) ?> </td>
-                            <td><p style="font-weight: bold">Tiền
-                                    VC:<?php echo product_price($orders['tienvanchuyen']) ?></p>
-                                <p style="color: blue">Tổng Kg:<?php echo product_price($orders['tongcan']) ?></p>
-                            </td>
+<!--                            <td><p>Tiền Hàng:--><?php //echo product_priceyen($orders['tongtienhang']) ?><!--</p>-->
+<!--                                <p>Tiền Ship TQ:--><?php //echo product_priceyen($orders['shiptq']) ?><!-- </p>-->
+<!--                                                       <p>Tổng MGG:-->
+<!--                                --><?php ////echo product_priceyen($orders['giamgia']) ?><!-- </p></td>-->
+<!--                            <td>--><?php //echo product_price($orders['tiencong']) ?><!-- </td>-->
+<!--                            <td><p style="font-weight: bold">Tiền-->
+<!--                                    VC:--><?php //echo product_price($orders['tienvanchuyen']) ?><!--</p>-->
+<!--                                <p style="color: blue">Tổng Kg:--><?php //echo product_price($orders['tongcan']) ?><!--</p>-->
+<!--                            </td>-->
                             <td style="font-weight: 500;color: blue"><?php echo product_price($orders['tongall']) ?></td>
                             <td style="color: limegreen;font-weight: bold"><?php echo product_price($orders['tamung']) ?> </td>
                             <td style="color: red;font-weight: bold"><?php echo product_price($orders['tongall'] - $orders['tamung']) ?></td>
-                            <td><?php echo $orders['ghichu'] ?> </td>
+<!--                            <td>--><?php //echo $orders['ghichu'] ?><!-- </td>-->
                             <td><p><a class="btn-sm btn-dark" href="detailOrder.php?id=<?php echo $orders['id'] ?>"
                                       role="button">Detail</a></p>
                                 <p><a class="btn-sm btn-primary" href=""
