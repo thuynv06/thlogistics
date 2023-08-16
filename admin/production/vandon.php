@@ -17,13 +17,19 @@ $total_no_of_pages = 1;
 $orderCode = '';
 
 //    echo $orderCode;
-$result_count = $orderRepository->getTotalResult(0);
+$result_count = $orderRepository->getTotalResult(0,0);
 //$total_records =$result_count->fetch_assoc();
 $total_records = $result_count['total_records'];
 //echo $total_records;
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1; // total page minus 1
-$ordersList = $orderRepository->getTotalRecordPerPageAdmin(0, $offset, $total_records_per_page);
+$ordersList = $orderRepository->getTotalRecordPerPageAdmin(0,0, $offset, $total_records_per_page);
+
+$result_count1 = $orderRepository->getTotalResult(0,1);
+$total_records1 = $result_count1['total_records'];
+$total_no_of_pages1 = ceil($total_records1 / $total_records_per_page);
+$second_last = $total_no_of_pages1 - 1; // total page minus 1
+$ordersListDaGiao = $orderRepository->getTotalRecordPerPageAdmin(0,1, $offset, $total_records_per_page);
 
 //if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
 //    $user_id = $_POST['user_id'];
@@ -143,15 +149,15 @@ if (isset($_POST['searchvandon'])) {
             </div>
         </div>
         <div>
-
         </div>
         <div class="row col col-12">
-            <h3>Danh Sách Đơn Hàng</h3>
+            <h3>Danh Sách Đơn Hàng Chưa Xuất</h3>
             <div class="table-responsive" style="padding-bottom: 20px;">
                 <table id="tableShoe">
                     <tr>
                         <th class="text-center" style="min-width:50px">STT</th>
                         <th class="text-center" style="min-width:80px">Ngày</th>
+                        <th class="text-center" style="min-width:80px">Mã Đơn</th>
                         <th class="text-center" style="min-width:100px">Khách Hàng</th>
                         <!--                        <th class="text-center" style="min-width:130px">Deal</th>-->
                         <th class="text-center" style="min-width:100px">Status</th>
@@ -163,8 +169,8 @@ if (isset($_POST['searchvandon'])) {
                         <th class="text-center" style="min-width:100px">Công Nợ</th>
 <!--                        <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
                         <th class="text-center" style="min-width:80px"></th>
-                        <th class="text-center" style="min-width:80px"></th>
-                        <th class="text-center" style="min-width:80px"></th>
+<!--                        <th class="text-center" style="min-width:80px"></th>-->
+<!--                        <th class="text-center" style="min-width:80px"></th>-->
                         <th class="text-center" style="min-width:80px"></th>
                     </tr>
                     <?php
@@ -201,17 +207,18 @@ if (isset($_POST['searchvandon'])) {
                         foreach ($ordersList as $orders) {
                             ?>
                             <td><?php echo $i++; ?></td>
-                            <td><p style="font-weight: 700;"><?php echo $orders['code'] ?></p>
+                            <td>
                                 <?php
                                 $startdate = date("Y-m-d", strtotime($orders['startdate']));
                                 echo $startdate ?>
+                            </td>
+                            <td><p style="font-weight: 700;"><?php echo $orders['code'] ?></p>
                             </td>
                             <td>
                                 <?php
                                 $user = $userRepository->getById($orders['user_id']);
                                 if (!empty($user)) { ?>
-                                    <p style="font-weight: 500;color: blue"><?php echo $user['username'] ?></p>
-                                    <p><?php echo $user['code'] ?></p>
+                                    <p><?php echo $user['code']."-".$user['fullname'] ?></p>
                                     <?php
                                 } ?>
                             </td>
@@ -248,17 +255,143 @@ if (isset($_POST['searchvandon'])) {
                             <td style="color: limegreen;font-weight: bold"><?php echo product_price($orders['tamung']) ?> </td>
                             <td style="color: red;font-weight: bold"><?php echo product_price($orders['tongall'] - $orders['tamung']) ?></td>
 <!--                            <td>--><?php //echo $orders['ghichu'] ?><!-- </td>-->
-                            <td><p><a class="btn-sm btn-dark" href="detailOrder.php?id=<?php echo $orders['id'] ?>"
-                                      role="button">Detail</a></p>
-                                <p><a class="btn-sm btn-primary" href=""
-                                      role="button">Duyệt</a></p></td>
+                            <td><a class="btn-sm btn-dark" href="detailOrder.php?id=<?php echo $orders['id'] ?>"
+                                      role="button">Chi tiết</a></td>
+<!--                                <p><a class="btn-sm btn-primary" href=""-->
+<!--                                      role="button">Duyệt</a></p></td>-->
+<!--                            <td>-->
+<!--                                <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"-->
+<!--                                   data-toggle="modal"-->
+<!--                                   data-target="#myModal" data-id="--><?php //echo $orders['id'] ?><!--"-->
+<!--                                   role="button" onclick="openModal()">Vận Đơn</a></td>-->
+<!--                            <td><a class="btn-sm btn-warning" href="updateOrder.php?id=--><?php //echo $orders['id'] ?><!--"-->
+<!--                                   role="button">Sửa</a></td>-->
+                            <td><a class="btn-sm btn-danger" href="deleteOrders.php?id=<?php echo $orders['id'] ?>"
+                                   role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+                            </tr><?php
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+            <?php include 'paginantionList.php' ?>
+        </div>
+        <div class="row col col-12">
+            <h3>Danh Sách Đơn Hàng Đã Giao</h3>
+            <div class="table-responsive" style="padding-bottom: 20px;">
+                <table id="tableShoe">
+                    <tr>
+                        <th class="text-center" style="min-width:50px">STT</th>
+                        <th class="text-center" style="min-width:80px">Ngày</th>
+                        <th class="text-center" style="min-width:80px">Mã đơn</th>
+                        <th class="text-center" style="min-width:100px">Khách Hàng</th>
+                        <!--                        <th class="text-center" style="min-width:130px">Deal</th>-->
+                        <th class="text-center" style="min-width:100px">Status</th>
+                        <!--                        <th class="text-center" style="min-width:130px">Tổng Tiền Hàng</th>-->
+                        <!--                        <th class="text-center" style="min-width:100px">Tiền Công</th>-->
+                        <!--                        <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>-->
+                        <th class="text-center" style="min-width:130px">Tổng Tiền</th>
+                        <th class="text-center" style="min-width:100px">Đã TT</th>
+                        <th class="text-center" style="min-width:100px">Công Nợ</th>
+                        <!--                        <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
+                        <th class="text-center" style="min-width:80px"></th>
+                        <!--                        <th class="text-center" style="min-width:80px"></th>-->
+<!--                        <th class="text-center" style="min-width:80px"></th>-->
+                        <th class="text-center" style="min-width:80px"></th>
+                    </tr>
+                    <?php
+                    //                    if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                    //                        $kienHangList = $kienhangRepository->findByMaVanDon($_POST['ladingCode']);
+                    //                    }
+                    //                    if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                    //                        $kienHangList = $kienhangRepository->findByStatus($_POST['status_id']);
+                    //                    }
+                    //                    if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+                    //                        $user_id = $_POST['user_id'];
+                    //                        $kienHangList = $kienhangRepository->findByUserId($user_id,$offset,$total_records_per_page);
+                    //                    }
+//                    function product_price($priceFloat)
+//                    {
+//                        $symbol = ' VNĐ';
+//                        $symbol_thousand = '.';
+//                        $decimal_place = 0;
+//                        $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+//                        return $price . $symbol;
+//                    }
+
+//                    function product_priceyen($priceFloat)
+//                    {
+//                        $symbol = ' ¥';
+//                        $symbol_thousand = '.';
+//                        $decimal_place = 0;
+//                        $price = number_format($priceFloat, $decimal_place, ',', $symbol_thousand);
+//                        return $price . $symbol;
+//                    }
+
+                    if (!empty($ordersListDaGiao)) {
+                        $i = 1;
+                        foreach ($ordersListDaGiao as $orders) {
+                            ?>
+                            <td><?php echo $i++; ?></td>
                             <td>
-                                <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"
-                                   data-toggle="modal"
-                                   data-target="#myModal" data-id="<?php echo $orders['id'] ?>"
-                                   role="button" onclick="openModal()">Vận Đơn</a></td>
-                            <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
-                                   role="button">Sửa</a></td>
+                                <?php
+                                $startdate = date("Y-m-d", strtotime($orders['startdate']));
+                                echo $startdate ?>
+                            </td>
+                            <td><p style="font-weight: 700;"><?php echo $orders['code'] ?></p>
+                            </td>
+                            <td>
+                                <?php
+                                $user = $userRepository->getById($orders['user_id']);
+                                if (!empty($user)) { ?>
+                                    <p><?php echo $user['code'] ?></p>
+                                    <?php
+                                } ?>
+                            </td>
+                            <!--                            <td>-->
+
+
+                            <!--                            </td>-->
+                            <!--                            <td style="background-color: #fec243;color: black;font-weight: bold"><p>Tỷ-->
+                            <!--                                    Giá:--><?php //echo product_price($orders['tygiate']) ?><!--</p>-->
+                            <!--                                <p>Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?><!--</p>-->
+                            <!--                          <p>Phí DV:--><?php ////echo $orders['phidichvu'] ?><!--<</p></td>-->
+                            <td> <?php
+                                switch ($orders['status']) {
+                                    case "0":
+                                        echo '<p style="' . 'font-weight: bold;">' . 'Chưa Giao';
+                                        break;
+                                    case "1":
+                                        echo '<p style="' . 'color: blue;font-weight: bold;">' . 'Đã Giao';
+                                        break;
+                                    default:
+                                        echo "--";
+                                }
+                                ?> </p></td>
+                            <!--                            <td><p>Tiền Hàng:--><?php //echo product_priceyen($orders['tongtienhang']) ?><!--</p>-->
+                            <!--                                <p>Tiền Ship TQ:--><?php //echo product_priceyen($orders['shiptq']) ?><!-- </p>-->
+                            <!--                                                       <p>Tổng MGG:-->
+                            <!--                                --><?php ////echo product_priceyen($orders['giamgia']) ?><!-- </p></td>-->
+                            <!--                            <td>--><?php //echo product_price($orders['tiencong']) ?><!-- </td>-->
+                            <!--                            <td><p style="font-weight: bold">Tiền-->
+                            <!--                                    VC:--><?php //echo product_price($orders['tienvanchuyen']) ?><!--</p>-->
+                            <!--                                <p style="color: blue">Tổng Kg:--><?php //echo product_price($orders['tongcan']) ?><!--</p>-->
+                            <!--                            </td>-->
+                            <td style="font-weight: 500;color: blue"><?php echo product_price($orders['tongall']) ?></td>
+                            <td style="color: limegreen;font-weight: bold"><?php echo product_price($orders['tamung']) ?> </td>
+                            <td style="color: red;font-weight: bold"><?php echo product_price($orders['tongall'] - $orders['tamung']) ?></td>
+                            <!--                            <td>--><?php //echo $orders['ghichu'] ?><!-- </td>-->
+                            <td><a class="btn-sm btn-dark" href="detailOrder.php?id=<?php echo $orders['id'] ?>"
+                                      role="button">Chi tiết</a></td>
+                            <!--                                <p><a class="btn-sm btn-primary" href=""-->
+                            <!--                                      role="button">Duyệt</a></p></td>-->
+                            <!--                            <td>-->
+                            <!--                                <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"-->
+                            <!--                                   data-toggle="modal"-->
+                            <!--                                   data-target="#myModal" data-id="--><?php //echo $orders['id'] ?><!--"-->
+                            <!--                                   role="button" onclick="openModal()">Vận Đơn</a></td>-->
+<!--                            <td><a class="btn-sm btn-warning" href="updateOrder.php?id=--><?php //echo $orders['id'] ?><!--"-->
+<!--                                   role="button">Sửa</a></td>-->
                             <td><a class="btn-sm btn-danger" href="deleteOrders.php?id=<?php echo $orders['id'] ?>"
                                    role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
                             </tr><?php

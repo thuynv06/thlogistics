@@ -17,13 +17,20 @@ $total_no_of_pages = 1;
 $orderCode = '';
 
 //    echo $orderCode;
-$result_count = $orderRepository->getTotalResult(1);
+$result_count = $orderRepository->getTotalResult(1,0);
 //$total_records =$result_count->fetch_assoc();
 $total_records = $result_count['total_records'];
 //echo $total_records;
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1; // total page minus 1
-$ordersList = $orderRepository->getTotalRecordPerPageAdmin(1, $offset, $total_records_per_page);
+$ordersList = $orderRepository->getTotalRecordPerPageAdmin(1,0,$offset, $total_records_per_page);
+
+
+$result_count1 = $orderRepository->getTotalResult(1,1);
+$total_records1 = $result_count1['total_records'];
+$total_no_of_pages1 = ceil($total_records1 / $total_records_per_page);
+$second_last = $total_no_of_pages1 - 1; // total page minus 1
+$ordersListDaGiao = $orderRepository->getTotalRecordPerPageAdmin(1,1, $offset, $total_records_per_page);
 
 if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
@@ -256,7 +263,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
         </form>
     </div>
     <div class="col-lg-10 col-xs-12">
-        <h3>Danh Sách Đơn Hàng</h3>
+        <h3>Danh Sách Đơn Hàng Chưa Xuất</h3>
         <div class="table-responsive" style="padding-bottom: 20px;">
             <table id="tableShoe">
                 <tr>
@@ -326,7 +333,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                                 <?php
                             } ?>
                         </td>
-                        <td><?php echo $user['username'] ?></td>
+                        <td><?php echo $user['fullname'] ?></td>
                         <!--                            <td>-->
 
 
@@ -372,6 +379,106 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
         </div>
         <?php include 'paginantionList.php' ?>
     </div>
+        <div class="col-lg-10 col-xs-12">
+            <h3>Danh Sách Đơn Hàng Đã Giao</h3>
+            <div class="table-responsive" style="padding-bottom: 20px;">
+                <table id="tableShoe">
+                    <tr>
+                        <th class="text-center" style="min-width:50px">STT</th>
+                        <th class="text-center" style="min-width:80px">Ngày</th>
+                        <th class="text-center" style="min-width:150px">Mã Đơn</th>
+                        <th class="text-center" style="min-width:100px">Mã KH</th>
+                        <th class="text-center" style="min-width:100px">Tên KH</th>
+                        <!--                    <th class="text-center" style="min-width:130px">Deal</th>-->
+                        <th class="text-center" style="min-width:100px">Status</th>
+                        <th class="text-center" style="min-width:100px">Tổng Kg</th>
+                        <th class="text-center" style="min-width:150px">Tiền Vận Chuyển</th>
+                        <th class="text-center" style="min-width:100px">Đã TT</th>
+                        <th class="text-center" style="min-width:100px">Công Nợ</th>
+                        <!--                    <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
+                        <th class="text-center" style="min-width:80px"></th>
+                        <th class="text-center" style="min-width:80px"></th>
+                    </tr>
+                    <?php
+                    //                    if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
+                    //                        $kienHangList = $kienhangRepository->findByMaVanDon($_POST['ladingCode']);
+                    //                    }
+                    //                    if (isset($_POST['status_id']) && !empty($_POST['status_id'])) {
+                    //                        $kienHangList = $kienhangRepository->findByStatus($_POST['status_id']);
+                    //                    }
+                    //                    if (isset($_POST['user_id']) && !empty($_POST['user_id'])) {
+                    //                        $user_id = $_POST['user_id'];
+                    //                        $kienHangList = $kienhangRepository->findByUserId($user_id,$offset,$total_records_per_page);
+                    //                    }
+
+
+                    if (!empty($ordersListDaGiao)) {
+                        $i = 1;
+                        foreach ($ordersListDaGiao as $orders) {
+                            ?>
+                            <td><?php echo $i++; ?></td>
+                            <td>
+                                <?php
+                                $startdate = date("Y-m-d", strtotime($orders['startdate']));
+
+                                echo $startdate ?>
+                            </td>
+                            <td style="font-weight: 700;"><?php echo $orders['code'] ?></td>
+                            <td style="color: blue">
+                                <?php
+                                $user = $userRepository->getById($orders['user_id']);
+                                if (!empty($user)) { ?>
+                                    <!--                                    <p style="font-weight: 500;color: blue"></p>-->
+                                    <?php echo $user['code'] ?>
+                                    <?php
+                                } ?>
+                            </td>
+                            <td><?php echo $user['fullname'] ?></td>
+                            <!--                            <td>-->
+
+
+                            <!--                            </td>-->
+                            <!--                        <td style="background-color: #fec243;color: black;font-weight: bold">-->
+                            <!--                            Giá VC:--><?php //echo product_price($orders['giavanchuyen']) ?>
+                            <td><?php
+                                switch ($orders['status']) {
+                                    case "0":
+                                        echo '<p style="' . 'font-weight: bold;">' . 'Chưa Giao';
+                                        break;
+                                    case "1":
+                                        echo '<p style="' . 'color: blue;font-weight: bold;">' . 'Đã Giao';
+                                        break;
+                                    default:
+                                        echo "--";
+                                }
+                                ?> </td>
+
+                            <td style="color: blue">
+                                <?php echo $orders['tongcan'] . " Kg" ?>
+                            </td>
+                            <td><?php echo product_price($orders['tienvanchuyen']) ?></td>
+                            <td style="color: limegreen;font-weight: bold"><?php echo product_price($orders['tamung']) ?> </td>
+                            <td style="color: red;font-weight: bold"><?php echo product_price($orders['tongall'] - $orders['tamung']) ?></td>
+                            <!--                        <td>--><?php //echo $orders['ghichu'] ?><!-- </td>-->
+                            <td><a class="btn-sm btn-dark" href="detailKyGui.php?id=<?php echo $orders['id'] ?>"
+                                   role="button">Chi tiết</a>
+                                <!--                        <td>-->
+                                <!--                            <a style="background-color: #ff6c00" class="btn-sm btn-primary" id="modalUpdateS"-->
+                                <!--                               data-toggle="modal"-->
+                                <!--                               data-target="#myModal" data-id="--><?php //echo $orders['id'] ?><!--"-->
+                                <!--                               role="button" onclick="openModal()">Vận Đơn</a></td>-->
+<!--                            <td><a class="btn-sm btn-warning" href="updateOrder.php?id=--><?php //echo $orders['id'] ?><!--"-->
+<!--                                   role="button">Sửa</a></td>-->
+                            <td><a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=<?php echo $orders['id'] ?>"
+                                   role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+                            </tr><?php
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+            <?php include 'paginantionList.php' ?>
+        </div>
     </div>
 </div>
 <script>

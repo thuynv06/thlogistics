@@ -48,11 +48,11 @@ class OrderRepository
         $sql = "select code from orders where id=$id";
         return mysqli_query($conn, $sql)->fetch_assoc();
     }
-    public function getTotalResult($type)
+    public function getTotalResult($type,$status)
     {
         global $conn;
 //        echo $orderCode;
-        $sql = "SELECT COUNT(*) As total_records FROM `orders`  where type=$type";
+        $sql = "SELECT COUNT(*) As total_records FROM `orders`  where type=$type and status=$status";
 
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql)->fetch_assoc();
@@ -68,10 +68,10 @@ class OrderRepository
 //            return mysqli_query($conn, $sql)->fetch_assoc();
 //        }
 
-    public function getTotalRecordPerPageAdmin($type, $offset, $total_records_per_page)
+    public function getTotalRecordPerPageAdmin($type,$status, $offset, $total_records_per_page)
     {
         global $conn;
-        $sql = "SELECT * FROM `orders` where type=$type ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
+        $sql = "SELECT * FROM `orders` where type=$type and status=$status ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
 
         mysqli_query($conn, 'set names "utf8"');
 
