@@ -545,7 +545,7 @@ if (!empty($_POST['listproduct'])) {
 
                     <tr>
                                 <td><?php echo $i++; ?></td>
-                                <td><input type="checkbox" name="listproduct[]" value="<?php if (!empty($tempMaVanDon)) { echo $tempMaVanDon['id'];}  ?>"
+                                <td><input type="checkbox" name="listproduct[]" value="<?php if (!empty($tempMaVanDon)) { echo $tempMaVanDon['id'];} else { echo "null"; } ?>"
                                            id=""> Chọn
                                 </td>
                                 <td><p style="font-weight: 700;"><?php echo $product['code'] ?></p>

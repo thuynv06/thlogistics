@@ -119,7 +119,6 @@ function phieuxuatkho($listId, $userID)
 //            echo $element . "\n";
             if(!empty($element)){
                 $tempProduct = $mvdRepository->getById($element)->fetch_assoc();
-
                 $obj = json_decode($tempProduct['times']);
                 $tqnhan = '';
                 $vnnhan = '';
@@ -132,7 +131,11 @@ function phieuxuatkho($listId, $userID)
                     }
                 }
                 $sheet->setCellValue('A' . $i, $i - 13);
-                $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
+                if (!empty($tempProduct['mvd'])){
+                    $sheet->setCellValue('B' . $i, $tempProduct['mvd']);
+                }else{
+                    $sheet->setCellValue('B' . $i, "chưa cập nhập");
+                }
                 $sheet->setCellValue('C' . $i, $tqnhan);
                 $sheet->setCellValue('D' . $i, $vnnhan);
                 //chưa thì print số cân ra
