@@ -30,11 +30,6 @@ class MaVanDonRepository
 //        echo $sql;
         return mysqli_query($conn, $sql);
     }
-//    public function deleteById($id){
-//        global $conn;
-//        $sql = "delete from orders where id=$id";
-//        mysqli_query($conn,$sql);
-//    }
     public function findByUserId($user_id, $offset, $total_records_per_page)
     {
         global $conn;
@@ -102,6 +97,27 @@ class MaVanDonRepository
         mysqli_query($conn, 'set names "utf8"');
         return mysqli_query($conn, $sql);
     }
+
+
+    public function getListMVDOfOrderByOrderCode($order_code)
+    {
+        global $conn;
+        $sql = "select id,mvd from mvd where ordercode='$order_code' ORDER BY id DESC";
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql);
+    }
+
+    public function getSumCanNangOfOderByOrderCode($order_code)
+    {
+        global $conn;
+        $sql = "SELECT sum(cannang) as tongcan FROM `mvd`  WHERE ordercode='$order_code' ";
+//        echo $sql;
+        mysqli_query($conn, 'set names "utf8"');
+        return mysqli_query($conn, $sql)->fetch_assoc();
+    }
+
+
 
     public function findByStatusAndUserIdAndMaVanDon($mavandon,$status_id,$user_id)
     {
@@ -210,6 +226,26 @@ class MaVanDonRepository
         mysqli_query($conn, $sql);
         return mysqli_insert_id($conn);
     }
+    public function add($mvd,$name,$cannang, $giavc, $line, $user_id,$times,$ghichu)
+    {
+        global $conn;
+        $thanhtien = $giavc*$cannang;
+
+
+        $sql = "insert into mvd(mvd,name,giavc,cannang,thanhtien,line,user_id,times,ghichu) 
+        values('$mvd','$name',$giavc,$cannang,$thanhtien,'$line',$user_id,'$times','$ghichu')";
+//        echo $sql;
+        mysqli_query($conn, $sql);
+        return mysqli_insert_id($conn);
+    }
+    public function updateMaKien($id)
+    {
+        global $conn;
+        $code = "KTH123" . $id;
+        $sql = "update mvd set code='$code' where id=$id ";
+//        echo $sql;
+        mysqli_query($conn, $sql);
+    }
 
     public function getOrderCodeLastRecord()
     {
@@ -238,6 +274,12 @@ class MaVanDonRepository
     {
         global $conn;
         $sql = "select * from mvd where id=$id";
+        return mysqli_query($conn, $sql);
+    }
+    public function getStatusByMVD($mvd)
+    {
+        global $conn;
+        $sql = "select status from mvd where mvd='$mvd' ";
         return mysqli_query($conn, $sql);
     }
     public function getByCode($code)
@@ -291,10 +333,10 @@ class MaVanDonRepository
 //        echo $sql;
         return mysqli_query($conn, $sql);
     }
-    public function updateByMaVanDon($mvd, $status, $date)
+    public function updateByMaVanDon($mvd,$ordercode,$status, $date)
     {
         global $conn;
-        $sql = "update mvd set status=$status,
+        $sql = "update mvd set status=$status,ordercode='$ordercode',
                     times =JSON_SET (times,'\$.\"$status\"','$date')
                     where mvd='$mvd'";
 //        echo $sql;
@@ -354,14 +396,14 @@ class MaVanDonRepository
         mysqli_query($conn, $sql);
     }
 
-    public function updateMaKien($id)
-    {
-        global $conn;
-        $orderCode = "TH168800" . $id;
-        $sql = "update mvd set orderCode='$orderCode' where id=$id ";
-//        echo $sql;
-        mysqli_query($conn, $sql);
-    }
+//    public function updateMaKien($id)
+//    {
+//        global $conn;
+//        $orderCode = "TH168800" . $id;
+//        $sql = "update mvd set orderCode='$orderCode' where id=$id ";
+////        echo $sql;
+//        mysqli_query($conn, $sql);
+//    }
     public function updateGiaVC($id,$giavc)
     {
         global $conn;

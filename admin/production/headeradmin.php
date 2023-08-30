@@ -79,11 +79,12 @@ $th1688Repository = new Th1688Repository();
                                 <ul class="nav child_menu">
 <!--                                    <li><a href="dashboard.php">Tổng Quan</a></li>-->
                                     <li><a href="vandon.php">Đơn Order</a></li>
-                                    <li><a href="kygui.php">Đơn Ký Gửi</a>
-                                    <li><a href="nhapkho.php">Nhập Kho TH1688</a></li>
-                                    <li><a href="xuatkho.php">Xuất Kho TH1688</a></li>
+                                    <li><a href="kygui.php">Danh Sách Bao Hàng</a>
                                     <li><a href="mvd.php">Quản Lý Mã Vận Đơn</a></li>
-                                    <li><a href="kienHang.php">Quản Lý Hàng Order</a></li>
+                                    <li><a href="nhapkho.php">Nhập Kho</a></li>
+                                    <li><a href="xuatkho.php">Xuất Kho</a></li>
+
+<!--                                    <li><a href="kienHang.php">Quản Lý Hàng Order</a></li>-->
                                         <ul class="nav child_menu">
                                             <li>
 <!--                                                <a href="yeucaugiaohang.php">Tạo Phiếu YC Giao Hàng</a>-->

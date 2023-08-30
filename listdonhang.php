@@ -52,8 +52,10 @@ function product_price($priceFloat)
             </div>
             <hr>
             <div class="btnquanlykienhang">
-                <a href="customer-packages.php" class="btn btn-primary ">Tất cả kiện hàng</a>
-                <a href="vandon.php" class="btn btn-primary ">Danh Sách Đơn Hàng /Phiếu Xuất</a>
+                <a href="customer-packages.php" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;">Tất cả kiện hàng</a>
+                <a href="vandon.php" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;">Danh Sách Đơn Hàng /Phiếu Xuất</a>
 <!--                <a href="" class="btn btn-primary btn-th">Giao hàng</a>-->
             </div>
             <hr>
@@ -61,8 +63,10 @@ function product_price($priceFloat)
                 <table id="tableShoeIndex">
                     <tr>
                         <th class="text-center" style="min-width:50px">STT</th>
+                        <th class="text-center" style="min-width:100px">Excel</th>
                         <th class="text-center" style="min-width:100px">Ngày Tháng</th>
                         <th class="text-center" style="min-width:100px">Mã Đơn</th>
+                        <th class="text-center" style="min-width:100px">Số Kiện</th>
                         <th class="text-center" style="min-width:100px">Trạng Thái</th>
 <!--                        <th class="text-center" style="min-width:100px">Số SP</th>-->
 <!--                        <th class="text-center" style="min-width:150px">Danh Sách MVĐ</th>-->
@@ -70,7 +74,6 @@ function product_price($priceFloat)
                         <th class="text-center" style="min-width:120px">Thu Khác</th>
                         <th class="text-center" style="min-width:120px">Tổng Tiền</th>
                         <th class="text-center" style="min-width:120px">Công Nợ</th>
-                        <th class="text-center" style="min-width:100px">Ghi Chú</th>
                         <th class="text-center" style="min-width:50px"></th>
                     </tr>
                     <?php
@@ -82,9 +85,13 @@ function product_price($priceFloat)
                             ?>
                             <tr>
                             <td><?php echo $i++; ?></td>
-                            <td><?php echo $order['startdate'] ?></td>
-                            <td><p style="font-weight: 500;color: #0b0b0b"><?php echo $order['code'] ?></p></td>
+                            <td> <a class="btn-sm btn-success" href="xuatExcel.php?id=<?php echo $order['id'] ?>"
+                                    role="button">Excel</a></td>
+                            <td><?php $startdate = date("Y-m-d", strtotime($order['startdate'])); echo $startdate ?></td>
+                            <td><p style="font-weight: 700;color: blue"><?php echo $order['code'] ?></p></td>
+                            <td><p style="font-weight: 700" ><?php if(isset($order['sokien'])) echo "Số Kiện: ".$order['sokien'] ?></p></td>
                             <td>
+
                                 <?php
                                 switch ($order['status']) {
                                     case "0":
@@ -129,11 +136,12 @@ function product_price($priceFloat)
                             <td>
                                 <?php echo product_price($order['tongall'] - $order['tamung']) ?>
                             </td>
-                            <td>
-                                <?php echo $order['ghichu'] ?>
-                            </td>
+<!--                            <td>-->
+<!--                                --><?php //echo $order['ghichu'] ?>
+<!--                            </td>-->
                             <td><a class="btn btn-primary" href="detailOrder.php?id=<?php echo $order['id'] ?>"
-                                   role="button">Chi tiết</a></td>
+                                   role="button" style="    background-color: #3ede08;
+    border-color: #1a981a;">Chi tiết</a></td>
                             </tr><?php
                         }
                     }
@@ -141,7 +149,7 @@ function product_price($priceFloat)
                 </table>
             </div>
 
-            <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
+            <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #26e102'>
                 <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
             </div>
             <ul class="pagination css-phantrang">

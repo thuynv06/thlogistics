@@ -42,13 +42,15 @@ class OrderRepository
         }
 
     }
+
     public function getOrderCodeById($id)
     {
         global $conn;
         $sql = "select code from orders where id=$id";
         return mysqli_query($conn, $sql)->fetch_assoc();
     }
-    public function getTotalResult($type,$status)
+
+    public function getTotalResult($type, $status)
     {
         global $conn;
 //        echo $orderCode;
@@ -68,7 +70,7 @@ class OrderRepository
 //            return mysqli_query($conn, $sql)->fetch_assoc();
 //        }
 
-    public function getTotalRecordPerPageAdmin($type,$status, $offset, $total_records_per_page)
+    public function getTotalRecordPerPageAdmin($type, $status, $offset, $total_records_per_page)
     {
         global $conn;
         $sql = "SELECT * FROM `orders` where type=$type and status=$status ORDER BY id DESC LIMIT $offset, $total_records_per_page ";
@@ -78,7 +80,7 @@ class OrderRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function createOrder($userId, $code,$listproduct, $tygiate, $phidichvu, $giavanchuyen, $tongtienhangweb, $tongtienshiptq, $tienvanchuyen, $tamung, $tongall, $tiencong, $tongmagiamgia, $tongcan, $type)
+    public function createOrder($userId, $code, $listproduct, $tygiate, $phidichvu, $giavanchuyen, $tongtienhangweb, $tongtienshiptq, $tienvanchuyen, $tamung, $tongall, $tiencong, $tongmagiamgia, $tongcan, $type)
     {
         global $conn;
         $array_data = serialize($listproduct);
@@ -99,6 +101,20 @@ class OrderRepository
         return mysqli_insert_id($conn);
     }
 
+    public function add($userId, $code,$listmvdId,$listmvd, $giavanchuyen, $tienvanchuyen, $tongall, $tongcan,$sokien, $type)
+    {
+        global $conn;
+        $array_data = serialize($listmvdId);
+        $sql = "insert into orders(user_id,code,listsproduct,listmvd,giavanchuyen,tienvanchuyen,tongall,tongcan,sokien,type)
+            values($userId,'$code','" . $array_data . "','$listmvd',$giavanchuyen,$tienvanchuyen,$tongall,$tongcan,$sokien,$type)";
+
+//            echo $sql;
+        mysqli_query($conn, $sql);
+
+
+        return mysqli_insert_id($conn);
+    }
+
     public function update($id, $user_id, $giatenhap, $tygiate, $giavanchuyen, $phidichvu, $tongcan, $tamung, $tongtienhang,
                            $phishiptq, $giamgia, $tienvanchuyen, $tiencong, $tongtien, $ghichu, $listproduct, $startdate)
     {
@@ -111,24 +127,32 @@ class OrderRepository
         mysqli_query($conn, $sql);
     }
 
-    public function findByUserId($type,$user_id)
+    public function findByUserId($type, $user_id)
     {
         global $conn;
         $sql = "select * from orders where user_id = $user_id and type= $type ORDER BY id DESC LIMIT 0, 30";
 //        echo $sql;
         return mysqli_query($conn, $sql);
     }
-    public function findByUserIdAndStatus($type,$user_id,$status)
+
+    public function findByUserIdAndStatus($type, $user_id, $status)
     {
         global $conn;
         $sql = "select * from orders where user_id = $user_id and type= $type and status=$status ORDER BY id DESC LIMIT 0, 30";
 //        echo $sql;
         return mysqli_query($conn, $sql);
     }
+
     public function findByType($type)
     {
         global $conn;
         $sql = "select * from orders where type = $type ORDER BY id DESC LIMIT 0, 30";
+        return mysqli_query($conn, $sql);
+    }
+    public function findByOrderCode($ordercode)
+    {
+        global $conn;
+        $sql = "select * from orders where code = '$ordercode' ";
         return mysqli_query($conn, $sql);
     }
 
@@ -191,7 +215,7 @@ class OrderRepository
         return mysqli_query($conn, $sql);
     }
 
-    public function updatedTongCan($id, $tongcan,$tienvanchuyen)
+    public function updatedTongCan($id, $tongcan, $tienvanchuyen)
     {
         global $conn;
         $sql = "update orders set tongcan= $tongcan, tienvanchuyen=$tienvanchuyen where id=$id";
@@ -216,7 +240,7 @@ class OrderRepository
 
         mysqli_query($conn, $sql);
 //        if (mysqli_query($conn, $sql)){
-            return mysqli_query($conn, $sql)->fetch_assoc();
+        return mysqli_query($conn, $sql)->fetch_assoc();
 //        }else{
 //            return mysqli_query($conn, $sql);
 //        }

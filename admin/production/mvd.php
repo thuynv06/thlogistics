@@ -154,6 +154,7 @@ if (isset($_POST['xuatKho'])) {
                                                                                       type="checkbox"
                                                                                       id="selectall"/>All
                                 <th class="text-center" style="min-width:120px">Mã Vận Đơn</th>
+                                <th class="text-center" style="min-width:120px">Status</th>
                                 <th class="text-center" style="min-width:100px">Khách Hàng</th>
                                 <th class="text-center" style="min-width:60px">Cân nặng</th>
                                 <th class="text-center" style="min-width:80px">Giá</th>
@@ -162,9 +163,9 @@ if (isset($_POST['xuatKho'])) {
                                 <th class="text-center" style="min-width:120px">Lộ Trình</th>
                                 <th class="text-center" style="min-width:150px">Chi tiết</th>
                                 <th class="text-center" style="min-width:100px">Ghi Chú</th>
-                                <th class="text-center" style="min-width:50px"></th>
-                                <th class="text-center" style="min-width:50px"></th>
-                                <th class="text-center" style="min-width:50px"></th>
+                                <th class="text-center" style="min-width:70px"></th>
+                                <th class="text-center" style="min-width:70px"></th>
+                                <th class="text-center" style="min-width:70px"></th>
                             </tr>
                             <?php
 
@@ -204,7 +205,10 @@ if (isset($_POST['xuatKho'])) {
                                     <td><?php echo $i++; ?></td>
                                     <td><input type="checkbox" name="listproduct[]" value="<?php echo $mvd['id'] ?>"
                                                id=""> Chọn
-                                    <td><p style="font-weight: 800"><?php echo $mvd['mvd'] ?></p>
+                                    <td><p style="font-weight: 600;color: red"><?php echo $mvd['ordercode'] ?></p>
+                                        <p style="font-weight: 600;color: blue"><?php echo $mvd['code'] ?></p>
+                                        <p style="font-weight: 800"><?php echo $mvd['mvd'] ?></p></td>
+                                    <td><p><?php echo $mvd['line'] ?></p>
                                         <p style="font-weight: 800;color: blue"> <?php
                                             switch ($mvd['status']) {
                                                 case "1":
@@ -226,8 +230,9 @@ if (isset($_POST['xuatKho'])) {
                                                     echo "--";
                                             }
                                             ?> </p>
-                                        <p><?php echo $mvd['line'] ?></p>
+
                                     </td>
+
                                     <td><p style="font-weight: 800">
                                             <?php
                                             if (isset($mvd['order_id'])) {
@@ -240,17 +245,17 @@ if (isset($_POST['xuatKho'])) {
                                             }
                                             ?>
                                         </p>
-
+                                        <p style="font-weight: 700;color: blue">
                                         <?php
                                         $listUser = $userRepository->getAll();
                                         foreach ($listUser as $user) {
                                             if ($user['id'] == $mvd['user_id']) {
                                                 ?>
-                                                <?php echo $user['username'] ?>
-                                                <span> &#45; </span><?php echo $user['code'] ?>
+<!--                                                --><?php //echo $user['username'] ?>
+                                                <?php echo $user['code'] ?>
                                             <?php }
                                         }
-                                        ?>
+                                        ?></p>
                                         <button type="button" id="chonKH" class="btn-primary btn-sm"
                                                 data-toggle="modal"
                                                 data-target="#modalChonKH" data-id="<?php echo $mvd['id'] ?>"

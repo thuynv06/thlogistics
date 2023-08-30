@@ -55,175 +55,54 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
 
 <!-- top navigation -->
 <div class="right_col" role="main">
-    <div class="row">
-        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-            <div class=" " style="padding: 20px;">
-                <form action="importKG.php" method="POST" enctype="multipart/form-data">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Ký Gửi:</span></label>
-                            <input required type="file" name="file">
-                            <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"
-                                                                                  href="../production/uploads/filemauKHKG.xlsx">đây</a>
-                            </p>
-                        </div>
-                        <div class="form-group">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Vận Đơn
-                                Cho
-                                Khách Hàng</label>
-                            <select name="userId" class="form-control">
-                                <?php
-                                $listUser = $userRepository->getAllByType(1);
-                                foreach ($listUser as $user) {
-                                    ?>
-                                    <option value="<?php echo $user['id']; ?>">
-                                        <?php echo $user['code']; ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;"
-                                   for="exampleInputPassword1 ">Giá Vận Chuyển</label>
-                            <input required min="0" max="99999999999" name="giavc" type="number" size="50"
-                                   class="form-control"
-                                   step="0.01"
-                                   id="exampleInputPassword1" value="<?php echo $th1688['giavanchuyen'] ?>"
-                                   placeholder="Nhập giá tiền">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" type="submit" name="btnImportKG">UpLoad</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 ">
-            <h3>Form Nhập Đơn Ký Gửi Nhanh</h3>
-            <form name="taodon" class="ps-subscribe__form" method="POST"
-                  enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label> Nhập Mã KH </label>
-                        <input style="margin-right: 20px; margin-bottom: 5px;"
-                               class="form-control input-large " name="makhachhang"
-                               type="text" value="" placeholder="Nhập Mã Khách Hàng">
-                    </div>
-<!--                    <div class="form-group col-md-6">-->
-<!--                        <label> Hoặc chọn mã KH </label>-->
-<!--                        <select style="margin-right: 20px; margin-bottom: 5px;" name="userIDKyGui"-->
-<!--                                class="form-control custom-select ">-->
-<!--                            <option value="">Lọc theo khách hàng</option>-->
-<!--                            --><?php
-//                            $listUser = $userRepository->getAllByType(1);
-//                            foreach ($listUser as $user) {
-//                                ?>
-<!--                                <option value="--><?php //echo $user['id']; ?><!--">--><?php //echo $user['code']; ?><!--</option>-->
-<!--                                --><?php
-//                            }
-//                            ?>
-<!--                        </select>-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">-->
+<!--            <div class=" " style="padding: 20px;">-->
+<!--                <form action="importKG.php" method="POST" enctype="multipart/form-data">-->
+<!--                    <div class="form-row">-->
+<!--                        <div class="form-group">-->
+<!--                            <label><span style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Upload File Ký Gửi:</span></label>-->
+<!--                            <input required type="file" name="file">-->
+<!--                            <p style="font-size: 14px;">Tải file excel mẫu tại <a style="color: blue;"-->
+<!--                                                                                  href="../production/uploads/filemauKHKG.xlsx">đây</a>-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                        </div>-->
 <!--                    </div>-->
-                </div>
-                <div class="form-row">
-                    <div class=" form-group col-md-6">
-                        <label>Ngay Shop Gui Hang</label>
-                        <input value="" name="startdate" type="datetime-local" step="1"
-                               class="form-control" id="startdate">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Ngay Kho TQ Nhan</label>
-                        <input value="" name="khotqnhan" type="datetime-local" step="1"
-                               class="form-control" id="khotqnhan">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="exampleFormControlTextarea1">Nhập List MVĐ</label>
-                        <textarea class="form-control" name="listMVD" id="exampleFormControlTextarea1"
-                                  rows="10"></textarea>
-                    </div>
-                </div>
-
-                <button class="btn btn--green btn-th" style="background-color: #ff6c00;margin-right: 20px; ">Import
-                </button>
-                <?php
-                if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                    $detail = $_POST['listMVD'];
-                    if (!empty($detail)) {
-                        // Xử lý khi người dùng chưa nhập dữ liệu
-//                        echo $_POST['listMVD'];
-//                        echo nl2br($_POST['listMVD']);
-                        $array = preg_split('/\n|\r\n/', $_POST['listMVD']);
-
-                        if (isset($_POST['user_id'])) {
-                            $user_ID = $_POST['user_id'];
-                        }
-
-                        if (isset($_POST['makhachhang'])) {
-                            $ma = $_POST['makhachhang'];
-                            $u = $userRepository->getByCode($ma);
-                            if (isset($u)) {
-                                $user_ID = $u['id'];
-                            } else {
-                                    echo "<script>alert('Không tồn tại mã KH');window.location.href='kygui.php';</script>";
-                            }
-                        }
-                        if (!empty($_POST['startdate'])) {
-//                    $startdate = $_POST['startdate'];
-                            $startdate = date("Y-m-d\TH:i:s", strtotime($_POST['startdate']));
-//                            echo $startdate;
-                        }
-                        if (!empty($_POST['khotqnhan'])) {
-//                    $startdate = $_POST['startdate'];
-                            $ngayTQNHAN = date("Y-m-d\TH:i:s", strtotime($_POST['khotqnhan']));
-//                            echo $ngayTQNHAN;
-                        }
-
-                        $code = $orderRepository->getLastOrderCodeByUserId($user_ID);
-                        if (!empty($code)) {
-                            $user = $userRepository->getById($user_ID);
-                            if (empty($code['code'])) {
-                                $newCode = $user['code'] . ".No099";
-                            } else {
-                                $numCode = substr($code['code'], -3) + 1;
-                                $newCode = $user['code'] . ".No" . $numCode;
-                            }
-                        } else {
-                            $newCode = $user['code'] . ".No099";
-                        }
-                        $orderId = $orderRepository->createOrder($user_ID, $newCode, null, 0, 0, 28000, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-//                        $dateCreadted = $_POST['startdate']->format("Y-m-d\TH:i:s");
-                        $myObj = new stdClass();
-                        $myObj->{1} = "$startdate";
-                        $listStatusJSON = json_encode($myObj);
-                        $listproduct = array();
-                        foreach ($array as $mavd) {
-//                            $o = $orderRepository->getById($orderId);
-//                            $date = new DateTime();
-                            $kienhang_id = $kienhangRepository->insert($orderId, 0, 0, $mavd, null, $mavd, 1, "BT/HN1", 0, 28000, 1, 0, 0, $user_ID, null, 0, $startdate, $listStatusJSON, 0, 0, 0, 0);
-//                            $arr_unserialize1 = unserialize($arrayList['listsproduct']);
-                            array_push($listproduct, $kienhang_id);
-                            $kienhangRepository->updateMaKien($kienhang_id);
-                            if (!empty($ngayTQNHAN)) {
-                                $kienhangRepository->updateStatus($kienhang_id, $mavd, 2, $ngayTQNHAN);
-                            }
-                        }
-////                        echo print_r($array,true)  ;
-                        $orderRepository->updatedListProductById($orderId, $listproduct);
-
-                        $urlStr = "detailKyGui.php?id=" . $orderId;
-                        echo "<script>alert('Thêm thành công');window.location.href='$urlStr';</script>";
-                    }
-                }
-                ?>
-            </form>
-        </div>
-    </div>
-    <hr>
+<!--                    <div class="form-row">-->
+<!--                        <div class="form-group col-md-6">-->
+<!--                            <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;">Vận Đơn-->
+<!--                                Cho-->
+<!--                                Khách Hàng</label>-->
+<!--                            <select name="userId" class="form-control">-->
+<!--                                --><?php
+//                                $listUser = $userRepository->getAllByType(1);
+//                                foreach ($listUser as $user) {
+//                                    ?>
+<!--                                    <option value="--><?php //echo $user['id']; ?><!--">-->
+<!--                                        --><?php //echo $user['code']; ?><!--</option>-->
+<!--                                    --><?php
+//                                }
+//                                ?>
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="form-group col-md-6">-->
+<!--                            <label style="color: #0b0b0b;font-weight: 700;margin-right: 10px;font-size: 16px;"-->
+<!--                                   for="exampleInputPassword1 ">Giá Vận Chuyển</label>-->
+<!--                            <input required min="0" max="99999999999" name="giavc" type="number" size="50"-->
+<!--                                   class="form-control"-->
+<!--                                   step="0.01"-->
+<!--                                   id="exampleInputPassword1" value="--><?php //echo $th1688['giavanchuyen'] ?><!--"-->
+<!--                                   placeholder="Nhập giá tiền">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <button class="btn btn-primary" type="submit" name="btnImportKG">UpLoad</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <hr>-->
     <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
         <form name="search" class="form-inline ps-subscribe__form" method="POST"
@@ -269,7 +148,8 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                 <tr>
                     <th class="text-center" style="min-width:50px">STT</th>
                     <th class="text-center" style="min-width:80px">Ngày</th>
-                    <th class="text-center" style="min-width:150px">Mã Đơn</th>
+                    <th class="text-center" style="min-width:80px">Xuất Excel</th>
+                    <th class="text-center" style="min-width:150px">Mã Bao</th>
                     <th class="text-center" style="min-width:100px">Mã KH</th>
                     <th class="text-center" style="min-width:100px">Tên KH</th>
 <!--                    <th class="text-center" style="min-width:130px">Deal</th>-->
@@ -279,7 +159,6 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                     <th class="text-center" style="min-width:100px">Đã TT</th>
                     <th class="text-center" style="min-width:100px">Công Nợ</th>
 <!--                    <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
-                    <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
                     <th class="text-center" style="min-width:80px"></th>
                 </tr>
@@ -317,13 +196,17 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                     foreach ($ordersList as $orders) {
                         ?>
                         <td><?php echo $i++; ?></td>
+                        <td> <a class="btn-sm btn-success" href="xuatExcel.php?id=<?php echo $orders['id'] ?>"
+                                role="button">Excel</a></td>
                         <td>
                             <?php
                             $startdate = date("Y-m-d", strtotime($orders['startdate']));
 
                             echo $startdate ?>
                         </td>
-                        <td style="font-weight: 700;"><?php echo $orders['code'] ?></td>
+                        <td style="font-weight: 700;"><?php echo $orders['code'] ?>
+                            <p style="font-weight: 700;color: blue" ><?php echo "Số Kiện: ".$orders['sokien'] ?></p>
+                        </td>
                         <td style="color: blue">
                             <?php
                             $user = $userRepository->getById($orders['user_id']);
@@ -333,7 +216,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                                 <?php
                             } ?>
                         </td>
-                        <td><?php echo $user['fullname'] ?></td>
+                        <td><?php if(isset($user['fullname'])) echo $user['fullname'] ?></td>
                         <!--                            <td>-->
 
 
@@ -367,8 +250,8 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
 <!--                               data-toggle="modal"-->
 <!--                               data-target="#myModal" data-id="--><?php //echo $orders['id'] ?><!--"-->
 <!--                               role="button" onclick="openModal()">Vận Đơn</a></td>-->
-                        <td><a class="btn-sm btn-warning" href="updateOrder.php?id=<?php echo $orders['id'] ?>"
-                               role="button">Sửa</a></td>
+<!--                        <td><a class="btn-sm btn-warning" href="updateOrder.php?id=--><?php //echo $orders['id'] ?><!--"-->
+<!--                               role="button">Sửa</a></td>-->
                         <td><a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=<?php echo $orders['id'] ?>"
                                role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
                         </tr><?php
@@ -385,6 +268,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                 <table id="tableShoe">
                     <tr>
                         <th class="text-center" style="min-width:50px">STT</th>
+                        <th class="text-center" style="min-width:80px">Xuất Excel</th>
                         <th class="text-center" style="min-width:80px">Ngày</th>
                         <th class="text-center" style="min-width:150px">Mã Đơn</th>
                         <th class="text-center" style="min-width:100px">Mã KH</th>
@@ -397,7 +281,7 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                         <th class="text-center" style="min-width:100px">Công Nợ</th>
                         <!--                    <th class="text-center" style="min-width:100px">Ghi Chú</th>-->
                         <th class="text-center" style="min-width:80px"></th>
-                        <th class="text-center" style="min-width:80px"></th>
+<!--                        <th class="text-center" style="min-width:80px"></th>-->
                     </tr>
                     <?php
                     //                    if (isset($_POST['ladingCode']) && !empty($_POST['ladingCode'])) {
@@ -417,13 +301,17 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                         foreach ($ordersListDaGiao as $orders) {
                             ?>
                             <td><?php echo $i++; ?></td>
+                            <td> <a class="btn-sm btn-success" href="xuatExcel.php?id=<?php echo $orders['id'] ?>"
+                            role="button">Excel</a></td>
                             <td>
                                 <?php
                                 $startdate = date("Y-m-d", strtotime($orders['startdate']));
 
                                 echo $startdate ?>
                             </td>
-                            <td style="font-weight: 700;"><?php echo $orders['code'] ?></td>
+
+                            <td style="font-weight: 700;"><?php echo $orders['code'] ?>
+                                <p style="font-weight: 700;color: blue" ><?php echo "Số Kiện: ".$orders['sokien'] ?></p></td>
                             <td style="color: blue">
                                 <?php
                                 $user = $userRepository->getById($orders['user_id']);
@@ -469,8 +357,8 @@ if (isset($_POST['trangthai']) && !empty($_POST['trangthai'])) {
                                 <!--                               role="button" onclick="openModal()">Vận Đơn</a></td>-->
 <!--                            <td><a class="btn-sm btn-warning" href="updateOrder.php?id=--><?php //echo $orders['id'] ?><!--"-->
 <!--                                   role="button">Sửa</a></td>-->
-                            <td><a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=<?php echo $orders['id'] ?>"
-                                   role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>
+<!--                            <td><a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=--><?php //echo $orders['id'] ?><!--"-->
+<!--                                   role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a></td>-->
                             </tr><?php
                         }
                     }

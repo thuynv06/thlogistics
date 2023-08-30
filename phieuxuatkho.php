@@ -1,20 +1,21 @@
 <?php
-require_once("../../repository/userRepository.php");
-require_once("../../repository/mvdRepository.php");
-require '../../vendor/autoload.php';
+require_once("repository/userRepository.php");
+require_once("repository/mvdRepository.php");
+require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Drawing;
 
 
-function phieuxuatkho($listId, $userID)
+function phieuxuatkho($code,$listId, $userID)
 {
     $userRepository = new UserRepository();
     $mvdRepository = new MaVanDonRepository();
 //    echo(print_r($listId, true));
 //    echo(print_r($userID, true));
     if (!empty($listId) && !empty($userID)) {
+
         $kh = $userRepository->getById($userID);
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
@@ -48,7 +49,7 @@ function phieuxuatkho($listId, $userID)
         $sheet->setCellValue('A2', ("Địa Chỉ: Khu Đô Thị Mới, Văn Khê, La Khê, Hà Đông, Hà Nội"));
         $sheet->setCellValue('A3', ("Hotline: 033.699.1688"));
 
-        $sheet->setCellValue('A5', mb_strtoupper("Phiếu Thu Kiêm Phiếu Xuất Kho", "UTF-8"));
+        $sheet->setCellValue('A5', mb_strtoupper("Phiếu Thu Kiêm Phiếu Xuất Kho: ".$code, "UTF-8"));
         $sheet->mergeCells('A5:G5');
         $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal('center');
 

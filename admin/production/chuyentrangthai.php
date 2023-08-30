@@ -2,16 +2,17 @@
 require '../../vendor/autoload.php';
 //require_once("../../repository/kienhangRepository.php");
 require_once("../../repository/userRepository.php");
-//require_once("../../repository/orderRepository.php");
+require_once("../../repository/orderRepository.php");
 require_once("../../repository/mvdRepository.php");
 
 include '../../connect.php';
 
 use vendor\PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+
 $mvdRepository = new MaVanDonRepository();
 //$kienhangRepository = new KienHangRepository();
 $userRepository = new UserRepository();
-//$orderRepository = new OrderRepository();
+$orderRepository = new OrderRepository();
 //if (empty($_POST['user_id'])) {
 //    echo "<script>alert('Vui lòng chọn khách hàng');window.location.href='vandon.php';</script>";
 //} else {
@@ -59,42 +60,11 @@ if (isset($_POST["btnImportKG"])) {
                 $worksheet = $spreadSheet->getActiveSheet();
                 $spreadSheetAry = $worksheet->toArray();
                 $sheetCount = count($spreadSheetAry);
-//        echo $sheetCount;
-//        die(print_r($spreadSheetAry, true));
-//        echo(print_r($spreadSheetAry, true));
-//                echo $_POST['giavc'];
-//                echo $_POST['userId'];
-                $userID =$_POST["userId"];
-                $dateCreadted=$_POST["ngaynhap"];
+//                $dateCreadted=$_POST["ngaycapnhap"];
 //            echo(print_r($user, true));
 
 
-//                $tygiate =0;
-//                $giavanchuyen = $_POST["giavc"];
-//                $phidichvu = 0;
-//                $listproduct = array();
-//                $tongtienhang = 0;
-//                $tongtienshiptq = 0;
-//                $tongall = 0;
-//                $tongmagiamgia = 0;
-//                $tienvanchuyen = 0;
-//                $tongcan=0;
-//                $date = new DateTime();
-//                $dateCreadted = $date->format("Y-m-d\TH:i:s");
-//
-//                $code= $orderRepository->getLastOrderCodeByUserId($userID);
-//                if(!empty($code)){
-//                    $user = $userRepository->getById($userID);
-//                    if(empty($code['code'] )){
-//                        $newCode= $user['code'].".No099";
-//                    }else{
-//                        $numCode = substr($code['code'],-3) +1;
-//                        $newCode = $user['code'].".No".$numCode;
-//                    }
-//
-//                }
-//
-//                $orderId = $orderRepository->createOrder($userID, $newCode,null, $tygiate, $phidichvu, $giavanchuyen, 0, 0, 0, 0, 0, 0, 0,0,1);
+                $listOder = array();
 
                 for ($i = 1; $i < $sheetCount; $i++) {
 
@@ -105,58 +75,71 @@ if (isset($_POST["btnImportKG"])) {
                         if (isset($spreadSheetAry[$i][1])) {
                             $mvd = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
                         }
-                        $name = "";
-                        if (isset($spreadSheetAry[$i][2]) && !empty($spreadSheetAry[$i][2])) {
-                            $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
-                        } else {
-                            break;
-                        }
-                        $amount = 0;
-                        if (isset($spreadSheetAry[$i][3])) {
-                            $amount = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
-                        }
-                        $klg = 0;
-                        if (isset($spreadSheetAry[$i][4])) {
-                            $klg = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
-                        }
-                        $linksp = "";
-                        if (isset($spreadSheetAry[$i][5])) {
-                            $linksp = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
+                        $ordercode = "";
+                        if (isset($spreadSheetAry[$i][0])) {
+                            $ordercode = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
                         }
 
-
-//            echo $amount;
-//                        $shiptq = 0;
-//                        $magiamgia = 0;
-                        $note = "";
-                        if (isset($spreadSheetAry[$i][7])) {
-                            $note = mysqli_real_escape_string($conn, $spreadSheetAry[$i][7]);
+//                        $myObj = new stdClass();
+//                        $myObj->{1} = "$dateCreadted";
+//                        $listStatusJSON = json_encode($myObj);
+                        $status= $mvdRepository->getStatusByMVD($mvd)->fetch_assoc();
+                        if(isset($status) && $status['status'] <=2 ){
+                            $flag = $mvdRepository->updateByMaVanDon($mvd, $ordercode, $_POST['status_id'], $_POST["ngaycapnhap"]);
+                            array_push($listOder, $ordercode);
+                            if ($flag) {
+                                $type = "success";
+                                $message = "Excel Data Imported into the Database";
+                            } else {
+                                $type = "error";
+                                $message = "Problem in Importing Excel Data";
+                            }
                         }
 
-
-//            if (! empty($name) || ! empty($description)) {
-
-                        $myObj = new stdClass();
-                        $myObj->{1} = "$dateCreadted";
-                        $listStatusJSON = json_encode($myObj);
-
-
-                         $mvd_id = $mvdRepository->add($mvd,$name,$klg,25000,"BT/HN",$userID,$listStatusJSON,$note);
-                         $mvdRepository->updateMaKien($mvd_id);
-//                        array_push($listproduct, $kienhang_id);
-
-                        if (!empty($mvd_id)) {
-                            $type = "success";
-                            $message = "Excel Data Imported into the Database";
-                        } else {
-                            $type = "error";
-                            $message = "Problem in Importing Excel Data";
-                        }
                     } else {
                         break;
                     }
 
                 }
+
+                // rut ngắn mảng,loại bỏ trùng lặp
+                $listOder = array_unique($listOder);
+                if (isset($_POST['status_id']) && $_POST['status_id'] == 2) {
+
+//                echo(print_r($listOder, true)); //test in ra man hình
+                    foreach ($listOder as $order_code) {
+                        $od=$orderRepository->findByOrderCode($order_code)->fetch_assoc();
+                        if(isset($od)){
+                            $orderRepository->deleteById($od['id']);
+                        }
+                        $user_code = substr($order_code, 0,6);
+                        echo $user_code;
+                        $u = $userRepository->getByCode($user_code);
+//                        echo(print_r($u, true));
+                        if (isset($u)) {
+                            $user_ID = $u['id'];
+//                    echo $user_ID;
+                        } else {
+                            $user_ID = 1;
+                        }
+                        $listMVDOfOrder = $mvdRepository->getListMVDOfOrderByOrderCode($order_code);
+                        $listmvd = '';
+                        $listmvdID = array();
+                        foreach ($listMVDOfOrder as $m) {
+                            $listmvd = $listmvd . $m['mvd'] . '/';
+                            array_push($listmvdID, $m['id']);
+                        }
+//                        echo(print_r($listmvd, true));
+//                        echo(print_r($listmvdID, true));
+
+                        $tongcan = $mvdRepository->getSumCanNangOfOderByOrderCode($order_code);
+//                    echo $tongcan['tongcan'];
+                        $oder_id = $orderRepository->add($user_ID, $order_code, $listmvdID, $listmvd, 17000, $tongcan['tongcan'] * 17000, $tongcan['tongcan'] * 17000, $tongcan['tongcan'], sizeof($listmvdID),1);
+                        $user_ID = null;
+                    }
+                }
+
+
 //                $tamung = 0;
 //                $tiencong = ($tongtienhang + $tongtienshiptq) * $phidichvu;
 //                $tongall = ($tongtienhang + $tongtienshiptq + $tiencong - $tongmagiamgia) * $tygiate + $tienvanchuyen;

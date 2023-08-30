@@ -64,12 +64,15 @@
 
         ?>
         <div class="ps-danhsachkienhang">
-            <div class="row" style="background-color: #ffe6d3; border-radius: 33px;">
+            <div class="row" style="background-color: #eeefee; border-radius: 33px;">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding: 15px;">
                     <div class="btnquanlykienhang">
-                        <a href="customer-packages.php" class="btn btn-primary ">Tất cả kiện hàng</a>
-                        <a href="vandon.php" class="btn btn-primary "> Danh Sách Đơn Hàng /Phiếu Xuất</a>
-                        <a href="" class="btn btn-primary ">Reload</a>
+                        <a href="customer-packages.php" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;">Tất cả kiện hàng</a>
+                        <a href="vandon.php" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;"> Danh Sách Đơn Hàng /Phiếu Xuất</a>
+                        <a href="" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;">Reload</a>
                     </div>
                     <div class="col-md-3 table-responsive">
                         <h3>Thông Tin Khách Hàng</h3>
@@ -239,7 +242,7 @@
                         </select>
                     </div>
                     <button class="btn btn--green btn-th"
-                            style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                            style="background-color: #33a51d;margin-right: 20px; ">Tra
                         Cứu
                     </button>
                 </form>

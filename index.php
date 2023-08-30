@@ -35,7 +35,7 @@ $sendEmail = new SendEMail();
                     ">
                     <input required id="inputtracuu" class="form-control" type="text" name="ladingCode"
                            placeholder="Nhập mã vận đơn…">
-                    <button style="background-color: #ff6c00;">Tra Cứu</button>
+                    <button style="background-color: #26e102;">Tra Cứu</button>
                     </form>
                 </div>
                 <div class="col-lg-2 col-md-5 col-sm-12 col-xs-12 ">
@@ -201,8 +201,8 @@ $sendEmail = new SendEMail();
     <div class="ps-taisao">
         <div class="ps-container">
             <div class="titleTH">
-                <h3 style="font-weight: 700;">TẠI SAO NÊN CHỌN TRUNG HOA LOGISTICS ORDER</h3>
-                <img src="images/devider.png">
+                <h3 style="font-weight: 700;">TẠI SAO NÊN CHỌN TMDT Trung Việt </h3>
+<!--                <img src="images/devider.png">-->
             </div>
             <div class="row">
                 <div class="col-md-3 col-12 th-taisao">
@@ -285,7 +285,7 @@ $sendEmail = new SendEMail();
                 <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                     <h1 class=""><span>CAM KẾT DỊCH VỤ</span></h1>
                     <ul>
-                        <li><h3><i class="fa fa-check-circle"></i> Cam kết hàng về chỉ sau 5-7 ngày (Kể từ khi shop
+                        <li><h3><i class="fa fa-check-circle"></i> Cam kết hàng về chỉ sau 3-5 ngày (Kể từ khi shop
                                 Trung Quốc phát hàng)</h3></li>
                         <li><h3><i class="fa fa-check-circle"></i> Đền 100% tiền hàng nếu mất/ vỡ do quá trình vận
                                 chuyển</h3></li>
@@ -338,7 +338,7 @@ $sendEmail = new SendEMail();
         <div class="ps-container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                    <h3><i class="fa fa-home"></i>Ngã 3 - Ba La - Hà Đông - Hà Nội </h3>
+                    <h3><i class="fa fa-home"></i>TMDT Trung Việt - KĐT Mới Văn Khê - Hà Đông - Hà Nội</h3>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <h3><i class="fa fa-phone"></i>Holine: 033.699.1688 </h3>

@@ -18,6 +18,7 @@ foreach ($arr_unserialize1 as $idMaVD) {
 if (isset($_POST['xuatphieu'])) {
     $order = $orderRepository->getById($_GET['id']);
 //    echo $order['user_id'];
+//    echo print_r($_POST['listproduct'],true);
     include "phieuxuatkho.php";
     phieuxuatkho($_POST['listproduct'], $order['user_id']);
 }
@@ -265,9 +266,8 @@ if (isset($_POST['removeKyGui'])) {
                                                                                 href="detailKyGui.php?id=<?php echo $order['id'] ?>"
                                                                                 role="button">Xuất Đơn
                     </button>
-                    <a class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=<?php echo $order['id'] ?>"
-                               role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>
-
+<!--                    <a  class="btn-sm btn-danger" href="deleteOrderKyGui.php?id=--><?php //echo $order['id'] ?><!--"-->
+<!--                               role="button" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>-->
 
                 </div>
 

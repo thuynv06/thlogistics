@@ -7,7 +7,7 @@
 $server = "localhost:3306";
 $user="Root";
 $pass="Root_1234";
-$database="thlogistics";
+$database="tmdt";
 $conn=mysqli_connect($server,$user,$pass,$database);
 $conn->set_charset('utf8');
 if(mysqli_connect_errno()){

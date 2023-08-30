@@ -1493,17 +1493,17 @@ body {
     padding-bottom: 16px;
 }
 .css-phantrang>li>a{
-    color: #ff6c00;
+    color: #26e102;
 }
 .css-phantrang>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #ff6c00;
-    border-color: #ff6c00;
+    background-color: #1b9600;
+    border-color: #26e102;
 }
 .btn-th{
-    background-color: #ff6c00;
+    background-color: #26e102;
     border-radius: 33px;
     border: none;
 }
@@ -1518,7 +1518,7 @@ body {
     margin-bottom: 50px;
 }
 .th-taisao h3 {
-    color: #ff6c00;
+    color: #26e102;
 }
 .ps-bangiadichvu{
     margin: auto;
@@ -1607,7 +1607,7 @@ td{
     font-family: 'FontAwesome';
     font-weight: 700;
     text-align: center;
-    background-color: #ff7e20;
+    background-color: #26e102;
     color: #ffffff;
 }
 .fix-status{
@@ -4772,8 +4772,8 @@ textarea.form-control {
     width: 60px;
     height: 60px;
     margin: -20px 0 0 -20px;
-    border: 8px solid #ff9d54;
-    border-bottom-color: #ff7e13;
+    border: 8px solid #7ed719;
+    border-bottom-color: #ffffff;
     border-radius: 50%;
     animation: animLoader 0.8s linear infinite forwards;
 }
@@ -5417,7 +5417,7 @@ textarea.form-control {
     color: #fff;
     font-weight: 600;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #ff6c00 0%, #f35587 100%);
+    background: linear-gradient(135deg, #7ed719 0%, #26e102 100%);
     border-bottom: 1px solid #eee;
     -webkit-transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     -moz-transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -5965,7 +5965,7 @@ textarea.form-control {
 .navigation {
     position: relative;
     color: #fff;
-    background: linear-gradient(135deg, #ff6c00 0%, #f35587 100%);
+    background: linear-gradient(135deg, #7ed719 0%, #26e102 100%);
 }
 
 .navigation .navigation__column {
@@ -6104,7 +6104,7 @@ textarea.form-control {
     background-color:#fff;
     border: 1;
     color: #000;
-    border-color: #ff6c00;
+    border-color: #62c500;
 }
 .ps-subscribe__form select.form-control {
     /*padding: 20px 30px;*/
@@ -6116,7 +6116,7 @@ textarea.form-control {
     background-color:#fff;
     border: 1;
     color: #000;
-    border-color: #ff6c00;
+    border-color: #62c500;
 }
 
 .ps-subscribe__form button {
@@ -7267,7 +7267,7 @@ textarea.form-control {
     display: inline-block;
     font-size: 40px;
     line-height: 50px;
-    color: #ff8900;
+    color: #26e102;
     font-weight: bold;
     vertical-align: middle;
 }

@@ -67,8 +67,10 @@ $statusRepository = new StatusRepository();
                     </div>
                     <hr>
                     <div class="btnquanlykienhang">
-                        <a href="vandon.php" class="btn btn-primary "> Danh Sách Đơn Hàng /Phiếu Xuất </a>
-                        <a href="customer-packages.php" class="btn btn-primary ">ReLoad</a>
+                        <a href="vandon.php" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;"> Danh Sách Đơn Hàng /Phiếu Xuất </a>
+                        <a href="customer-packages.php" class="btn btn-primary " style="    background-color: #3ede08;
+    border-color: #1a981a;">ReLoad</a>
                         <!--                <a href="" class="btn btn-primary btn-th">Giao hàng</a>-->
                     </div>
                     <hr>
@@ -97,7 +99,7 @@ $statusRepository = new StatusRepository();
                                 </select>
                             </div>
                             <button class="btn btn--green btn-th"
-                                    style="background-color: #ff6c00;margin-right: 20px; ">Tra
+                                    style="background-color: #7ed719;margin-right: 20px; ">Tra
                                 Cứu
                             </button>
                         </form>
@@ -123,7 +125,7 @@ $statusRepository = new StatusRepository();
                     include 'renderMVD.php'; ?>
 
                     <!--                    // phan trang-->
-                    <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #ff6c00'>
+                    <div style='text-indent: 20px; border-top: dotted 1px #CCC;background-color: #26e102'>
                         <strong>Page <?php echo $page_no . " of " . $total_no_of_pages; ?></strong>
                     </div>
                     <ul class="pagination css-phantrang">
